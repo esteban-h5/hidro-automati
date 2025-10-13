@@ -1,0 +1,83 @@
+
+[11:48:02] [5.1.2]
+-------------------------
+Programa RegistrosPendientes.py - Version: 5.1.2 - venv: False
+Version Python: 3.11.6 (tags/v3.11.6:8b6ee5b, Oct  2 2023, 14:57:12) [MSC v.1935 64 bit (AMD64)]
+Version actual de chrome: ERROR al obtener version
+Fecha Actual: Mon 08/09 11:48:02
+-------------------------
+
+
+[11:48:05] [5.1.2]
+Publicacion desactivada
+
+
+[11:48:05] [5.1.2]
+Pais Actual: chile
+
+
+[11:48:05] [5.1.2]
+Iniciando navegador
+
+
+[11:48:07] [5.1.2]
+Iniciando sesion en myLIMS
+
+
+[11:48:58] [5.1.2]
+Menu principal a la espera...
+
+
+[11:48:58] [LOG RECARGADO] [log]
+
+[11:52:24] [5.1.2]
+Subiendo Fichero
+
+
+[11:52:26] [5.1.2]
+ID 1977110 subido (1 de 10)
+
+[11:52:29] [5.1.2]
+ID 1687605 subido (2 de 10)
+
+[11:52:31] [5.1.2]
+ID 1980548 subido (3 de 10)
+
+[11:52:33] [5.1.2]
+ID 2021726 subido (4 de 10)
+
+[11:52:35] [5.1.2]
+ID 2017466 subido (5 de 10)
+
+[11:52:37] [5.1.2]
+ID 1991621 subido (6 de 10)
+
+[11:52:39] [5.1.2]
+ID 1991622 subido (7 de 10)
+
+[11:52:41] [5.1.2]
+ID 2017664 subido (8 de 10)
+
+[11:52:44] [5.1.2]
+ID 2000042 subido (9 de 10)
+
+[11:52:47] [5.1.2]
+ID 1996092 subido (10 de 10)
+
+[11:52:48] [5.1.2]
+Grid actualizado
+
+
+[11:52:48] [5.1.2]
+Mensaje a la espera de interaccion...
+
+
+[11:52:51] [5.1.2]
+Menu principal a la espera...
+
+
+[11:52:51] [LOG RECARGADO] [log]
+
+[11:53:15] [5.1.2]
+Terminado
+

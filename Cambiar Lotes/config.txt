@@ -1,0 +1,54 @@
+# Archivo de Configuración para Cambiar Lote
+# Lineas que tengan # no serán concideradas... (lineas comentadas)
+#
+#
+# Variable del filtro actual (Publicadas y Metalab solo para chile) (no importan mayusculas ni tildes)
+# Finalizadas - Metalab - Publicadas
+filtro                :   finalizadas
+#
+# ID de botones para documentos de revision (separar por comas para varios botones eg. 1234,5678)
+DOC_REVISION_ETFA_ID_CL    :   0
+DOC_REVISION_ID_CL         :   0
+#
+#
+# Revisa si existen alertas de horas y las corrige [True]
+DescargaRevisarRutinas        :   	True
+#
+#
+# Añade pasos a los botones para recordar [True]
+Ayuda						  :		True
+#
+#
+# Publicar Muestras Descargables [False]
+PublicarDescargables          :   	False
+#
+#
+# Descargar Muestras Publicadas [False]
+# se ve afectado por RepasarEstado
+DescargarPublicadas           :   	True
+#
+#
+# Cambiar Estado en excel con lotes [True]
+Registrar       :   True
+#
+#
+# Estado de las muestras para conciderar [Recibida,En Análisis,Registrada,Finalizada]
+EstadoMuestras  :   Recibida,En Análisis,Registrada
+#
+#
+# Volver a correr muestras con estado guardado [False]
+RepasarEstado  :   True
+#
+#
+# Saltar muestra en caso de error en calcular precios [True]
+SaltarMuestra  :   False
+#
+#
+nombreExcelEntrada              :   ListaMuestras.xlsx
+nombreExcelHistorico            :   Historico.xlsx
+nombreExcelEstados              :   Registro.xlsx
+nombreExcelAuxiliar             :   RegistroAuxiliar.xlsx
+#
+#
+nombreExcelListaMetodos         :   __ListaMetodos.xlsx
+nombreExcelListaRequerimientos  :   __ListaRequerimientos.xlsx

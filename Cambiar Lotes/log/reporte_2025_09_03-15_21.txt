@@ -1,0 +1,1385 @@
+
+[15:21:50] [5.1.1]
+-------------------------
+Programa CambiarLotes.py - Version: 5.1.1 - venv: False
+Version Python: 3.11.6 (tags/v3.11.6:8b6ee5b, Oct  2 2023, 14:57:12) [MSC v.1935 64 bit (AMD64)]
+Version actual de chrome: ERROR al obtener version
+Fecha Actual: Wed 03/09 15:21:50
+-------------------------
+
+
+[15:21:53] [5.1.1]
+Pais Actual: chile
+
+
+[15:21:53] [LOG RECARGADO] [log]
+
+[15:21:53] [5.1.1]
+Menu Principal
+
+[15:22:03] [5.1.1] [log]
+Salida del menu: 1
+
+
+
+[15:22:03] [5.1.1]
+1: Reemplazar uno o mas metodos por otro metodo de analisis para 46 muestras
+
+[15:22:25] [5.1.1]
+Cambiando de "['EIS-Rob-Nitrato']" a "EAM-Nitrato" para 46 muestras
+
+
+[15:22:58] [5.1.1]
+Iniciando sesion en labsoft
+
+[15:23:23] [5.1.1]
+
+[1/46] Revisando muestra 1992042
+
+[15:23:27] [5.1.1] [log]
+Estado de la muestra 1992042: EnAnalisis
+
+[15:23:27] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:23:31] [5.1.1]
+Analitos encontrados: 1
+
+[15:23:31] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:23:42] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:23:52] [5.1.1]
+
+editado en la muestra 1992042:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:23:52] [5.1.1]
+
+Muestra 1992042 lista
+
+
+[15:23:52] [5.1.1]
+
+[2/46] Revisando muestra 1992029
+
+[15:23:55] [5.1.1] [log]
+Estado de la muestra 1992029: EnAnalisis
+
+[15:23:55] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:23:59] [5.1.1]
+Analitos encontrados: 1
+
+[15:23:59] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:24:11] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:24:18] [5.1.1]
+
+editado en la muestra 1992029:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:24:18] [5.1.1]
+
+Muestra 1992029 lista
+
+
+[15:24:18] [5.1.1]
+
+[3/46] Revisando muestra 1992082
+
+[15:24:21] [5.1.1] [log]
+Estado de la muestra 1992082: EnAnalisis
+
+[15:24:21] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:24:25] [5.1.1]
+Analitos encontrados: 1
+
+[15:24:25] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:24:39] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:24:47] [5.1.1]
+
+editado en la muestra 1992082:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:24:47] [5.1.1]
+
+Muestra 1992082 lista
+
+
+[15:24:47] [5.1.1]
+
+[4/46] Revisando muestra 1992078
+
+[15:24:50] [5.1.1] [log]
+Estado de la muestra 1992078: EnAnalisis
+
+[15:24:50] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:24:54] [5.1.1]
+Analitos encontrados: 1
+
+[15:24:54] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:25:05] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:25:15] [5.1.1]
+
+editado en la muestra 1992078:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:25:15] [5.1.1]
+
+Muestra 1992078 lista
+
+
+[15:25:15] [5.1.1]
+
+[5/46] Revisando muestra 1992076
+
+[15:25:19] [5.1.1] [log]
+Estado de la muestra 1992076: EnAnalisis
+
+[15:25:19] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:25:23] [5.1.1]
+Analitos encontrados: 1
+
+[15:25:23] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:25:35] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:25:47] [5.1.1]
+
+editado en la muestra 1992076:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:25:47] [5.1.1]
+
+Muestra 1992076 lista
+
+
+[15:25:47] [5.1.1]
+
+[6/46] Revisando muestra 1992077
+
+[15:25:50] [5.1.1] [log]
+Estado de la muestra 1992077: EnAnalisis
+
+[15:25:50] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:25:54] [5.1.1]
+Analitos encontrados: 1
+
+[15:25:54] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:26:05] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:26:15] [5.1.1]
+
+editado en la muestra 1992077:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:26:15] [5.1.1]
+
+Muestra 1992077 lista
+
+
+[15:26:15] [5.1.1]
+
+[7/46] Revisando muestra 1992037
+
+[15:26:19] [5.1.1] [log]
+Estado de la muestra 1992037: EnAnalisis
+
+[15:26:19] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:26:23] [5.1.1]
+Analitos encontrados: 1
+
+[15:26:23] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:26:34] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:26:42] [5.1.1]
+
+editado en la muestra 1992037:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:26:42] [5.1.1]
+
+Muestra 1992037 lista
+
+
+[15:26:42] [5.1.1]
+
+[8/46] Revisando muestra 1992026
+
+[15:26:45] [5.1.1] [log]
+Estado de la muestra 1992026: EnAnalisis
+
+[15:26:45] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:26:49] [5.1.1]
+Analitos encontrados: 1
+
+[15:26:49] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:27:04] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:27:11] [5.1.1]
+
+editado en la muestra 1992026:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:27:11] [5.1.1]
+
+Muestra 1992026 lista
+
+
+[15:27:11] [5.1.1]
+
+[9/46] Revisando muestra 1992083
+
+[15:27:15] [5.1.1] [log]
+Estado de la muestra 1992083: EnAnalisis
+
+[15:27:15] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:27:19] [5.1.1]
+Analitos encontrados: 1
+
+[15:27:19] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:27:30] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:27:37] [5.1.1]
+
+editado en la muestra 1992083:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:27:37] [5.1.1]
+
+Muestra 1992083 lista
+
+
+[15:27:38] [5.1.1]
+
+[10/46] Revisando muestra 1992024
+
+[15:27:40] [5.1.1] [log]
+Estado de la muestra 1992024: EnAnalisis
+
+[15:27:40] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:27:44] [5.1.1]
+Analitos encontrados: 1
+
+[15:27:44] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:27:56] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:28:04] [5.1.1]
+
+editado en la muestra 1992024:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:28:04] [5.1.1]
+
+Muestra 1992024 lista
+
+
+[15:28:04] [5.1.1]
+
+[11/46] Revisando muestra 1992030
+
+[15:28:08] [5.1.1] [log]
+Estado de la muestra 1992030: EnAnalisis
+
+[15:28:08] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:28:11] [5.1.1]
+Analitos encontrados: 1
+
+[15:28:11] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:28:23] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:28:32] [5.1.1]
+
+editado en la muestra 1992030:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:28:32] [5.1.1]
+
+Muestra 1992030 lista
+
+
+[15:28:32] [5.1.1]
+
+[12/46] Revisando muestra 2043649
+
+[15:28:37] [5.1.1] [log]
+Estado de la muestra 2043649: EnAnalisis
+
+[15:28:37] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:28:41] [5.1.1]
+Analitos encontrados: 1
+
+[15:28:41] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:28:51] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:28:57] [5.1.1]
+
+editado en la muestra 2043649:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:28:57] [5.1.1]
+
+Muestra 2043649 lista
+
+
+[15:28:57] [5.1.1]
+
+[13/46] Revisando muestra 2043648
+
+[15:29:01] [5.1.1] [log]
+Estado de la muestra 2043648: EnAnalisis
+
+[15:29:01] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:29:04] [5.1.1]
+Analitos encontrados: 1
+
+[15:29:04] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:29:15] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:29:23] [5.1.1]
+
+editado en la muestra 2043648:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:29:23] [5.1.1]
+
+Muestra 2043648 lista
+
+
+[15:29:23] [5.1.1]
+
+[14/46] Revisando muestra 2043656
+
+[15:29:26] [5.1.1] [log]
+Estado de la muestra 2043656: EnAnalisis
+
+[15:29:26] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:29:29] [5.1.1]
+Analitos encontrados: 1
+
+[15:29:29] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:29:40] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:29:52] [5.1.1]
+
+editado en la muestra 2043656:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:29:52] [5.1.1]
+
+Muestra 2043656 lista
+
+
+[15:29:52] [5.1.1]
+
+[15/46] Revisando muestra 2043641
+
+[15:29:56] [5.1.1] [log]
+Estado de la muestra 2043641: EnAnalisis
+
+[15:29:56] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:29:59] [5.1.1]
+Analitos encontrados: 1
+
+[15:29:59] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:30:11] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:30:18] [5.1.1]
+
+editado en la muestra 2043641:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:30:18] [5.1.1]
+
+Muestra 2043641 lista
+
+
+[15:30:18] [5.1.1]
+
+[16/46] Revisando muestra 2043654
+
+[15:30:22] [5.1.1] [log]
+Estado de la muestra 2043654: EnAnalisis
+
+[15:30:22] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:30:25] [5.1.1]
+Analitos encontrados: 1
+
+[15:30:25] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:30:37] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:30:50] [5.1.1]
+
+editado en la muestra 2043654:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:30:50] [5.1.1]
+
+Muestra 2043654 lista
+
+
+[15:30:51] [5.1.1]
+
+[17/46] Revisando muestra 2043653
+
+[15:30:55] [5.1.1] [log]
+Estado de la muestra 2043653: EnAnalisis
+
+[15:30:55] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:30:57] [5.1.1]
+Analitos encontrados: 1
+
+[15:30:57] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:31:10] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:31:31] [5.1.1]
+
+editado en la muestra 2043653:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:31:31] [5.1.1]
+
+Muestra 2043653 lista
+
+
+[15:31:31] [5.1.1]
+
+[18/46] Revisando muestra 2043655
+
+[15:31:34] [5.1.1] [log]
+Estado de la muestra 2043655: EnAnalisis
+
+[15:31:34] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:31:37] [5.1.1]
+Analitos encontrados: 1
+
+[15:31:37] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:31:48] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:31:58] [5.1.1]
+
+editado en la muestra 2043655:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:31:58] [5.1.1]
+
+Muestra 2043655 lista
+
+
+[15:31:58] [5.1.1]
+
+[19/46] Revisando muestra 2043634
+
+[15:32:02] [5.1.1] [log]
+Estado de la muestra 2043634: EnAnalisis
+
+[15:32:02] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:32:05] [5.1.1]
+Analitos encontrados: 1
+
+[15:32:05] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:32:18] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:32:25] [5.1.1]
+
+editado en la muestra 2043634:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:32:25] [5.1.1]
+
+Muestra 2043634 lista
+
+
+[15:32:25] [5.1.1]
+
+[20/46] Revisando muestra 2043633
+
+[15:32:28] [5.1.1] [log]
+Estado de la muestra 2043633: EnAnalisis
+
+[15:32:28] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:32:30] [5.1.1]
+Analitos encontrados: 1
+
+[15:32:30] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:32:42] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:32:50] [5.1.1]
+
+editado en la muestra 2043633:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:32:50] [5.1.1]
+
+Muestra 2043633 lista
+
+
+[15:32:50] [5.1.1]
+
+[21/46] Revisando muestra 2043647
+
+[15:32:52] [5.1.1] [log]
+Estado de la muestra 2043647: EnAnalisis
+
+[15:32:52] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:32:55] [5.1.1]
+Analitos encontrados: 1
+
+[15:32:55] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:33:06] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:33:12] [5.1.1]
+
+editado en la muestra 2043647:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:33:12] [5.1.1]
+
+Muestra 2043647 lista
+
+
+[15:33:12] [5.1.1]
+
+[22/46] Revisando muestra 2043646
+
+[15:33:15] [5.1.1] [log]
+Estado de la muestra 2043646: EnAnalisis
+
+[15:33:15] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:33:17] [5.1.1]
+Analitos encontrados: 1
+
+[15:33:17] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:33:28] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:33:34] [5.1.1]
+
+editado en la muestra 2043646:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:33:34] [5.1.1]
+
+Muestra 2043646 lista
+
+
+[15:33:34] [5.1.1]
+
+[23/46] Revisando muestra 2043642
+
+[15:33:37] [5.1.1] [log]
+Estado de la muestra 2043642: EnAnalisis
+
+[15:33:37] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:33:40] [5.1.1]
+Analitos encontrados: 1
+
+[15:33:40] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:33:50] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:34:03] [5.1.1]
+
+editado en la muestra 2043642:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:34:03] [5.1.1]
+
+Muestra 2043642 lista
+
+
+[15:34:03] [5.1.1]
+
+[24/46] Revisando muestra 2043645
+
+[15:34:07] [5.1.1] [log]
+Estado de la muestra 2043645: EnAnalisis
+
+[15:34:07] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:34:10] [5.1.1]
+Analitos encontrados: 1
+
+[15:34:10] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:34:21] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:34:34] [5.1.1]
+
+editado en la muestra 2043645:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:34:34] [5.1.1]
+
+Muestra 2043645 lista
+
+
+[15:34:34] [5.1.1]
+
+[25/46] Revisando muestra 2043643
+
+[15:34:37] [5.1.1] [log]
+Estado de la muestra 2043643: EnAnalisis
+
+[15:34:37] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:34:39] [5.1.1]
+Analitos encontrados: 1
+
+[15:34:39] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:34:53] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:35:03] [5.1.1]
+
+editado en la muestra 2043643:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:35:03] [5.1.1]
+
+Muestra 2043643 lista
+
+
+[15:35:03] [5.1.1]
+
+[26/46] Revisando muestra 2043644
+
+[15:35:07] [5.1.1] [log]
+Estado de la muestra 2043644: EnAnalisis
+
+[15:35:07] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:35:10] [5.1.1]
+Analitos encontrados: 1
+
+[15:35:10] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:35:22] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:35:28] [5.1.1]
+
+editado en la muestra 2043644:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:35:28] [5.1.1]
+
+Muestra 2043644 lista
+
+
+[15:35:28] [5.1.1]
+
+[27/46] Revisando muestra 1968948
+
+[15:35:33] [5.1.1] [log]
+Estado de la muestra 1968948: EnAnalisis
+
+[15:35:33] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:35:40] [5.1.1]
+Analitos encontrados: 1
+
+[15:35:40] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:35:52] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:36:05] [5.1.1]
+
+editado en la muestra 1968948:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:36:05] [5.1.1]
+
+Muestra 1968948 lista
+
+
+[15:36:05] [5.1.1]
+
+[28/46] Revisando muestra 1968950
+
+[15:36:09] [5.1.1] [log]
+Estado de la muestra 1968950: EnAnalisis
+
+[15:36:09] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:36:14] [5.1.1]
+Analitos encontrados: 1
+
+[15:36:14] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:36:27] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:36:36] [5.1.1]
+
+editado en la muestra 1968950:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:36:36] [5.1.1]
+
+Muestra 1968950 lista
+
+
+[15:36:36] [5.1.1]
+
+[29/46] Revisando muestra 1611650
+
+[15:36:39] [5.1.1] [log]
+Estado de la muestra 1611650: EnAnalisis
+
+[15:36:39] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:36:44] [5.1.1]
+Analitos encontrados: 1
+
+[15:36:44] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:36:54] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:37:04] [5.1.1]
+
+editado en la muestra 1611650:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:37:04] [5.1.1]
+
+Muestra 1611650 lista
+
+
+[15:37:04] [5.1.1]
+
+[30/46] Revisando muestra 1731025
+
+[15:37:07] [5.1.1] [log]
+Estado de la muestra 1731025: EnAnalisis
+
+[15:37:07] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:37:12] [5.1.1]
+Analitos encontrados: 1
+
+[15:37:12] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:37:24] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:37:37] [5.1.1]
+
+editado en la muestra 1731025:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:37:37] [5.1.1]
+
+Muestra 1731025 lista
+
+
+[15:37:37] [5.1.1]
+
+[31/46] Revisando muestra 1731026
+
+[15:37:40] [5.1.1] [log]
+Estado de la muestra 1731026: EnAnalisis
+
+[15:37:40] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:37:45] [5.1.1]
+Analitos encontrados: 1
+
+[15:37:45] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:37:56] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:38:14] [5.1.1]
+
+editado en la muestra 1731026:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:38:14] [5.1.1]
+
+Muestra 1731026 lista
+
+
+[15:38:14] [5.1.1]
+
+[32/46] Revisando muestra 1916107
+
+[15:38:18] [5.1.1] [log]
+Estado de la muestra 1916107: EnAnalisis
+
+[15:38:18] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:38:22] [5.1.1]
+Analitos encontrados: 1
+
+[15:38:22] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:38:34] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:38:44] [5.1.1]
+
+editado en la muestra 1916107:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:38:44] [5.1.1]
+
+Muestra 1916107 lista
+
+
+[15:38:44] [5.1.1]
+
+[33/46] Revisando muestra 2005601
+
+[15:38:47] [5.1.1] [log]
+Estado de la muestra 2005601: EnAnalisis
+
+[15:38:47] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:38:50] [5.1.1]
+Analitos encontrados: 1
+
+[15:38:50] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:39:01] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:39:09] [5.1.1]
+
+editado en la muestra 2005601:
+ -> Nitrato - EIS-Rob-Nitrato - mg N/L
+
+[15:39:09] [5.1.1]
+
+Muestra 2005601 lista
+
+
+[15:39:09] [5.1.1]
+
+[34/46] Revisando muestra 2005602
+
+[15:39:12] [5.1.1] [log]
+Estado de la muestra 2005602: EnAnalisis
+
+[15:39:12] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:39:15] [5.1.1]
+Analitos encontrados: 1
+
+[15:39:15] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:39:27] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:39:33] [5.1.1]
+
+editado en la muestra 2005602:
+ -> Nitrato - EIS-Rob-Nitrato - mg N/L
+
+[15:39:33] [5.1.1]
+
+Muestra 2005602 lista
+
+
+[15:39:33] [5.1.1]
+
+[35/46] Revisando muestra 2005603
+
+[15:39:36] [5.1.1] [log]
+Estado de la muestra 2005603: EnAnalisis
+
+[15:39:36] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:39:39] [5.1.1]
+Analitos encontrados: 1
+
+[15:39:39] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:39:50] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:39:57] [5.1.1]
+
+editado en la muestra 2005603:
+ -> Nitrato - EIS-Rob-Nitrato - mg N/L
+
+[15:39:57] [5.1.1]
+
+Muestra 2005603 lista
+
+
+[15:39:57] [5.1.1]
+
+[36/46] Revisando muestra 2005604
+
+[15:39:59] [5.1.1] [log]
+Estado de la muestra 2005604: EnAnalisis
+
+[15:39:59] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:40:02] [5.1.1]
+Analitos encontrados: 1
+
+[15:40:02] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:40:17] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:40:56] [5.1.1]
+
+editado en la muestra 2005604:
+ -> Nitrato - EIS-Rob-Nitrato - mg N/L
+
+[15:40:56] [5.1.1]
+
+Muestra 2005604 lista
+
+
+[15:40:56] [5.1.1]
+
+[37/46] Revisando muestra 2005605
+
+[15:41:04] [5.1.1] [log]
+Estado de la muestra 2005605: EnAnalisis
+
+[15:41:04] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:41:07] [5.1.1]
+Analitos encontrados: 1
+
+[15:41:07] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:41:26] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:42:04] [5.1.1]
+
+editado en la muestra 2005605:
+ -> Nitrato - EIS-Rob-Nitrato - mg N/L
+
+[15:42:04] [5.1.1]
+
+Muestra 2005605 lista
+
+
+[15:42:04] [5.1.1]
+
+[38/46] Revisando muestra 2005606
+
+[15:42:09] [5.1.1] [log]
+Estado de la muestra 2005606: EnAnalisis
+
+[15:42:09] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:42:11] [5.1.1]
+Analitos encontrados: 1
+
+[15:42:11] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:42:23] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:42:35] [5.1.1]
+
+editado en la muestra 2005606:
+ -> Nitrato - EIS-Rob-Nitrato - mg N/L
+
+[15:42:35] [5.1.1]
+
+Muestra 2005606 lista
+
+
+[15:42:36] [5.1.1]
+
+[39/46] Revisando muestra 2006707
+
+[15:42:42] [5.1.1] [log]
+Estado de la muestra 2006707: EnAnalisis
+
+[15:42:42] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:42:46] [5.1.1]
+Analitos encontrados: 1
+
+[15:42:46] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:42:58] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:43:12] [5.1.1]
+
+editado en la muestra 2006707:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:43:12] [5.1.1]
+
+Muestra 2006707 lista
+
+
+[15:43:12] [5.1.1]
+
+[40/46] Revisando muestra 2033929
+
+[15:43:17] [5.1.1] [log]
+Estado de la muestra 2033929: EnAnalisis
+
+[15:43:17] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:43:21] [5.1.1]
+Analitos encontrados: 1
+
+[15:43:21] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:43:34] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:43:50] [5.1.1]
+
+editado en la muestra 2033929:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:43:50] [5.1.1]
+
+Muestra 2033929 lista
+
+
+[15:43:50] [5.1.1]
+
+[41/46] Revisando muestra 2046200
+
+[15:43:54] [5.1.1] [log]
+Estado de la muestra 2046200: EnAnalisis
+
+[15:43:54] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:43:58] [5.1.1]
+Analitos encontrados: 1
+
+[15:43:58] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:44:13] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:44:27] [5.1.1]
+
+editado en la muestra 2046200:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:44:27] [5.1.1]
+
+Muestra 2046200 lista
+
+
+[15:44:27] [5.1.1]
+
+[42/46] Revisando muestra 2046201
+
+[15:44:30] [5.1.1] [log]
+Estado de la muestra 2046201: EnAnalisis
+
+[15:44:30] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:44:34] [5.1.1]
+Analitos encontrados: 1
+
+[15:44:34] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:44:46] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:44:55] [5.1.1]
+
+editado en la muestra 2046201:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:44:55] [5.1.1]
+
+Muestra 2046201 lista
+
+
+[15:44:55] [5.1.1]
+
+[43/46] Revisando muestra 2046202
+
+[15:44:59] [5.1.1] [log]
+Estado de la muestra 2046202: EnAnalisis
+
+[15:44:59] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:45:03] [5.1.1]
+Analitos encontrados: 1
+
+[15:45:03] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:45:13] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:45:31] [5.1.1]
+
+editado en la muestra 2046202:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:45:31] [5.1.1]
+
+Muestra 2046202 lista
+
+
+[15:45:31] [5.1.1]
+
+[44/46] Revisando muestra 2046203
+
+[15:45:35] [5.1.1] [log]
+Estado de la muestra 2046203: EnAnalisis
+
+[15:45:35] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:45:39] [5.1.1]
+Analitos encontrados: 1
+
+[15:45:39] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:45:50] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:46:00] [5.1.1]
+
+editado en la muestra 2046203:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:46:00] [5.1.1]
+
+Muestra 2046203 lista
+
+
+[15:46:00] [5.1.1]
+
+[45/46] Revisando muestra 2046204
+
+[15:46:04] [5.1.1] [log]
+Estado de la muestra 2046204: EnAnalisis
+
+[15:46:04] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:46:08] [5.1.1]
+Analitos encontrados: 1
+
+[15:46:08] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:46:20] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:46:29] [5.1.1]
+
+editado en la muestra 2046204:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:46:29] [5.1.1]
+
+Muestra 2046204 lista
+
+
+[15:46:29] [5.1.1]
+
+[46/46] Revisando muestra 2046205
+
+[15:46:33] [5.1.1] [log]
+Estado de la muestra 2046205: EnAnalisis
+
+[15:46:33] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:46:37] [5.1.1]
+Analitos encontrados: 1
+
+[15:46:37] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[15:46:49] [5.1.1] [log]
+click boton accion SaveButton
+
+[15:47:02] [5.1.1]
+
+editado en la muestra 2046205:
+ -> Nitrato - EIS-Rob-Nitrato - mg NO3/L
+
+[15:47:02] [5.1.1]
+
+Muestra 2046205 lista
+
+
+[15:47:02] [5.1.1]
+
+Programa finalizado... Cerrando
+
+
+[15:47:09] [LOG RECARGADO] [log]
+
+[15:47:09] [5.1.1]
+Menu Principal
+
+[15:49:47] [5.1.1] [log]
+Salida del menu: 31
+
+
+
+[15:49:47] [5.1.1]
+31: Programa Terminado

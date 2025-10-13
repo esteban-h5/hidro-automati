@@ -1,0 +1,3043 @@
+
+[11:49:56] [5.1.1]
+-------------------------
+Programa CambiarLotes.py - Version: 5.1.1 - venv: False
+Version Python: 3.11.6 (tags/v3.11.6:8b6ee5b, Oct  2 2023, 14:57:12) [MSC v.1935 64 bit (AMD64)]
+Version actual de chrome: ERROR al obtener version
+Fecha Actual: Fri 05/09 11:49:56
+-------------------------
+
+
+[11:49:59] [5.1.1]
+Pais Actual: chile
+
+
+[11:50:00] [LOG RECARGADO] [log]
+
+[11:50:00] [5.1.1]
+Menu Principal
+
+[11:55:07] [5.1.1] [log]
+Salida del menu: 1
+
+
+
+[11:55:07] [5.1.1]
+1: Reemplazar uno o mas metodos por otro metodo de analisis para 79 muestras
+
+[11:55:38] [5.1.1]
+Cambiando de "['AA-As', 'AA-Se', 'AA-Hg', 'ICPOES-Metales-NCh409', 'ICPOES-Metales-NCh409']" a "ICPMS-Metales-NCh409" para 79 muestras
+
+
+[11:55:40] [5.1.1]
+Iniciando sesion en labsoft
+
+[11:56:04] [5.1.1]
+
+[1/79] Revisando muestra 1811644
+
+[11:56:07] [5.1.1] [log]
+Estado de la muestra 1811644: Recibida
+
+[11:56:07] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[11:56:11] [5.1.1]
+Analitos encontrados: 10
+
+[11:56:11] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[11:56:48] [5.1.1] [log]
+click boton accion SaveButton
+
+[11:56:54] [5.1.1]
+
+editado en la muestra 1811644:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+
+[11:56:54] [5.1.1]
+
+Muestra 1811644 lista
+
+
+[11:56:54] [5.1.1]
+
+[2/79] Revisando muestra 1916113
+
+[11:56:57] [5.1.1] [log]
+Estado de la muestra 1916113: EnAnalisis
+
+[11:56:57] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[11:57:02] [5.1.1]
+Analitos encontrados: 10
+
+[11:57:02] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[11:57:37] [5.1.1] [log]
+click boton accion SaveButton
+
+[11:57:47] [5.1.1]
+
+editado en la muestra 1916113:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[11:57:47] [5.1.1]
+
+Muestra 1916113 lista
+
+
+[11:57:47] [5.1.1]
+
+[3/79] Revisando muestra 1934561
+
+[11:57:51] [5.1.1] [log]
+Estado de la muestra 1934561: EnAnalisis
+
+[11:57:51] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[11:57:56] [5.1.1]
+Analitos encontrados: 10
+
+[11:57:56] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[11:58:36] [5.1.1] [log]
+click boton accion SaveButton
+
+[11:58:43] [5.1.1]
+
+editado en la muestra 1934561:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[11:58:43] [5.1.1]
+
+Muestra 1934561 lista
+
+
+[11:58:43] [5.1.1]
+
+[4/79] Revisando muestra 1970684
+
+[11:58:46] [5.1.1] [log]
+Estado de la muestra 1970684: EnAnalisis
+
+[11:58:46] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[11:58:52] [5.1.1]
+Analitos encontrados: 10
+
+[11:58:52] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[11:59:39] [5.1.1] [log]
+click boton accion SaveButton
+
+[11:59:46] [5.1.1]
+
+editado en la muestra 1970684:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[11:59:46] [5.1.1]
+
+Muestra 1970684 lista
+
+
+[11:59:46] [5.1.1]
+
+[5/79] Revisando muestra 1971433
+
+[11:59:49] [5.1.1] [log]
+Estado de la muestra 1971433: EnAnalisis
+
+[11:59:49] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[11:59:53] [5.1.1]
+Analitos encontrados: 10
+
+[11:59:53] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:00:30] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:00:36] [5.1.1]
+
+editado en la muestra 1971433:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:00:36] [5.1.1]
+
+Muestra 1971433 lista
+
+
+[12:00:36] [5.1.1]
+
+[6/79] Revisando muestra 1971438
+
+[12:00:38] [5.1.1] [log]
+Estado de la muestra 1971438: EnAnalisis
+
+[12:00:38] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:00:42] [5.1.1]
+Analitos encontrados: 10
+
+[12:00:42] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:01:18] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:01:25] [5.1.1]
+
+editado en la muestra 1971438:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:01:25] [5.1.1]
+
+Muestra 1971438 lista
+
+
+[12:01:25] [5.1.1]
+
+[7/79] Revisando muestra 1992009
+
+[12:01:28] [5.1.1] [log]
+Estado de la muestra 1992009: EnAnalisis
+
+[12:01:28] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:01:32] [5.1.1]
+Analitos encontrados: 10
+
+[12:01:32] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:02:09] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:02:14] [5.1.1]
+
+editado en la muestra 1992009:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:02:14] [5.1.1]
+
+Muestra 1992009 lista
+
+
+[12:02:15] [5.1.1]
+
+[8/79] Revisando muestra 1992010
+
+[12:02:17] [5.1.1] [log]
+Estado de la muestra 1992010: EnAnalisis
+
+[12:02:17] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:02:21] [5.1.1]
+Analitos encontrados: 10
+
+[12:02:21] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:03:00] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:03:07] [5.1.1]
+
+editado en la muestra 1992010:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:03:07] [5.1.1]
+
+Muestra 1992010 lista
+
+
+[12:03:07] [5.1.1]
+
+[9/79] Revisando muestra 1992011
+
+[12:03:10] [5.1.1] [log]
+Estado de la muestra 1992011: EnAnalisis
+
+[12:03:10] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:03:15] [5.1.1]
+Analitos encontrados: 10
+
+[12:03:15] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:03:56] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:04:02] [5.1.1]
+
+editado en la muestra 1992011:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:04:02] [5.1.1]
+
+Muestra 1992011 lista
+
+
+[12:04:02] [5.1.1]
+
+[10/79] Revisando muestra 1992036
+
+[12:04:07] [5.1.1] [log]
+Estado de la muestra 1992036: EnAnalisis
+
+[12:04:07] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:04:11] [5.1.1]
+Analitos encontrados: 10
+
+[12:04:11] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:04:47] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:04:53] [5.1.1]
+
+editado en la muestra 1992036:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:04:53] [5.1.1]
+
+Muestra 1992036 lista
+
+
+[12:04:53] [5.1.1]
+
+[11/79] Revisando muestra 1992065
+
+[12:04:56] [5.1.1] [log]
+Estado de la muestra 1992065: EnAnalisis
+
+[12:04:56] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:05:00] [5.1.1]
+Analitos encontrados: 10
+
+[12:05:00] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:05:40] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:05:47] [5.1.1]
+
+editado en la muestra 1992065:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:05:47] [5.1.1]
+
+Muestra 1992065 lista
+
+
+[12:05:47] [5.1.1]
+
+[12/79] Revisando muestra 1995409
+
+[12:05:51] [5.1.1] [log]
+Estado de la muestra 1995409: EnAnalisis
+
+[12:05:51] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:05:55] [5.1.1]
+Analitos encontrados: 10
+
+[12:05:55] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:06:32] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:06:37] [5.1.1]
+
+editado en la muestra 1995409:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:06:37] [5.1.1]
+
+Muestra 1995409 lista
+
+
+[12:06:37] [5.1.1]
+
+[13/79] Revisando muestra 2037078
+
+[12:06:39] [5.1.1] [log]
+Estado de la muestra 2037078: Recibida
+
+[12:06:39] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:06:43] [5.1.1]
+Analitos encontrados: 6
+
+[12:06:43] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:07:05] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:07:10] [5.1.1]
+
+editado en la muestra 2037078:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+
+[12:07:10] [5.1.1]
+
+Muestra 2037078 lista
+
+
+[12:07:11] [5.1.1]
+
+[14/79] Revisando muestra 2043888
+
+[12:07:13] [5.1.1] [log]
+Estado de la muestra 2043888: EnAnalisis
+
+[12:07:13] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:07:17] [5.1.1]
+Analitos encontrados: 10
+
+[12:07:17] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:08:01] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:08:07] [5.1.1]
+
+editado en la muestra 2043888:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:08:07] [5.1.1]
+
+Muestra 2043888 lista
+
+
+[12:08:07] [5.1.1]
+
+[15/79] Revisando muestra 2045117
+
+[12:08:10] [5.1.1] [log]
+Estado de la muestra 2045117: EnAnalisis
+
+[12:08:10] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:08:15] [5.1.1]
+Analitos encontrados: 10
+
+[12:08:15] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:08:56] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:09:03] [5.1.1]
+
+editado en la muestra 2045117:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:09:03] [5.1.1]
+
+Muestra 2045117 lista
+
+
+[12:09:03] [5.1.1]
+
+[16/79] Revisando muestra 2047655
+
+[12:09:05] [5.1.1] [log]
+Estado de la muestra 2047655: EnAnalisis
+
+[12:09:05] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:09:09] [5.1.1]
+Analitos encontrados: 10
+
+[12:09:09] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:09:49] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:09:57] [5.1.1]
+
+editado en la muestra 2047655:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:09:57] [5.1.1]
+
+Muestra 2047655 lista
+
+
+[12:09:58] [5.1.1]
+
+[17/79] Revisando muestra 2051736
+
+[12:10:00] [5.1.1] [log]
+Estado de la muestra 2051736: EnAnalisis
+
+[12:10:00] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:10:04] [5.1.1]
+Analitos encontrados: 10
+
+[12:10:04] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:10:41] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:10:48] [5.1.1]
+
+editado en la muestra 2051736:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:10:48] [5.1.1]
+
+Muestra 2051736 lista
+
+
+[12:10:48] [5.1.1]
+
+[18/79] Revisando muestra 2053025
+
+[12:10:51] [5.1.1] [log]
+Estado de la muestra 2053025: EnAnalisis
+
+[12:10:51] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:10:55] [5.1.1]
+Analitos encontrados: 10
+
+[12:10:55] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:11:33] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:11:40] [5.1.1]
+
+editado en la muestra 2053025:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:11:40] [5.1.1]
+
+Muestra 2053025 lista
+
+
+[12:11:40] [5.1.1]
+
+[19/79] Revisando muestra 2053690
+
+[12:11:42] [5.1.1] [log]
+Estado de la muestra 2053690: EnAnalisis
+
+[12:11:42] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:11:47] [5.1.1]
+Analitos encontrados: 10
+
+[12:11:47] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:12:29] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:12:38] [5.1.1]
+
+editado en la muestra 2053690:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:12:38] [5.1.1]
+
+Muestra 2053690 lista
+
+
+[12:12:38] [5.1.1]
+
+[20/79] Revisando muestra 2053692
+
+[12:12:41] [5.1.1] [log]
+Estado de la muestra 2053692: EnAnalisis
+
+[12:12:41] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:12:46] [5.1.1]
+Analitos encontrados: 10
+
+[12:12:46] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:13:24] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:13:31] [5.1.1]
+
+editado en la muestra 2053692:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:13:31] [5.1.1]
+
+Muestra 2053692 lista
+
+
+[12:13:31] [5.1.1]
+
+[21/79] Revisando muestra 2053816
+
+[12:13:34] [5.1.1] [log]
+Estado de la muestra 2053816: EnAnalisis
+
+[12:13:34] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:13:39] [5.1.1]
+Analitos encontrados: 10
+
+[12:13:39] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:14:22] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:14:30] [5.1.1]
+
+editado en la muestra 2053816:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:14:30] [5.1.1]
+
+Muestra 2053816 lista
+
+
+[12:14:30] [5.1.1]
+
+[22/79] Revisando muestra 2054517
+
+[12:14:35] [5.1.1] [log]
+Estado de la muestra 2054517: EnAnalisis
+
+[12:14:35] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:14:41] [5.1.1]
+Analitos encontrados: 10
+
+[12:14:41] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:15:25] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:15:35] [5.1.1]
+
+editado en la muestra 2054517:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:15:35] [5.1.1]
+
+Muestra 2054517 lista
+
+
+[12:15:35] [5.1.1]
+
+[23/79] Revisando muestra 2056274
+
+[12:15:37] [5.1.1] [log]
+Estado de la muestra 2056274: EnAnalisis
+
+[12:15:37] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:15:43] [5.1.1]
+Analitos encontrados: 10
+
+[12:15:43] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:16:23] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:16:32] [5.1.1]
+
+editado en la muestra 2056274:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:16:32] [5.1.1]
+
+Muestra 2056274 lista
+
+
+[12:16:32] [5.1.1]
+
+[24/79] Revisando muestra 2058516
+
+[12:16:34] [5.1.1] [log]
+Estado de la muestra 2058516: EnAnalisis
+
+[12:16:34] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:16:39] [5.1.1]
+Analitos encontrados: 10
+
+[12:16:39] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:17:21] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:17:28] [5.1.1]
+
+editado en la muestra 2058516:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:17:28] [5.1.1]
+
+Muestra 2058516 lista
+
+
+[12:17:28] [5.1.1]
+
+[25/79] Revisando muestra 2059355
+
+[12:17:32] [5.1.1] [log]
+Estado de la muestra 2059355: EnAnalisis
+
+[12:17:32] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:17:37] [5.1.1]
+Analitos encontrados: 10
+
+[12:17:37] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:18:15] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:18:22] [5.1.1]
+
+editado en la muestra 2059355:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:18:22] [5.1.1]
+
+Muestra 2059355 lista
+
+
+[12:18:22] [5.1.1]
+
+[26/79] Revisando muestra 1598789
+
+[12:18:25] [5.1.1] [log]
+Estado de la muestra 1598789: EnAnalisis
+
+[12:18:25] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:18:30] [5.1.1]
+Analitos encontrados: 10
+
+[12:18:30] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:19:13] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:19:19] [5.1.1]
+
+editado en la muestra 1598789:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:19:19] [5.1.1]
+
+Muestra 1598789 lista
+
+
+[12:19:19] [5.1.1]
+
+[27/79] Revisando muestra 1611652
+
+[12:19:21] [5.1.1] [log]
+Estado de la muestra 1611652: EnAnalisis
+
+[12:19:21] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:19:27] [5.1.1]
+Analitos encontrados: 10
+
+[12:19:27] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:20:05] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:20:15] [5.1.1]
+
+editado en la muestra 1611652:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:20:15] [5.1.1]
+
+Muestra 1611652 lista
+
+
+[12:20:15] [5.1.1]
+
+[28/79] Revisando muestra 1611654
+
+[12:20:18] [5.1.1] [log]
+Estado de la muestra 1611654: EnAnalisis
+
+[12:20:18] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:20:23] [5.1.1]
+Analitos encontrados: 10
+
+[12:20:23] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:21:03] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:21:12] [5.1.1]
+
+editado en la muestra 1611654:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:21:12] [5.1.1]
+
+Muestra 1611654 lista
+
+
+[12:21:12] [5.1.1]
+
+[29/79] Revisando muestra 1968993
+
+[12:21:16] [5.1.1] [log]
+Estado de la muestra 1968993: EnAnalisis
+
+[12:21:16] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:21:21] [5.1.1]
+Analitos encontrados: 10
+
+[12:21:21] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:22:00] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:22:07] [5.1.1]
+
+editado en la muestra 1968993:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:22:07] [5.1.1]
+
+Muestra 1968993 lista
+
+
+[12:22:07] [5.1.1]
+
+[30/79] Revisando muestra 1971439
+
+[12:22:11] [5.1.1] [log]
+Estado de la muestra 1971439: EnAnalisis
+
+[12:22:11] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:22:15] [5.1.1]
+Analitos encontrados: 10
+
+[12:22:15] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:22:51] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:22:58] [5.1.1]
+
+editado en la muestra 1971439:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:22:58] [5.1.1]
+
+Muestra 1971439 lista
+
+
+[12:22:58] [5.1.1]
+
+[31/79] Revisando muestra 1971440
+
+[12:23:01] [5.1.1] [log]
+Estado de la muestra 1971440: EnAnalisis
+
+[12:23:01] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:23:05] [5.1.1]
+Analitos encontrados: 10
+
+[12:23:05] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:23:41] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:23:48] [5.1.1]
+
+editado en la muestra 1971440:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:23:48] [5.1.1]
+
+Muestra 1971440 lista
+
+
+[12:23:49] [5.1.1]
+
+[32/79] Revisando muestra 1971441
+
+[12:23:51] [5.1.1] [log]
+Estado de la muestra 1971441: EnAnalisis
+
+[12:23:51] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:23:55] [5.1.1]
+Analitos encontrados: 10
+
+[12:23:55] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:24:34] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:24:41] [5.1.1]
+
+editado en la muestra 1971441:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:24:41] [5.1.1]
+
+Muestra 1971441 lista
+
+
+[12:24:41] [5.1.1]
+
+[33/79] Revisando muestra 1992007
+
+[12:24:43] [5.1.1] [log]
+Estado de la muestra 1992007: EnAnalisis
+
+[12:24:43] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:24:48] [5.1.1]
+Analitos encontrados: 10
+
+[12:24:48] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:25:23] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:25:33] [5.1.1]
+
+editado en la muestra 1992007:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:25:33] [5.1.1]
+
+Muestra 1992007 lista
+
+
+[12:25:33] [5.1.1]
+
+[34/79] Revisando muestra 1992045
+
+[12:25:37] [5.1.1] [log]
+Estado de la muestra 1992045: EnAnalisis
+
+[12:25:37] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:25:41] [5.1.1]
+Analitos encontrados: 10
+
+[12:25:41] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:26:20] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:26:26] [5.1.1]
+
+editado en la muestra 1992045:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:26:26] [5.1.1]
+
+Muestra 1992045 lista
+
+
+[12:26:26] [5.1.1]
+
+[35/79] Revisando muestra 2019194
+
+[12:26:29] [5.1.1] [log]
+Estado de la muestra 2019194: EnAnalisis
+
+[12:26:29] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:26:34] [5.1.1]
+Analitos encontrados: 10
+
+[12:26:34] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:27:19] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:27:26] [5.1.1]
+
+editado en la muestra 2019194:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:27:26] [5.1.1]
+
+Muestra 2019194 lista
+
+
+[12:27:26] [5.1.1]
+
+[36/79] Revisando muestra 2019200
+
+[12:27:28] [5.1.1] [log]
+Estado de la muestra 2019200: EnAnalisis
+
+[12:27:28] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:27:33] [5.1.1]
+Analitos encontrados: 10
+
+[12:27:33] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:28:13] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:28:19] [5.1.1]
+
+editado en la muestra 2019200:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:28:19] [5.1.1]
+
+Muestra 2019200 lista
+
+
+[12:28:20] [5.1.1]
+
+[37/79] Revisando muestra 2023569
+
+[12:28:22] [5.1.1] [log]
+Estado de la muestra 2023569: EnAnalisis
+
+[12:28:22] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:28:27] [5.1.1]
+Analitos encontrados: 10
+
+[12:28:27] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:29:05] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:29:13] [5.1.1]
+
+editado en la muestra 2023569:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:29:13] [5.1.1]
+
+Muestra 2023569 lista
+
+
+[12:29:13] [5.1.1]
+
+[38/79] Revisando muestra 2030036
+
+[12:29:17] [5.1.1] [log]
+Estado de la muestra 2030036: EnAnalisis
+
+[12:29:17] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:29:22] [5.1.1]
+Analitos encontrados: 10
+
+[12:29:22] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:30:19] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:30:28] [5.1.1]
+
+editado en la muestra 2030036:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:30:28] [5.1.1]
+
+Muestra 2030036 lista
+
+
+[12:30:28] [5.1.1]
+
+[39/79] Revisando muestra 2047711
+
+[12:30:32] [5.1.1] [log]
+Estado de la muestra 2047711: EnAnalisis
+
+[12:30:32] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:30:36] [5.1.1]
+Analitos encontrados: 10
+
+[12:30:36] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:31:17] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:31:26] [5.1.1]
+
+editado en la muestra 2047711:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:31:26] [5.1.1]
+
+Muestra 2047711 lista
+
+
+[12:31:26] [5.1.1]
+
+[40/79] Revisando muestra 2050887
+
+[12:31:30] [5.1.1] [log]
+Estado de la muestra 2050887: EnAnalisis
+
+[12:31:30] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:31:37] [5.1.1]
+Analitos encontrados: 10
+
+[12:31:37] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:32:29] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:32:37] [5.1.1]
+
+editado en la muestra 2050887:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:32:37] [5.1.1]
+
+Muestra 2050887 lista
+
+
+[12:32:38] [5.1.1]
+
+[41/79] Revisando muestra 2051877
+
+[12:32:41] [5.1.1] [log]
+Estado de la muestra 2051877: EnAnalisis
+
+[12:32:41] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:32:47] [5.1.1]
+Analitos encontrados: 10
+
+[12:32:47] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:33:29] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:33:40] [5.1.1]
+
+editado en la muestra 2051877:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:33:40] [5.1.1]
+
+Muestra 2051877 lista
+
+
+[12:33:40] [5.1.1]
+
+[42/79] Revisando muestra 2051880
+
+[12:33:46] [5.1.1] [log]
+Estado de la muestra 2051880: EnAnalisis
+
+[12:33:46] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:33:52] [5.1.1]
+Analitos encontrados: 10
+
+[12:33:52] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:34:30] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:34:37] [5.1.1]
+
+editado en la muestra 2051880:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:34:37] [5.1.1]
+
+Muestra 2051880 lista
+
+
+[12:34:37] [5.1.1]
+
+[43/79] Revisando muestra 2051889
+
+[12:34:46] [5.1.1] [log]
+Estado de la muestra 2051889: EnAnalisis
+
+[12:34:46] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:34:53] [5.1.1]
+Analitos encontrados: 10
+
+[12:34:53] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:35:31] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:35:41] [5.1.1]
+
+editado en la muestra 2051889:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:35:41] [5.1.1]
+
+Muestra 2051889 lista
+
+
+[12:35:41] [5.1.1]
+
+[44/79] Revisando muestra 2051890
+
+[12:35:44] [5.1.1] [log]
+Estado de la muestra 2051890: EnAnalisis
+
+[12:35:44] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:35:50] [5.1.1]
+Analitos encontrados: 10
+
+[12:35:50] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:36:32] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:36:40] [5.1.1]
+
+editado en la muestra 2051890:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:36:40] [5.1.1]
+
+Muestra 2051890 lista
+
+
+[12:36:40] [5.1.1]
+
+[45/79] Revisando muestra 2053678
+
+[12:36:44] [5.1.1] [log]
+Estado de la muestra 2053678: EnAnalisis
+
+[12:36:44] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:36:48] [5.1.1]
+Analitos encontrados: 10
+
+[12:36:48] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:37:20] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:37:26] [5.1.1]
+
+editado en la muestra 2053678:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:37:26] [5.1.1]
+
+Muestra 2053678 lista
+
+
+[12:37:26] [5.1.1]
+
+[46/79] Revisando muestra 2053802
+
+[12:37:29] [5.1.1] [log]
+Estado de la muestra 2053802: EnAnalisis
+
+[12:37:29] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:37:35] [5.1.1]
+Analitos encontrados: 10
+
+[12:37:35] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:38:09] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:38:16] [5.1.1]
+
+editado en la muestra 2053802:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:38:16] [5.1.1]
+
+Muestra 2053802 lista
+
+
+[12:38:16] [5.1.1]
+
+[47/79] Revisando muestra 2054751
+
+[12:38:19] [5.1.1] [log]
+Estado de la muestra 2054751: EnAnalisis
+
+[12:38:19] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:38:25] [5.1.1]
+Analitos encontrados: 10
+
+[12:38:25] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:39:02] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:39:10] [5.1.1]
+
+editado en la muestra 2054751:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:39:10] [5.1.1]
+
+Muestra 2054751 lista
+
+
+[12:39:10] [5.1.1]
+
+[48/79] Revisando muestra 2054752
+
+[12:39:13] [5.1.1] [log]
+Estado de la muestra 2054752: EnAnalisis
+
+[12:39:13] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:39:19] [5.1.1]
+Analitos encontrados: 10
+
+[12:39:19] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:39:58] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:40:05] [5.1.1]
+
+editado en la muestra 2054752:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:40:05] [5.1.1]
+
+Muestra 2054752 lista
+
+
+[12:40:05] [5.1.1]
+
+[49/79] Revisando muestra 2054753
+
+[12:40:08] [5.1.1] [log]
+Estado de la muestra 2054753: EnAnalisis
+
+[12:40:08] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:40:14] [5.1.1]
+Analitos encontrados: 10
+
+[12:40:14] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:40:57] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:41:09] [5.1.1]
+
+editado en la muestra 2054753:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:41:09] [5.1.1]
+
+Muestra 2054753 lista
+
+
+[12:41:09] [5.1.1]
+
+[50/79] Revisando muestra 2056370
+
+[12:41:11] [5.1.1] [log]
+Estado de la muestra 2056370: EnAnalisis
+
+[12:41:11] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:41:15] [5.1.1]
+Analitos encontrados: 10
+
+[12:41:15] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:41:54] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:42:00] [5.1.1]
+
+editado en la muestra 2056370:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:42:00] [5.1.1]
+
+Muestra 2056370 lista
+
+
+[12:42:00] [5.1.1]
+
+[51/79] Revisando muestra 1611650
+
+[12:42:04] [5.1.1] [log]
+Estado de la muestra 1611650: EnAnalisis
+
+[12:42:04] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:42:08] [5.1.1]
+Analitos encontrados: 8
+
+[12:42:08] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:42:47] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:42:54] [5.1.1]
+
+editado en la muestra 1611650:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:42:54] [5.1.1]
+
+Muestra 1611650 lista
+
+
+[12:42:55] [5.1.1]
+
+[52/79] Revisando muestra 1731025
+
+[12:43:00] [5.1.1] [log]
+Estado de la muestra 1731025: EnAnalisis
+
+[12:43:00] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:43:04] [5.1.1]
+Analitos encontrados: 10
+
+[12:43:04] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:43:45] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:43:57] [5.1.1]
+
+editado en la muestra 1731025:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:43:57] [5.1.1]
+
+Muestra 1731025 lista
+
+
+[12:43:57] [5.1.1]
+
+[53/79] Revisando muestra 1731026
+
+[12:44:01] [5.1.1] [log]
+Estado de la muestra 1731026: EnAnalisis
+
+[12:44:01] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:44:07] [5.1.1]
+Analitos encontrados: 10
+
+[12:44:07] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:44:56] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:45:04] [5.1.1]
+
+editado en la muestra 1731026:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:45:04] [5.1.1]
+
+Muestra 1731026 lista
+
+
+[12:45:04] [5.1.1]
+
+[54/79] Revisando muestra 1916104
+
+[12:45:07] [5.1.1] [log]
+Estado de la muestra 1916104: EnAnalisis
+
+[12:45:07] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:45:14] [5.1.1]
+Analitos encontrados: 8
+
+[12:45:14] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:46:01] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:46:09] [5.1.1]
+
+editado en la muestra 1916104:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:46:09] [5.1.1]
+
+Muestra 1916104 lista
+
+
+[12:46:09] [5.1.1]
+
+[55/79] Revisando muestra 1916105
+
+[12:46:14] [5.1.1] [log]
+Estado de la muestra 1916105: EnAnalisis
+
+[12:46:14] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:46:21] [5.1.1]
+Analitos encontrados: 10
+
+[12:46:21] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:47:13] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:47:21] [5.1.1]
+
+editado en la muestra 1916105:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:47:21] [5.1.1]
+
+Muestra 1916105 lista
+
+
+[12:47:22] [5.1.1]
+
+[56/79] Revisando muestra 1916107
+
+[12:47:25] [5.1.1] [log]
+Estado de la muestra 1916107: EnAnalisis
+
+[12:47:25] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:47:32] [5.1.1]
+Analitos encontrados: 8
+
+[12:47:32] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:48:20] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:48:27] [5.1.1]
+
+editado en la muestra 1916107:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:48:27] [5.1.1]
+
+Muestra 1916107 lista
+
+
+[12:48:27] [5.1.1]
+
+[57/79] Revisando muestra 1968948
+
+[12:48:31] [5.1.1] [log]
+Estado de la muestra 1968948: EnAnalisis
+
+[12:48:31] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:48:39] [5.1.1]
+Analitos encontrados: 10
+
+[12:48:39] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:49:27] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:49:36] [5.1.1]
+
+editado en la muestra 1968948:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:49:36] [5.1.1]
+
+Muestra 1968948 lista
+
+
+[12:49:36] [5.1.1]
+
+[58/79] Revisando muestra 1968950
+
+[12:49:43] [5.1.1] [log]
+Estado de la muestra 1968950: EnAnalisis
+
+[12:49:43] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:49:51] [5.1.1]
+Analitos encontrados: 10
+
+[12:49:51] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:50:33] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:50:41] [5.1.1]
+
+editado en la muestra 1968950:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:50:41] [5.1.1]
+
+Muestra 1968950 lista
+
+
+[12:50:41] [5.1.1]
+
+[59/79] Revisando muestra 1992024
+
+[12:50:44] [5.1.1] [log]
+Estado de la muestra 1992024: EnAnalisis
+
+[12:50:44] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:50:49] [5.1.1]
+Analitos encontrados: 10
+
+[12:50:49] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:51:26] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:51:34] [5.1.1]
+
+editado en la muestra 1992024:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:51:34] [5.1.1]
+
+Muestra 1992024 lista
+
+
+[12:51:35] [5.1.1]
+
+[60/79] Revisando muestra 1992026
+
+[12:51:38] [5.1.1] [log]
+Estado de la muestra 1992026: EnAnalisis
+
+[12:51:38] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:51:43] [5.1.1]
+Analitos encontrados: 10
+
+[12:51:43] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:52:18] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:52:24] [5.1.1]
+
+editado en la muestra 1992026:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:52:24] [5.1.1]
+
+Muestra 1992026 lista
+
+
+[12:52:24] [5.1.1]
+
+[61/79] Revisando muestra 1992029
+
+[12:52:28] [5.1.1] [log]
+Estado de la muestra 1992029: EnAnalisis
+
+[12:52:28] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:52:32] [5.1.1]
+Analitos encontrados: 10
+
+[12:52:32] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:53:05] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:53:11] [5.1.1]
+
+editado en la muestra 1992029:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:53:11] [5.1.1]
+
+Muestra 1992029 lista
+
+
+[12:53:11] [5.1.1]
+
+[62/79] Revisando muestra 1992030
+
+[12:53:15] [5.1.1] [log]
+Estado de la muestra 1992030: EnAnalisis
+
+[12:53:15] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:53:19] [5.1.1]
+Analitos encontrados: 10
+
+[12:53:19] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:53:59] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:54:05] [5.1.1]
+
+editado en la muestra 1992030:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:54:05] [5.1.1]
+
+Muestra 1992030 lista
+
+
+[12:54:05] [5.1.1]
+
+[63/79] Revisando muestra 1992037
+
+[12:54:09] [5.1.1] [log]
+Estado de la muestra 1992037: EnAnalisis
+
+[12:54:09] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:54:13] [5.1.1]
+Analitos encontrados: 10
+
+[12:54:13] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:54:47] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:54:53] [5.1.1]
+
+editado en la muestra 1992037:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:54:53] [5.1.1]
+
+Muestra 1992037 lista
+
+
+[12:54:53] [5.1.1]
+
+[64/79] Revisando muestra 1992042
+
+[12:54:56] [5.1.1] [log]
+Estado de la muestra 1992042: EnAnalisis
+
+[12:54:56] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:55:00] [5.1.1]
+Analitos encontrados: 10
+
+[12:55:00] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:55:39] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:55:45] [5.1.1]
+
+editado en la muestra 1992042:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:55:45] [5.1.1]
+
+Muestra 1992042 lista
+
+
+[12:55:45] [5.1.1]
+
+[65/79] Revisando muestra 1992076
+
+[12:55:49] [5.1.1] [log]
+Estado de la muestra 1992076: EnAnalisis
+
+[12:55:49] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:55:53] [5.1.1]
+Analitos encontrados: 10
+
+[12:55:53] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:56:32] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:56:38] [5.1.1]
+
+editado en la muestra 1992076:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:56:38] [5.1.1]
+
+Muestra 1992076 lista
+
+
+[12:56:38] [5.1.1]
+
+[66/79] Revisando muestra 1992077
+
+[12:56:42] [5.1.1] [log]
+Estado de la muestra 1992077: EnAnalisis
+
+[12:56:42] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:56:46] [5.1.1]
+Analitos encontrados: 10
+
+[12:56:46] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:57:21] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:57:27] [5.1.1]
+
+editado en la muestra 1992077:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:57:27] [5.1.1]
+
+Muestra 1992077 lista
+
+
+[12:57:28] [5.1.1]
+
+[67/79] Revisando muestra 1992078
+
+[12:57:31] [5.1.1] [log]
+Estado de la muestra 1992078: EnAnalisis
+
+[12:57:31] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:57:35] [5.1.1]
+Analitos encontrados: 10
+
+[12:57:35] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:58:09] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:58:22] [5.1.1]
+
+editado en la muestra 1992078:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:58:22] [5.1.1]
+
+Muestra 1992078 lista
+
+
+[12:58:22] [5.1.1]
+
+[68/79] Revisando muestra 1992082
+
+[12:58:26] [5.1.1] [log]
+Estado de la muestra 1992082: EnAnalisis
+
+[12:58:26] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:58:30] [5.1.1]
+Analitos encontrados: 10
+
+[12:58:30] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:59:08] [5.1.1] [log]
+click boton accion SaveButton
+
+[12:59:18] [5.1.1]
+
+editado en la muestra 1992082:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[12:59:18] [5.1.1]
+
+Muestra 1992082 lista
+
+
+[12:59:18] [5.1.1]
+
+[69/79] Revisando muestra 1992083
+
+[12:59:21] [5.1.1] [log]
+Estado de la muestra 1992083: EnAnalisis
+
+[12:59:21] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[12:59:25] [5.1.1]
+Analitos encontrados: 10
+
+[12:59:25] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:00:09] [5.1.1] [log]
+click boton accion SaveButton
+
+[13:00:18] [5.1.1]
+
+editado en la muestra 1992083:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[13:00:18] [5.1.1]
+
+Muestra 1992083 lista
+
+
+[13:00:18] [5.1.1]
+
+[70/79] Revisando muestra 2006707
+
+[13:00:21] [5.1.1] [log]
+Estado de la muestra 2006707: EnAnalisis
+
+[13:00:21] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:00:25] [5.1.1]
+Analitos encontrados: 10
+
+[13:00:25] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:01:02] [5.1.1] [log]
+click boton accion SaveButton
+
+[13:01:10] [5.1.1]
+
+editado en la muestra 2006707:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[13:01:10] [5.1.1]
+
+Muestra 2006707 lista
+
+
+[13:01:10] [5.1.1]
+
+[71/79] Revisando muestra 2033929
+
+[13:01:14] [5.1.1] [log]
+Estado de la muestra 2033929: EnAnalisis
+
+[13:01:14] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:01:18] [5.1.1]
+Analitos encontrados: 10
+
+[13:01:18] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:01:57] [5.1.1] [log]
+click boton accion SaveButton
+
+[13:02:03] [5.1.1]
+
+editado en la muestra 2033929:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[13:02:03] [5.1.1]
+
+Muestra 2033929 lista
+
+
+[13:02:03] [5.1.1]
+
+[72/79] Revisando muestra 2046200
+
+[13:02:06] [5.1.1] [log]
+Estado de la muestra 2046200: EnAnalisis
+
+[13:02:06] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:02:10] [5.1.1]
+Analitos encontrados: 10
+
+[13:02:10] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:02:47] [5.1.1] [log]
+click boton accion SaveButton
+
+[13:02:59] [5.1.1]
+
+editado en la muestra 2046200:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[13:02:59] [5.1.1]
+
+Muestra 2046200 lista
+
+
+[13:02:59] [5.1.1]
+
+[73/79] Revisando muestra 2046201
+
+[13:03:03] [5.1.1] [log]
+Estado de la muestra 2046201: EnAnalisis
+
+[13:03:03] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:03:08] [5.1.1]
+Analitos encontrados: 10
+
+[13:03:08] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:03:45] [5.1.1] [log]
+click boton accion SaveButton
+
+[13:03:52] [5.1.1]
+
+editado en la muestra 2046201:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[13:03:52] [5.1.1]
+
+Muestra 2046201 lista
+
+
+[13:03:52] [5.1.1]
+
+[74/79] Revisando muestra 2046202
+
+[13:03:56] [5.1.1] [log]
+Estado de la muestra 2046202: EnAnalisis
+
+[13:03:56] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:04:00] [5.1.1]
+Analitos encontrados: 10
+
+[13:04:00] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:04:39] [5.1.1] [log]
+click boton accion SaveButton
+
+[13:04:45] [5.1.1]
+
+editado en la muestra 2046202:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[13:04:45] [5.1.1]
+
+Muestra 2046202 lista
+
+
+[13:04:46] [5.1.1]
+
+[75/79] Revisando muestra 2046203
+
+[13:04:49] [5.1.1] [log]
+Estado de la muestra 2046203: EnAnalisis
+
+[13:04:49] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:04:53] [5.1.1]
+Analitos encontrados: 10
+
+[13:04:53] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:05:35] [5.1.1] [log]
+click boton accion SaveButton
+
+[13:05:41] [5.1.1]
+
+editado en la muestra 2046203:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[13:05:41] [5.1.1]
+
+Muestra 2046203 lista
+
+
+[13:05:41] [5.1.1]
+
+[76/79] Revisando muestra 2046204
+
+[13:05:45] [5.1.1] [log]
+Estado de la muestra 2046204: EnAnalisis
+
+[13:05:45] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:05:49] [5.1.1]
+Analitos encontrados: 10
+
+[13:05:49] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:06:26] [5.1.1] [log]
+click boton accion SaveButton
+
+[13:06:33] [5.1.1]
+
+editado en la muestra 2046204:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[13:06:33] [5.1.1]
+
+Muestra 2046204 lista
+
+
+[13:06:33] [5.1.1]
+
+[77/79] Revisando muestra 2046205
+
+[13:06:37] [5.1.1] [log]
+Estado de la muestra 2046205: EnAnalisis
+
+[13:06:37] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:06:42] [5.1.1]
+Analitos encontrados: 10
+
+[13:06:42] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:07:21] [5.1.1] [log]
+click boton accion SaveButton
+
+[13:07:30] [5.1.1]
+
+editado en la muestra 2046205:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[13:07:30] [5.1.1]
+
+Muestra 2046205 lista
+
+
+[13:07:30] [5.1.1]
+
+[78/79] Revisando muestra 2020650
+
+[13:07:33] [5.1.1] [log]
+Estado de la muestra 2020650: EnAnalisis
+
+[13:07:33] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:07:38] [5.1.1]
+Analitos encontrados: 10
+
+[13:07:38] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:08:18] [5.1.1] [log]
+click boton accion SaveButton
+
+[13:08:25] [5.1.1]
+
+editado en la muestra 2020650:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[13:08:25] [5.1.1]
+
+Muestra 2020650 lista
+
+
+[13:08:26] [5.1.1]
+
+[79/79] Revisando muestra 2042536
+
+[13:08:31] [5.1.1] [log]
+Estado de la muestra 2042536: EnAnalisis
+
+[13:08:31] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:08:35] [5.1.1]
+Analitos encontrados: 10
+
+[13:08:35] [5.1.1] [log]
+click boton section SectionAnalysis
+
+[13:09:12] [5.1.1] [log]
+click boton accion SaveButton
+
+[13:09:21] [5.1.1]
+
+editado en la muestra 2042536:
+ -> Cobre - ICPOES-Metales-NCh409 - mg Cu/L
+ -> Cromo - ICPOES-Metales-NCh409 - mg Cr/L
+ -> Hierro - ICPOES-Metales-NCh409 - mg Fe/L
+ -> Manganeso - ICPOES-Metales-NCh409 - mg Mn/L
+ -> Selenio - AA-Se - mg Se/L
+ -> Cinc - ICPOES-Metales-NCh409 - mg Zn/L
+ -> Arsenico - AA-As - mg As/L
+ -> Cadmio - ICPOES-Metales-NCh409 - mg Cd/L
+ -> Mercurio - AA-Hg - mg Hg/L
+ -> Plomo - ICPOES-Metales-NCh409 - mg Pb/L
+
+[13:09:21] [5.1.1]
+
+Muestra 2042536 lista
+
+
+[13:09:21] [5.1.1]
+
+Programa finalizado... Cerrando
+
+
+[13:09:28] [LOG RECARGADO] [log]
+
+[13:09:28] [5.1.1]
+Menu Principal
+
+[13:09:35] [5.1.1] [log]
+Salida del menu: 31
+
+
+
+[13:09:35] [5.1.1]
+31: Programa Terminado

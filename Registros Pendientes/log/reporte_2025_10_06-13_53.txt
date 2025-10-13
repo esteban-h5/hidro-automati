@@ -1,0 +1,45 @@
+
+[13:53:14] [5.3.1]
+-------------------------
+Programa RegistrosPendientes.py - Version: 5.3.1 - venv: False
+Version Python: 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+Version actual de chrome: ERROR al obtener version
+Fecha Actual: Mon 06/10 13:53:14
+-------------------------
+
+
+[13:53:17] [5.3.1]
+Publicacion desactivada
+
+
+[13:53:17] [5.3.1]
+Pais Actual: chile
+
+
+[13:53:17] [5.3.1]
+Iniciando navegador
+
+
+[13:53:18] [5.3.1]
+Iniciando sesion en myLIMS
+
+
+[13:53:47] [5.3.1]
+Menu principal a la espera...
+
+
+[13:53:47] [LOG RECARGADO] [log]
+
+[13:54:55] [5.3.1]
+No existen Muestras pendientes en navegador
+
+
+[13:54:55] [5.3.1]
+Alerta a la espera de interaccion...
+
+
+[13:54:57] [5.3.1]
+Menu principal a la espera...
+
+
+[13:54:57] [LOG RECARGADO] [log]

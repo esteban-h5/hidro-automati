@@ -1,0 +1,43 @@
+
+[17:14:47] [5.1.2]
+-------------------------
+Programa CambiarLotes.py - Version: 5.1.2 - venv: False
+Version Python: 3.11.6 (tags/v3.11.6:8b6ee5b, Oct  2 2023, 14:57:12) [MSC v.1935 64 bit (AMD64)]
+Version actual de chrome: ERROR al obtener version
+Fecha Actual: Mon 08/09 17:14:47
+-------------------------
+
+
+[17:14:50] [5.1.2]
+Pais Actual: chile
+
+
+[17:14:51] [LOG RECARGADO] [log]
+
+[17:14:51] [5.1.2]
+Menu Principal
+
+[17:15:07] [5.1.2] [log]
+Salida del menu: 1
+
+
+
+[17:15:07] [5.1.2]
+1: Reemplazar uno o mas metodos por otro metodo de analisis para 34 muestras
+
+[17:16:23] [5.1.2]
+Cambiando de "['AA-As', 'AA-Hg', 'AA-Se', 'ICPOES-Metales-NCh409', 'ICPOES-Metales-NCh409']" a "ICPMS-Metales-NCh409" para 34 muestras
+
+
+[17:16:27] [5.1.2]
+Iniciando sesion en labsoft
+Traceback (most recent call last):
+  File "C:\Users\Hidrolab\Documents\Automatizacion\Automatizacion 5.1.2\Cambiar Lotes\CambiarLotes.py", line 301, in <module>
+    driver = secuencia_inicio()
+             ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Hidrolab\Documents\Automatizacion\Automatizacion 5.1.2\Cambiar Lotes\CambiarLotes.py", line 175, in secuencia_inicio
+    Login(driver, path_internal=internal_lib, post_url=myLIMSdomain, login_url=Labsoftdomain)
+  File "C:\Users\Hidrolab\Documents\Automatizacion\Automatizacion 5.1.2\internal_lib\__myLIMS_wrappers__.py", line 79, in Login
+    driver.find_element(By.XPATH,'//*[@id="Password"]').send_keys(passwd)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'send_keys'

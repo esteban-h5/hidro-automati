@@ -1,0 +1,16 @@
+# Archivo de Configuración para Registros Pendientes
+# Lineas que tengan # no serán concideradas... (lineas comentadas)
+#
+#
+# Intentar Publicar muestras al reconocer controles [True]
+Publicar              	    :   False
+#
+#
+# Revisa si las muestras tienen rutina para evitar publicarlas [True]
+RevisarRutinas        :   True
+#
+#
+nombreExcelEntrada  	    :   RegistroAuxiliar.xlsx
+nombreExcelSalida   	    :   RegistroSalida.xlsx
+nombreExcepciones  	    :   Excepciones.xlsx
+nombreExcelError  	    :   ERROR.xlsx

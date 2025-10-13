@@ -1,0 +1,25 @@
+
+[10:51:11] [5.1.2]
+-------------------------
+Programa RegistrosPendientes.py - Version: 5.1.2 - venv: False
+Version Python: 3.11.6 (tags/v3.11.6:8b6ee5b, Oct  2 2023, 14:57:12) [MSC v.1935 64 bit (AMD64)]
+Version actual de chrome: ERROR al obtener version
+Fecha Actual: Mon 08/09 10:51:11
+-------------------------
+
+
+[10:51:14] [5.1.2]
+Publicacion desactivada
+
+
+[10:51:14] [5.1.2]
+Pais Actual: chile
+
+
+[10:51:14] [5.1.2]
+Iniciando navegador
+
+
+[10:51:16] [5.1.2]
+Iniciando sesion en myLIMS
+

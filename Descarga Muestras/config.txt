@@ -1,0 +1,54 @@
+# Archivo de Configuración para Descarga Documentos
+# Lineas que tengan # no serán concideradas... (lineas comentadas)
+#
+# Variable del filtro actual (Publicadas y Metalab solo para chile) (no importan mayusculas ni tildes)
+# Finalizadas - Metalab - Publicadas
+filtro                :   finalizadas
+#
+# ID de botones para documentos de revision (separar por comas para varios botones eg. 1234,5678)
+DOC_REVISION_ETFA_ID_CL    :   0
+DOC_REVISION_ID_CL         :   0
+#
+#
+# Deshabilitar descarga de documentos y publicacion, solo agregar a registro muestras con controles [True]
+SoloBuscarControles   :	  False
+#
+#
+# Descargar en caso de que la muestra ya este publicada
+DescargarPublicadas   :   False
+#
+#
+# Alertar si la configuracion ha sido alterada [True]
+Alerta		            :	  True
+#
+#
+# Publicación automatica [True]
+AutoPublicar          :   False
+#
+#
+# Revisa si existen alertas de horas y las corrige [True]
+RevisarRutinas        :   False
+#
+#
+# Descargar sin recordar lo registrado [False]
+Olvidar               :   False
+#
+#
+# Registrar descargados para futuras instancias [True]
+RegistrarMuestras     :   True
+#
+#
+# Borrar los archivos duplicados al terminar el programa [True]
+BorrarDuplicados      :   True
+#
+#
+# Reintentos antes de interrumpir el programa [5]
+# TotalReintentos      	:   5
+#
+#
+# Tiempo de espera en segundos para carga de mylims [45]
+# TiempoEspera					: 	45
+#
+#
+nombreExcelRegistro   		:   Registro.xlsx
+nombreExcelHistorico     	:   Historico.xlsx

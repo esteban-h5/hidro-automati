@@ -1,0 +1,2863 @@
+
+[12:10:29] [5.1.2]
+-------------------------
+Programa CambiarLotes.py - Version: 5.1.2 - venv: False
+Version Python: 3.11.6 (tags/v3.11.6:8b6ee5b, Oct  2 2023, 14:57:12) [MSC v.1935 64 bit (AMD64)]
+Version actual de chrome: ERROR al obtener version
+Fecha Actual: Fri 12/09 12:10:29
+-------------------------
+
+
+[12:10:32] [5.1.2]
+Pais Actual: chile
+
+
+[12:10:32] [LOG RECARGADO] [log]
+
+[12:10:32] [5.1.2]
+Menu Principal
+
+[12:10:42] [5.1.2] [log]
+Salida del menu: 1
+
+
+
+[12:10:42] [5.1.2]
+1: Reemplazar uno o mas metodos por otro metodo de analisis para 95 muestras
+
+[12:11:14] [5.1.2]
+Cambiando de "['ICPMS-Metales']" a "ICPMS-Hidruros" para 95 muestras
+
+
+[12:11:17] [5.1.2]
+Iniciando sesion en labsoft
+
+[12:11:42] [5.1.2]
+
+[1/95] Revisando muestra 2034318
+
+[12:11:45] [5.1.2] [log]
+Estado de la muestra 2034318: EnAnalisis
+
+[12:11:45] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:11:47] [5.1.2]
+Analitos encontrados: 1
+
+[12:11:47] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:12:00] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:12:05] [5.1.2]
+
+editado en la muestra 2034318:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:12:05] [5.1.2]
+
+Muestra 2034318 lista
+
+
+[12:12:05] [5.1.2]
+
+[2/95] Revisando muestra 2034319
+
+[12:12:07] [5.1.2] [log]
+Estado de la muestra 2034319: EnAnalisis
+
+[12:12:07] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:12:09] [5.1.2]
+Analitos encontrados: 1
+
+[12:12:09] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:12:20] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:12:24] [5.1.2]
+
+editado en la muestra 2034319:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:12:24] [5.1.2]
+
+Muestra 2034319 lista
+
+
+[12:12:25] [5.1.2]
+
+[3/95] Revisando muestra 2034321
+
+[12:12:27] [5.1.2] [log]
+Estado de la muestra 2034321: EnAnalisis
+
+[12:12:27] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:12:29] [5.1.2]
+Analitos encontrados: 1
+
+[12:12:29] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:12:42] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:12:46] [5.1.2]
+
+editado en la muestra 2034321:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:12:46] [5.1.2]
+
+Muestra 2034321 lista
+
+
+[12:12:46] [5.1.2]
+
+[4/95] Revisando muestra 2034322
+
+[12:12:49] [5.1.2] [log]
+Estado de la muestra 2034322: Recibida
+
+[12:12:49] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:12:52] [5.1.2]
+Analitos encontrados: 1
+
+[12:12:52] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:13:03] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:13:08] [5.1.2]
+
+editado en la muestra 2034322:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:13:08] [5.1.2]
+
+Muestra 2034322 lista
+
+
+[12:13:09] [5.1.2]
+
+[5/95] Revisando muestra 2034324
+
+[12:13:11] [5.1.2] [log]
+Estado de la muestra 2034324: EnAnalisis
+
+[12:13:11] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:13:13] [5.1.2]
+Analitos encontrados: 1
+
+[12:13:13] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:13:24] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:13:30] [5.1.2]
+
+editado en la muestra 2034324:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:13:30] [5.1.2]
+
+Muestra 2034324 lista
+
+
+[12:13:30] [5.1.2]
+
+[6/95] Revisando muestra 2034326
+
+[12:13:33] [5.1.2] [log]
+Estado de la muestra 2034326: EnAnalisis
+
+[12:13:33] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:13:35] [5.1.2]
+Analitos encontrados: 1
+
+[12:13:35] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:13:45] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:13:49] [5.1.2]
+
+editado en la muestra 2034326:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:13:49] [5.1.2]
+
+Muestra 2034326 lista
+
+
+[12:13:49] [5.1.2]
+
+[7/95] Revisando muestra 2034401
+
+[12:13:53] [5.1.2] [log]
+Estado de la muestra 2034401: EnAnalisis
+
+[12:13:53] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:13:55] [5.1.2]
+Analitos encontrados: 1
+
+[12:13:55] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:14:05] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:14:11] [5.1.2]
+
+editado en la muestra 2034401:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:14:11] [5.1.2]
+
+Muestra 2034401 lista
+
+
+[12:14:11] [5.1.2]
+
+[8/95] Revisando muestra 2034403
+
+[12:14:13] [5.1.2] [log]
+Estado de la muestra 2034403: EnAnalisis
+
+[12:14:13] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:14:16] [5.1.2]
+Analitos encontrados: 1
+
+[12:14:16] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:14:27] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:14:35] [5.1.2]
+
+editado en la muestra 2034403:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:14:35] [5.1.2]
+
+Muestra 2034403 lista
+
+
+[12:14:35] [5.1.2]
+
+[9/95] Revisando muestra 2048034
+
+[12:14:39] [5.1.2] [log]
+Estado de la muestra 2048034: EnAnalisis
+
+[12:14:39] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:14:45] [5.1.2]
+Analitos encontrados: 1
+
+[12:14:45] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:14:56] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:15:02] [5.1.2]
+
+editado en la muestra 2048034:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:15:02] [5.1.2]
+
+Muestra 2048034 lista
+
+
+[12:15:02] [5.1.2]
+
+[10/95] Revisando muestra 2048035
+
+[12:15:05] [5.1.2] [log]
+Estado de la muestra 2048035: EnAnalisis
+
+[12:15:05] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:15:11] [5.1.2]
+Analitos encontrados: 1
+
+[12:15:11] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:15:22] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:15:28] [5.1.2]
+
+editado en la muestra 2048035:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:15:28] [5.1.2]
+
+Muestra 2048035 lista
+
+
+[12:15:28] [5.1.2]
+
+[11/95] Revisando muestra 1110169
+
+[12:15:32] [5.1.2] [log]
+Estado de la muestra 1110169: EnAnalisis
+
+[12:15:32] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:15:35] [5.1.2]
+Analitos encontrados: 1
+
+[12:15:35] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:15:46] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:15:51] [5.1.2]
+
+editado en la muestra 1110169:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:15:51] [5.1.2]
+
+Muestra 1110169 lista
+
+
+[12:15:51] [5.1.2]
+
+[12/95] Revisando muestra 1208287
+
+[12:15:54] [5.1.2] [log]
+Estado de la muestra 1208287: EnAnalisis
+
+[12:15:54] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:15:57] [5.1.2]
+Analitos encontrados: 1
+
+[12:15:57] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:16:07] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:16:12] [5.1.2]
+
+editado en la muestra 1208287:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:16:12] [5.1.2]
+
+Muestra 1208287 lista
+
+
+[12:16:12] [5.1.2]
+
+[13/95] Revisando muestra 1934319
+
+[12:16:16] [5.1.2] [log]
+Estado de la muestra 1934319: EnAnalisis
+
+[12:16:16] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:16:20] [5.1.2]
+Analitos encontrados: 3
+
+[12:16:20] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:16:34] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:16:40] [5.1.2]
+
+editado en la muestra 1934319:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:16:40] [5.1.2]
+
+Muestra 1934319 lista
+
+
+[12:16:40] [5.1.2]
+
+[14/95] Revisando muestra 1934327
+
+[12:16:42] [5.1.2] [log]
+Estado de la muestra 1934327: EnAnalisis
+
+[12:16:42] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:16:47] [5.1.2]
+Analitos encontrados: 3
+
+[12:16:47] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:16:58] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:17:03] [5.1.2]
+
+editado en la muestra 1934327:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:17:03] [5.1.2]
+
+Muestra 1934327 lista
+
+
+[12:17:03] [5.1.2]
+
+[15/95] Revisando muestra 1934330
+
+[12:17:06] [5.1.2] [log]
+Estado de la muestra 1934330: EnAnalisis
+
+[12:17:06] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:17:10] [5.1.2]
+Analitos encontrados: 3
+
+[12:17:10] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:17:21] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:17:26] [5.1.2]
+
+editado en la muestra 1934330:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:17:26] [5.1.2]
+
+Muestra 1934330 lista
+
+
+[12:17:26] [5.1.2]
+
+[16/95] Revisando muestra 2007503
+
+[12:17:29] [5.1.2] [log]
+Estado de la muestra 2007503: EnAnalisis
+
+[12:17:29] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:17:35] [5.1.2]
+Analitos encontrados: 3
+
+[12:17:35] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:17:45] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:17:50] [5.1.2]
+
+editado en la muestra 2007503:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:17:50] [5.1.2]
+
+Muestra 2007503 lista
+
+
+[12:17:50] [5.1.2]
+
+[17/95] Revisando muestra 2007504
+
+[12:17:52] [5.1.2] [log]
+Estado de la muestra 2007504: EnAnalisis
+
+[12:17:52] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:17:57] [5.1.2]
+Analitos encontrados: 3
+
+[12:17:57] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:18:07] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:18:13] [5.1.2]
+
+editado en la muestra 2007504:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:18:13] [5.1.2]
+
+Muestra 2007504 lista
+
+
+[12:18:13] [5.1.2]
+
+[18/95] Revisando muestra 2007505
+
+[12:18:15] [5.1.2] [log]
+Estado de la muestra 2007505: EnAnalisis
+
+[12:18:15] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:18:20] [5.1.2]
+Analitos encontrados: 3
+
+[12:18:20] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:18:33] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:18:37] [5.1.2]
+
+editado en la muestra 2007505:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:18:37] [5.1.2]
+
+Muestra 2007505 lista
+
+
+[12:18:37] [5.1.2]
+
+[19/95] Revisando muestra 2034101
+
+[12:18:40] [5.1.2] [log]
+Estado de la muestra 2034101: EnAnalisis
+
+[12:18:40] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:18:42] [5.1.2]
+Analitos encontrados: 1
+
+[12:18:42] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:18:53] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:18:58] [5.1.2]
+
+editado en la muestra 2034101:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:18:58] [5.1.2]
+
+Muestra 2034101 lista
+
+
+[12:18:58] [5.1.2]
+
+[20/95] Revisando muestra 2040807
+
+[12:19:02] [5.1.2] [log]
+Estado de la muestra 2040807: EnAnalisis
+
+[12:19:02] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:19:08] [5.1.2]
+Analitos encontrados: 3
+
+[12:19:08] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:19:21] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:19:27] [5.1.2]
+
+editado en la muestra 2040807:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:19:27] [5.1.2]
+
+Muestra 2040807 lista
+
+
+[12:19:27] [5.1.2]
+
+[21/95] Revisando muestra 2040808
+
+[12:19:30] [5.1.2] [log]
+Estado de la muestra 2040808: EnAnalisis
+
+[12:19:30] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:19:36] [5.1.2]
+Analitos encontrados: 3
+
+[12:19:36] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:19:48] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:19:53] [5.1.2]
+
+editado en la muestra 2040808:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:19:53] [5.1.2]
+
+Muestra 2040808 lista
+
+
+[12:19:53] [5.1.2]
+
+[22/95] Revisando muestra 2040809
+
+[12:19:56] [5.1.2] [log]
+Estado de la muestra 2040809: EnAnalisis
+
+[12:19:56] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:20:02] [5.1.2]
+Analitos encontrados: 3
+
+[12:20:02] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:20:13] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:20:19] [5.1.2]
+
+editado en la muestra 2040809:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:20:19] [5.1.2]
+
+Muestra 2040809 lista
+
+
+[12:20:19] [5.1.2]
+
+[23/95] Revisando muestra 2040810
+
+[12:20:21] [5.1.2] [log]
+Estado de la muestra 2040810: EnAnalisis
+
+[12:20:21] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:20:28] [5.1.2]
+Analitos encontrados: 3
+
+[12:20:28] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:20:40] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:20:59] [5.1.2]
+
+editado en la muestra 2040810:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:20:59] [5.1.2]
+
+Muestra 2040810 lista
+
+
+[12:20:59] [5.1.2]
+
+[24/95] Revisando muestra 2040811
+
+[12:21:03] [5.1.2] [log]
+Estado de la muestra 2040811: EnAnalisis
+
+[12:21:03] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:21:09] [5.1.2]
+Analitos encontrados: 3
+
+[12:21:09] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:21:24] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:21:31] [5.1.2]
+
+editado en la muestra 2040811:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:21:31] [5.1.2]
+
+Muestra 2040811 lista
+
+
+[12:21:32] [5.1.2]
+
+[25/95] Revisando muestra 2045580
+
+[12:21:35] [5.1.2] [log]
+Estado de la muestra 2045580: EnAnalisis
+
+[12:21:35] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:21:37] [5.1.2]
+Analitos encontrados: 1
+
+[12:21:37] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:21:47] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:21:51] [5.1.2]
+
+editado en la muestra 2045580:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:21:51] [5.1.2]
+
+Muestra 2045580 lista
+
+
+[12:21:51] [5.1.2]
+
+[26/95] Revisando muestra 2045581
+
+[12:21:54] [5.1.2] [log]
+Estado de la muestra 2045581: EnAnalisis
+
+[12:21:54] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:21:57] [5.1.2]
+Analitos encontrados: 1
+
+[12:21:57] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:22:09] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:22:14] [5.1.2]
+
+editado en la muestra 2045581:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:22:14] [5.1.2]
+
+Muestra 2045581 lista
+
+
+[12:22:15] [5.1.2]
+
+[27/95] Revisando muestra 2045582
+
+[12:22:17] [5.1.2] [log]
+Estado de la muestra 2045582: EnAnalisis
+
+[12:22:17] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:22:19] [5.1.2]
+Analitos encontrados: 1
+
+[12:22:19] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:22:33] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:22:37] [5.1.2]
+
+editado en la muestra 2045582:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:22:37] [5.1.2]
+
+Muestra 2045582 lista
+
+
+[12:22:37] [5.1.2]
+
+[28/95] Revisando muestra 2060960
+
+[12:22:40] [5.1.2] [log]
+Estado de la muestra 2060960: EnAnalisis
+
+[12:22:40] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:22:44] [5.1.2]
+Analitos encontrados: 3
+
+[12:22:44] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:22:58] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:23:03] [5.1.2]
+
+editado en la muestra 2060960:
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:23:03] [5.1.2]
+
+Muestra 2060960 lista
+
+
+[12:23:03] [5.1.2]
+
+[29/95] Revisando muestra 2061942
+
+[12:23:06] [5.1.2] [log]
+Estado de la muestra 2061942: EnAnalisis
+
+[12:23:06] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:23:10] [5.1.2]
+Analitos encontrados: 3
+
+[12:23:10] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:23:23] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:23:29] [5.1.2]
+
+editado en la muestra 2061942:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:23:29] [5.1.2]
+
+Muestra 2061942 lista
+
+
+[12:23:29] [5.1.2]
+
+[30/95] Revisando muestra 2061992
+
+[12:23:32] [5.1.2] [log]
+Estado de la muestra 2061992: Recibida
+
+[12:23:32] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:23:34] [5.1.2]
+Analitos encontrados: 1
+
+[12:23:34] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:23:46] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:23:50] [5.1.2]
+
+editado en la muestra 2061992:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:23:50] [5.1.2]
+
+Muestra 2061992 lista
+
+
+[12:23:50] [5.1.2]
+
+[31/95] Revisando muestra 2062041
+
+[12:23:53] [5.1.2] [log]
+Estado de la muestra 2062041: EnAnalisis
+
+[12:23:53] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:23:57] [5.1.2]
+Analitos encontrados: 3
+
+[12:23:57] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:24:08] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:24:14] [5.1.2]
+
+editado en la muestra 2062041:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:24:14] [5.1.2]
+
+Muestra 2062041 lista
+
+
+[12:24:14] [5.1.2]
+
+[32/95] Revisando muestra 2062141
+
+[12:24:18] [5.1.2] [log]
+Estado de la muestra 2062141: EnAnalisis
+
+[12:24:18] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:24:25] [5.1.2]
+Analitos encontrados: 3
+
+[12:24:25] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:24:39] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:24:44] [5.1.2]
+
+editado en la muestra 2062141:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:24:44] [5.1.2]
+
+Muestra 2062141 lista
+
+
+[12:24:44] [5.1.2]
+
+[33/95] Revisando muestra 2062157
+
+[12:24:53] [5.1.2] [log]
+Estado de la muestra 2062157: EnAnalisis
+
+[12:24:53] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:25:00] [5.1.2]
+Analitos encontrados: 3
+
+[12:25:00] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:25:13] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:25:26] [5.1.2]
+
+editado en la muestra 2062157:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:25:26] [5.1.2]
+
+Muestra 2062157 lista
+
+
+[12:25:26] [5.1.2]
+
+[34/95] Revisando muestra 2062158
+
+[12:25:30] [5.1.2] [log]
+Estado de la muestra 2062158: EnAnalisis
+
+[12:25:30] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:25:37] [5.1.2]
+Analitos encontrados: 3
+
+[12:25:37] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:25:49] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:25:54] [5.1.2]
+
+editado en la muestra 2062158:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:25:54] [5.1.2]
+
+Muestra 2062158 lista
+
+
+[12:25:54] [5.1.2]
+
+[35/95] Revisando muestra 2062174
+
+[12:25:58] [5.1.2] [log]
+Estado de la muestra 2062174: Recibida
+
+[12:25:58] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:26:00] [5.1.2]
+Analitos encontrados: 1
+
+[12:26:00] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:26:10] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:26:14] [5.1.2]
+
+editado en la muestra 2062174:
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:26:14] [5.1.2]
+
+Muestra 2062174 lista
+
+
+[12:26:15] [5.1.2]
+
+[36/95] Revisando muestra 2062189
+
+[12:26:17] [5.1.2] [log]
+Estado de la muestra 2062189: Recibida
+
+[12:26:17] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:26:19] [5.1.2]
+Analitos encontrados: 3
+
+[12:26:19] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:26:30] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:26:36] [5.1.2]
+
+editado en la muestra 2062189:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:26:36] [5.1.2]
+
+Muestra 2062189 lista
+
+
+[12:26:36] [5.1.2]
+
+[37/95] Revisando muestra 2062463
+
+[12:26:38] [5.1.2] [log]
+Estado de la muestra 2062463: Recibida
+
+[12:26:38] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:26:41] [5.1.2]
+No se encontro el metodo ['ICPMS-Metales'] en la muestra. Saltando edicion...
+
+
+[12:26:41] [5.1.2]
+
+[38/95] Revisando muestra 2062464
+
+[12:26:44] [5.1.2] [log]
+Estado de la muestra 2062464: Recibida
+
+[12:26:44] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:26:46] [5.1.2]
+Analitos encontrados: 1
+
+[12:26:46] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:26:57] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:27:01] [5.1.2]
+
+editado en la muestra 2062464:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:27:01] [5.1.2]
+
+Muestra 2062464 lista
+
+
+[12:27:01] [5.1.2]
+
+[39/95] Revisando muestra 2062465
+
+[12:27:04] [5.1.2] [log]
+Estado de la muestra 2062465: Recibida
+
+[12:27:04] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:27:06] [5.1.2]
+Analitos encontrados: 1
+
+[12:27:06] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:27:16] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:27:20] [5.1.2]
+
+editado en la muestra 2062465:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:27:20] [5.1.2]
+
+Muestra 2062465 lista
+
+
+[12:27:20] [5.1.2]
+
+[40/95] Revisando muestra 2062466
+
+[12:27:22] [5.1.2] [log]
+Estado de la muestra 2062466: Recibida
+
+[12:27:22] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:27:24] [5.1.2]
+Analitos encontrados: 1
+
+[12:27:24] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:27:34] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:27:40] [5.1.2]
+
+editado en la muestra 2062466:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:27:40] [5.1.2]
+
+Muestra 2062466 lista
+
+
+[12:27:40] [5.1.2]
+
+[41/95] Revisando muestra 2062467
+
+[12:27:44] [5.1.2] [log]
+Estado de la muestra 2062467: Recibida
+
+[12:27:44] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:27:46] [5.1.2]
+Analitos encontrados: 1
+
+[12:27:46] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:27:56] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:28:00] [5.1.2]
+
+editado en la muestra 2062467:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:28:00] [5.1.2]
+
+Muestra 2062467 lista
+
+
+[12:28:00] [5.1.2]
+
+[42/95] Revisando muestra 2062468
+
+[12:28:04] [5.1.2] [log]
+Estado de la muestra 2062468: Recibida
+
+[12:28:04] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:28:06] [5.1.2]
+Analitos encontrados: 1
+
+[12:28:06] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:28:16] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:28:21] [5.1.2]
+
+editado en la muestra 2062468:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:28:21] [5.1.2]
+
+Muestra 2062468 lista
+
+
+[12:28:21] [5.1.2]
+
+[43/95] Revisando muestra 2062469
+
+[12:28:24] [5.1.2] [log]
+Estado de la muestra 2062469: Recibida
+
+[12:28:24] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:28:26] [5.1.2]
+Analitos encontrados: 1
+
+[12:28:26] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:28:37] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:28:40] [5.1.2]
+
+editado en la muestra 2062469:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:28:40] [5.1.2]
+
+Muestra 2062469 lista
+
+
+[12:28:41] [5.1.2]
+
+[44/95] Revisando muestra 2062470
+
+[12:28:43] [5.1.2] [log]
+Estado de la muestra 2062470: Recibida
+
+[12:28:43] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:28:45] [5.1.2]
+Analitos encontrados: 1
+
+[12:28:45] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:28:56] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:29:01] [5.1.2]
+
+editado en la muestra 2062470:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:29:01] [5.1.2]
+
+Muestra 2062470 lista
+
+
+[12:29:01] [5.1.2]
+
+[45/95] Revisando muestra 2062471
+
+[12:29:04] [5.1.2] [log]
+Estado de la muestra 2062471: Recibida
+
+[12:29:04] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:29:06] [5.1.2]
+Analitos encontrados: 1
+
+[12:29:06] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:29:17] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:29:21] [5.1.2]
+
+editado en la muestra 2062471:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:29:21] [5.1.2]
+
+Muestra 2062471 lista
+
+
+[12:29:21] [5.1.2]
+
+[46/95] Revisando muestra 2062472
+
+[12:29:24] [5.1.2] [log]
+Estado de la muestra 2062472: Recibida
+
+[12:29:24] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:29:27] [5.1.2]
+Analitos encontrados: 1
+
+[12:29:27] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:29:37] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:29:41] [5.1.2]
+
+editado en la muestra 2062472:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:29:41] [5.1.2]
+
+Muestra 2062472 lista
+
+
+[12:29:41] [5.1.2]
+
+[47/95] Revisando muestra 2062473
+
+[12:29:44] [5.1.2] [log]
+Estado de la muestra 2062473: Recibida
+
+[12:29:44] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:29:46] [5.1.2]
+Analitos encontrados: 1
+
+[12:29:46] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:29:58] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:30:03] [5.1.2]
+
+editado en la muestra 2062473:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:30:03] [5.1.2]
+
+Muestra 2062473 lista
+
+
+[12:30:04] [5.1.2]
+
+[48/95] Revisando muestra 2062474
+
+[12:30:06] [5.1.2] [log]
+Estado de la muestra 2062474: Recibida
+
+[12:30:06] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:30:08] [5.1.2]
+Analitos encontrados: 1
+
+[12:30:08] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:30:20] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:30:26] [5.1.2]
+
+editado en la muestra 2062474:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:30:26] [5.1.2]
+
+Muestra 2062474 lista
+
+
+[12:30:26] [5.1.2]
+
+[49/95] Revisando muestra 2062475
+
+[12:30:28] [5.1.2] [log]
+Estado de la muestra 2062475: Recibida
+
+[12:30:28] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:30:31] [5.1.2]
+Analitos encontrados: 1
+
+[12:30:31] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:30:41] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:30:48] [5.1.2]
+
+editado en la muestra 2062475:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:30:48] [5.1.2]
+
+Muestra 2062475 lista
+
+
+[12:30:48] [5.1.2]
+
+[50/95] Revisando muestra 2062476
+
+[12:30:51] [5.1.2] [log]
+Estado de la muestra 2062476: Recibida
+
+[12:30:51] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:30:53] [5.1.2]
+Analitos encontrados: 1
+
+[12:30:53] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:31:03] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:31:09] [5.1.2]
+
+editado en la muestra 2062476:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:31:09] [5.1.2]
+
+Muestra 2062476 lista
+
+
+[12:31:10] [5.1.2]
+
+[51/95] Revisando muestra 2062477
+
+[12:31:12] [5.1.2] [log]
+Estado de la muestra 2062477: Recibida
+
+[12:31:12] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:31:14] [5.1.2]
+Analitos encontrados: 1
+
+[12:31:14] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:31:26] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:31:30] [5.1.2]
+
+editado en la muestra 2062477:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:31:30] [5.1.2]
+
+Muestra 2062477 lista
+
+
+[12:31:30] [5.1.2]
+
+[52/95] Revisando muestra 2062478
+
+[12:31:33] [5.1.2] [log]
+Estado de la muestra 2062478: Recibida
+
+[12:31:33] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:31:35] [5.1.2]
+Analitos encontrados: 1
+
+[12:31:35] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:31:46] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:31:51] [5.1.2]
+
+editado en la muestra 2062478:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:31:51] [5.1.2]
+
+Muestra 2062478 lista
+
+
+[12:31:51] [5.1.2]
+
+[53/95] Revisando muestra 2062479
+
+[12:31:53] [5.1.2] [log]
+Estado de la muestra 2062479: Recibida
+
+[12:31:53] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:31:55] [5.1.2]
+Analitos encontrados: 1
+
+[12:31:55] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:32:07] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:32:12] [5.1.2]
+
+editado en la muestra 2062479:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:32:12] [5.1.2]
+
+Muestra 2062479 lista
+
+
+[12:32:12] [5.1.2]
+
+[54/95] Revisando muestra 2062480
+
+[12:32:15] [5.1.2] [log]
+Estado de la muestra 2062480: Recibida
+
+[12:32:15] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:32:17] [5.1.2]
+Analitos encontrados: 1
+
+[12:32:17] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:32:27] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:32:33] [5.1.2]
+
+editado en la muestra 2062480:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:32:33] [5.1.2]
+
+Muestra 2062480 lista
+
+
+[12:32:33] [5.1.2]
+
+[55/95] Revisando muestra 2062482
+
+[12:32:36] [5.1.2] [log]
+Estado de la muestra 2062482: Recibida
+
+[12:32:36] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:32:38] [5.1.2]
+Analitos encontrados: 1
+
+[12:32:38] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:32:49] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:32:53] [5.1.2]
+
+editado en la muestra 2062482:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:32:53] [5.1.2]
+
+Muestra 2062482 lista
+
+
+[12:32:53] [5.1.2]
+
+[56/95] Revisando muestra 2062483
+
+[12:32:55] [5.1.2] [log]
+Estado de la muestra 2062483: Recibida
+
+[12:32:55] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:32:57] [5.1.2]
+Analitos encontrados: 1
+
+[12:32:57] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:33:07] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:33:13] [5.1.2]
+
+editado en la muestra 2062483:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:33:13] [5.1.2]
+
+Muestra 2062483 lista
+
+
+[12:33:13] [5.1.2]
+
+[57/95] Revisando muestra 2062485
+
+[12:33:16] [5.1.2] [log]
+Estado de la muestra 2062485: Recibida
+
+[12:33:16] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:33:18] [5.1.2]
+Analitos encontrados: 1
+
+[12:33:18] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:33:29] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:33:34] [5.1.2]
+
+editado en la muestra 2062485:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:33:34] [5.1.2]
+
+Muestra 2062485 lista
+
+
+[12:33:34] [5.1.2]
+
+[58/95] Revisando muestra 2062488
+
+[12:33:37] [5.1.2] [log]
+Estado de la muestra 2062488: Recibida
+
+[12:33:37] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:33:40] [5.1.2]
+Analitos encontrados: 1
+
+[12:33:40] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:33:50] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:33:54] [5.1.2]
+
+editado en la muestra 2062488:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:33:54] [5.1.2]
+
+Muestra 2062488 lista
+
+
+[12:33:54] [5.1.2]
+
+[59/95] Revisando muestra 2062490
+
+[12:33:58] [5.1.2] [log]
+Estado de la muestra 2062490: Recibida
+
+[12:33:58] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:34:00] [5.1.2]
+Analitos encontrados: 1
+
+[12:34:00] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:34:10] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:34:14] [5.1.2]
+
+editado en la muestra 2062490:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:34:14] [5.1.2]
+
+Muestra 2062490 lista
+
+
+[12:34:14] [5.1.2]
+
+[60/95] Revisando muestra 2062497
+
+[12:34:17] [5.1.2] [log]
+Estado de la muestra 2062497: Recibida
+
+[12:34:17] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:34:19] [5.1.2]
+Analitos encontrados: 1
+
+[12:34:19] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:34:29] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:34:33] [5.1.2]
+
+editado en la muestra 2062497:
+ -> Arsenico - ICPMS-Metales - mg As/L
+
+[12:34:33] [5.1.2]
+
+Muestra 2062497 lista
+
+
+[12:34:33] [5.1.2]
+
+[61/95] Revisando muestra 2028526
+
+[12:34:37] [5.1.2] [log]
+Estado de la muestra 2028526: EnAnalisis
+
+[12:34:37] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:34:42] [5.1.2]
+No se encontro el metodo ['ICPMS-Metales'] en la muestra. Saltando edicion...
+
+
+[12:34:42] [5.1.2]
+
+[62/95] Revisando muestra 2028528
+
+[12:34:45] [5.1.2] [log]
+Estado de la muestra 2028528: EnAnalisis
+
+[12:34:45] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:34:50] [5.1.2]
+Analitos encontrados: 2
+
+[12:34:50] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:35:03] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:35:07] [5.1.2]
+
+editado en la muestra 2028528:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:35:07] [5.1.2]
+
+Muestra 2028528 lista
+
+
+[12:35:07] [5.1.2]
+
+[63/95] Revisando muestra 2028529
+
+[12:35:11] [5.1.2] [log]
+Estado de la muestra 2028529: EnAnalisis
+
+[12:35:11] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:35:15] [5.1.2]
+Analitos encontrados: 2
+
+[12:35:15] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:35:26] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:35:32] [5.1.2]
+
+editado en la muestra 2028529:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:35:32] [5.1.2]
+
+Muestra 2028529 lista
+
+
+[12:35:32] [5.1.2]
+
+[64/95] Revisando muestra 2028530
+
+[12:35:34] [5.1.2] [log]
+Estado de la muestra 2028530: EnAnalisis
+
+[12:35:34] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:35:39] [5.1.2]
+Analitos encontrados: 2
+
+[12:35:39] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:35:51] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:35:57] [5.1.2]
+
+editado en la muestra 2028530:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:35:57] [5.1.2]
+
+Muestra 2028530 lista
+
+
+[12:35:58] [5.1.2]
+
+[65/95] Revisando muestra 2028532
+
+[12:36:02] [5.1.2] [log]
+Estado de la muestra 2028532: EnAnalisis
+
+[12:36:02] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:36:06] [5.1.2]
+Analitos encontrados: 2
+
+[12:36:06] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:36:21] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:36:29] [5.1.2]
+
+editado en la muestra 2028532:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:36:29] [5.1.2]
+
+Muestra 2028532 lista
+
+
+[12:36:29] [5.1.2]
+
+[66/95] Revisando muestra 2028534
+
+[12:36:33] [5.1.2] [log]
+Estado de la muestra 2028534: EnAnalisis
+
+[12:36:33] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:36:37] [5.1.2]
+Analitos encontrados: 2
+
+[12:36:37] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:36:52] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:36:59] [5.1.2]
+
+editado en la muestra 2028534:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:36:59] [5.1.2]
+
+Muestra 2028534 lista
+
+
+[12:36:59] [5.1.2]
+
+[67/95] Revisando muestra 2028537
+
+[12:37:02] [5.1.2] [log]
+Estado de la muestra 2028537: EnAnalisis
+
+[12:37:02] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:37:07] [5.1.2]
+Analitos encontrados: 2
+
+[12:37:07] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:37:18] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:37:24] [5.1.2]
+
+editado en la muestra 2028537:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:37:24] [5.1.2]
+
+Muestra 2028537 lista
+
+
+[12:37:24] [5.1.2]
+
+[68/95] Revisando muestra 2028540
+
+[12:37:28] [5.1.2] [log]
+Estado de la muestra 2028540: EnAnalisis
+
+[12:37:28] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:37:32] [5.1.2]
+Analitos encontrados: 2
+
+[12:37:32] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:37:45] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:37:50] [5.1.2]
+
+editado en la muestra 2028540:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:37:50] [5.1.2]
+
+Muestra 2028540 lista
+
+
+[12:37:50] [5.1.2]
+
+[69/95] Revisando muestra 2028542
+
+[12:37:53] [5.1.2] [log]
+Estado de la muestra 2028542: EnAnalisis
+
+[12:37:53] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:37:58] [5.1.2]
+Analitos encontrados: 2
+
+[12:37:58] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:38:12] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:38:23] [5.1.2]
+
+editado en la muestra 2028542:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:38:23] [5.1.2]
+
+Muestra 2028542 lista
+
+
+[12:38:23] [5.1.2]
+
+[70/95] Revisando muestra 2028545
+
+[12:38:27] [5.1.2] [log]
+Estado de la muestra 2028545: EnAnalisis
+
+[12:38:27] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:38:32] [5.1.2]
+Analitos encontrados: 2
+
+[12:38:32] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:38:43] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:38:48] [5.1.2]
+
+editado en la muestra 2028545:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:38:48] [5.1.2]
+
+Muestra 2028545 lista
+
+
+[12:38:49] [5.1.2]
+
+[71/95] Revisando muestra 2028548
+
+[12:38:51] [5.1.2] [log]
+Estado de la muestra 2028548: EnAnalisis
+
+[12:38:51] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:38:56] [5.1.2]
+Analitos encontrados: 2
+
+[12:38:56] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:39:11] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:39:18] [5.1.2]
+
+editado en la muestra 2028548:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:39:18] [5.1.2]
+
+Muestra 2028548 lista
+
+
+[12:39:18] [5.1.2]
+
+[72/95] Revisando muestra 2028550
+
+[12:39:21] [5.1.2] [log]
+Estado de la muestra 2028550: EnAnalisis
+
+[12:39:21] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:39:26] [5.1.2]
+Analitos encontrados: 2
+
+[12:39:26] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:39:38] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:39:47] [5.1.2]
+
+editado en la muestra 2028550:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:39:47] [5.1.2]
+
+Muestra 2028550 lista
+
+
+[12:39:47] [5.1.2]
+
+[73/95] Revisando muestra 2028552
+
+[12:39:51] [5.1.2] [log]
+Estado de la muestra 2028552: EnAnalisis
+
+[12:39:51] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:39:55] [5.1.2]
+Analitos encontrados: 2
+
+[12:39:55] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:40:07] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:40:13] [5.1.2]
+
+editado en la muestra 2028552:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:40:13] [5.1.2]
+
+Muestra 2028552 lista
+
+
+[12:40:13] [5.1.2]
+
+[74/95] Revisando muestra 2028554
+
+[12:40:16] [5.1.2] [log]
+Estado de la muestra 2028554: EnAnalisis
+
+[12:40:16] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:40:21] [5.1.2]
+Analitos encontrados: 2
+
+[12:40:21] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:40:32] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:40:37] [5.1.2]
+
+editado en la muestra 2028554:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:40:37] [5.1.2]
+
+Muestra 2028554 lista
+
+
+[12:40:37] [5.1.2]
+
+[75/95] Revisando muestra 2028556
+
+[12:40:41] [5.1.2] [log]
+Estado de la muestra 2028556: EnAnalisis
+
+[12:40:41] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:40:46] [5.1.2]
+Analitos encontrados: 2
+
+[12:40:46] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:40:56] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:41:06] [5.1.2]
+
+editado en la muestra 2028556:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:41:06] [5.1.2]
+
+Muestra 2028556 lista
+
+
+[12:41:06] [5.1.2]
+
+[76/95] Revisando muestra 2028558
+
+[12:41:08] [5.1.2] [log]
+Estado de la muestra 2028558: EnAnalisis
+
+[12:41:08] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:41:13] [5.1.2]
+Analitos encontrados: 2
+
+[12:41:13] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:41:24] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:41:31] [5.1.2]
+
+editado en la muestra 2028558:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:41:31] [5.1.2]
+
+Muestra 2028558 lista
+
+
+[12:41:31] [5.1.2]
+
+[77/95] Revisando muestra 2028560
+
+[12:41:34] [5.1.2] [log]
+Estado de la muestra 2028560: EnAnalisis
+
+[12:41:34] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:41:39] [5.1.2]
+Analitos encontrados: 2
+
+[12:41:39] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:41:49] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:41:53] [5.1.2]
+
+editado en la muestra 2028560:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:41:53] [5.1.2]
+
+Muestra 2028560 lista
+
+
+[12:41:53] [5.1.2]
+
+[78/95] Revisando muestra 2028564
+
+[12:41:56] [5.1.2] [log]
+Estado de la muestra 2028564: EnAnalisis
+
+[12:41:56] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:42:00] [5.1.2]
+Analitos encontrados: 2
+
+[12:42:00] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:42:16] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:42:21] [5.1.2]
+
+editado en la muestra 2028564:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:42:21] [5.1.2]
+
+Muestra 2028564 lista
+
+
+[12:42:21] [5.1.2]
+
+[79/95] Revisando muestra 2040812
+
+[12:42:23] [5.1.2] [log]
+Estado de la muestra 2040812: EnAnalisis
+
+[12:42:23] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:42:27] [5.1.2]
+Analitos encontrados: 3
+
+[12:42:27] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:42:41] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:42:47] [5.1.2]
+
+editado en la muestra 2040812:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:42:47] [5.1.2]
+
+Muestra 2040812 lista
+
+
+[12:42:47] [5.1.2]
+
+[80/95] Revisando muestra 2040813
+
+[12:42:50] [5.1.2] [log]
+Estado de la muestra 2040813: EnAnalisis
+
+[12:42:50] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:42:55] [5.1.2]
+Analitos encontrados: 3
+
+[12:42:55] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:43:10] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:43:16] [5.1.2]
+
+editado en la muestra 2040813:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:43:16] [5.1.2]
+
+Muestra 2040813 lista
+
+
+[12:43:16] [5.1.2]
+
+[81/95] Revisando muestra 2040814
+
+[12:43:18] [5.1.2] [log]
+Estado de la muestra 2040814: EnAnalisis
+
+[12:43:18] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:43:23] [5.1.2]
+Analitos encontrados: 3
+
+[12:43:23] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:43:37] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:43:43] [5.1.2]
+
+editado en la muestra 2040814:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:43:43] [5.1.2]
+
+Muestra 2040814 lista
+
+
+[12:43:43] [5.1.2]
+
+[82/95] Revisando muestra 2040815
+
+[12:43:46] [5.1.2] [log]
+Estado de la muestra 2040815: EnAnalisis
+
+[12:43:46] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:43:51] [5.1.2]
+Analitos encontrados: 3
+
+[12:43:51] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:44:04] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:44:08] [5.1.2]
+
+editado en la muestra 2040815:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:44:08] [5.1.2]
+
+Muestra 2040815 lista
+
+
+[12:44:08] [5.1.2]
+
+[83/95] Revisando muestra 2040816
+
+[12:44:12] [5.1.2] [log]
+Estado de la muestra 2040816: EnAnalisis
+
+[12:44:12] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:44:16] [5.1.2]
+Analitos encontrados: 3
+
+[12:44:16] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:44:26] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:44:31] [5.1.2]
+
+editado en la muestra 2040816:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:44:31] [5.1.2]
+
+Muestra 2040816 lista
+
+
+[12:44:31] [5.1.2]
+
+[84/95] Revisando muestra 2040817
+
+[12:44:38] [5.1.2] [log]
+Estado de la muestra 2040817: EnAnalisis
+
+[12:44:38] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:44:42] [5.1.2]
+Analitos encontrados: 3
+
+[12:44:42] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:44:57] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:45:01] [5.1.2]
+
+editado en la muestra 2040817:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:45:01] [5.1.2]
+
+Muestra 2040817 lista
+
+
+[12:45:01] [5.1.2]
+
+[85/95] Revisando muestra 2040818
+
+[12:45:04] [5.1.2] [log]
+Estado de la muestra 2040818: EnAnalisis
+
+[12:45:04] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:45:09] [5.1.2]
+Analitos encontrados: 3
+
+[12:45:09] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:45:23] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:45:31] [5.1.2]
+
+editado en la muestra 2040818:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:45:31] [5.1.2]
+
+Muestra 2040818 lista
+
+
+[12:45:31] [5.1.2]
+
+[86/95] Revisando muestra 2040819
+
+[12:45:33] [5.1.2] [log]
+Estado de la muestra 2040819: EnAnalisis
+
+[12:45:33] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:45:37] [5.1.2]
+Analitos encontrados: 3
+
+[12:45:37] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:45:50] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:45:54] [5.1.2]
+
+editado en la muestra 2040819:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:45:54] [5.1.2]
+
+Muestra 2040819 lista
+
+
+[12:45:54] [5.1.2]
+
+[87/95] Revisando muestra 2040820
+
+[12:45:58] [5.1.2] [log]
+Estado de la muestra 2040820: EnAnalisis
+
+[12:45:58] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:46:02] [5.1.2]
+Analitos encontrados: 3
+
+[12:46:02] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:46:16] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:46:20] [5.1.2]
+
+editado en la muestra 2040820:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:46:20] [5.1.2]
+
+Muestra 2040820 lista
+
+
+[12:46:20] [5.1.2]
+
+[88/95] Revisando muestra 2040821
+
+[12:46:22] [5.1.2] [log]
+Estado de la muestra 2040821: EnAnalisis
+
+[12:46:22] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:46:26] [5.1.2]
+Analitos encontrados: 3
+
+[12:46:26] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:46:39] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:46:43] [5.1.2]
+
+editado en la muestra 2040821:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:46:43] [5.1.2]
+
+Muestra 2040821 lista
+
+
+[12:46:43] [5.1.2]
+
+[89/95] Revisando muestra 2040822
+
+[12:46:46] [5.1.2] [log]
+Estado de la muestra 2040822: EnAnalisis
+
+[12:46:46] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:46:50] [5.1.2]
+Analitos encontrados: 3
+
+[12:46:50] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:47:03] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:47:10] [5.1.2]
+
+editado en la muestra 2040822:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:47:10] [5.1.2]
+
+Muestra 2040822 lista
+
+
+[12:47:10] [5.1.2]
+
+[90/95] Revisando muestra 2063144
+
+[12:47:12] [5.1.2] [log]
+Estado de la muestra 2063144: EnAnalisis
+
+[12:47:12] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:47:16] [5.1.2]
+Analitos encontrados: 3
+
+[12:47:16] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:47:30] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:47:35] [5.1.2]
+
+editado en la muestra 2063144:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:47:35] [5.1.2]
+
+Muestra 2063144 lista
+
+
+[12:47:36] [5.1.2]
+
+[91/95] Revisando muestra 2063145
+
+[12:47:38] [5.1.2] [log]
+Estado de la muestra 2063145: EnAnalisis
+
+[12:47:38] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:47:43] [5.1.2]
+Analitos encontrados: 3
+
+[12:47:43] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:47:55] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:48:01] [5.1.2]
+
+editado en la muestra 2063145:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:48:01] [5.1.2]
+
+Muestra 2063145 lista
+
+
+[12:48:01] [5.1.2]
+
+[92/95] Revisando muestra 2069990
+
+[12:48:04] [5.1.2] [log]
+Estado de la muestra 2069990: Recibida
+
+[12:48:04] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:48:06] [5.1.2]
+Analitos encontrados: 3
+
+[12:48:06] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:48:19] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:48:23] [5.1.2]
+
+editado en la muestra 2069990:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:48:23] [5.1.2]
+
+Muestra 2069990 lista
+
+
+[12:48:23] [5.1.2]
+
+[93/95] Revisando muestra 2069991
+
+[12:48:26] [5.1.2] [log]
+Estado de la muestra 2069991: Recibida
+
+[12:48:26] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:48:28] [5.1.2]
+Analitos encontrados: 3
+
+[12:48:28] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:48:39] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:48:44] [5.1.2]
+
+editado en la muestra 2069991:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:48:44] [5.1.2]
+
+Muestra 2069991 lista
+
+
+[12:48:44] [5.1.2]
+
+[94/95] Revisando muestra 2069993
+
+[12:48:46] [5.1.2] [log]
+Estado de la muestra 2069993: Recibida
+
+[12:48:46] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:48:49] [5.1.2]
+Analitos encontrados: 3
+
+[12:48:49] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:49:00] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:49:05] [5.1.2]
+
+editado en la muestra 2069993:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+
+[12:49:05] [5.1.2]
+
+Muestra 2069993 lista
+
+
+[12:49:05] [5.1.2]
+
+[95/95] Revisando muestra 2072027
+
+[12:49:07] [5.1.2] [log]
+Estado de la muestra 2072027: EnAnalisis
+
+[12:49:07] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:49:12] [5.1.2]
+Analitos encontrados: 3
+
+[12:49:12] [5.1.2] [log]
+click boton section SectionAnalysis
+
+[12:49:24] [5.1.2] [log]
+click boton accion SaveButton
+
+[12:49:28] [5.1.2]
+
+editado en la muestra 2072027:
+ -> Arsenico - ICPMS-Metales - mg As/L
+ -> Mercurio - ICPMS-Metales - mg Hg/L
+ -> Selenio - ICPMS-Metales - mg Se/L
+
+[12:49:28] [5.1.2]
+
+Muestra 2072027 lista
+
+
+[12:49:29] [5.1.2]
+
+Programa finalizado... Cerrando
+
+
+[12:49:35] [LOG RECARGADO] [log]
+
+[12:49:35] [5.1.2]
+Menu Principal
+
+[13:13:01] [5.1.2] [log]
+Salida del menu: 31
+
+
+
+[13:13:01] [5.1.2]
+31: Programa Terminado

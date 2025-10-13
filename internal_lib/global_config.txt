@@ -1,0 +1,43 @@
+# Archivo de Configuración General
+# Lineas que tengan # no serán concideradas... (lineas comentadas)
+#
+#
+# Direccion web principal de mylims
+myLIMSdomain          :   https://hidrolab.mylimsweb.cloud/
+#
+#
+# Direccion web inicio de sesión en mylims 
+Labsoftdomain         :   https://labsoft-identitycenter-sts.mylimsweb.cloud/
+#
+#
+# Variable del pais actual (no importan mayusculas ni tildes)
+# Chile - Perú - Colombia - México
+paisActual            :   Chile
+#
+#
+# Largo de la jornada en cantidad de horas, dos puntos para separar horas y minutos (10:30) o (11)
+ExtensionJornada      :   11
+#
+#
+# Inicio de la jornada en formato 24h y dos puntos para separar horas y minutos (8:30) o (8)
+InicioJornada         :   8:30
+#
+#
+# Guardar lo mostrado por consola en archivo [True]
+ActivarLOG            :   True
+#
+#
+# Aplicacion para ver archivos .xlsx [excel.exe]
+AppExcel              	    :   excel.exe
+#
+#
+# Lista de tipo de mensaje para conciderar descarga
+ListaMensajesRutina         :   Rutina,Analisis-Formato,Analisis-FQ,Analisis-FQAnion,Analisis-FQAyG,Analisis-FQDBO,Analisis-FQEAM,Analisis-FQFisico,Analisis-FQNutr,Analisis-FQ-P/LSS,Analisis-FQpHCond,Analisis-GC,Analisis-Lab,Analisis-MB,Analisis-Metales,Analisis-Terreno,Analisis-Balances,Formato
+#
+#
+# Lista de horas para las rutinas
+ListaMensajesHoras          :   Horas
+#
+#
+# Excepciones generales
+nombreExcelExcepciones      :   Excepciones.xlsx

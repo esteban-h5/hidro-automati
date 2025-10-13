@@ -1,0 +1,19 @@
+---
+Pasos para instalación de Programas
+Información mejor detallada dentro del Manual
+---
+
+1.  Instalar python 3.13.7
+    a. Ejecutando el script 1_InstalarPython.bat
+    b. Bajando instalador desde https://www.python.org/ftp/python/3.13.7/python-3.13.7-amd64.exe y ejecutandolo
+    
+3.	Esperar que termine la instalación
+4.  Descargar los módulos correspondientes haciendo doble click en el archivo 2_InstalarModulos.bat
+5.  Ingresar credenciales ejecutando el archivo 3_Credenciales.py 
+6.	Probar acceso con 4_AccesoLogin.py y registrar token de api
+
+- Correr crear_venv para crear entorno virtual separado de python, instalar paquetes en nuevo directorio y no interferir
+- Correr el archivo Actualizar.py para copiar archivos de versiones antiguas a los nuevos directorios.
+
+# pip download -r requirements.txt
+# pip install --no-index --find-links=./paquetes_locales nombre_paquete

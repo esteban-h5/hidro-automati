@@ -1,0 +1,14 @@
+---
+Pasos para instalación de Programa de Impresión
+Información mejor detallada dentro del Manual
+---
+
+Instalar GhostScript 10.02.1
+
+Opción 1:
+    Ejecutando el script InstalarGhostscript.bat
+
+Opción 2:
+    Bajando instalador desde https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10021/gs10021w64.exe 
+    y ejecutarlo para instalar
+    

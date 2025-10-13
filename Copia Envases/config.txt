@@ -1,0 +1,18 @@
+# Archivo de Configuración para Copiar Envases
+# Lineas que tengan # no serán concideradas... (lineas comentadas)
+#
+#
+# Saltar cotizaciones que ya esten en excel de salida [True]
+ExcluirExcelSalida  :   False
+#
+#
+# Hacer Copia de muestras en lista [True]
+CopiarMuestras      :   True
+#
+#
+# Crear PE para muestras en lista [True]
+CrearPE             :   True
+#
+#
+nombreExcelEntrada  :   ListaEntrada.xlsx
+nombreExcelSalida   :   ListaSalida.xlsx

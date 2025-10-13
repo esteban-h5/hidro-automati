@@ -1,0 +1,28 @@
+
+[09:55:43] [5.3.3]
+-------------------------
+Programa CambiarLotes.py - Version: 5.3.3 - venv: False
+Version Python: 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]
+Version actual de chrome: ERROR al obtener version
+Fecha Actual: Fri 10/10 09:55:43
+-------------------------
+
+
+[09:55:46] [5.3.3]
+Pais Actual: chile
+
+
+[09:55:46] [LOG RECARGADO] [log]
+
+[09:55:46] [5.3.3]
+Menu Principal
+
+[09:55:59] [5.3.3] [log]
+Salida del menu: 18
+
+
+
+[09:55:59] [5.3.3]
+18: Abrir excel con lista de muestras
+
+[09:56:00] [LOG RECARGADO] [log]
