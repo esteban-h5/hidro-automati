@@ -39,7 +39,8 @@ try:
     ExcluirExcelSalida      =   config["ExcluirExcelSalida"]
     CopiarMuestras          =   config["CopiarMuestras"]
     CrearPE                 =   config["CrearPE"]
-
+    SufijoTitulo            =   config["SufijoTitulo"]
+    
     timeout                 =   120
 
     nombre_columnas_in      =   ["ID COTI", "ID MUESTRA", "N COPIAS"]
@@ -421,7 +422,11 @@ try:
                 elementos = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
                 
                 m_cliente = elementos[1].find_element(By.XPATH,"./td[6]").text
-                pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
+                if not SufijoTitulo:
+                    pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
+                else:
+                    pe_titulo = f"PE - {m_cliente} - {coti_name_id} - {SufijoTitulo}"
+
                 logprint(f"titulo: {pe_titulo}")
 
                 #Crear pe de muestras nuevas copiadas

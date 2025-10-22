@@ -1,7 +1,7 @@
 ###############################
 
 version_actual = "5.3.3"
-fecha_version = "miercoles 6 de octubre 2025"
+fecha_version = "miercoles 22 de octubre 2025"
 
 changelog = [
     "- Actualizacion con encode latin-1",

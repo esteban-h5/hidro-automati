@@ -69,25 +69,25 @@ def existe_param_env(path_internal):
 #Devolver diccionario con variables del código
 def GetConfig(dirConfig):
     
-    with open(dirConfig,"r", encoding="utf-8") as configTXT:
+    with open(dirConfig,"r", encoding="latin-1") as configTXT:
         lineas = [_.split(":") for _ in configTXT.read().split("\n") if "#" not in _ and _ != ""]
         configDict = {}
 
         for items in lineas:
             
             llave = items[0].replace(" ","").replace("\t","")
-            valor = ":".join(items[1:]).replace(" ","").replace("\t","")
+            valor = re.sub(r'^[ \t]+', '', ":".join(items[1:]))
             
             try:
                 configDict[llave] = int(valor)
             except ValueError:
                 configDict[llave] = valor
 
-            if "true" in str(valor).lower() or "verdadero" in str(valor).lower():
+            if str(valor).lower() in ("true", "verdadero"):
                 configDict[llave] = True
-            
-            if "false" in str(valor).lower() or "falso" in str(valor).lower():
-                configDict[llave] = False 
+
+            if str(valor).lower() in ("false", "falso"):
+                configDict[llave] = False
 
     return configDict
 

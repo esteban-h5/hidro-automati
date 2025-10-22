@@ -6,6 +6,10 @@
 ExcluirExcelSalida  :   False
 #
 #
+# Información extra en titulo de PE
+SufijoTitulo        :
+#
+#
 # Hacer Copia de muestras en lista [True]
 CopiarMuestras      :   True
 #
