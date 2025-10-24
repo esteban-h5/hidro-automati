@@ -39,7 +39,7 @@ try:
             INICIO_JORNADA      =   global_config["InicioJornada"]
             EXTENSION_JORNADA   =   global_config["ExtensionJornada"]
             
-            filtroActual    =   config["filtro"].replace("é","e").replace("ú","u").lower()
+            filtroActual            =   config["filtro"].replace("é","e").replace("ú","u").lower()
 
             SoloBuscarControles     =   config["SoloBuscarControles"]
             DescargarPublicadas     =   config["DescargarPublicadas"]

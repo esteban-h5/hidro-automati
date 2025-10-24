@@ -33,8 +33,12 @@ def Login(driver, path_internal, login_url, post_url, funcion_print=print):
 
     param = Config(RepositoryEnv(os.path.join(path_internal,"Param.env")))
 
-    key = keyring.get_password('mylims_app', 'secret4').encode()
-    if key == None: raise ExcepcionDeCarga(f'No se encontro llave de desencriptación. (myLIMS_key)')
+    key = keyring.get_password('mylims_app', 'secret4')
+    
+    if key == None: 
+        raise ExcepcionDeCarga(f'No se encontro llave de desencriptación. (Secret)')
+    
+    key = key.encode()
 
     encuser = param.get("USER").encode()
     encpasswd = param.get("PASSWD").encode()

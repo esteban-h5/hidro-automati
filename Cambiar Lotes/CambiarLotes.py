@@ -32,12 +32,12 @@ config              =   GetConfig( dirConfig=os.path.join(CL_wd,"config.txt") )
 global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
 try:
-    myLIMSdomain        =   global_config["myLIMSdomain"]
-    Labsoftdomain       =   global_config["Labsoftdomain"]
+    myLIMSdomain          =   global_config["myLIMSdomain"]
+    Labsoftdomain         =   global_config["Labsoftdomain"]
 
-    paisActual              =   global_config["paisActual"].replace("é","e").replace("ú","u").lower()
-    log                     =   global_config["ActivarLOG"]
-    app_excel               =   global_config["AppExcel"]
+    paisActual            =   global_config["paisActual"].replace("é","e").replace("ú","u").lower()
+    log                   =   global_config["ActivarLOG"]
+    app_excel             =   global_config["AppExcel"]
 
     RevisarRutinas          =   config["DescargaRevisarRutinas"]
     RepasarEstado           =   config["RepasarEstado"]
@@ -227,13 +227,13 @@ def secuencia_estado_muestra(driver, id_muestra, idx=None, total=None, estados=e
 
         return -1
 
-    muestra_estado = driver.find_element(By.XPATH, xpath_estado_muestra ).get_attribute("value").replace(" ","")
+    muestra_estado = driver.find_element(By.XPATH, xpath_estado_muestra ).get_attribute("value")
     logprint(f"Estado de la muestra {id_muestra}: {muestra_estado}")
 
     if muestra_estado not in estados:
-        eprint(f"Muestra en estado {muestra_estado}, saltando...\n")
+        eprint(f"Muestra en estado {muestra_estado}, se eperaba {estados}, saltando...\n")
         return -1
-
+    
 while True:
     slog()
     eprint("Menú Principal")
@@ -1013,8 +1013,12 @@ while True:
                             combobox.find_element(By.XPATH, control_label+"//span[contains(@class, 'k-i-arrow-60-down')]").click()
                             logprint(f"click en moneda de origen [{n_combobox}]")
                             EsperarCARGA_myLIMS(driver)
-
-                            driver.find_element(By.XPATH, f"//ul[@role='listbox' and @id='{n_combobox}']/li[contains(text(), 'Unidad de Fomento')]").click()
+                            
+                            if paisActual == "mexico":
+                                driver.find_element(By.XPATH, f"//ul[@role='listbox' and @id='{n_combobox}']/li[contains(text(), 'Peso Mexicano')]").click()
+                            else:
+                                driver.find_element(By.XPATH, f"//ul[@role='listbox' and @id='{n_combobox}']/li[contains(text(), 'Unidad de Fomento')]").click()
+                            
                             logprint("click en unidad de fomento")
                             EsperarCARGA_myLIMS(driver)
                             

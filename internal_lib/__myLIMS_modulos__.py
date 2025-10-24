@@ -69,7 +69,7 @@ def existe_param_env(path_internal):
 #Devolver diccionario con variables del código
 def GetConfig(dirConfig):
     
-    with open(dirConfig,"r", encoding="latin-1") as configTXT:
+    with open(dirConfig,"r", encoding="utf-8") as configTXT:
         lineas = [_.split(":") for _ in configTXT.read().split("\n") if "#" not in _ and _ != ""]
         configDict = {}
 

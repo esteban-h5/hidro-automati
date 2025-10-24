@@ -1,7 +1,7 @@
 ###############################
 
 version_actual = "5.3.3"
-fecha_version = "miercoles 22 de octubre 2025"
+fecha_version = "viernes 24 de octubre 2025"
 
 changelog = [
     "- Actualizacion con encode latin-1",
@@ -11,6 +11,7 @@ changelog = [
     "- Anunciar ventanas y continuar reprocesando precios a pesar de no poder, mostrar en excel"
     "- Detectar error al hacer click de metodo al eliminar metodo"
     "- Error split saltar muestras"
+    "- error de atributo llave desencriptacion"
     #"- Contar ventanas"
 ]
 

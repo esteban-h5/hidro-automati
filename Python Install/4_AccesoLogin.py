@@ -165,9 +165,10 @@ try:
       exit(1)
     
     if x != "n":      
-      print("Extrayendo token de acceso")
-      EsperarCARGA_myLIMS(driver)
 
+      EsperarCARGA_myLIMS(driver)
+      print("Extrayendo token de acceso")
+      
       driver.get(mylims_url+"api/v2/IntegrationTokens/6")
       salida_json = json.loads(driver.find_element(By.XPATH,"//*").text)
       
