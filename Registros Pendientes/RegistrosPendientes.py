@@ -14,8 +14,8 @@ internal_lib        =   os.path.normpath(os.path.join(RP_wd,"..","internal_lib")
 sys.path.insert(0, internal_lib)
 
 from __myLIMS_modulos__     import *
-from __myLIMS_wrappers__ import *
-from __ficheros_modulos__  import *
+from __myLIMS_wrappers__    import *
+from __ficheros_modulos__   import *
 
 ########################################
 #Inicialización de Config
@@ -96,7 +96,7 @@ else:
 if os.path.exists(os.path.join(internal_lib, "hidro-env") ) and sys.prefix == sys.base_prefix:
     eprint("SE HA CREADO VENV PERO NO SE ESTA USANDO\n")
 
-MensajeInicial(file_name, login_url=Labsoftdomain, init_url=mainUrl, funcion_print=eprint)
+MensajeInicial(file_name, funcion_print=eprint, config=config, global_config=global_config, funcion_log=logprint )
 
 if Publicar:
     eprint("Publicación activada\n")

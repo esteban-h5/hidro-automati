@@ -89,7 +89,7 @@ else:
     logprint = print
     slog = lambda: None
 
-MensajeInicial(file_name, init_url=myLIMSdomain, login_url=Labsoftdomain, funcion_print=eprint)
+MensajeInicial(file_name, funcion_print=eprint, config=config, global_config=global_config, funcion_log=logprint )
 
 eprint(f"País Actual: {paisActual}\n")
 
@@ -289,7 +289,7 @@ try:
                         driver.execute_script("arguments[0].setAttribute('class', 'k-alt k-state-selected');", _)
 
                     driver.find_element(By.XPATH, f'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar"]//div[not(contains(@style, "display: none;"))]/button[@data-test="Copiar"]').click()
-                    EsperarCARGA_myLIMS(driver)
+                    EsperarCARGA_myLIMS(driver, reintentos=180)
 
                     ## Seleccionar cantidad en ventana
                     for v_elementos in driver.find_elements(By.XPATH, f"{xpath_ventana_copia}//tbody/tr"):

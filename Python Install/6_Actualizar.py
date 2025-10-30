@@ -3,7 +3,7 @@ Copiar archivos de configuracion con nuevas variables, dejando como persistente 
 """
 
 try:
-    import os, shutil, time, zipfile, importlib.util
+    import os, shutil, time, zipfile, importlib.util, traceback
     from tkinter.filedialog import askopenfile
     from pathlib import Path
     
@@ -74,6 +74,7 @@ try:
         os.path.join(n_CE,"log"),
     ]
     
+    #./Automatizacion actual/.
     dir_actual = os.path.realpath( os.path.join( os.path.dirname(os.path.realpath(__file__)),"..") )
     update_config = GetConfig(os.path.join(dir_actual,"Python Install","config_actualizar.txt"))
 
@@ -95,22 +96,26 @@ try:
         exit(1)
 
     lista_config_old = [os.path.join(dir_actual,_) for _ in config]
-    zip_dir = os.path.abspath(os.path.join(dir_actual, ".."))
-
+    
     lista_archivos_persistentes_old = []
     lista_archivos_persistentes_new = []
-
+    
+    zip_name = os.path.splitext(os.path.basename(zip_file))[0]
+    
+    #Directorio donde se dejara nuevo programa
+    dir_zip = os.path.normpath(os.path.join(dir_actual,"..", zip_name))
+    
+    if not os.path.exists(dir_zip):
+        os.mkdir(dir_zip)
+    else:
+        input("Directorio objetivo para descomprimir existe, enter para cerrar...")
+        exit(1)
+        
     #Descomprimir archivos
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
-        zip_actual = os.path.join(zip_dir, zip_ref.namelist()[0].split("/")[0])
-
-        lista_config_new = [os.path.join(zip_actual,_) for _ in config]
-
-        if not os.path.exists(zip_actual): 
-            zip_ref.extractall(zip_dir)
-        else:
-            input(f"El nombre del directorio zip {zip_actual} ya existe")
-            exit(1)
+        
+        lista_config_new = [os.path.join(dir_zip,_) for _ in config]
+        zip_ref.extractall(dir_zip)
 
     for _ in config + xlsxDescarga + xlsxRegistros + fOtros:
         archivo = os.path.join(dir_actual,_)
@@ -120,31 +125,32 @@ try:
             print(f"Archivo persistente {_} para excluir")
         else:
             lista_archivos_persistentes_old.append(archivo)
-            lista_archivos_persistentes_new.append(os.path.join(zip_actual,_))
+            lista_archivos_persistentes_new.append(os.path.join(dir_zip,_))
 
-    print(f"Programa descomprimido en {zip_dir}")
-            
+    print(f"Programa descomprimido en {dir_zip}")
     #Obtener versión del programa nuevo
+    
     version_file_path = None
-    for root, dirs, files in os.walk(zip_actual):
+    for root, dirs, files in os.walk(dir_zip):
         for file in files:
             if file == "__version_info__.py":
                 version_file_path = os.path.join(root, file)
                 break
         if version_file_path:
             break
+            
     if version_file_path:
         spec = importlib.util.spec_from_file_location("version_mod", version_file_path)
         version_mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(version_mod)
         nueva_version = version_mod.version_actual
         print(f"Creando nueva versión: {nueva_version}")
+        
     else:
         input("No se encontró __version_info__.py, Enter para cerrar...")
         exit(1)
     
     time.sleep(1)
-
 
     #Revisar variables de config y agregarlas a nuevo config en caso de no existir
     print("Revisando variables nuevas en archivos config")
@@ -161,11 +167,12 @@ try:
         dict_cambio[lista_config_new[idx]] = cambio
 
     #Eliminar archivos persistentes de zip nuevo y copiar archivos persistentes de programa viejo
-    print(f"Reemplazando {len(lista_archivos_persistentes_new)} archivos en \n{zip_actual}")
+    print(f"Reemplazando {len(lista_archivos_persistentes_new)} archivos en \n{dir_zip}")
+    
     for idx in range(len(lista_archivos_persistentes_new)):
         archivo_old = lista_archivos_persistentes_old[idx]
         archivo_new = lista_archivos_persistentes_new[idx]
-
+        
         if os.path.exists(archivo_old):
             if os.path.exists(archivo_new): os.remove(archivo_new)
             if os.path.exists(archivo_old): shutil.copy2(archivo_old, archivo_new)
@@ -183,8 +190,8 @@ try:
     #Copiar directorios persistentes
     for idx in range(len(dirOtros_persistentes)):
         dir_old = os.path.join(dir_actual, dirOtros_persistentes[idx])
-        dir_new = os.path.join(zip_actual, dirOtros_persistentes[idx])
-
+        dir_new = os.path.join(dir_zip, dirOtros_persistentes[idx])
+        
         if os.path.exists(dir_old):
             shutil.rmtree(dir_new, ignore_errors=True)
             shutil.copytree(dir_old, dir_new)
@@ -192,9 +199,10 @@ try:
         else:
             print(f"Ya no existe: {dir_old}")
     
-    os.startfile(zip_actual)
-    input(f"{os.path.basename(zip_actual)} descomprimido correctamente, enter para salir...")
+    os.startfile(dir_zip)
+    input(f"{os.path.basename(dir_zip)} descomprimido correctamente, enter para salir...")
 
 except Exception as e:
   print(e)
+  traceback.print_exc()
   input("Error, enter para salir...")

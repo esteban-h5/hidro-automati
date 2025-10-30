@@ -138,17 +138,26 @@ def obtener_version_chrome():
     except Exception:
         return "ERROR al obtener versión"
 
-def MensajeInicial(filename, login_url, init_url, funcion_print=print,):
+def MensajeInicial(filename, funcion_log=None, login_url=None, init_url=None,  funcion_print=print, config=None, global_config=None):
 
-    funcion_print(f'-------------------------\n'+
+    funcion_print(f'---------------------------\n'+
                   f'Programa {filename} - Versión: {version_actual} - venv: {sys.prefix != sys.base_prefix}\n'+
                   f'Versión Python: {sys.version}\n'+
-                  f'Versión actual de chrome: {obtener_version_chrome()}\n'+
                   f"Fecha Actual: {datetime.now().strftime('%a %d/%m %H:%M:%S')}\n"+
                 #   f"Fecha Actual: {datetime.now().strftime('%a %-d de %B %H:%M:%S')}\n"+
                 #   f'Dirección Objetivo para myLIMS: {init_url}\n'+
-                  f'-------------------------\n')
+                  f'---------------------------\n')
+    
+    if funcion_log != None and config != None:
+        funcion_log(f'---------------------------\n'+
+                    f"Config:\n{'\n'.join(f'- {x}: {y}' for x,y in config.items())}"+
+                    f'\n-------------------------\n')
+    if funcion_log != None and global_config != None:
+        funcion_log(f'---------------------------\n'+
+                    f"Global Config:\n{'\n'.join(f'- {x}: {y}' for x,y in global_config.items())}"+
+                    f'\n-------------------------\n')
     wait(3)
+
 
 def AlternarMedidaVentana(driver):
     if driver.get_window_size()["width"] == 1199:

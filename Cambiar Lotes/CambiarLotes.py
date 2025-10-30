@@ -123,7 +123,7 @@ else:
 if os.path.exists(os.path.join(internal_lib, "hidro-env") ) and sys.prefix == sys.base_prefix:
     eprint("SE HA CREADO VENV PERO NO SE ESTA USANDO\n")
 
-MensajeInicial(file_name, init_url=myLIMSdomain, login_url=Labsoftdomain, funcion_print=eprint)
+MensajeInicial(file_name, funcion_print=eprint, config=config, global_config=global_config, funcion_log=logprint )
 
 eprint(f"País Actual: {paisActual}\n")
 
@@ -1000,43 +1000,56 @@ while True:
                             
                         #EDITAR
                         try:
-                            driver.find_element(By.XPATH,'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar" and not(@style="display: none;")]//button[@data-test="BackToListButton" and text()="Editar"]').click()
-                            logprint("Editando muestra")
-                            EsperarCARGA_myLIMS(driver, espera=.5)
-
-                            #Encontrar elemento con clase control-label y texto mondea de origen
+                            #Encontrar elemento con clase control-label y texto moneda de origen
                             control_label = '//div[@class="labsoft-ui-input"]/label[@class="control-label" and contains(text(), "Moneda de Origen")]/ancestor::div[@class="labsoft-ui-input"]'
+                            moneda_actual = driver.find_element(By.XPATH, control_label+'//input[@class="k-input" and @role="combobox"]').get_attribute("value")
                             
-                            combobox = driver.find_element(By.XPATH, control_label+'//input[@class="k-input" and @role="combobox"]')
-                            n_combobox = combobox.get_attribute("aria-owns")
+                            if moneda_actual in ["Peso Mexicano","Unidad de Fomento"]:
+                                boton = BotonAccion(driver, "CalculatePriceButton", log=True, funcion_print=logprint)
+                                boton.click()
 
-                            combobox.find_element(By.XPATH, control_label+"//span[contains(@class, 'k-i-arrow-60-down')]").click()
-                            logprint(f"click en moneda de origen [{n_combobox}]")
-                            EsperarCARGA_myLIMS(driver)
-                            
-                            if paisActual == "mexico":
-                                driver.find_element(By.XPATH, f"//ul[@role='listbox' and @id='{n_combobox}']/li[contains(text(), 'Peso Mexicano')]").click()
+                                boton.find_element(By.XPATH,"./..//li[@data-test='CalculatePriceButtonItem-RecalculatePrice']").click()
+
+                                BotonVentana(driver,"Confirmar", log=True, funcion_print=logprint ).click()
+                                EsperarCARGA_myLIMS(driver)
+
                             else:
-                                driver.find_element(By.XPATH, f"//ul[@role='listbox' and @id='{n_combobox}']/li[contains(text(), 'Unidad de Fomento')]").click()
-                            
-                            logprint("click en unidad de fomento")
-                            EsperarCARGA_myLIMS(driver)
-                            
-                            BotonAccion(driver, "SaveButton", log=True, funcion_print=logprint ).click()
-                            EsperarCARGA_myLIMS(driver, espera=.5)
+                                driver.find_element(By.XPATH,'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar" and not(@style="display: none;")]//button[@data-test="BackToListButton" and text()="Editar"]').click()
+                                logprint("Editando muestra")
+                                EsperarCARGA_myLIMS(driver, espera=.5)
 
-                            #Esperar alerta
-                            if EsperarVentana(driver,segundos=2):
-                                #Revisar que titulo sea "Volver a calcular Precios" y hacer click en Si, caso contrario ignorar
-                                ventana_titulo = driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//span[@class="k-window-title"]').text
-                                if ventana_titulo == "Volver a calcular Precios":
-                                    BotonVentana(driver,"Si", log=True, funcion_print=logprint ).click()
-                                    
-                                else:    
-                                    eprint(f"Otra ventana encontrada [titulo: {ventana_titulo}], saltando muestra...")
-                                    if Registrar: 
-                                        CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ALERTA PRECIOS")
-                                    continue
+                                combobox = driver.find_element(By.XPATH, control_label+'//input[@class="k-input" and @role="combobox"]')
+                                n_combobox = combobox.get_attribute("aria-owns")
+                                
+                                combobox.find_element(By.XPATH, control_label+"//span[contains(@class, 'k-i-arrow-60-down')]").click()
+                                logprint(f"click en moneda de origen [{n_combobox}]")
+                                EsperarCARGA_myLIMS(driver)
+
+                                if paisActual == "mexico":
+                                    driver.find_element(By.XPATH, f"//ul[@role='listbox' and @id='{n_combobox}']/li[contains(text(), 'Peso Mexicano')]").click()
+                                    logprint("click en peso mexicano")
+
+                                else:
+                                    driver.find_element(By.XPATH, f"//ul[@role='listbox' and @id='{n_combobox}']/li[contains(text(), 'Unidad de Fomento')]").click()
+                                    logprint("click en unidad de fomento")
+                                
+                                EsperarCARGA_myLIMS(driver)
+                                
+                                BotonAccion(driver, "SaveButton", log=True, funcion_print=logprint ).click()
+                                EsperarCARGA_myLIMS(driver, espera=.5)
+
+                                #Esperar alerta
+                                if EsperarVentana(driver,segundos=2):
+                                    #Revisar que titulo sea "Volver a calcular Precios" y hacer click en Si, caso contrario ignorar
+                                    ventana_titulo = driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//span[@class="k-window-title"]').text
+                                    if ventana_titulo == "Volver a calcular Precios":
+                                        BotonVentana(driver,"Si", log=True, funcion_print=logprint ).click()
+                                        
+                                    else:    
+                                        eprint(f"Otra ventana encontrada [titulo: {ventana_titulo}], saltando muestra...")
+                                        if Registrar: 
+                                            CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ALERTA PRECIOS")
+                                        continue
 
                         except ElementNotInteractableException:
                             if SaltarMuestra:
@@ -1074,9 +1087,37 @@ while True:
                             BotonAccion(driver, "ContainerGenerateButton", log=True, funcion_print=logprint ).click()
                             EsperarCARGA_myLIMS(driver, espera=.5)
 
-                            driver.find_element(By.XPATH,"//ul/li[@data-test='UpdateSampleContainersButton']").click()
+                            driver.find_element(By.XPATH,"//ul/li[@data-test='RecreateSampleContainersButton']").click()
                             EsperarCARGA_myLIMS(driver)
-                        
+
+                            #Esperar alerta
+                            if EsperarVentana(driver,segundos=2):
+                                #Revisar que titulo sea "Volver a calcular Precios" y hacer click en Si, caso contrario ignorar
+                                ventana_titulo = driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//span[@class="k-window-title"]').text
+                                if ventana_titulo == "Recrear Recipientes":
+                                    BotonVentana(driver,"Confirmar", log=True, funcion_print=logprint ).click()
+                                    
+                                else:    
+                                    eprint(f"Otra ventana encontrada [titulo: {ventana_titulo}], saltando muestra...")
+                                    if Registrar: 
+                                        CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ALERTA PRECIOS")
+                                    continue
+                                
+                            #Esperar alerta
+                            if EsperarVentana(driver,segundos=2):
+                                #Revisar que titulo sea "Volver a calcular Precios" y hacer click en Si, caso contrario ignorar
+                                ventana_titulo = driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//span[@class="k-window-title"]').text
+                                if ventana_titulo == "Atención":
+                                    BotonVentana(driver,"Confirmar", log=True, funcion_print=logprint ).click()
+                                    
+                                else:    
+                                    eprint(f"Otra ventana encontrada [titulo: {ventana_titulo}], saltando muestra...")
+                                    if Registrar: 
+                                        CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ALERTA PRECIOS")
+                                    continue
+                            
+                            EsperarCARGA_myLIMS(driver)
+
                         except ElementNotInteractableException:
                             eprint("No se pudo encontrar el boton de actualizar recipientes, saltando muestra...")
                             if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ERROR RECIPIENTES")

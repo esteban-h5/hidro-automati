@@ -1,6 +1,6 @@
 ###############################
 
-version_actual = "5.3.3"
+version_actual = "5.4.0"
 fecha_version = "viernes 24 de octubre 2025"
 
 changelog = [
@@ -8,11 +8,14 @@ changelog = [
     "- error de url"
     "- correxion accesos directos"
     "- Reinstalar modulos en instalacion?",
-    "- Anunciar ventanas y continuar reprocesando precios a pesar de no poder, mostrar en excel"
-    "- Detectar error al hacer click de metodo al eliminar metodo"
-    "- Error split saltar muestras"
-    "- error de atributo llave desencriptacion"
-    #"- Contar ventanas"
+    "- Anunciar ventanas y continuar reprocesando precios a pesar de no poder, mostrar en excel",
+    "- Detectar error al hacer click de metodo al eliminar metodo",
+    "- Error split saltar muestras",
+    "- Sufijo en config para titulos de PE",
+    "- error de atributo llave desencriptacion",
+    "- Mostrar config en log",
+    "- Script Actualizar sin doble directorio",
+    "- Reprocesar precios ahora recrea envase y revisa precio para volver a calcular",
 ]
 
 ###############################

@@ -30,15 +30,18 @@ try:
     
         try:
             
-            myLIMSdomain    =   global_config["myLIMSdomain"] 
-            Labsoftdomain   =   global_config["Labsoftdomain"]
+            myLIMSdomain        =   global_config["myLIMSdomain"] 
+            Labsoftdomain       =   global_config["Labsoftdomain"]
             
-            paisActual      =   global_config["paisActual"].replace("é","e").replace("ú","u").lower()
-            log             =   global_config["ActivarLOG"]
+            paisActual          =   global_config["paisActual"].replace("é","e").replace("ú","u").lower()
+            log                 =   global_config["ActivarLOG"]
 
             INICIO_JORNADA      =   global_config["InicioJornada"]
             EXTENSION_JORNADA   =   global_config["ExtensionJornada"]
             
+            tipo_rutinas        =   global_config["ListaMensajesRutina"].lower().split(",")
+            tipo_horas          =   global_config["ListaMensajesHoras"].lower().split(",")
+
             filtroActual            =   config["filtro"].replace("é","e").replace("ú","u").lower()
 
             SoloBuscarControles     =   config["SoloBuscarControles"]
@@ -51,9 +54,6 @@ try:
             
             BorrarDup               =   config["BorrarDuplicados"]
             Alerta                  =   config["Alerta"]
-
-            tipo_rutinas            =   global_config["ListaMensajesRutina"].lower().split(",")
-            tipo_horas              =   global_config["ListaMensajesHoras"].lower().split(",")
 
             id_etfa_config          =   str(config["DOC_REVISION_ETFA_ID_CL"]).split(",")
             id_no_etfa_config       =   str(config["DOC_REVISION_ID_CL"]).split(",")
@@ -109,7 +109,7 @@ try:
         if os.path.exists(os.path.join(internal_lib, "hidro-env") ) and sys.prefix == sys.base_prefix:
             eprint("SE HA CREADO VENV PERO NO SE ESTA USANDO\n")
 
-        MensajeInicial(file_name, login_url=Labsoftdomain, init_url=mainUrl, funcion_print=eprint)
+        MensajeInicial(file_name, funcion_print=eprint, config=config, global_config=global_config, funcion_log=logprint )
 
         limite_inferior, limite_superior = FormatoLimiteHoras(INICIO_JORNADA, EXTENSION_JORNADA)
 
@@ -274,8 +274,6 @@ try:
         EsperarCARGA_myLIMS(driver, funcion_print=eprint, recargar=False)
 
         eprint(f"Cambiando los filtros de la Grilla, Cantidad de filtros: {len(filtros)}\n")
-        
-        driver.get("https://hidrolab.mylimsweb.cloud/Main.cshtml#Sample/Edit/4101")
         EsperarCARGA_myLIMS(driver, funcion_print=eprint, recargar=False)
 
         ListaMuestras = []; MuestrasError = []
