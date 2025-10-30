@@ -41,3 +41,5 @@ ListaMensajesHoras          :   Horas
 #
 # Excepciones generales
 nombreExcelExcepciones      :   Excepciones.xlsx
+#
+#
