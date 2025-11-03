@@ -1,21 +1,12 @@
 ###############################
 
-version_actual = "5.4.0"
-fecha_version = "viernes 24 de octubre 2025"
+version_actual = "5.4.1"
+fecha_version = "lunes 3 de noviembre 2025"
 
 changelog = [
-    "- Actualizacion con encode latin-1",
-    "- error de url"
-    "- correxion accesos directos"
-    "- Reinstalar modulos en instalacion?",
-    "- Anunciar ventanas y continuar reprocesando precios a pesar de no poder, mostrar en excel",
-    "- Detectar error al hacer click de metodo al eliminar metodo",
-    "- Error split saltar muestras",
-    "- Sufijo en config para titulos de PE",
-    "- error de atributo llave desencriptacion",
-    "- Mostrar config en log",
-    "- Script Actualizar sin doble directorio",
-    "- Reprocesar precios ahora recrea envase y revisa precio para volver a calcular",
+    "- Modificacion descarga muestras en cambiar lotes, SoloDescargarMuestras",
+    "- Indicar cantidad total descargada , con controles y alertas en resumen",
+    "- Anunciar sin controles en log",
 ]
 
 ###############################

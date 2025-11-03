@@ -11,8 +11,12 @@ DOC_REVISION_ETFA_ID_CL    :   0
 DOC_REVISION_ID_CL         :   0
 #
 #
+# Deshabilitar descarga de documentos y publicacion, solo agregar a registro muestras con controles [True]
+SoloBuscarControles   :	  True
+#
+#
 # Revisa si existen alertas de horas y las corrige [True]
-DescargaRevisarRutinas        :   	True
+RevisarRutinas        :   	True
 #
 #
 # Añade pasos a los botones para recordar [True]
@@ -20,12 +24,12 @@ Ayuda						  :		True
 #
 #
 # Publicar Muestras Descargables [False]
-PublicarDescargables          :   	False
+PublicarDescargables          :   	True
 #
 #
 # Descargar Muestras Publicadas [False]
 # se ve afectado por RepasarEstado
-DescargarPublicadas           :   	True
+DescargarPublicadas           :   	False
 #
 #
 # Cambiar Estado en excel con lotes [True]

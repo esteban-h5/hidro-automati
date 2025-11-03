@@ -39,7 +39,8 @@ try:
     log                   =   global_config["ActivarLOG"]
     app_excel             =   global_config["AppExcel"]
 
-    RevisarRutinas          =   config["DescargaRevisarRutinas"]
+    SoloBuscarControles     =   config["SoloBuscarControles"]
+    RevisarRutinas          =   config["RevisarRutinas"]
     RepasarEstado           =   config["RepasarEstado"]
     Registrar               =   config["Registrar"]
 
@@ -1261,12 +1262,23 @@ while True:
                         flagControles = False
                         flagDescargar = False
 
-                        cant_previa = len(os.listdir(dir_Descargados))
+                        if not SoloBuscarControles:
+                            cant_previa = len(os.listdir(dir_Descargados))
+                        else:
+                            cant_previa = 0
+                        
+                        if SoloBuscarControles:
+                            eprint( f'\nRevisando ID: {id_muestra}\n'+
+                                    f'N de Muestra: {N_Muestra}\n'+
+                                    f'Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{MuestrasCantidad}]\n'+
+                                    f'Registradas: {TotalDescarga} - Publicadas: {TotalPublicados} - Cambios de Fechas: {TotalCambioFechas}')
+                        else:
+                            eprint( f'\nRevisando ID: {id_muestra}\n'+
+                                    f'N de Muestra: {N_Muestra}\n'+
+                                    f'Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{MuestrasCantidad}]\n'+
+                                    f'Descargadas: {TotalDescarga} - Publicadas: {TotalPublicados} - Cambios de Fechas: {TotalCambioFechas}')
 
-                        eprint( f'\nRevisando ID: {id_muestra}\n'+
-                                f'N de Muestra: {N_Muestra}\n'+
-                                f'Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{MuestrasCantidad}]\n'+
-                                f'Descargadas: {TotalDescarga} - Publicadas: {TotalPublicados} - Cambios de Fechas: {TotalCambioFechas}')
+                        logprint(f"Muestra en estado: {muestra_estado}")
 
                         BotonSection(driver,"SectionMessage", log=True, funcion_print=logprint ).click()
                         EsperarCARGA_myLIMS(driver, funcion_print=eprint, kill=True)
@@ -1409,8 +1421,11 @@ while True:
 
                         if cant_controles != 0:
                             eprint(f"[{cant_controles} Controles Pendientes]")
+                            logprint(f'controles: {" - ".join(lista_alertas)}')
                             flagDescargar = True
                             flagControles = True
+                        else:
+                            logprint('Sin controles')
 
                         ###################################################
                         #Intentar Publicar y continuar
@@ -1439,133 +1454,138 @@ while True:
                                 eprint("[Publicable]\n")
                                 continue
                         
-                        eprint("[Descarga]\n")
-                        BotonSection(driver,"SectionDetails", log=True, funcion_print=logprint ).click()
+                        if SoloBuscarControles:
+                            if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "PARA DESCARGAR")
+                            eprint("[Saltada - Descargable]\n")
 
-                        ############################
-                        # PROCESADO descargar documento              
-                        # USAR N de Muestra para encontrar archivo de muestra actual y moverlo
-                        EsperarCLICK(driver,atributo="data-test",valor="DocumentsButton", kill=True)
-                        EsperarCARGA_myLIMS(driver, funcion_print=eprint, kill=True)
-                        
-                        botones = driver.find_element(By.XPATH,'//button[@data-test="DocumentsButton"]/following-sibling::ul').find_elements(By.TAG_NAME,'li')
-                        id_botones_myLIMS = [_.get_attribute("data-test").split(":")[1] for _ in botones]
+                        else:  
+                            eprint("[Descarga]\n")
+                            BotonSection(driver,"SectionDetails", log=True, funcion_print=logprint ).click()
 
-                        obj_botones = 0
-                        for boton_id in IDbotonesDocumentos:
-                            if boton_id in id_botones_myLIMS:
-                                IDboton = boton_id
-                                obj_botones += 1
+                            ############################
+                            # PROCESADO descargar documento              
+                            # USAR N de Muestra para encontrar archivo de muestra actual y moverlo
+                            EsperarCLICK(driver,atributo="data-test",valor="DocumentsButton", kill=True)
+                            EsperarCARGA_myLIMS(driver, funcion_print=eprint, kill=True)
+                            
+                            botones = driver.find_element(By.XPATH,'//button[@data-test="DocumentsButton"]/following-sibling::ul').find_elements(By.TAG_NAME,'li')
+                            id_botones_myLIMS = [_.get_attribute("data-test").split(":")[1] for _ in botones]
 
-                        #Priorizar Aguas Potable frente a otros botones en COLOMBIA
-                        if obj_botones >= 2:
-                            if "1165" in id_botones_myLIMS:
-                                IDboton = "1165"
-                            else:
+                            obj_botones = 0
+                            for boton_id in IDbotonesDocumentos:
+                                if boton_id in id_botones_myLIMS:
+                                    IDboton = boton_id
+                                    obj_botones += 1
+
+                            #Priorizar Aguas Potable frente a otros botones en COLOMBIA
+                            if obj_botones >= 2:
+                                if "1165" in id_botones_myLIMS:
+                                    IDboton = "1165"
+                                else:
+                                    raise ExcepcionDeCarga(f"No se encontró boton en la lista ({IDbotonesDocumentos}) para descargar documento (ID de botones disponibles en myLIMS: {id_botones_myLIMS})")
+
+                            if obj_botones == 0:
                                 raise ExcepcionDeCarga(f"No se encontró boton en la lista ({IDbotonesDocumentos}) para descargar documento (ID de botones disponibles en myLIMS: {id_botones_myLIMS})")
+                            
+                            EsperarCLICK(driver,atributo="data-test",valor=f"DocumentsButtonItem-DocTemplateId:{IDboton}", kill=True)
+                            wait(3)
+                            EsperarCARGA_myLIMS(driver, funcion_print=eprint, reintentos=30, kill=True)
 
-                        if obj_botones == 0:
-                            raise ExcepcionDeCarga(f"No se encontró boton en la lista ({IDbotonesDocumentos}) para descargar documento (ID de botones disponibles en myLIMS: {id_botones_myLIMS})")
-                        
-                        EsperarCLICK(driver,atributo="data-test",valor=f"DocumentsButtonItem-DocTemplateId:{IDboton}", kill=True)
-                        wait(3)
-                        EsperarCARGA_myLIMS(driver, funcion_print=eprint, reintentos=30, kill=True)
+                            #Desaparece barra naranja
+                            for _ in range(timeout):
+                                if queue_redy(driver): break
+                                if alerta_visible(driver): raise ExcepcionDeMuestra("ALERTA en procesado de muestra (Reintentar)")
+                                wait(1)
 
-                        #Desaparece barra naranja
-                        for _ in range(timeout):
-                            if queue_redy(driver): break
-                            if alerta_visible(driver): raise ExcepcionDeMuestra("ALERTA en procesado de muestra (Reintentar)")
+                            else:
+                                raise ExcepcionDeMuestra("TIMOUT en procesado de muestra (notificacion naranja no desaparece)")
                             wait(1)
-
-                        else:
-                            raise ExcepcionDeMuestra("TIMOUT en procesado de muestra (notificacion naranja no desaparece)")
-                        wait(1)
-                        #Esperar descarga de documento revisando cantidad de archivos en carpeta
-                        for _ in range(timeout):
-                            if cant_previa == len(os.listdir(dir_Descargados)):
-                                wait(1)
-                                continue
-                            
-                            if any(".crdownload" in archivo or ".part" in archivo for archivo in os.listdir(dir_Descargados)):
-                                wait(1)
-                                continue
-
-                            if alerta_visible(driver): raise ExcepcionDeMuestra("ERROR en procesado de muestra (Reintentar)")
-                            
-                            if Registrar: 
-                                CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ERROR")
+                            #Esperar descarga de documento revisando cantidad de archivos en carpeta
+                            for _ in range(timeout):
+                                if cant_previa == len(os.listdir(dir_Descargados)):
+                                    wait(1)
+                                    continue
                                 
-                            TotalDescarga += 1
-                            break
+                                if any(".crdownload" in archivo or ".part" in archivo for archivo in os.listdir(dir_Descargados)):
+                                    wait(1)
+                                    continue
 
-                        else:
-                            raise ExcepcionDeCarga("No se ha descargado documento (Cantidad de archivos)")
-
-                        if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "DESCARGA")
-
-                        nombre_informe = ""
-                        nombre_informe_nuevo = ""
-
-                        # [296069-2/2025.0] =>[296069][2/2025.0] 
-                        N_Muestra, sub_muestra = N_Muestra.split("-")
-                        
-                        lista_descargas = [str(f) for f in os.listdir(dir_Descargados) if os.path.isfile( os.path.join(dir_Descargados,f) )]
-
-                        for archivo in lista_descargas:
-                            # eprint(f"ta {N_Muestra} en {archivo}? => {N_Muestra in archivo} ")
-                            if N_Muestra in archivo and "(" not in archivo and ")" not in archivo:
-                                nombre_informe = archivo
-                                n_sub_muestra = sub_muestra.split("/")[0]
+                                if alerta_visible(driver): raise ExcepcionDeMuestra("ERROR en procesado de muestra (Reintentar)")
                                 
-                                if n_sub_muestra != "1":
-                                    #Submuestra , cambiar nombre de archivo por numero
-                                    # 296069-2/2025.0 => Informe análisis ETFA para revisión - 296069-1-2025_0.pdf
-
-                                    # 2/2025.0 => 2-2025_0
-                                    sub_muestra = sub_muestra.replace("/","-").replace(".","_") 
-
-                                    # Informe análisis ETFA para revisión - 
-                                    prefijo = archivo.split(N_Muestra+"-")[0]   
-
-                                    #Informe análisis ETFA para revisión - 296069-2-2025_0.pdf
-                                    nombre_informe_nuevo = prefijo+N_Muestra+"-"+sub_muestra+".pdf"
-                                
+                                if Registrar: 
+                                    CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ERROR")
+                                    
+                                TotalDescarga += 1
                                 break
 
-                        else: 
-                            raise ExcepcionDeCarga(f"No se encontró el archivo de muestra {N_Muestra} en la carpeta de descarga\n\nLISTA:\n{lista_descargas}")
-                        
-                        dir_archivo = os.path.join(dir_Descargados,nombre_informe)
-                        
-                        #MOVER DOCUMENTO DESCARGADO A CARPETA EN FUNCION DE FLAG
-                        if not os.path.isfile(os.path.join(dir_archivo)):
-                            raise ExcepcionDeCarga(f"El archivo {nombre_informe} no fue encontrado en la carpeta de descarga para clasificarlo")
-                        
-                        if nombre_informe_nuevo != "":
-                            #Cambiar nombre a submuestra para renombrar
-                            nombre_informe = nombre_informe_nuevo
-                        
-                        try:
-                            if flagRutina and not flagControles:
-                                os.rename(dir_archivo, os.path.join(dir_RUTINA,nombre_informe))
-                                logprint(f"[RUTINA] Moviendo {dir_archivo} a {os.path.join(dir_RUTINA,nombre_informe)}")
-                            
-                            elif not flagRutina and flagControles:
-                                os.rename(dir_archivo, os.path.join(dir_CONTROLES,nombre_informe))
-                                logprint(f"[CONTROLES] Moviendo {dir_archivo} a {os.path.join(dir_CONTROLES,nombre_informe)}")
-                            
-                            elif flagRutina and flagControles:
-                                os.rename(dir_archivo, os.path.join(dir_AMBOS,nombre_informe))
-                                logprint(f"[RUTINA Y CONTROLES] Moviendo {dir_archivo} a {os.path.join(dir_AMBOS,nombre_informe)}")
-                            
                             else:
-                                os.rename(dir_archivo, os.path.join(dir_OTROS,nombre_informe))
-                                logprint(f"[OTRO] Moviendo {dir_archivo} a {os.path.join(dir_OTROS,nombre_informe)}")
+                                raise ExcepcionDeCarga("No se ha descargado documento (Cantidad de archivos)")
 
-                        except FileExistsError:
-                            eprint(f"El archivo {nombre_informe} ya existe en la carpeta de descarga, dejando en directorio Descargados\n")
-                            if dir_archivo != os.path.join(dir_Descargados,nombre_informe):
-                                os.rename(dir_archivo, os.path.join(dir_Descargados,nombre_informe) )
+                            if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "DESCARGA")
+
+                            nombre_informe = ""
+                            nombre_informe_nuevo = ""
+
+                            # [296069-2/2025.0] =>[296069][2/2025.0] 
+                            N_Muestra, sub_muestra = N_Muestra.split("-")
+                            
+                            lista_descargas = [str(f) for f in os.listdir(dir_Descargados) if os.path.isfile( os.path.join(dir_Descargados,f) )]
+
+                            for archivo in lista_descargas:
+                                # eprint(f"ta {N_Muestra} en {archivo}? => {N_Muestra in archivo} ")
+                                if N_Muestra in archivo and "(" not in archivo and ")" not in archivo:
+                                    nombre_informe = archivo
+                                    n_sub_muestra = sub_muestra.split("/")[0]
+                                    
+                                    if n_sub_muestra != "1":
+                                        #Submuestra , cambiar nombre de archivo por numero
+                                        # 296069-2/2025.0 => Informe análisis ETFA para revisión - 296069-1-2025_0.pdf
+
+                                        # 2/2025.0 => 2-2025_0
+                                        sub_muestra = sub_muestra.replace("/","-").replace(".","_") 
+
+                                        # Informe análisis ETFA para revisión - 
+                                        prefijo = archivo.split(N_Muestra+"-")[0]   
+
+                                        #Informe análisis ETFA para revisión - 296069-2-2025_0.pdf
+                                        nombre_informe_nuevo = prefijo+N_Muestra+"-"+sub_muestra+".pdf"
+                                    
+                                    break
+
+                            else: 
+                                raise ExcepcionDeCarga(f"No se encontró el archivo de muestra {N_Muestra} en la carpeta de descarga\n\nLISTA:\n{lista_descargas}")
+                            
+                            dir_archivo = os.path.join(dir_Descargados,nombre_informe)
+                            
+                            #MOVER DOCUMENTO DESCARGADO A CARPETA EN FUNCION DE FLAG
+                            if not os.path.isfile(os.path.join(dir_archivo)):
+                                raise ExcepcionDeCarga(f"El archivo {nombre_informe} no fue encontrado en la carpeta de descarga para clasificarlo")
+                            
+                            if nombre_informe_nuevo != "":
+                                #Cambiar nombre a submuestra para renombrar
+                                nombre_informe = nombre_informe_nuevo
+                            
+                            try:
+                                if flagRutina and not flagControles:
+                                    os.rename(dir_archivo, os.path.join(dir_RUTINA,nombre_informe))
+                                    logprint(f"[RUTINA] Moviendo {dir_archivo} a {os.path.join(dir_RUTINA,nombre_informe)}")
+                                
+                                elif not flagRutina and flagControles:
+                                    os.rename(dir_archivo, os.path.join(dir_CONTROLES,nombre_informe))
+                                    logprint(f"[CONTROLES] Moviendo {dir_archivo} a {os.path.join(dir_CONTROLES,nombre_informe)}")
+                                
+                                elif flagRutina and flagControles:
+                                    os.rename(dir_archivo, os.path.join(dir_AMBOS,nombre_informe))
+                                    logprint(f"[RUTINA Y CONTROLES] Moviendo {dir_archivo} a {os.path.join(dir_AMBOS,nombre_informe)}")
+                                
+                                else:
+                                    os.rename(dir_archivo, os.path.join(dir_OTROS,nombre_informe))
+                                    logprint(f"[OTRO] Moviendo {dir_archivo} a {os.path.join(dir_OTROS,nombre_informe)}")
+
+                            except FileExistsError:
+                                eprint(f"El archivo {nombre_informe} ya existe en la carpeta de descarga, dejando en directorio Descargados\n")
+                                if dir_archivo != os.path.join(dir_Descargados,nombre_informe):
+                                    os.rename(dir_archivo, os.path.join(dir_Descargados,nombre_informe) )
 
 
                     #######################

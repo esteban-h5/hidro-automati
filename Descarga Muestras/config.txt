@@ -23,7 +23,7 @@ Alerta		            :	  True
 #
 #
 # Publicación automatica [True]
-AutoPublicar          :   False
+AutoPublicar          :   True
 #
 #
 # Revisa si existen alertas de horas y las corrige [True]
