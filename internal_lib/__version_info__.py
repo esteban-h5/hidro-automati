@@ -1,12 +1,10 @@
 ###############################
 
-version_actual = "5.4.1"
-fecha_version = "lunes 3 de noviembre 2025"
+version_actual = "5.4.2"
+fecha_version = "martes 11 de noviembre 2025"
 
 changelog = [
-    "- Modificacion descarga muestras en cambiar lotes, SoloDescargarMuestras",
-    "- Indicar cantidad total descargada , con controles y alertas en resumen",
-    "- Anunciar sin controles en log",
+    "- click en Boton actualizar envaces cuando no se encuentra reprocesar envaces",
 ]
 
 ###############################

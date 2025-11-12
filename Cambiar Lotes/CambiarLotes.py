@@ -1087,40 +1087,54 @@ while True:
 
                             BotonAccion(driver, "ContainerGenerateButton", log=True, funcion_print=logprint ).click()
                             EsperarCARGA_myLIMS(driver, espera=.5)
-
-                            driver.find_element(By.XPATH,"//ul/li[@data-test='RecreateSampleContainersButton']").click()
-                            EsperarCARGA_myLIMS(driver)
-
-                            #Esperar alerta
-                            if EsperarVentana(driver,segundos=2):
-                                #Revisar que titulo sea "Volver a calcular Precios" y hacer click en Si, caso contrario ignorar
-                                ventana_titulo = driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//span[@class="k-window-title"]').text
-                                if ventana_titulo == "Recrear Recipientes":
-                                    BotonVentana(driver,"Confirmar", log=True, funcion_print=logprint ).click()
-                                    
-                                else:    
-                                    eprint(f"Otra ventana encontrada [titulo: {ventana_titulo}], saltando muestra...")
-                                    if Registrar: 
-                                        CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ALERTA PRECIOS")
-                                    continue
-                                
-                            #Esperar alerta
-                            if EsperarVentana(driver,segundos=2):
-                                #Revisar que titulo sea "Volver a calcular Precios" y hacer click en Si, caso contrario ignorar
-                                ventana_titulo = driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//span[@class="k-window-title"]').text
-                                if ventana_titulo == "Atención":
-                                    BotonVentana(driver,"Confirmar", log=True, funcion_print=logprint ).click()
-                                    
-                                else:    
-                                    eprint(f"Otra ventana encontrada [titulo: {ventana_titulo}], saltando muestra...")
-                                    if Registrar: 
-                                        CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ALERTA PRECIOS")
-                                    continue
                             
+                            btn_recreate = driver.find_elements(By.XPATH, "//ul/li[@data-test='RecreateSampleContainersButton' and contains(@style, 'display: list-item;')]")
+
+                            if btn_recreate:
+                                btn_recreate[0].click()
+
+                                #Esperar alerta
+                                if EsperarVentana(driver,segundos=2):
+                                    #Revisar que titulo sea "Volver a calcular Precios" y hacer click en Si, caso contrario ignorar
+                                    ventana_titulo = driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//span[@class="k-window-title"]').text
+                                    if ventana_titulo == "Recrear Recipientes":
+                                        BotonVentana(driver,"Confirmar", log=True, funcion_print=logprint ).click()
+                                        
+                                    else:    
+                                        eprint(f"Otra ventana encontrada [titulo: {ventana_titulo}], saltando muestra...")
+                                        if Registrar: 
+                                            CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ALERTA PRECIOS")
+                                        continue
+                                    
+                                #Esperar alerta
+                                if EsperarVentana(driver,segundos=2):
+                                    #Revisar que titulo sea "Volver a calcular Precios" y hacer click en Si, caso contrario ignorar
+                                    ventana_titulo = driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//span[@class="k-window-title"]').text
+                                    if ventana_titulo == "Atención":
+                                        BotonVentana(driver,"Confirmar", log=True, funcion_print=logprint ).click()
+                                        
+                                    else:    
+                                        eprint(f"Otra ventana encontrada [titulo: {ventana_titulo}], saltando muestra...")
+                                        if Registrar: 
+                                            CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ALERTA PRECIOS")
+                                        continue
+                            
+                                EsperarCARGA_myLIMS(driver)
+                                
+                            else:
+                                driver.find_element(By.XPATH, "//ul/li[@data-test='UpdateSampleContainersButton']").click()
+
                             EsperarCARGA_myLIMS(driver)
+
+                            # driver.find_element(By.XPATH,"//ul/li[@data-test='RecreateSampleContainersButton']").click()
+                            # EsperarCARGA_myLIMS(driver)
+                            
+                            # driver.find_element(By.XPATH,"//ul/li[@data-test='UpdateSampleContainersButton']").click()
+                            # EsperarCARGA_myLIMS(driver)
+                            
 
                         except ElementNotInteractableException:
-                            eprint("No se pudo encontrar el boton de actualizar recipientes, saltando muestra...")
+                            eprint(f"No se pudo encontrar el boton de actualizar recipientes, saltando muestra...")
                             if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ERROR RECIPIENTES")
                             continue
 

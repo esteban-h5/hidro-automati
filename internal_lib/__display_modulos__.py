@@ -219,7 +219,7 @@ match tipo_menu:
                         "Agregar análisis a muestras en lista":4,
                         "Eliminar método de muestras en lista":5,
                         "Cambiar Fecha Recibimiento":6,
-                        "Reprocesar Precios":7,
+                        "Reprocesar Precios y Envases":7,
                         "Volver":8
                     }
 
