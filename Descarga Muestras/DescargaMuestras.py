@@ -17,59 +17,66 @@ try:
     ########################################
     #Inicialización de Config
     ########################################
-
     try:
         config              =   GetConfig( dirConfig=os.path.join(DM_wd,"config.txt") )
         global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
+        keys_used = ["filtro", "SoloBuscarControles", "DescargarPublicadas", "RegistrarMuestras", "RevisarRutinas", "AutoPublicar", "Olvidar", "BorrarDuplicados", "Alerta", "DOC_REVISION_ETFA_ID_CL", "DOC_REVISION_ID_CL", "nombreExcelRegistro", "nombreExcelHistorico"]
+        keys_used_g = ["myLIMSdomain", "Labsoftdomain", "paisActual", "ActivarLOG", "InicioJornada", "ExtensionJornada", "ListaMensajesRutina", "ListaMensajesHoras", "nombreExcelExcepciones"]
+
+        for key in keys_used:
+            if key not in config.keys():
+                input(f"Valor de config \'{key}\' no encontrado en archivo config, enter para continuar igualmente...")
+        for key in keys_used_g:
+            if key not in global_config.keys():
+                input(f"Valor de config \'{key}\' no encontrado en archivo global_config, enter para continuar igualmente...")
+
         timeout             =   120
         timeout_con_check   =   3
 
-        nombreLOG       =   os.path.join(DM_wd,"log",datetime.now().strftime('reporte_%Y_%m_%d-%H_%M'))
-        nombreRESUMEN   =   f"{nombreLOG}_RESUMEN.txt"
-    
-        try:
-            
-            myLIMSdomain        =   global_config["myLIMSdomain"] 
-            Labsoftdomain       =   global_config["Labsoftdomain"]
-            
-            paisActual          =   global_config["paisActual"].replace("é","e").replace("ú","u").lower()
-            log                 =   global_config["ActivarLOG"]
+        nombreLOG     = os.path.join(DM_wd, "log", datetime.now().strftime('reporte_%Y_%m_%d-%H_%M'))
+        nombreRESUMEN = f"{nombreLOG}_RESUMEN.txt"
 
-            INICIO_JORNADA      =   global_config["InicioJornada"]
-            EXTENSION_JORNADA   =   global_config["ExtensionJornada"]
-            
-            tipo_rutinas        =   global_config["ListaMensajesRutina"].lower().split(",")
-            tipo_horas          =   global_config["ListaMensajesHoras"].lower().split(",")
+        myLIMSdomain  = global_config.get("myLIMSdomain", "")
+        Labsoftdomain = global_config.get("Labsoftdomain", "")
 
-            filtroActual            =   config["filtro"].replace("é","e").replace("ú","u").lower()
+        paisActual = global_config.get("paisActual", "").replace("é","e").replace("ú","u").lower()
+        log        = global_config.get("ActivarLOG", False)
 
-            SoloBuscarControles     =   config["SoloBuscarControles"]
-            DescargarPublicadas     =   config["DescargarPublicadas"]
+        INICIO_JORNADA    = global_config.get("InicioJornada", "")
+        EXTENSION_JORNADA = global_config.get("ExtensionJornada", "")
 
-            Registrar               =   config["RegistrarMuestras"]
-            RevisarRutinas          =   config["RevisarRutinas"]
-            AutoPublicar            =   config["AutoPublicar"]
-            Olvidar                 =   config["Olvidar"]
-            
-            BorrarDup               =   config["BorrarDuplicados"]
-            Alerta                  =   config["Alerta"]
+        tipo_rutinas = global_config.get("ListaMensajesRutina", "")
+        tipo_rutinas = tipo_rutinas.lower().split(",") if tipo_rutinas else []
 
-            id_etfa_config          =   str(config["DOC_REVISION_ETFA_ID_CL"]).split(",")
-            id_no_etfa_config       =   str(config["DOC_REVISION_ID_CL"]).split(",")
-            
-            nombreExcelRegistro     =   config["nombreExcelRegistro"]
-            dirExcelRegistro        =   os.path.join(DM_wd, nombreExcelRegistro)
-            
-            nombreHistorico         =   config["nombreExcelHistorico"]
-            dirExcelHistorico       =   os.path.join(DM_wd, nombreHistorico)
+        tipo_horas = global_config.get("ListaMensajesHoras", "")
+        tipo_horas = tipo_horas.lower().split(",") if tipo_horas else []
 
-            nombreExcepciones       =   global_config["nombreExcelExcepciones"]
-            dirExcepciones          =   os.path.join(internal_lib, nombreExcepciones)
-        
-        except KeyError as e:
-            input(f"Error en archivo de configuración, falta el valor de {e}\n\nEnter para cerrar...")
-            exit(1)
+        filtroActual = config.get("filtro", "").replace("é","e").replace("ú","u").lower()
+
+        SoloBuscarControles = config.get("SoloBuscarControles", False)
+        DescargarPublicadas = config.get("DescargarPublicadas", False)
+
+        Registrar      = config.get("RegistrarMuestras", False)
+        RevisarRutinas = config.get("RevisarRutinas", False)
+        AutoPublicar   = config.get("AutoPublicar", False)
+        Olvidar        = config.get("Olvidar", False)
+
+        BorrarDup = config.get("BorrarDuplicados", False)
+        Alerta    = config.get("Alerta", False)
+
+        id_etfa_config    = str(config.get("DOC_REVISION_ETFA_ID_CL", "")).split(",") if config.get("DOC_REVISION_ETFA_ID_CL") else []
+        id_no_etfa_config = str(config.get("DOC_REVISION_ID_CL", "")).split(",") if config.get("DOC_REVISION_ID_CL") else []
+
+        nombreExcelRegistro = config.get("nombreExcelRegistro", "")
+        dirExcelRegistro    = os.path.join(DM_wd, nombreExcelRegistro) if nombreExcelRegistro else ""
+
+        nombreHistorico   = config.get("nombreExcelHistorico", "")
+        dirExcelHistorico = os.path.join(DM_wd, nombreHistorico) if nombreHistorico else ""
+
+        nombreExcepciones = global_config.get("nombreExcelExcepciones", "")
+        dirExcepciones    = os.path.join(internal_lib, nombreExcepciones) if nombreExcepciones else ""
+
 
         mainUrl                 =   f"{myLIMSdomain}Main.cshtml#Sample/Finalized/List"
         nombre_columnas         =   ["ID MUESTRAS"]

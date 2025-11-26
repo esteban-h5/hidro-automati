@@ -67,27 +67,41 @@ def existe_param_env(path_internal):
   return os.path.exists(file)
 
 #Devolver diccionario con variables del código
-def GetConfig(dirConfig):
+def GetConfig(dirConfig, encode="utf-8"):
     
-    with open(dirConfig,"r", encoding="utf-8") as configTXT:
-        lineas = [_.split(":") for _ in configTXT.read().split("\n") if "#" not in _ and _ != ""]
+  
+    with open(dirConfig, "r", encoding=encode) as configTXT:
+        lineas = []
+        for linea in configTXT.read().split("\n"):
+
+            if linea[0] == "#" or linea == "" : continue
+            if "#" in linea: linea = linea.split("#")[0].strip()
+                
+            lineas.append( linea.split(":") )
+        
         configDict = {}
 
         for items in lineas:
+            # llave = items[0].strip().replace("\t","")
+            # valor = re.sub(r'^[ \t]+', '', ":".join(items[1:]))
             
-            llave = items[0].replace(" ","").replace("\t","")
-            valor = re.sub(r'^[ \t]+', '', ":".join(items[1:]))
+            llave = items[0].strip()
+            valor = ":".join(items[1:]).strip()
             
-            try:
+            if valor.isdigit():
                 configDict[llave] = int(valor)
-            except ValueError:
-                configDict[llave] = valor
+                continue
 
-            if str(valor).lower() in ("true", "verdadero"):
+            elif str(valor).lower() in ("true", "verdadero"):
                 configDict[llave] = True
+                continue
 
-            if str(valor).lower() in ("false", "falso"):
+            elif str(valor).lower() in ("false", "falso"):
                 configDict[llave] = False
+                continue
+            
+            else:
+                configDict[llave] = valor
 
     return configDict
 

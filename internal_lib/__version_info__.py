@@ -1,10 +1,13 @@
 ###############################
 
-version_actual = "5.4.2"
+version_actual = "5.5.0"
 fecha_version = "martes 11 de noviembre 2025"
 
 changelog = [
-    "- click en Boton actualizar envaces cuando no se encuentra reprocesar envaces",
+    "- Corregir casos con más de 100 copias en copiamuestras (estado_final)",
+    "- Esperar a alerta 'Copias concluidas' de copias muestras y no mylims",
+    "- RevisarEtapaActual = 'en realizacion'",
+    "- Nuevo GetConfig de MuestrasAPI",
 ]
 
 ###############################

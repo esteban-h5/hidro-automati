@@ -22,3 +22,4 @@ nombreExcelEntrada  :   ListaEntrada.xlsx
 nombreExcelSalida   :   ListaSalida.xlsx
 #
 #
+RevisarEtapaActual  :   True

@@ -28,35 +28,56 @@ from __ficheros_modulos__ import *
 config              =   GetConfig( dirConfig=os.path.join(CE_wd,"config.txt") )
 global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
-try:
-    myLIMSdomain            =   global_config["myLIMSdomain"]
-    Labsoftdomain           =   global_config["Labsoftdomain"]
+keys_used = [
+    "RevisarEtapaActual",
+    "ExcluirExcelSalida",
+    "CopiarMuestras",
+    "CrearPE",
+    "SufijoTitulo",
+    "nombreExcelEntrada",
+    "nombreExcelSalida",
+]
 
-    paisActual              =   global_config["paisActual"].replace("é","e").replace("ú","u").lower()
-    log                     =   global_config["ActivarLOG"]
-    app_excel               =   global_config["AppExcel"]
+keys_used_g = [
+    "myLIMSdomain",
+    "Labsoftdomain",
+    "paisActual",
+    "ActivarLOG",
+    "AppExcel",
+]
 
-    ExcluirExcelSalida      =   config["ExcluirExcelSalida"]
-    CopiarMuestras          =   config["CopiarMuestras"]
-    CrearPE                 =   config["CrearPE"]
-    SufijoTitulo            =   config["SufijoTitulo"]
-    
-    timeout                 =   120
+for key in keys_used:
+    if key not in config.keys():
+        input(f"Valor de config \'{key}\' no encontrado en archivo config, enter para continuar igualmente...")
+for key in keys_used_g:
+    if key not in global_config.keys():
+        input(f"Valor de config \'{key}\' no encontrado en archivo global_config, enter para continuar igualmente...")
 
-    nombre_columnas_in      =   ["ID COTI", "ID MUESTRA", "N COPIAS"]
-    nombre_columnas_out     =   ["INDICE", "ID COTI", "ID MUESTRA INICIAL", "ID COPIA", "PE ID", "PE ACTIVIDAD", "PE LUGAR ID", "ESTADO"]
+myLIMSdomain            =   global_config.get("myLIMSdomain")
+Labsoftdomain           =   global_config.get("Labsoftdomain")
 
-    nombreLOG               =   os.path.join(CE_wd,"log", datetime.now().strftime('reporte_%Y_%m_%d-%H_%M') )
+paisActual              =   global_config.get("paisActual", "").replace("é","e").replace("ú","u").lower()
+log                     =   global_config.get("ActivarLOG")
+app_excel               =   global_config.get("AppExcel")
 
-    nombreExcelEntrada      =   config["nombreExcelEntrada"]
-    dirExcelEntrada         =   os.path.join(CE_wd, nombreExcelEntrada)
+RevisarEtapaActual      =   config.get("RevisarEtapaActual")
+ExcluirExcelSalida      =   config.get("ExcluirExcelSalida")
+CopiarMuestras          =   config.get("CopiarMuestras")
+CrearPE                 =   config.get("CrearPE")
+SufijoTitulo            =   config.get("SufijoTitulo")
 
-    nombreExcelSalida       =   config["nombreExcelSalida"]
-    dirExcelSalida          =   os.path.join(CE_wd, nombreExcelSalida)
+timeout                 =   120
 
-except KeyError as e:
-    input(f"Error en archivo de configuración, falta el valor de {e}\n\nEnter para cerrar...")
-    exit(1)
+nombre_columnas_in      =   ["ID COTI", "ID MUESTRA", "N COPIAS"]
+nombre_columnas_out     =   ["INDICE", "ID COTI", "ID MUESTRA INICIAL", "ID COPIA", "PE ID", "PE ACTIVIDAD", "PE LUGAR ID", "ESTADO"]
+
+nombreLOG               =   os.path.join(CE_wd, "log", datetime.now().strftime('reporte_%Y_%m_%d-%H_%M'))
+
+nombreExcelEntrada      =   config.get("nombreExcelEntrada")
+dirExcelEntrada         =   os.path.join(CE_wd, nombreExcelEntrada)
+
+nombreExcelSalida       =   config.get("nombreExcelSalida")
+dirExcelSalida          =   os.path.join(CE_wd, nombreExcelSalida)
 
 if log:
     print("Historial de log activo\n")
@@ -192,7 +213,7 @@ try:
         x_pe_n_muestra = "###"
         x_pe_titulo = "###"
         x_xlsx_estado = "ERROR INICIO"
-        x_xlsx_estado_final = ""
+        x_xlsx_estado_final = []
         ####
 
         driver.get(f"{myLIMSdomain}Main.cshtml#Work/Details/{id_coti}") # error redirige a
@@ -216,7 +237,8 @@ try:
 
         try:
             coti_activa = driver.find_element(By.XPATH, xpath_muestra_activa ).is_selected()
-            coti_estado = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='SampleStatus']/..//input[@class='k-input']").get_attribute("value")
+            coti_etapa = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='WorkFlowStepTo']/..//input[@class='k-input']").get_attribute("value")
+            # coti_estado = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='SampleStatus']/..//input[@class='k-input']").get_attribute("value")
             coti_name_id = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Identification' and @name='Identification']").get_attribute("value")
 
             if not copias_totales and CopiarMuestras:
@@ -227,9 +249,9 @@ try:
                 x_xlsx_estado = "COTI DESACTIVADA"
                 raise ExcepcionDeMuestra(f"[Cotizacion desactivada]")
 
-            if coti_estado != "Registrada":
-                x_xlsx_estado = f"COTI ESTADO {coti_estado.upper()}"
-                raise ExcepcionDeMuestra(f"[Cotizacion en estado {coti_estado if coti_estado else 'Vacío'}]")
+            if RevisarEtapaActual and coti_etapa != "En Realización":
+                x_xlsx_estado = f"COTI ETAPA {coti_etapa.upper()}"
+                raise ExcepcionDeMuestra(f"[Cotizacion en etapa {coti_etapa if coti_etapa else 'Vacío'}]")
 
             BotonSection(driver, "Muestras").click()
             EsperarCARGA_myLIMS(driver)
@@ -277,7 +299,7 @@ try:
                     else:
                         eprint(f"[Muestras {' - '.join(m_no_copia)} no existen en cotizacion]")
                         x_muestra_id = f'{" - ".join(m_copias_id)} ![ {" - ".join(m_no_copia)} ]'
-                        x_xlsx_estado_final = "COTI NO ENCUENTRA M"
+                        x_xlsx_estado_final.append("[COTI NO ENCUENTRA M]")
                     ####
 
                     ## Seleccionar muestras para copiar
@@ -289,7 +311,7 @@ try:
                         driver.execute_script("arguments[0].setAttribute('class', 'k-alt k-state-selected');", _)
 
                     driver.find_element(By.XPATH, f'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar"]//div[not(contains(@style, "display: none;"))]/button[@data-test="Copiar"]').click()
-                    EsperarCARGA_myLIMS(driver, reintentos=180)
+                    EsperarCARGA_myLIMS(driver)
 
                     ## Seleccionar cantidad en ventana
                     for v_elementos in driver.find_elements(By.XPATH, f"{xpath_ventana_copia}//tbody/tr"):
@@ -309,7 +331,13 @@ try:
 
                     else:
                         BotonVentana(driver,"Copiar").click()
-                        EsperarCARGA_myLIMS(driver)
+                        EsperarCARGA_myLIMS(driver, reintentos=180)
+
+                        xpath_estado_copia = f"{xpath_ventana_copia}//div[contains(text(),'Copias Concluidas.')]"
+                        try:
+                            WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, xpath_estado_copia)))
+                        except Exception:
+                            raise ExcepcionDeCarga(f"No apareció el mensaje 'Copias Concluidas.' dentro de la ventana: {xpath_estado_copia}")
                         
                         driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//button[@data-test="Cancelar" and contains(text(), "Salir")]').click()
                         EsperarCARGA_myLIMS(driver)
@@ -317,7 +345,7 @@ try:
                 ############################################################################################
                 ## Seleccionar ID COPIA UNO POR UNO
                 else:
-                    eprint(f"[Más de 100 muestras, haciendo busqueda por separado]")
+                    eprint(f"[Más de 100 muestras en grilla, haciendo busqueda por separado]")
 
                     for muestra in lista_muestras_coti:
 
@@ -380,7 +408,7 @@ try:
                     else:
                         eprint(f"[Muestras {' - '.join(m_no_copia)} no existen en cotizacion]")
                         x_muestra_id = f'{" - ".join(m_copias_id)} ![ {" - ".join(m_no_copia)} ]'
-                        x_xlsx_estado_final = "COTI NO ENCUENTRA M"
+                        x_xlsx_estado_final.append("[COTI NO ENCUENTRA M]")
                     ####
 
                 ###################
@@ -401,11 +429,17 @@ try:
                     logprint(f"DIFERENCIAS DE CANTIDAD {MuestrasCantidad} muestras + {copias_totales} copias != {MuestrasCantidadNueva} nuevas cantidad de muestras totales")
                 
                 copias_reales = MuestrasCantidadNueva - MuestrasCantidad
+                
+                if copias_reales > 100:
+                    eprint(f"[MÁS DE 100 COPIAS, asignando 100 a PE ({copias_reales-100} restantes)]")
+                    cant_copias = 100
+                else:
+                    cant_copias = copias_reales
 
             else:
                 eprint(f"[Saltando copia ID]")
-                copias_reales = 0
-            
+                cant_copias = 0
+
             ## Invertir Orden
             driver.find_element(By.XPATH,"//div[@id='InterfaceContent']/div[not(contains(@style, 'display: block;'))]//th[@data-title='Orden']").click()
             EsperarCARGA_myLIMS(driver)
@@ -432,7 +466,7 @@ try:
                 #Crear pe de muestras nuevas copiadas
                 if CopiarMuestras:
 
-                    for idx in range(copias_reales):
+                    for idx in range(cant_copias):
                         muestra = elementos[idx]
 
                         muestra_id = muestra.find_element(By.XPATH, "./td[2]").text
@@ -445,6 +479,7 @@ try:
                         m_selec_id.append(muestra_id)
 
                     x_copias_id = " - ".join(m_selec_id)
+                    ultimo_id = m_selec_id[-1]
 
                 if not CopiarMuestras: # x_muestra con selec y x_copia con ### 
                     x_copias_id = "###"
@@ -469,9 +504,13 @@ try:
                     else: 
                         eprint(f"[Muestras {' - '.join(m_no_selec)} no existen en cotizacion]")
                         x_muestra_id = f'{" - ".join(m_selec_id)} ![ {" - ".join(m_no_selec)} ]'
-                        x_xlsx_estado_final = "COTI NO ENCUENTRA M PE"
+                        x_xlsx_estado_final.append("[COTI NO ENCUENTRA M PE]")
                     ####
-
+                    ultimo_id = m_selec_id[-1]
+                
+                eprint(f"[Úlitmo ID seleccionado: {ultimo_id}]")
+                x_xlsx_estado_final.append(f"[M100C ({copias_reales-100}) ({ultimo_id})]")
+                
                 ## Seleccionar muestras para copiar
                 m_selec_1 = m_selec[0].find_element(By.XPATH, "./td[1]")
                 driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", m_selec_1)
@@ -561,7 +600,7 @@ try:
                 
                 eprint(f"[Saltando creación de PE]\n")
             
-            x_xlsx_estado = "LISTO" if not x_xlsx_estado_final else x_xlsx_estado_final
+            x_xlsx_estado = "LISTO" if not x_xlsx_estado_final else " - ".join(x_xlsx_estado_final)
             FilaAgregarXLSX(dirExcel=dirExcelSalida, valores_fila=[x_idx, x_id_coti, x_muestra_id, x_copias_id, x_pe_id, x_pe_n_muestra, x_pe_titulo, x_xlsx_estado], colnames=nombre_columnas_out, except_kill=False, except_create=True)
 
             if CopiarMuestras and CrearPE:
