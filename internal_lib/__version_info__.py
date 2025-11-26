@@ -1,10 +1,11 @@
 ###############################
 
-version_actual = "5.4.2"
-fecha_version = "martes 11 de noviembre 2025"
+version_actual = "5.4.5"
+fecha_version = "martes 25 de noviembre 2025"
 
 changelog = [
-    "- click en Boton actualizar envaces cuando no se encuentra reprocesar envaces",
+    "- indicar archivo excel con errores en cambiar lotes",
+    "- revisar variables config sin botar programa"
 ]
 
 ###############################

@@ -28,35 +28,56 @@ from __ficheros_modulos__ import *
 config              =   GetConfig( dirConfig=os.path.join(CE_wd,"config.txt") )
 global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
-try:
-    myLIMSdomain            =   global_config["myLIMSdomain"]
-    Labsoftdomain           =   global_config["Labsoftdomain"]
+keys_used = [
+    "RevisarEtapaActual",
+    "ExcluirExcelSalida",
+    "CopiarMuestras",
+    "CrearPE",
+    "SufijoTitulo",
+    "nombreExcelEntrada",
+    "nombreExcelSalida",
+]
 
-    paisActual              =   global_config["paisActual"].replace("é","e").replace("ú","u").lower()
-    log                     =   global_config["ActivarLOG"]
-    app_excel               =   global_config["AppExcel"]
+keys_used_g = [
+    "myLIMSdomain",
+    "Labsoftdomain",
+    "paisActual",
+    "ActivarLOG",
+    "AppExcel",
+]
 
-    ExcluirExcelSalida      =   config["ExcluirExcelSalida"]
-    CopiarMuestras          =   config["CopiarMuestras"]
-    CrearPE                 =   config["CrearPE"]
-    SufijoTitulo            =   config["SufijoTitulo"]
-    
-    timeout                 =   120
+for key in keys_used:
+    if key not in config.keys():
+        input(f"Valor de config \'{key}\' no encontrado en archivo config, enter para continuar igualmente...")
+for key in keys_used_g:
+    if key not in global_config.keys():
+        input(f"Valor de config \'{key}\' no encontrado en archivo global_config, enter para continuar igualmente...")
 
-    nombre_columnas_in      =   ["ID COTI", "ID MUESTRA", "N COPIAS"]
-    nombre_columnas_out     =   ["INDICE", "ID COTI", "ID MUESTRA INICIAL", "ID COPIA", "PE ID", "PE ACTIVIDAD", "PE LUGAR ID", "ESTADO"]
+myLIMSdomain            =   global_config.get("myLIMSdomain")
+Labsoftdomain           =   global_config.get("Labsoftdomain")
 
-    nombreLOG               =   os.path.join(CE_wd,"log", datetime.now().strftime('reporte_%Y_%m_%d-%H_%M') )
+paisActual              =   global_config.get("paisActual", "").replace("é","e").replace("ú","u").lower()
+log                     =   global_config.get("ActivarLOG")
+app_excel               =   global_config.get("AppExcel")
 
-    nombreExcelEntrada      =   config["nombreExcelEntrada"]
-    dirExcelEntrada         =   os.path.join(CE_wd, nombreExcelEntrada)
+RevisarEtapaActual      =   config.get("RevisarEtapaActual")
+ExcluirExcelSalida      =   config.get("ExcluirExcelSalida")
+CopiarMuestras          =   config.get("CopiarMuestras")
+CrearPE                 =   config.get("CrearPE")
+SufijoTitulo            =   config.get("SufijoTitulo")
 
-    nombreExcelSalida       =   config["nombreExcelSalida"]
-    dirExcelSalida          =   os.path.join(CE_wd, nombreExcelSalida)
+timeout                 =   120
 
-except KeyError as e:
-    input(f"Error en archivo de configuración, falta el valor de {e}\n\nEnter para cerrar...")
-    exit(1)
+nombre_columnas_in      =   ["ID COTI", "ID MUESTRA", "N COPIAS"]
+nombre_columnas_out     =   ["INDICE", "ID COTI", "ID MUESTRA INICIAL", "ID COPIA", "PE ID", "PE ACTIVIDAD", "PE LUGAR ID", "ESTADO"]
+
+nombreLOG               =   os.path.join(CE_wd, "log", datetime.now().strftime('reporte_%Y_%m_%d-%H_%M'))
+
+nombreExcelEntrada      =   config.get("nombreExcelEntrada")
+dirExcelEntrada         =   os.path.join(CE_wd, nombreExcelEntrada)
+
+nombreExcelSalida       =   config.get("nombreExcelSalida")
+dirExcelSalida          =   os.path.join(CE_wd, nombreExcelSalida)
 
 if log:
     print("Historial de log activo\n")
@@ -216,7 +237,8 @@ try:
 
         try:
             coti_activa = driver.find_element(By.XPATH, xpath_muestra_activa ).is_selected()
-            coti_estado = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='SampleStatus']/..//input[@class='k-input']").get_attribute("value")
+            coti_etapa = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='WorkFlowStepTo']/..//input[@class='k-input']").get_attribute("value")
+            # coti_estado = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='SampleStatus']/..//input[@class='k-input']").get_attribute("value")
             coti_name_id = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Identification' and @name='Identification']").get_attribute("value")
 
             if not copias_totales and CopiarMuestras:
@@ -227,9 +249,9 @@ try:
                 x_xlsx_estado = "COTI DESACTIVADA"
                 raise ExcepcionDeMuestra(f"[Cotizacion desactivada]")
 
-            if coti_estado != "Registrada":
-                x_xlsx_estado = f"COTI ESTADO {coti_estado.upper()}"
-                raise ExcepcionDeMuestra(f"[Cotizacion en estado {coti_estado if coti_estado else 'Vacío'}]")
+            if RevisarEtapaActual and coti_etapa != "En Realización":
+                x_xlsx_estado = f"COTI ETAPA {coti_etapa.upper()}"
+                raise ExcepcionDeMuestra(f"[Cotizacion en etapa {coti_etapa if coti_etapa else 'Vacío'}]")
 
             BotonSection(driver, "Muestras").click()
             EsperarCARGA_myLIMS(driver)

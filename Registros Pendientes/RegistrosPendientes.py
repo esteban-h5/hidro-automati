@@ -24,43 +24,50 @@ from __ficheros_modulos__   import *
 config              =   GetConfig( dirConfig=os.path.join(RP_wd,"config.txt") )
 global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
-try:
-    myLIMSdomain        =   global_config["myLIMSdomain"]
-    Labsoftdomain       =   global_config["Labsoftdomain"]
-    mainUrl             =   f"{myLIMSdomain}Main.cshtml#Sample/SearchBarCode/List"
+keys_used_g = ["myLIMSdomain", "Labsoftdomain", "AppExcel", "paisActual", "ActivarLOG", "ListaMensajesRutina", "ListaMensajesHoras", "nombreExcelExcepciones"]            
+keys_used = ["Publicar", "RevisarRutinas", "nombreExcelSalida", "nombreExcelEntrada", "nombreExcelError"]
+             
+for key in keys_used:
+    if key not in config.keys():
+        input(f"Valor de config \'{key}\' no encontrado en archivo config, enter para continuar igualmente...")
+for key in keys_used_g:
+    if key not in global_config.keys():
+        input(f"Valor de config \'{key}\' no encontrado en archivo global_config, enter para continuar igualmente...")
 
-    app_excel           =   global_config["AppExcel"]
+myLIMSdomain    = global_config.get("myLIMSdomain", "")
+Labsoftdomain   = global_config.get("Labsoftdomain", "")
 
-    pais                =   global_config["paisActual"].replace("é","e").replace("ú","u").lower()
-    log                 =   global_config["ActivarLOG"]
-    
-    tipo_rutinas        =   global_config["ListaMensajesRutina"].lower().split(",")
-    tipo_horas          =   global_config["ListaMensajesHoras"].lower().split(",")
-    
-    nombreLOG           =   os.path.join(RP_wd,"log",datetime.now().strftime('reporte_%Y_%m_%d-%H_%M'))
+mainUrl         = f"{myLIMSdomain}Main.cshtml#Sample/SearchBarCode/List"
 
-    Publicar            =   config["Publicar"]
-    RevisarRutina       =   config["RevisarRutinas"]
+app_excel       = global_config.get("AppExcel", "")
 
-    nombreExcelSalida   =   config["nombreExcelSalida"]
-    dirExcelSalida      =   os.path.join(RP_wd, nombreExcelSalida)
+pais            = global_config.get("paisActual", "").replace("é","e").replace("ú","u").lower()
+log             = global_config.get("ActivarLOG", False)
 
-    nombreExcelEntrada  =   config["nombreExcelEntrada"]
-    dirExcelEntrada     =   os.path.join(RP_wd, nombreExcelEntrada)
+tipo_rutinas    = global_config.get("ListaMensajesRutina", "").lower().split(",")
+tipo_horas      = global_config.get("ListaMensajesHoras", "").lower().split(",")
 
-    nombreExcepciones   =   global_config["nombreExcelExcepciones"]
-    dirExcepciones      =   os.path.join(internal_lib, nombreExcepciones)
+nombreExcepciones  = global_config.get("nombreExcelExcepciones", "")
+dirExcepciones     = os.path.join(internal_lib, nombreExcepciones)
 
-    nombreExcelError    =   config["nombreExcelError"]
-    dirExcelError       =   os.path.join(RP_wd, nombreExcelError)
+nombreLOG       = os.path.join(RP_wd,"log",datetime.now().strftime('reporte_%Y_%m_%d-%H_%M'))
 
-    delimiter           =   "#######################"
-    nombre_columnas     =   ["INDICE MUESTRA","N MUESTRA","ID MUESTRAS","CONTROL CQ PENDIENTE","ID DEL CQ","NUMERO CQ","ESTADO CQ","ACTIVO","CLIENTE","ÁREA DE SERVICIO"]
-    nombre_columnas_aux =   ["ID MUESTRAS"]
-    
-except KeyError as e:
-    input(f"Error en archivo de configuración, falta el valor de {e}\n\nEnter para cerrar...")
-    exit(1)
+Publicar        = config.get("Publicar", False)
+RevisarRutina   = config.get("RevisarRutinas", False)
+
+nombreExcelSalida = config.get("nombreExcelSalida", "")
+dirExcelSalida    = os.path.join(RP_wd, nombreExcelSalida)
+
+nombreExcelEntrada = config.get("nombreExcelEntrada", "")
+dirExcelEntrada     = os.path.join(RP_wd, nombreExcelEntrada)
+
+nombreExcelError   = config.get("nombreExcelError", "")
+dirExcelError      = os.path.join(RP_wd, nombreExcelError)
+
+delimiter           =   "#######################"
+nombre_columnas     =   ["INDICE MUESTRA","N MUESTRA","ID MUESTRAS","CONTROL CQ PENDIENTE","ID DEL CQ","NUMERO CQ","ESTADO CQ","ACTIVO","CLIENTE","ÁREA DE SERVICIO"]
+nombre_columnas_aux =   ["ID MUESTRAS"]
+
 
 if log:
     print("Historial de log activo\n")

@@ -31,64 +31,83 @@ from __ficheros_modulos__ import *
 config              =   GetConfig( dirConfig=os.path.join(CL_wd,"config.txt") )
 global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
-try:
-    myLIMSdomain          =   global_config["myLIMSdomain"]
-    Labsoftdomain         =   global_config["Labsoftdomain"]
+keys_used = [
+    "SoloBuscarControles", "RevisarRutinas", "RepasarEstado", "Registrar",
+    "EstadoMuestras", "SaltarMuestra", "PublicarDescargables",
+    "DescargarPublicadas", "filtro", "DOC_REVISION_ETFA_ID_CL",
+    "DOC_REVISION_ID_CL", "nombreExcelListaMetodos",
+    "nombreExcelListaRequerimientos", "nombreExcelEntrada",
+    "nombreExcelHistorico", "nombreExcelEstados", "nombreExcelAuxiliar"
+]
 
-    paisActual            =   global_config["paisActual"].replace("é","e").replace("ú","u").lower()
-    log                   =   global_config["ActivarLOG"]
-    app_excel             =   global_config["AppExcel"]
+keys_used_g = [
+    "myLIMSdomain", "Labsoftdomain", "paisActual", "ActivarLOG",
+    "AppExcel", "InicioJornada", "ExtensionJornada",
+    "ListaMensajesRutina", "ListaMensajesHoras"
+]  
 
-    SoloBuscarControles     =   config["SoloBuscarControles"]
-    RevisarRutinas          =   config["RevisarRutinas"]
-    RepasarEstado           =   config["RepasarEstado"]
-    Registrar               =   config["Registrar"]
+for key in keys_used:
+    if key not in config.keys():
+        input(f"Valor de config \'{key}\' no encontrado en archivo config, enter para continuar igualmente...")
+for key in keys_used_g:
+    if key not in global_config.keys():
+        input(f"Valor de config \'{key}\' no encontrado en archivo global_config, enter para continuar igualmente...")
 
-    estadoMuestras          =   config["EstadoMuestras"].split(",")
-    SaltarMuestra           =   config["SaltarMuestra"]
-    
-    INICIO_JORNADA          =   global_config["InicioJornada"]
-    EXTENSION_JORNADA       =   global_config["ExtensionJornada"]
+myLIMSdomain = global_config.get("myLIMSdomain", "")
+Labsoftdomain = global_config.get("Labsoftdomain", "")
 
-    tipo_rutinas            =   global_config["ListaMensajesRutina"].lower().split(",")
-    tipo_horas              =   global_config["ListaMensajesHoras"].lower().split(",")
+paisActual = global_config.get("paisActual", "").replace("é", "e").replace("ú", "u").lower()
+log = global_config.get("ActivarLOG", False)
+app_excel = global_config.get("AppExcel", "")
 
-    AutoPublicar            =   config["PublicarDescargables"]
-    DescargarPublicadas     =   config["DescargarPublicadas"]
-    filtroActual            =   config["filtro"].replace("é","e").replace("ú","u").lower()
+INICIO_JORNADA = global_config.get("InicioJornada", "")
+EXTENSION_JORNADA = global_config.get("ExtensionJornada", "")
 
-    timeout                 =   120
+tipo_rutinas = global_config.get("ListaMensajesRutina", "").lower().split(",") if global_config.get("ListaMensajesRutina") else []
+tipo_horas = global_config.get("ListaMensajesHoras", "").lower().split(",") if global_config.get("ListaMensajesHoras") else []
 
-    id_etfa_config          =   str(config["DOC_REVISION_ETFA_ID_CL"]).split(",")
-    id_no_etfa_config       =   str(config["DOC_REVISION_ID_CL"]).split(",")
+SoloBuscarControles = config.get("SoloBuscarControles", False)
+RevisarRutinas = config.get("RevisarRutinas", False)
+RepasarEstado = config.get("RepasarEstado", False)
+Registrar = config.get("Registrar", False)
 
-    nombre_columnas         =   ["ID MUESTRAS", "ESTADO"]
-    nombre_columnas_reg     =   ["ID", "ID MUESTRAS", "TIENE CONTROLES", "TIENE RUTINAS","MARCA"]
-    nombre_columnas_id      =   ["ID MUESTRAS"]
+estadoMuestras = config.get("EstadoMuestras", "")
+estadoMuestras = estadoMuestras.split(",") if estadoMuestras else []
 
-    nombreLOG               =   os.path.join(CL_wd,"log", datetime.now().strftime('reporte_%Y_%m_%d-%H_%M') )
+SaltarMuestra = config.get("SaltarMuestra", "")
 
-    nombreExcelListaMetodos     =   config["nombreExcelListaMetodos"]
-    dirExcelListaMetodos        =   os.path.join(CL_wd, nombreExcelListaMetodos)
+AutoPublicar = config.get("PublicarDescargables", False)
+DescargarPublicadas = config.get("DescargarPublicadas", False)
+filtroActual = config.get("filtro", "").replace("é", "e").replace("ú", "u").lower()
 
-    nombreExcelListaRequerimientos  = config["nombreExcelListaRequerimientos"]
-    dirExcelListaRequerimientos     = os.path.join(CL_wd, nombreExcelListaRequerimientos)
+timeout = 120
 
-    nombreExcelEntrada          =   config["nombreExcelEntrada"] # Rutinas
-    dirExcelEntrada             =   os.path.join(CL_wd, nombreExcelEntrada)
+id_etfa_config = str(config.get("DOC_REVISION_ETFA_ID_CL", "")).split(",") if config.get("DOC_REVISION_ETFA_ID_CL") else []
+id_no_etfa_config = str(config.get("DOC_REVISION_ID_CL", "")).split(",") if config.get("DOC_REVISION_ID_CL") else []
 
-    nombreExcelHistorico        =   config["nombreExcelHistorico"] # Historico
-    dirExcelHistorico           =   os.path.join(DM_wd, nombreExcelHistorico)
+nombre_columnas = ["ID MUESTRAS", "ESTADO"]
+nombre_columnas_reg = ["ID", "ID MUESTRAS", "TIENE CONTROLES", "TIENE RUTINAS", "MARCA"]
+nombre_columnas_id = ["ID MUESTRAS"]
 
-    nombreExcelEstados          =   config["nombreExcelEstados"] # Estados
-    dirExcelEstados             =   os.path.join(DM_wd, nombreExcelEstados)
+nombreLOG = os.path.join(CL_wd, "log", datetime.now().strftime('reporte_%Y_%m_%d-%H_%M'))
 
-    nombreExcelAuxiliar          =   config["nombreExcelAuxiliar"] # Controles
-    dirExcelAuxiliar             =   os.path.join(RP_wd, nombreExcelAuxiliar)
+nombreExcelListaMetodos = config.get("nombreExcelListaMetodos", "")
+dirExcelListaMetodos = os.path.join(CL_wd, nombreExcelListaMetodos) if nombreExcelListaMetodos else ""
 
-except KeyError as e:
-    input(f"Error en archivo de configuración, falta el valor de {e}\n\nEnter para cerrar...")
-    exit(1)
+nombreExcelListaRequerimientos = config.get("nombreExcelListaRequerimientos", "")
+dirExcelListaRequerimientos = os.path.join(CL_wd, nombreExcelListaRequerimientos) if nombreExcelListaRequerimientos else ""
+
+nombreExcelEntrada = config.get("nombreExcelEntrada", "")  # Rutinas
+dirExcelEntrada = os.path.join(CL_wd, nombreExcelEntrada) if nombreExcelEntrada else ""
+
+nombreExcelHistorico = config.get("nombreExcelHistorico", "")  # Historico
+dirExcelHistorico = os.path.join(DM_wd, nombreExcelHistorico) if nombreExcelHistorico else ""
+
+nombreExcelEstados = config.get("nombreExcelEstados", "")  # Estados
+dirExcelEstados = os.path.join(DM_wd, nombreExcelEstados) if nombreExcelEstados else ""
+
+nombreExcelAuxiliar = config.get("nombreExcelAuxiliar", "")  # Controles
+dirExcelAuxiliar = os.path.join(RP_wd, nombreExcelAuxiliar) if nombreExcelAuxiliar else ""
 
 if log:
     print("Historial de log activo\n")
@@ -142,16 +161,24 @@ xpath_estado_muestra    = "//div[@id='InterfaceContent']/div[1]//label[contains(
 xpath_lista_analitos    = "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[2]/table/tbody"
 x_path_alerta_inactiva  = "//*/div[contains(@class,'k-window') and contains(@style,'display: block;')]//span[@class='k-window-title' and contains(text(), 'Registro Inactivo')]/ancestor::div[contains(@class,'k-window') and contains(@style,'display: block;')]"
 
-df_entrada          =   AbrirXLSX(dirExcelEntrada, colnames=nombre_columnas)
-dir_Descargados     =   os.path.join(CL_wd, "Descargados")
+try:
+        
+    df_entrada          =   AbrirXLSX(dirExcelEntrada, colnames=nombre_columnas, except_kill)
+    dir_Descargados     =   os.path.join(CL_wd, "Descargados")
 
-if not RepasarEstado: #Obtener solo muestras que no tengan estado [LISTO, ERROR]
-    muestras_entrada = df_entrada[df_entrada["ESTADO"].astype(str).str.strip() == ""]["ID MUESTRAS"].to_list()
-else: 
-    muestras_entrada = df_entrada["ID MUESTRAS"].to_list()
+    if not RepasarEstado: #Obtener solo muestras que no tengan estado [LISTO, ERROR]
+        muestras_entrada = df_entrada[df_entrada["ESTADO"].astype(str).str.strip() == ""]["ID MUESTRAS"].to_list()
+    else: 
+        muestras_entrada = df_entrada["ID MUESTRAS"].to_list()
 
-muestras_requerimientos = pd.read_excel(dirExcelListaRequerimientos)
-cantidad_muestras = len(muestras_entrada)
+    muestras_requerimientos = pd.read_excel(dirExcelListaRequerimientos)
+    cantidad_muestras = len(muestras_entrada)
+
+except ExcepcionArchivo as e:
+    eprint(e)
+    input("Enter para cerrar...")
+    exit(1)
+
 
 def excepcion_handler(e, id_muestra=None, driver=None):
     
@@ -1026,7 +1053,11 @@ while True:
                                 logprint(f"click en moneda de origen [{n_combobox}]")
                                 EsperarCARGA_myLIMS(driver)
 
-                                if paisActual == "mexico":
+                                if paisActual == "colombia":
+                                    driver.find_element(By.XPATH, f"//ul[@role='listbox' and @id='{n_combobox}']/li[contains(text(), 'Peso Colombiano')]").click()
+                                    logprint("click en peso mexicano")
+
+                                elif paisActual == "mexico":
                                     driver.find_element(By.XPATH, f"//ul[@role='listbox' and @id='{n_combobox}']/li[contains(text(), 'Peso Mexicano')]").click()
                                     logprint("click en peso mexicano")
 
