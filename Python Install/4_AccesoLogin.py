@@ -101,6 +101,7 @@ try:
 
     encuser = config.get("USER").encode()
     encpasswd = config.get("PASSWD").encode()
+    etiqueta = config.get("ETIQUETA")
 
     try:
       user = str(Fernet(key).decrypt(encuser).decode())
@@ -113,7 +114,7 @@ try:
     x = ""
     if keyring.get_password('mylims_app', 'secret7') != None:
       print("Token de acceso existente")
-      x = str(input("Volver a registrar token de acceso? (S/n) "))
+      x = str(input("Volver a registrar token de acceso? (s/N) "))
 
     DriverOptions = Options()
     DriverOptions.add_argument("--window-size=1172,708")
@@ -143,7 +144,7 @@ try:
     driver = Chrome(options=DriverOptions)
     #driver.minimize_window()
 
-    print("Iniciando sesión en labsoft")
+    print(f"Iniciando sesión en labsoft con \'{etiqueta}\'")
     driver.get(labsoft_url+"Account/Login?ReturnUrl=%2Fconnect%2Fauthorize%2Fcallback%3Fclient_id%3DmyLIMSweb_JQuery%26redirect_uri%3Dhttps%253A%252F%252Fhidrolab.mylimsweb.cloud%252Fcallback%252Findex%26response_type%3Dcode%26scope%3Dopenid%2520myLIMSweb_API_Create%2520myLIMSweb_API_Read%2520myLIMSweb_API_Update%2520myLIMSweb_API_Delete%2520DataViewer_API_Create%2520DataViewer_API_Read%2520DataViewer_API_Update%2520DataViewer_API_Delete%2520DataFactory_API_Create%2520DataFactory_API_Read%2520DataFactory_API_Update%2520DataFactory_API_Delete%26state%3D3f7710d7f8f54206ab43e2adb4373545%26code_challenge%3DomdhGcvw4OZtkZOX0FbtzxaFQQ82k9KoWdY-zQiq1Ok%26code_challenge_method%3DS256%26response_mode%3Dquery%26requesterClient%3Dhidrolab")
 
     driver.find_element(By.XPATH,'//*[@id="Username"]').send_keys(user)
@@ -164,7 +165,7 @@ try:
       input("Error interno de la página, no se cargó mylims correctamente\nPresione enter para cerrar")
       exit(1)
     
-    if x != "n":      
+    if x == "s":      
 
       EsperarCARGA_myLIMS(driver)
       print("Extrayendo token de acceso")

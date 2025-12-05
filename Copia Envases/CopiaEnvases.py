@@ -331,7 +331,7 @@ try:
 
                     else:
                         BotonVentana(driver,"Copiar").click()
-                        EsperarCARGA_myLIMS(driver, reintentos=180)
+                        EsperarCARGA_myLIMS(driver, reintentos=300)
 
                         xpath_estado_copia = f"{xpath_ventana_copia}//div[contains(text(),'Copias Concluidas.')]"
                         try:
@@ -392,8 +392,14 @@ try:
 
                         else:
                             BotonVentana(driver,"Copiar").click()
-                            EsperarCARGA_myLIMS(driver, reintentos=300) ###
+                            EsperarCARGA_myLIMS(driver, reintentos=300)
 
+                            xpath_estado_copia = f"{xpath_ventana_copia}//div[contains(text(),'Copias Concluidas.')]"
+                            try:
+                                WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, xpath_estado_copia)))
+                            except Exception:
+                                raise ExcepcionDeCarga(f"No apareció el mensaje 'Copias Concluidas.' dentro de la ventana: {xpath_estado_copia}")
+                            
                             driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//button[@data-test="Cancelar" and contains(text(), "Salir")]').click()
                             EsperarCARGA_myLIMS(driver)
 

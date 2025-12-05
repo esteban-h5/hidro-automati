@@ -74,7 +74,7 @@ def ReestablecerXLSX(dirExcel, colnames, filtro=False):
 
 def AbrirXLSX(dirExcel, colnames, except_kill=True, except_create=True, except_alert=True):
     try:
-        regExcel = pd.read_excel(dirExcel, keep_default_na=False)
+        regExcel = pd.read_excel(dirExcel, keep_default_na=False, index_col=None)
 
         if colnames != regExcel.columns.to_list() and except_alert:
             if except_kill: raise ExcepcionArchivo(f"La cantidad de columnas no coincide, los datos pueden quedar corridos\nSe esparaba: {colnames}\nSe lee: {regExcel.columns.to_list()}\n")

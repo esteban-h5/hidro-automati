@@ -66,19 +66,19 @@ EXTENSION_JORNADA = global_config.get("ExtensionJornada", "")
 tipo_rutinas = global_config.get("ListaMensajesRutina", "").lower().split(",") if global_config.get("ListaMensajesRutina") else []
 tipo_horas = global_config.get("ListaMensajesHoras", "").lower().split(",") if global_config.get("ListaMensajesHoras") else []
 
-SoloBuscarControles = config.get("SoloBuscarControles", False)
-RevisarRutinas = config.get("RevisarRutinas", False)
+SoloBuscarControles = config.get("SoloBuscarControles", True)
+RevisarRutinas = config.get("RevisarRutinas", True)
 RepasarEstado = config.get("RepasarEstado", False)
-Registrar = config.get("Registrar", False)
+Registrar = config.get("Registrar", True)
 
 estadoMuestras = config.get("EstadoMuestras", "")
 estadoMuestras = estadoMuestras.split(",") if estadoMuestras else []
 
-SaltarMuestra = config.get("SaltarMuestra", "")
+SaltarMuestra = config.get("SaltarMuestra", True)
 
 AutoPublicar = config.get("PublicarDescargables", False)
 DescargarPublicadas = config.get("DescargarPublicadas", False)
-filtroActual = config.get("filtro", "").replace("é", "e").replace("ú", "u").lower()
+filtroActual = config.get("filtro", "finalizadas").replace("é", "e").replace("ú", "u").lower()
 
 timeout = 120
 
@@ -172,9 +172,9 @@ else:
 muestras_requerimientos = pd.read_excel(dirExcelListaRequerimientos)
 cantidad_muestras = len(muestras_entrada)
 
-def excepcion_handler(e, id_muestra=None, driver=None):
-    
-    str_expt = "Error en ejecucion" if id_muestra == None else f"Error para la muestra {id_muestra}"
+def excepcion_handler(e, id_muestra=None, driver=None, funcion_print=print):
+    tipoError = type(e).__name__
+    str_expt = f"Error {tipoError} en ejecucion" if id_muestra == None else f"Error {tipoError} para la muestra {id_muestra}"
 
     if driver != None:
         ventana_dim = driver.get_window_size()
@@ -183,7 +183,9 @@ def excepcion_handler(e, id_muestra=None, driver=None):
     
     str_expt = str_expt+FormatoExcepcion(e)
 
-    notify(title=f"Problemas con la muestra {id_muestra}!", body=type(e).__name__)
+    if Registrar and id_muestra != None: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ERROR")
+    notify(title=f"Problemas con la muestra {id_muestra}!", body=tipoError)
+    eprint(str_expt)
     sleep(3)
 
 def secuencia_inicio():
@@ -374,6 +376,15 @@ while True:
                                     # eprint(f"Metodo {metodo_nuevo} no encontrado para analito numero {analito['id']} con metodo {analito['metodo']}")
                                     eprint(f"Metodo {metodo_nuevo} no encontrado")
                                     if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SIN METODO")
+                                    
+                                    BotonAccion(driver,"CancelButton", log=True, funcion_print=logprint ).click()
+                                    EsperarCARGA_myLIMS(driver)                             
+                                    continue
+
+                                if flag_estado == -2: 
+                                    # eprint(f"Metodo {metodo_nuevo} no encontrado para analito numero {analito['id']} con metodo {analito['metodo']}")
+                                    eprint(f"Metodo {metodo_nuevo} no se puede alterar")
+                                    if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "METODO NO ALT")
                                     
                                     BotonAccion(driver,"CancelButton", log=True, funcion_print=logprint ).click()
                                     EsperarCARGA_myLIMS(driver)                             
@@ -1024,10 +1035,9 @@ while True:
                             control_label = '//div[@class="labsoft-ui-input"]/label[@class="control-label" and contains(text(), "Moneda de Origen")]/ancestor::div[@class="labsoft-ui-input"]'
                             moneda_actual = driver.find_element(By.XPATH, control_label+'//input[@class="k-input" and @role="combobox"]').get_attribute("value")
                             
-                            if moneda_actual in ["Peso Mexicano","Unidad de Fomento"]:
+                            if moneda_actual in ["Peso Mexicano","Unidad de Fomento", "Peso Colombiano"]:
                                 boton = BotonAccion(driver, "CalculatePriceButton", log=True, funcion_print=logprint)
                                 boton.click()
-
                                 boton.find_element(By.XPATH,"./..//li[@data-test='CalculatePriceButtonItem-RecalculatePrice']").click()
 
                                 BotonVentana(driver,"Confirmar", log=True, funcion_print=logprint ).click()
@@ -1045,7 +1055,11 @@ while True:
                                 logprint(f"click en moneda de origen [{n_combobox}]")
                                 EsperarCARGA_myLIMS(driver)
 
-                                if paisActual == "mexico":
+                                if paisActual == "colombia":
+                                    driver.find_element(By.XPATH, f"//ul[@role='listbox' and @id='{n_combobox}']/li[contains(text(), 'Peso Colombiano')]").click()
+                                    logprint("click en peso colombiano")
+
+                                elif paisActual == "mexico":
                                     driver.find_element(By.XPATH, f"//ul[@role='listbox' and @id='{n_combobox}']/li[contains(text(), 'Peso Mexicano')]").click()
                                     logprint("click en peso mexicano")
 
@@ -1054,7 +1068,6 @@ while True:
                                     logprint("click en unidad de fomento")
                                 
                                 EsperarCARGA_myLIMS(driver)
-                                
                                 BotonAccion(driver, "SaveButton", log=True, funcion_print=logprint ).click()
                                 EsperarCARGA_myLIMS(driver, espera=.5)
 

@@ -10,11 +10,11 @@ DOC_REVISION_ETFA_ID_CL    :   0
 DOC_REVISION_ID_CL         :   0
 #
 #
-# Deshabilitar descarga de documentos y publicacion, solo agregar a registro muestras con controles [True]
-SoloBuscarControles   :	  False
+# Deshabilitar descarga de documentos, solo agregar a registro muestras con controles [True]
+SoloBuscarControles   :	  True
 #
 #
-# Descargar en caso de que la muestra ya este publicada
+# Descargar en caso de que la muestra ya este publicada [False]
 DescargarPublicadas   :   False
 #
 #
@@ -27,7 +27,7 @@ AutoPublicar          :   True
 #
 #
 # Revisa si existen alertas de horas y las corrige [True]
-RevisarRutinas        :   False
+RevisarRutinas        :   True
 #
 #
 # Descargar sin recordar lo registrado [False]
@@ -43,11 +43,7 @@ BorrarDuplicados      :   True
 #
 #
 # Reintentos antes de interrumpir el programa [5]
-# TotalReintentos      	:   5
-#
-#
-# Tiempo de espera en segundos para carga de mylims [45]
-# TiempoEspera					: 	45
+TotalReintentos      	:   5
 #
 #
 nombreExcelRegistro   		:   Registro.xlsx

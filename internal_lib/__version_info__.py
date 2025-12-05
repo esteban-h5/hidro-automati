@@ -1,13 +1,23 @@
 ###############################
 
-version_actual = "5.5.0"
-fecha_version = "martes 11 de noviembre 2025"
+version_actual = "5.5.3"
+fecha_version = "lunes 5 de diciembre 2025"
 
 changelog = [
-    "- Corregir casos con más de 100 copias en copiamuestras (estado_final)",
-    "- Esperar a alerta 'Copias concluidas' de copias muestras y no mylims",
-    "- RevisarEtapaActual = 'en realizacion'",
-    "- Nuevo GetConfig de MuestrasAPI",
+    # #"- Corregir casos con más de 100 copias en copiamuestras (estado_final)",
+    # # "- Esperar a alerta 'Copias concluidas' de copias muestras y no mylims",
+    # # "- RevisarEtapaActual = 'en realizacion'",
+    # # "- Nuevo GetConfig de MuestrasAPI",
+    # # "- Agregar Mas usuarios, respeta los index",
+    # # "- Se incluye peso colombiano",
+    #"- Valores de Reintentos en DescargaMuestras",
+    #"- Credenciales creando con etiqueta para varias opciones",
+    #"- Ajuste Valores Predeterminados en config",
+    #"- Actualizar anuncia archivo config con nuevo valor",
+    "- Config CambiarLotes",
+    "- CambiarLotes y AbrirExcel en orden",
+    "- CambiarLotes Excepcion Alterar metodo",
+    "- Guardar Credenciales con decode, no en bytes",
 ]
 
 ###############################

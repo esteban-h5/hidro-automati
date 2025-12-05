@@ -68,7 +68,6 @@ delimiter           =   "#######################"
 nombre_columnas     =   ["INDICE MUESTRA","N MUESTRA","ID MUESTRAS","CONTROL CQ PENDIENTE","ID DEL CQ","NUMERO CQ","ESTADO CQ","ACTIVO","CLIENTE","ÁREA DE SERVICIO"]
 nombre_columnas_aux =   ["ID MUESTRAS"]
 
-
 if log:
     print("Historial de log activo\n")
     

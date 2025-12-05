@@ -2,17 +2,19 @@ try:
     from cryptography.fernet import Fernet
     from datetime import datetime
     from getpass import getpass
-    from time import sleep
     import keyring, os
     
 except ModuleNotFoundError as e:
     input(f"Modulos no instalados: {e}\nEnter para cerrar")
     exit(1)
-    
-internal_lib =  os.path.dirname(os.path.realpath(__file__))+"\\..\\internal_lib"
-param_path = internal_lib+"\\Param.env"
-param_exist = os.path.exists(param_path)
-token = keyring.get_password('mylims_app', 'secret4')
+
+etiqueta        = "PRINCIPAL"
+internal_lib    = os.path.join(os.path.dirname(os.path.realpath(__file__)),"..","internal_lib")
+param_path      = os.path.join(internal_lib,"Param.env")
+param_exist     = os.path.exists(param_path)
+
+token           = keyring.get_password('mylims_app', 'secret4')
+header_user     = os.getlogin().replace("ñ","$n")
 
 if os.getenv("mylims_key") != None:
     print("ADVERTENCIA: llave de desencriptación previa guardada en variable de entorno\n")
@@ -38,14 +40,17 @@ if x != "n":
     #os.system(f"setx mylims_key {llave.decode()}")
     keyring.set_password("mylims_app", "secret4", llave.decode())
 
-    encuser = Fernet(llave).encrypt(user.encode())
-    encpasswd = Fernet(llave).encrypt(passwd.encode())
+    enc_user = Fernet(llave).encrypt(user.encode())
+    enc_passwd = Fernet(llave).encrypt(passwd.encode())
 
     fecha = datetime.now().strftime("%d/%m/%Y")
     hora = datetime.now().strftime("%H:%M:%S")
 
     with open(param_path,"w") as archivo:
-        archivo.write(f'#Archivo creado en la sesion de {os.getlogin().replace("ñ","$n")} con fecha de {fecha} a las {hora}\nUSER={encuser.decode()}\nPASSWD={encpasswd.decode()}')
+        archivo.write(f"#Archivo creado en la sesion de {header_user} con fecha de {fecha} a las {hora}\n")
+        archivo.write(f"ETIQUETA={etiqueta}\n")
+        archivo.write(f"USER={enc_user.decode()}\n")
+        archivo.write(f"PASSWD={enc_passwd.decode()}\n")
         archivo.close()
 
     print("\nContraseñas encriptadas y archivo de credenciales creado\n")

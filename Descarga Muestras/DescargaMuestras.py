@@ -41,7 +41,7 @@ try:
         Labsoftdomain = global_config.get("Labsoftdomain", "")
 
         paisActual = global_config.get("paisActual", "").replace("é","e").replace("ú","u").lower()
-        log        = global_config.get("ActivarLOG", False)
+        log        = global_config.get("ActivarLOG", True)
 
         INICIO_JORNADA    = global_config.get("InicioJornada", "")
         EXTENSION_JORNADA = global_config.get("ExtensionJornada", "")
@@ -54,30 +54,30 @@ try:
 
         filtroActual = config.get("filtro", "").replace("é","e").replace("ú","u").lower()
 
-        SoloBuscarControles = config.get("SoloBuscarControles", False)
+        SoloBuscarControles = config.get("SoloBuscarControles", True)
         DescargarPublicadas = config.get("DescargarPublicadas", False)
+        
+        Alerta          = config.get("Alerta", True)
+        AutoPublicar    = config.get("AutoPublicar", True)
 
-        Registrar      = config.get("RegistrarMuestras", False)
-        RevisarRutinas = config.get("RevisarRutinas", False)
-        AutoPublicar   = config.get("AutoPublicar", False)
-        Olvidar        = config.get("Olvidar", False)
+        RevisarRutinas  = config.get("RevisarRutinas", True)
+        Olvidar         = config.get("Olvidar", False)
+        Registrar       = config.get("RegistrarMuestras", True)
+        TotalReintentos = config.get("TotalReintentos", 5)
 
-        BorrarDup = config.get("BorrarDuplicados", False)
-        Alerta    = config.get("Alerta", False)
+        BorrarDup = config.get("BorrarDuplicados", True)
 
         id_etfa_config    = str(config.get("DOC_REVISION_ETFA_ID_CL", "")).split(",") if config.get("DOC_REVISION_ETFA_ID_CL") else []
         id_no_etfa_config = str(config.get("DOC_REVISION_ID_CL", "")).split(",") if config.get("DOC_REVISION_ID_CL") else []
 
-        nombreExcelRegistro = config.get("nombreExcelRegistro", "")
+        nombreExcelRegistro = config.get("nombreExcelRegistro", "Registro.xlsx")
         dirExcelRegistro    = os.path.join(DM_wd, nombreExcelRegistro) if nombreExcelRegistro else ""
 
-        nombreHistorico   = config.get("nombreExcelHistorico", "")
+        nombreHistorico   = config.get("nombreExcelHistorico", "Historico.xlsx")
         dirExcelHistorico = os.path.join(DM_wd, nombreHistorico) if nombreHistorico else ""
-
-        nombreExcepciones = global_config.get("nombreExcelExcepciones", "")
-        dirExcepciones    = os.path.join(internal_lib, nombreExcepciones) if nombreExcepciones else ""
-
-
+        nombreExcepciones = global_config.get("nombreExcelExcepciones", "Excepciones.xlsx")
+        dirExcepciones    = os.path.join(internal_lib, nombreExcepciones)
+	
         mainUrl                 =   f"{myLIMSdomain}Main.cshtml#Sample/Finalized/List"
         nombre_columnas         =   ["ID MUESTRAS"]
         nombre_columnas_reg     =   ["ID", "ID MUESTRAS", "TIENE CONTROLES", "TIENE RUTINAS","MARCA"]
@@ -121,7 +121,7 @@ try:
         limite_inferior, limite_superior = FormatoLimiteHoras(INICIO_JORNADA, EXTENSION_JORNADA)
 
         if SoloBuscarControles:
-            eprint( 
+            eprint(
                 f"Solo Buscar Controles [True]:\t{SoloBuscarControles}\n\n"+
                 f"Publicación automática [True]:\t{AutoPublicar}\n\n"+
                 f"Olvidar registro [False]:\t{Olvidar}\n\n"+
@@ -395,7 +395,7 @@ try:
         id_excel += 1
 
         Excepcion_error = ""
-        IntentosDeCarga = 5
+        IntentosDeCarga = TotalReintentos
 
         if not SoloBuscarControles:
             cant_previa = len(os.listdir(dir_Descargados))

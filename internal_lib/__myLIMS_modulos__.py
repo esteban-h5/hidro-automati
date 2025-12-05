@@ -68,13 +68,12 @@ def existe_param_env(path_internal):
 
 #Devolver diccionario con variables del código
 def GetConfig(dirConfig, encode="utf-8"):
-    
   
     with open(dirConfig, "r", encoding=encode) as configTXT:
         lineas = []
         for linea in configTXT.read().split("\n"):
 
-            if linea[0] == "#" or linea == "" : continue
+            if linea == "" or linea[0] == "#": continue
             if "#" in linea: linea = linea.split("#")[0].strip()
                 
             lineas.append( linea.split(":") )

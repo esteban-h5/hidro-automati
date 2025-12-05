@@ -1044,10 +1044,13 @@ def edit_alterar_por_metodo(driver, analito_dict, nuevo_metodo):
 
         for _ in m_copia[1:]:
             driver.execute_script("arguments[0].setAttribute('class', 'k-alt k-state-selected');", driver.find_element(By.XPATH, _))
-
-        BotonAccion(driver,"AnalysisAlterMethodButton").click()
-        EsperarCARGA_myLIMS(driver)
-
+        
+        try:
+            BotonAccion(driver,"AnalysisAlterMethodButton").click()
+            EsperarCARGA_myLIMS(driver)
+        except ElementNotInteractableException:
+            return -2
+        
         ventana = driver.find_element(By.XPATH, "//div[@class='k-widget k-window' and contains(@style, 'display: block;')]/div[@data-role='window']")
         
         cuadro_busqueda = ventana.find_element(By.XPATH, ".//span[@data-field='Identification']//input[@aria-label='Identificación' and @type='text']")

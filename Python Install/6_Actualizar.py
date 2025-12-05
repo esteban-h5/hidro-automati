@@ -3,7 +3,7 @@ Copiar archivos de configuracion con nuevas variables, dejando como persistente 
 """
 
 try:
-    import os, shutil, time, zipfile, importlib.util, traceback
+    import os, shutil, time, zipfile, importlib.util, traceback, re
     from tkinter.filedialog import askopenfile
     from pathlib import Path
     
@@ -11,33 +11,46 @@ except ModuleNotFoundError as e:
     input(f"Modulos no instalados: {e}\nEnter para cerrar")
     exit(1)  
 
+
 #Devolver diccionario con variables del código
-def GetConfig(dirConfig):
-    with open(dirConfig,"r",encoding="latin-1") as configTXT:
-        lineas = [_.split(":") for _ in configTXT.read().split("\n") if "#" not in _ and _ != ""]
+def GetConfig(dirConfig, encode="utf-8"):
+  
+    with open(dirConfig, "r", encoding=encode) as configTXT:
+        lineas = []
+        for linea in configTXT.read().split("\n"):
+
+            if linea == "" or linea[0] == "#": continue
+            if "#" in linea: linea = linea.split("#")[0].strip()
+                
+            lineas.append( linea.split(":") )
+        
         configDict = {}
 
         for items in lineas:
             
-            llave = items[0].replace("\t","")
-            valor = ":".join(items[1:]).replace("\t","")
+            llave = items[0].strip()
+            valor = ":".join(items[1:]).strip()
             
-            try:
+            if valor.isdigit():
                 configDict[llave] = int(valor)
-            except ValueError:
+                continue
+
+            elif str(valor).lower() in ("true", "verdadero"):
+                configDict[llave] = True
+                continue
+
+            elif str(valor).lower() in ("false", "falso"):
+                configDict[llave] = False
+                continue
+            
+            else:
                 configDict[llave] = valor
 
-            if "true" in str(valor).lower() or "verdadero" in str(valor).lower():
-                configDict[llave] = True
-            
-            if "false" in str(valor).lower() or "falso" in str(valor).lower():
-                configDict[llave] = False 
-
     return configDict
-
 try:
     zip_actual = "#####"
     ignore = []
+    save_pattern = re.compile(r"save_Param_(\d+)\.env$")
 
     n_DM = "Descarga Muestras"
     n_RP = "Registros Pendientes"
@@ -62,10 +75,6 @@ try:
         os.path.join(n_CE,"config.txt"),
         os.path.join(n_il,"global_config.txt"),
     ]
-    fOtros = [
-        os.path.join(n_il,"Excepciones.xlsx"),
-        os.path.join(n_il,"Param.env"),
-    ]
     dirOtros_persistentes = [
         os.path.join(n_DM,"log"),
         os.path.join(n_DM,"Descargados"),
@@ -73,10 +82,18 @@ try:
         os.path.join(n_CL,"Descargados"),
         os.path.join(n_CE,"log"),
     ]
-    
+    fOtros = [
+        os.path.join(n_il,"Excepciones.xlsx"),
+        os.path.join(n_il,"Param.env"),
+    ]
+
     #./Automatizacion actual/.
     dir_actual = os.path.realpath( os.path.join( os.path.dirname(os.path.realpath(__file__)),"..") )
     update_config = GetConfig(os.path.join(dir_actual,"Python Install","config_actualizar.txt"))
+
+    for fname in os.listdir(os.path.join(dir_actual,n_il)):
+        if save_pattern.match(fname):
+            fOtros.append(os.path.join(n_il, fname))
 
     excluir = [os.path.normpath(_) for _ in update_config["ExcluirArchivos"].split(",")]
 
@@ -158,13 +175,25 @@ try:
     cambio = ""
     
     for idx in range(len(lista_config_new)):
-        dict_old = GetConfig(lista_config_old[idx])
-        dict_new = GetConfig(lista_config_new[idx])
+        config_old = lista_config_old[idx]
+        config_old_name = os.path.basename(os.path.dirname(lista_config_old[idx]))+" VIEJO"
+        
+        config_new = lista_config_new[idx]
+        config_new_name = os.path.basename(os.path.dirname(lista_config_new[idx]))+" NUEVO"
+        
+        dict_old = GetConfig(config_old)
+        dict_new = GetConfig(config_new)
+        
         for key in dict_new.keys():
             if key not in dict_old.keys():
-                print(f"Nuevo valor: {key}")
+                print(f"Nuevo valor en {config_old_name}: {key}")
                 cambio = cambio+f"\n{key}: {dict_new[key]}\n"
-        dict_cambio[lista_config_new[idx]] = cambio
+
+        for key in dict_old.keys():
+            if key not in dict_new.keys():
+                print(f"Valor descartado en {config_new_name}: {key}")
+
+        dict_cambio[config_new] = cambio
 
     #Eliminar archivos persistentes de zip nuevo y copiar archivos persistentes de programa viejo
     print(f"Reemplazando {len(lista_archivos_persistentes_new)} archivos en \n{dir_zip}")

@@ -19,12 +19,8 @@ SoloBuscarControles   :	  True
 RevisarRutinas        :   	True
 #
 #
-# Añade pasos a los botones para recordar [True]
-Ayuda						  :		True
-#
-#
 # Publicar Muestras Descargables [False]
-PublicarDescargables          :   	True
+PublicarDescargables          :   	False
 #
 #
 # Descargar Muestras Publicadas [False]
@@ -41,11 +37,11 @@ EstadoMuestras  :   Recibida,En Análisis,Registrada
 #
 #
 # Volver a correr muestras con estado guardado [False]
-RepasarEstado  :   True
+RepasarEstado  :   False
 #
 #
 # Saltar muestra en caso de error en calcular precios [True]
-SaltarMuestra  :   False
+SaltarMuestra  :   True
 #
 #
 nombreExcelEntrada              :   ListaMuestras.xlsx
