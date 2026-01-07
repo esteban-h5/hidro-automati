@@ -4,6 +4,13 @@ import pandas as pd
 from openpyxl import load_workbook
 from zipfile import BadZipFile
 
+#Excepcion al no encontrar en diccionario, indicar valor no encontrado
+def obtener_llave_por_valor(dic, valor):
+    for k, v in dic.items():
+        if v == valor:
+            return k
+    return None
+
 #Insertar filtro automaticamente al inicio de la columna
 def insertarFiltro(dirExcel, colnames):
   wb = load_workbook(dirExcel)

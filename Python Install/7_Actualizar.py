@@ -56,6 +56,7 @@ try:
     n_RP = "Registros Pendientes"
     n_CL = "Cambiar Lotes"
     n_CE = "Copia Envases"
+    n_CM = "Crear Muestras"
     n_il = "internal_lib"
 
     xlsxDescarga = [
@@ -73,6 +74,7 @@ try:
         os.path.join(n_DM,"config.txt"),
         os.path.join(n_CL,"config.txt"),
         os.path.join(n_CE,"config.txt"),
+        os.path.join(n_CM,"config.txt"),
         os.path.join(n_il,"global_config.txt"),
     ]
     dirOtros_persistentes = [
@@ -81,6 +83,7 @@ try:
         os.path.join(n_CL,"log"),
         os.path.join(n_CL,"Descargados"),
         os.path.join(n_CE,"log"),
+        os.path.join(n_CM,"log"),
     ]
     fOtros = [
         os.path.join(n_il,"Excepciones.xlsx"),

@@ -13,15 +13,16 @@ try:
 
     from cryptography.fernet import InvalidToken, Fernet
     from datetime import datetime, timedelta, time
-    from decouple import Config, RepositoryEnv
-    from collections import defaultdict
     from random import randint, choice, uniform
-    from time import sleep as wait
-    from time import time as tiempo
+    from decouple import Config, RepositoryEnv
+    from tkinter import filedialog, messagebox
+    from keyring import get_password as get
+    from collections import defaultdict
+    from time import sleep
     from win11toast import notify
     from pathlib import Path
 
-    import os, requests, sys, traceback, subprocess, re, ctypes, keyring, pandas as pd
+    import os, requests, sys, traceback, subprocess, re, ctypes, pandas as pd
     from __version_info__ import version_actual
 
 except ModuleNotFoundError as e:
@@ -61,6 +62,13 @@ class ExcepcionArchivo(Exception):
 
 class ExcepcionDeCodigo(Exception):
     pass
+
+paisDICT = {
+    "chile":"SCL",
+    "mexico":"MTY",
+    "peru":"LIM",
+    "colombia":"BOG",
+    }
 
 def existe_param_env(path_internal):
   file = os.path.join(path_internal,"Param.env")
@@ -169,7 +177,7 @@ def MensajeInicial(filename, funcion_log=None, login_url=None, init_url=None,  f
         funcion_log(f'---------------------------\n'+
                     f"Global Config:\n{'\n'.join(f'- {x}: {y}' for x,y in global_config.items())}"+
                     f'\n-------------------------\n')
-    wait(3)
+    sleep(3)
 
 
 def AlternarMedidaVentana(driver):
@@ -194,7 +202,7 @@ def del_alertas_iniciales(driver, xalerta, xboton):
     return False
 
 def EsperarCARGA_myLIMS(driver, reintentos=60, kill=True, funcion_print=print, recargar=True, resize=True, extra=None, espera=0, revisar_overlay=True):
-    wait(espera)
+    sleep(espera)
     mover_mouse_antiSalvapantallas()
 
     for _ in range(5):    
@@ -209,13 +217,13 @@ def EsperarCARGA_myLIMS(driver, reintentos=60, kill=True, funcion_print=print, r
 
         if resize: AlternarMedidaVentana(driver)
         for _ in range(reintentos):
-            wait(1)
+            sleep(1)
             try:
                 if 'pace-inactive' in driver.execute_script('return document.querySelector("body > div.pace").getAttribute("class");'):
                     if extra == None:
                         return 0
                     else:
-                        wait(extra)
+                        sleep(extra)
                         return 0
                 
             except JavascriptException:
@@ -224,7 +232,7 @@ def EsperarCARGA_myLIMS(driver, reintentos=60, kill=True, funcion_print=print, r
         if recargar: 
             funcion_print("Elevado tiempo de espera, recargando mylims")
             driver.refresh()
-        wait(5)
+        sleep(5)
 
     if kill: raise ExcepcionDeCarga(f'Timeout al esperar carga de myLIMS')
     else:
@@ -373,4 +381,4 @@ def mover_mouse_antiSalvapantallas():
         ii_.mi.time = 0
         ii_.mi.dwExtraInfo = ctypes.pointer(extra)
         ctypes.windll.user32.SendInput(1, ctypes.pointer(ii_), ctypes.sizeof(ii_))
-        wait(0.05)  # Pausa breve entre movimientos
+        sleep(0.05)  # Pausa breve entre movimientos

@@ -107,8 +107,8 @@ try:
       user = str(Fernet(key).decrypt(encuser).decode())
       passwd = str(Fernet(key).decrypt(encpasswd).decode())
 
-    except InvalidToken:
-      input("Llave de desencriptación no coincide. (myLIMS_key)\nPresione enter para cerrar")
+    except InvalidToken as e:
+      input(f"Llave de desencriptación no coincide. (myLIMS_key)\n{e}\nPresione enter para cerrar")
       exit(1)
 
     x = ""

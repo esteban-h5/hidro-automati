@@ -1,4 +1,5 @@
 from __myLIMS_modulos__ import *
+from __myLIMS_class__ import DeltaTimer
 
 def unique(lista, invertido=False):
     if invertido:
@@ -33,7 +34,7 @@ def Login(driver, path_internal, login_url, post_url, funcion_print=print):
 
     param = Config(RepositoryEnv(os.path.join(path_internal,"Param.env")))
 
-    key = keyring.get_password('mylims_app', 'secret4')
+    key = get('mylims_app', 'secret4')
     
     if key == None: 
         raise ExcepcionDeCarga(f'No se encontro llave de desencriptación. (Secret)')
@@ -69,7 +70,7 @@ def Login(driver, path_internal, login_url, post_url, funcion_print=print):
             #Elemento de login
             WebDriverWait(driver, 20).until( EC.presence_of_element_located((By.XPATH, '//*[@id="Username"]')) ) 
             
-            wait(1)
+            sleep(1)
             break
 
         except TimeoutException:
@@ -83,7 +84,7 @@ def Login(driver, path_internal, login_url, post_url, funcion_print=print):
         driver.find_element(By.XPATH,'//*[@id="Password"]').send_keys(passwd)
 
         driver.find_element(By.XPATH,'//*[@class="labsoft-login-button-primary"]').click()
-        wait(1)
+        sleep(1)
         
     except NoSuchElementException as e:
         user = "\0" * len(user)
@@ -123,19 +124,19 @@ def forzar_carga(driver, url, max_intentos=8, reintentos=4, funcion_print=print,
         
     if "callback" in driver.current_url:
       #Redirección de backend, reintentando
-      wait(n_reintentos)
+      sleep(n_reintentos)
       driver.get(url)
       n_reintentos, intento = 1, intento + 1
 
     elif url in driver.current_url:
       #Bien, esperando redirección
-      wait(n_reintentos)
+      sleep(n_reintentos)
       n_reintentos, intento = n_reintentos + 1, intento + 1
 
     else:
       #Revisar link
       try:
-        wait(n_reintentos)
+        sleep(n_reintentos)
         if "Muitos usuários" in driver.find_element(By.XPATH,"//*[@id='message' and @class='alert alert-danger']").text:
           
           if kill: raise ExcepcionDeMuestra(f'ALERTA DE MUCHOS USUARIOS, se necesita esperar')
@@ -458,7 +459,7 @@ def ControlRecon(driver,muestraInicial):
         if elemento.get_attribute("style") == "": continue
         driver.execute_script("var cagaste = arguments[0]; cagaste.parentNode.removeChild(cagaste);",elemento)
 
-    wait(.1)
+    sleep(.1)
     ntexto = driver.find_element(By.TAG_NAME,'tbody').find_element(
         By.XPATH,
         '//*[@class="k-pager-info k-label" and @style="visibility: visible;"]'
@@ -466,7 +467,7 @@ def ControlRecon(driver,muestraInicial):
 
     while ntexto == "Nada a enseñar.":
         print("Carga muy rapida")
-        wait(1.5)
+        sleep(1.5)
         ntexto = driver.find_element(By.TAG_NAME,'tbody').find_element(By.XPATH,'//*[@class="k-pager-info k-label" and @style="visibility: visible;"]').text    
 
     ActualCQ = []
@@ -510,12 +511,19 @@ def ControlRecon(driver,muestraInicial):
 
 #Subir ID de muestras en listaFichero a navegador buscando código de barra 
 def SubirLista(driver,listaLista, funcion_print=print):
+
     
     EsperarCARGA_myLIMS(driver)
     CodigoDeBarra = driver.find_element(By.XPATH,'//*[@placeholder="Código de Barras"]')
     largo_indices = len(listaLista)
+    
+    timer = DeltaTimer(buffer_size=10)
+    timer.start()
 
     for idx, _ID in enumerate(listaLista):
+        timer.delta()
+        timer.final(idx-1,largo_indices)
+        
         CodigoDeBarra.click()
         CodigoDeBarra.send_keys(Keys.CONTROL, Keys.ARROW_LEFT)
         CodigoDeBarra.send_keys(Keys.CONTROL, Keys.DELETE)
@@ -530,7 +538,7 @@ def SubirLista(driver,listaLista, funcion_print=print):
             funcion_print(f'Error con id: {_ID}\n')
             continue
         
-        funcion_print(f"ID {str(_ID)} subido ({idx+1} de {largo_indices})")
+        funcion_print(f"ID {str(_ID)} subido ({idx+1} de {largo_indices}) [restantes: {timer.t_restante} - final: {timer.end_time}]")
         EsperarCARGA_myLIMS(driver)
 
 

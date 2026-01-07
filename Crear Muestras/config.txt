@@ -1,0 +1,185 @@
+# Mostrar estructura JSON
+MostrarJSON     : False
+#
+#
+#ID o nombre de tabla de precios (0 marca lista predeterminada al pais)
+ListaPrecio     : 0
+#
+#
+# Largo de particion para subir y crear muestras
+Partition       : 5
+#
+#
+# Direccion completa de excel donde se guardaran las muestras
+ExcelObjetivo   :		C:\Users\Hidrolab\Documents\Automatizacion\Automatizacion-main\Registros Pendientes\RegistroAuxiliar.xlsx
+#
+#
+# COLUMNA EXCEL OBJETIVO PARA DEJAR NUEVAS MUESTRAS (Importan mayusculas)
+COL-std_id_muestra          :   ID MUESTRAS
+#
+#
+# Nombre de excel con muestras a crear (Buscar en directorio de script)
+ExcelEntrada    :   Hidrolab MTY _ Planilla de carga de muestras (WALMART)
+
+
+#################
+##    CHILE    ##
+#################
+
+SCL-HojaIM : Muestras
+SCL-COL-indice_m                :   N°
+SCL-COL-id_muestras             :   ID muestra
+SCL-COL-identificacion          :   Identificación de muestra
+SCL-COL-matriz                  :   Matriz
+SCL-COL-empresa                 :   Empresa
+SCL-COL-cuenta_relacionada      :   Cuenta Relacionada
+SCL-COL-motivo                  :   Motivo
+SCL-COL-cliente_solicitante     :   Cliente solicitante #Cliente solicitante (en caso de ser consultora)
+SCL-COL-lugar_muestreo          :   Lugar de Muestreo
+SCL-COL-punto_muestreo          :   Punto de muestreo
+SCL-COL-direccion_muestreo      :   Dirección de muestreo
+SCL-COL-estado                  :   Estado
+SCL-COL-municipio               :   Municipio
+SCL-COL-siralab                 :   Siralab
+SCL-COL-instrumento_ambiental   :   Instrumento ambiental
+SCL-COL-tipo_muestreo           :   Tipo de muestreo
+SCL-COL-consultora              :   Consultora?
+SCL-COL-coordenadas             :   Coordenadas
+SCL-COL-resp_muestreo           :   Resp Muestreo
+SCL-COL-frecuencia              :   Frecuencia
+SCL-COL-proyecto                :   Proyecto
+SCL-COL-region                  :   Región
+SCL-COL-departamento            :   Departamento
+SCL-COL-comuna                  :   Comuna
+SCL-COL-etfa                    :   ETFA
+SCL-COL-tabla_comp              :   Tabla comparativa
+
+SCL-HojaA : Análisis
+SCL-COL-indice_a                :   N°
+SCL-COL-metodo_id               :   MetodoId
+SCL-COL-grupo_id                :   Id Grupo
+SCL-COL-analisis_id             :   AnalisisId
+SCL-COL-u_medida_id             :   UMedidaId
+
+
+
+##################
+##    MEXICO    ##
+##################
+
+MTY-HojaIM : Muestras
+MTY-COL-indice_m                :   N°
+MTY-COL-id_muestras             :   ID muestra
+MTY-COL-identificacion          :   Identificación de muestra
+MTY-COL-matriz                  :   Matriz
+MTY-COL-empresa                 :   Empresa
+MTY-COL-cuenta_relacionada      :   Cuenta Relacionada
+MTY-COL-motivo                  :   Motivo
+MTY-COL-cliente_solicitante     :   Cliente solicitante
+MTY-COL-lugar_muestreo          :   Lugar de Muestreo
+MTY-COL-punto_muestreo          :   Punto de muestreo
+MTY-COL-direccion_muestreo      :   Dirección de muestreo
+MTY-COL-estado                  :   Estado
+MTY-COL-municipio               :   Municipio
+MTY-COL-siralab                 :   Siralab
+MTY-COL-instrumento_ambiental   :   Instrumento ambiental
+MTY-COL-tipo_muestreo           :   Tipo de muestreo
+MTY-COL-consultora              :   Consultora?
+MTY-COL-coordenadas             :   Coordenadas
+MTY-COL-resp_muestreo           :   Resp Muestreo
+MTY-COL-frecuencia              :   Frecuencia
+MTY-COL-proyecto                :   Proyecto
+MTY-COL-region                  :   Región
+MTY-COL-departamento            :   Departamento
+MTY-COL-comuna                  :   Comuna
+MTY-COL-etfa                    :   ETFA
+MTY-COL-tabla_comp              :   Tabla comparativa
+
+MTY-HojaA : Análisis
+MTY-COL-indice_a                :   ID muestra
+MTY-COL-metodo_id               :   MetodoId
+MTY-COL-grupo_id                :   Id Grupo
+MTY-COL-analisis_id             :   AnalisisId
+MTY-COL-u_medida_id             :   UMedidaId
+
+
+
+#################
+##    PERU     ##
+#################
+
+LIM-HojaIM : Muestras
+LIM-COL-indice_m                :   N° #ID de muestra
+LIM-COL-id_muestras             :   ID muestra #N° en Mylims
+LIM-COL-identificacion          :   Identificación de muestra
+LIM-COL-matriz                  :   Matriz
+LIM-COL-empresa                 :   Empresa
+LIM-COL-cuenta_relacionada      :   Cuenta Relacionada
+LIM-COL-motivo                  :   Motivo
+LIM-COL-cliente_solicitante     :   Cliente solicitante #Cliente solicitante (en caso de ser consultora)
+LIM-COL-lugar_muestreo          :   Lugar de Muestreo
+LIM-COL-punto_muestreo          :   Punto de muestreo
+LIM-COL-direccion_muestreo      :   Dirección de muestreo
+LIM-COL-estado                  :   Estado
+LIM-COL-municipio               :   Municipio
+LIM-COL-siralab                 :   Siralab
+LIM-COL-instrumento_ambiental   :   Instrumento ambiental
+LIM-COL-tipo_muestreo           :   Tipo de muestreo
+LIM-COL-consultora              :   Consultora?
+LIM-COL-coordenadas             :   Coordenadas
+LIM-COL-resp_muestreo           :   Resp Muestreo
+LIM-COL-frecuencia              :   Frecuencia
+LIM-COL-proyecto                :   Proyecto
+LIM-COL-region                  :   Región
+LIM-COL-departamento            :   Departamento
+LIM-COL-comuna                  :   Comuna
+LIM-COL-etfa                    :   ETFA
+LIM-COL-tabla_comp              :   Tabla comparativa
+
+LIM-HojaA : Análisis
+LIM-COL-indice_a                :   ID muestra
+LIM-COL-metodo_id               :   MetodoId
+LIM-COL-grupo_id                :   Id Grupo
+LIM-COL-analisis_id             :   AnalisisId
+LIM-COL-u_medida_id             :   UMedidaId
+
+
+
+################
+##  COLOMBIA  ##
+################
+
+BOG-HojaIM : Muestras
+BOG-COL-indice_m                :   N° #ID de muestra
+BOG-COL-id_muestras             :   ID muestra #N° en Mylims
+BOG-COL-identificacion          :   Identificación de muestra
+BOG-COL-matriz                  :   Matriz
+BOG-COL-empresa                 :   Empresa
+BOG-COL-cuenta_relacionada      :   Cuenta Relacionada
+BOG-COL-motivo                  :   Motivo
+BOG-COL-cliente_solicitante     :   Cliente solicitante #Cliente solicitante (en caso de ser consultora)
+BOG-COL-lugar_muestreo          :   Lugar de Muestreo
+BOG-COL-punto_muestreo          :   Punto de muestreo
+BOG-COL-direccion_muestreo      :   Dirección de muestreo
+BOG-COL-estado                  :   Estado
+BOG-COL-municipio               :   Municipio
+BOG-COL-siralab                 :   Siralab
+BOG-COL-instrumento_ambiental   :   Instrumento ambiental
+BOG-COL-tipo_muestreo           :   Tipo de muestreo
+BOG-COL-consultora              :   Consultora?
+BOG-COL-coordenadas             :   Coordenadas
+BOG-COL-resp_muestreo           :   Resp Muestreo
+BOG-COL-frecuencia              :   Frecuencia
+BOG-COL-proyecto                :   Proyecto
+BOG-COL-region                  :   Región
+BOG-COL-departamento            :   Departamento
+BOG-COL-comuna                  :   Comuna
+BOG-COL-etfa                    :   ETFA
+BOG-COL-tabla_comp              :   Tabla comparativa
+
+BOG-HojaA : Análisis
+BOG-COL-indice_a                :   ID muestra
+BOG-COL-metodo_id               :   MetodoId
+BOG-COL-grupo_id                :   Id Grupo
+BOG-COL-analisis_id             :   AnalisisId
+BOG-COL-u_medida_id             :   UMedidaId

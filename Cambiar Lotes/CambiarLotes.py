@@ -1,14 +1,4 @@
-try:
-    from selenium.webdriver.common.alert import Alert
-    from selenium.common.exceptions import *
-    from tkinter import messagebox
-    from datetime import datetime
-    import subprocess, os, sys
-    from time import sleep
-
-except ModuleNotFoundError as e:
-    input(f"Modulos no instalados: {e}\nEnter para cerrar")
-    exit(1)
+import os, sys
 
 file_name           =   os.path.basename(__file__)
 
@@ -20,9 +10,31 @@ RP_wd               =   os.path.normpath(os.path.join(CL_wd,"..","Registros Pend
 
 sys.path.insert(0, internal_lib)
 
-from __myLIMS_modulos__ import *
-from __myLIMS_wrappers__ import *
-from __ficheros_modulos__ import *
+from __myLIMS_modulos__ import (
+    GetConfig, MensajeInicial, version_actual, existe_param_env,
+    EsperarCARGA_myLIMS, EsperarVentana, ExcepcionDeCarga, 
+    BotonSection, BotonAccion, BotonVentana,
+    FormatoExcepcion, ExcepcionDeMuestra, alerta_visible,
+    UnexpectedAlertPresentException, StaleElementReferenceException, InvalidSessionIdException,
+    SessionNotCreatedException, TimeoutException, NoSuchWindowException, 
+    ElementNotInteractableException, ElementClickInterceptedException,
+    SiExisteElemento, EsperarCLICK, queue_redy, 
+    By, EC, DriverOptions, Chrome, Keys, WebDriverWait,
+    pd, notify, sleep, datetime, Path, requests, subprocess, messagebox
+)
+
+from __ficheros_modulos__ import (
+    ListaMuestraXLSX, ListaAColumnaXLSX, ReestablecerXLSX,
+    ListaMuestraXLSX, CambiarEstadoIDxlsx, 
+    AbrirXLSX, ComprobarExcelAbierto
+)
+
+from __myLIMS_wrappers__ import (
+    Logout, Login, CambiarFechas, FormatoLimiteHoras,
+    get_analito_dict, ContarControlesPendientes, MuestraPublicar, BuscarAlertas,
+    edit_alterar_por_metodo, edit_revisar_medida, edit_agregar_por_analisis_y_metodo, 
+    edit_eliminar_por_analisis_dict, edit_aprobar_logistica, edit_eliminar_por_metodo_dict, 
+)
 
 ########################################
 #Inicialización de Config
@@ -35,8 +47,8 @@ keys_used = [
     "SoloBuscarControles", "RevisarRutinas", "RepasarEstado", "Registrar",
     "EstadoMuestras", "SaltarMuestra", "PublicarDescargables",
     "DescargarPublicadas", "filtro", "DOC_REVISION_ETFA_ID_CL",
-    "DOC_REVISION_ID_CL", "nombreExcelListaMetodos",
-    "nombreExcelListaRequerimientos", "nombreExcelEntrada",
+    "DOC_REVISION_ID_CL",
+    "nombreExcelMetodosDB", "nombreExcelEntrada",
     "nombreExcelHistorico", "nombreExcelEstados", "nombreExcelAuxiliar"
 ]
 
@@ -91,11 +103,8 @@ nombre_columnas_id = ["ID MUESTRAS"]
 
 nombreLOG = os.path.join(CL_wd, "log", datetime.now().strftime('reporte_%Y_%m_%d-%H_%M'))
 
-nombreExcelListaMetodos = config.get("nombreExcelListaMetodos", "")
-dirExcelListaMetodos = os.path.join(CL_wd, nombreExcelListaMetodos) if nombreExcelListaMetodos else ""
-
-nombreExcelListaRequerimientos = config.get("nombreExcelListaRequerimientos", "")
-dirExcelListaRequerimientos = os.path.join(CL_wd, nombreExcelListaRequerimientos) if nombreExcelListaRequerimientos else ""
+nombreExcelMetodosDB = config.get("nombreExcelMetodosDB", "")
+dirExcelMetodosDB = os.path.join(internal_lib, nombreExcelMetodosDB) if nombreExcelMetodosDB else ""
 
 nombreExcelEntrada = config.get("nombreExcelEntrada", "")  # Rutinas
 dirExcelEntrada = os.path.join(CL_wd, nombreExcelEntrada) if nombreExcelEntrada else ""
@@ -153,7 +162,7 @@ if not existe_param_env(internal_lib):
     exit(1)
 
 # tkMenu      =   lambda x,y="-",z="-": int(subprocess.run(["python", f"{internal_lib}\\__display_modulos__.py","2",str(x),str(y),str(z)], capture_output=True, text=True).stdout)
-tkMenu      =   lambda x1, x2="-", x3="-", x4="-", x5="-": subprocess.run(["python", f"{internal_lib}\\__display_modulos__.py","2",str(x1),str(x2),str(x3),str(x4),str(x5)], text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).stdout
+tkMenu      =   lambda x1, x2="-", x3="-", x4="-", x5="-": subprocess.run(["python", f"{internal_lib}\\__display_modulos__.py","2",str(x1),str(x2),str(x3),str(x4)], text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT).stdout
 ptkMenu      =   lambda x1, x2="-", x3="-", x4="-", x5="-": eprint(f"python \"{internal_lib}\\__display_modulos__.py\" 2 \"{str(x1)}\" \"{str(x2)}\" \"{str(x3)}\" \"{str(x4)}\" \"{str(x5)}\"")
 
 xpath_muestra_activa    = "//div[@id='InterfaceContent']/div[1]//div[@class='labsoft-ui-input checkbox']//input[@data-test='Active']"
@@ -169,7 +178,7 @@ if not RepasarEstado: #Obtener solo muestras que no tengan estado [LISTO, ERROR]
 else: 
     muestras_entrada = df_entrada["ID MUESTRAS"].to_list()
 
-muestras_requerimientos = pd.read_excel(dirExcelListaRequerimientos)
+muestras_requerimientos = pd.read_excel(dirExcelMetodosDB, sheet_name="Requerimientos")
 cantidad_muestras = len(muestras_entrada)
 
 def excepcion_handler(e, id_muestra=None, driver=None, funcion_print=print):
@@ -259,7 +268,7 @@ def secuencia_estado_muestra(driver, id_muestra, idx=None, total=None, estados=e
 while True:
     slog()
     eprint("Menú Principal")
-    menu_principal = tkMenu(0, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual)
+    menu_principal = tkMenu(0, dirExcelMetodosDB, cantidad_muestras, paisActual)
     logprint(f"Salida del menu: {menu_principal}\n")
 
     try:
@@ -286,11 +295,11 @@ while True:
             eprint(f"{n_menu_principal}: Reemplazar uno o más métodos por otro método de análisis para {cantidad_muestras} muestras")
 
             #Obtener opcion a partir de menu
-            # str_cambio = ptkMenu(n_menu_principal, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual)
-            str_cambio = str(tkMenu(n_menu_principal, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual))
+            # str_cambio = ptkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual)
+            str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB, cantidad_muestras, paisActual))
 
             while str_cambio == "-2":
-                str_cambio = str(tkMenu(n_menu_principal, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual))
+                str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual))
 
             if str_cambio == "-1" or str_cambio == "":
                 #Volviendo
@@ -459,10 +468,10 @@ while True:
             eprint(f"{n_menu_principal}: Reemplazar analíto por otro con el mismo método de análisis para {cantidad_muestras} muestras")
 
             #Obtener opcion a partir de menu
-            str_cambio = str(tkMenu(n_menu_principal, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual))
+            str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual))
 
             while str_cambio == "-2":
-                str_cambio = str(tkMenu(n_menu_principal, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual))
+                str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual))
 
             if str_cambio == "-1" or str_cambio == "":
                 #Volviendo
@@ -596,10 +605,10 @@ while True:
             eprint(f"{n_menu_principal}: Reemplazar un análisis por otro con otro método de análisis para {cantidad_muestras} muestras")
 
             #Obtener opcion a partir de menu
-            str_cambio = str(tkMenu(n_menu_principal, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual))
+            str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual))
 
             while str_cambio == "-2":
-                str_cambio = str(tkMenu(n_menu_principal, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual))
+                str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual))
 
             if str_cambio == "-1" or str_cambio == "":
                 #Volviendo
@@ -732,10 +741,10 @@ while True:
         case 4:
             eprint(f"{n_menu_principal}: Agregar análisis a muestras en lista para {cantidad_muestras} muestras")
             
-            str_cambio = str(tkMenu(n_menu_principal, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual))
+            str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual))
             
             while str_cambio == "-2":
-                str_cambio = str(tkMenu(n_menu_principal, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual))
+                str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual))
 
             if str_cambio == "-1" or str_cambio == "":
                 #Volviendo
@@ -839,10 +848,10 @@ while True:
         case 5:
             eprint(f"{n_menu_principal}: Eliminar método de muestras en lista para {cantidad_muestras} muestras")
             
-            str_cambio = str(tkMenu(n_menu_principal, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual))
+            str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual))
 
             while str_cambio == "-2":
-                str_cambio = str(tkMenu(n_menu_principal, dirExcelListaMetodos, dirExcelListaRequerimientos, cantidad_muestras, paisActual))
+                str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual))
 
             if str_cambio == "-1" or str_cambio == "":
                 #Volviendo
@@ -1456,7 +1465,7 @@ while True:
                         ###################################################
                         #Revisar Controles Pendientes
                         BotonSection(driver,"SectionRelatedSamples", log=True, funcion_print=logprint ).click()
-                        wait(1)
+                        sleep(1)
                         EsperarCARGA_myLIMS(driver)
                         
                         cant_controles, lista_controles = ContarControlesPendientes(driver, ID_Actual=id_muestra)
@@ -1534,26 +1543,26 @@ while True:
                                 raise ExcepcionDeCarga(f"No se encontró boton en la lista ({IDbotonesDocumentos}) para descargar documento (ID de botones disponibles en myLIMS: {id_botones_myLIMS})")
                             
                             EsperarCLICK(driver,atributo="data-test",valor=f"DocumentsButtonItem-DocTemplateId:{IDboton}", kill=True)
-                            wait(3)
+                            sleep(3)
                             EsperarCARGA_myLIMS(driver, funcion_print=eprint, reintentos=30, kill=True)
 
                             #Desaparece barra naranja
                             for _ in range(timeout):
                                 if queue_redy(driver): break
                                 if alerta_visible(driver): raise ExcepcionDeMuestra("ALERTA en procesado de muestra (Reintentar)")
-                                wait(1)
+                                sleep(1)
 
                             else:
                                 raise ExcepcionDeMuestra("TIMOUT en procesado de muestra (notificacion naranja no desaparece)")
-                            wait(1)
+                            sleep(1)
                             #Esperar descarga de documento revisando cantidad de archivos en carpeta
                             for _ in range(timeout):
                                 if cant_previa == len(os.listdir(dir_Descargados)):
-                                    wait(1)
+                                    sleep(1)
                                     continue
                                 
                                 if any(".crdownload" in archivo or ".part" in archivo for archivo in os.listdir(dir_Descargados)):
-                                    wait(1)
+                                    sleep(1)
                                     continue
 
                                 if alerta_visible(driver): raise ExcepcionDeMuestra("ERROR en procesado de muestra (Reintentar)")
@@ -1644,7 +1653,7 @@ while True:
                                 break
                             except requests.ConnectionError:
                                 eprint("No hay connexión a internet, reintentando cada 1 minuto...")
-                                wait(60)
+                                sleep(60)
 
                         if isinstance(e, (ExcepcionDeMuestra,UnexpectedAlertPresentException, StaleElementReferenceException) ):
                             eprint(f'__________________\nProblemas con la muestra {id_muestra}\n{FormatoExcepcion(e)}\n')
@@ -1658,7 +1667,7 @@ while True:
                         if not isinstance(e, (ExcepcionDeMuestra, UnexpectedAlertPresentException, StaleElementReferenceException, InvalidSessionIdException, ExcepcionDeCarga, KeyError) ):
                             eprint(f'__________________\nProblemas desconocidos con la muestra {id_muestra}\n{FormatoExcepcion(e)}\n')
                         
-                        wait(1)
+                        sleep(1)
                         driver.refresh()
                         EsperarCARGA_myLIMS(driver, funcion_print=eprint)
                         IntentosDeCarga -= 1

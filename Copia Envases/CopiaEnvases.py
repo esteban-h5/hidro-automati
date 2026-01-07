@@ -14,7 +14,6 @@ file_name           =   os.path.basename(__file__)
 
 CE_wd               =   os.path.dirname(os.path.realpath(__file__))
 internal_lib        =   os.path.normpath(os.path.join(CE_wd,"..","internal_lib"))
-
 sys.path.insert(0, internal_lib)
 
 from __myLIMS_modulos__ import *

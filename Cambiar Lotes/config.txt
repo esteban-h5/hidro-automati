@@ -48,7 +48,4 @@ nombreExcelEntrada              :   ListaMuestras.xlsx
 nombreExcelHistorico            :   Historico.xlsx
 nombreExcelEstados              :   Registro.xlsx
 nombreExcelAuxiliar             :   RegistroAuxiliar.xlsx
-#
-#
-nombreExcelListaMetodos         :   __ListaMetodos.xlsx
-nombreExcelListaRequerimientos  :   __ListaRequerimientos.xlsx
+nombreExcelMetodosDB            :   __MethodsDB__.xlsx

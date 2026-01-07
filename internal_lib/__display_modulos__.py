@@ -30,7 +30,7 @@ try:
     tipo_menu = int(sys.argv[1])
 
 except (ValueError, IndexError):
-    messagebox.showerror(title="Error en programacion", message="No se especifica el menu del programa")
+    messagebox.showerror(title="Error en programacion", message=f"No se especifica el menu del programa: \'{sys.argv}\'")
     exit(1)
 
 match tipo_menu:
@@ -167,24 +167,23 @@ match tipo_menu:
     case 2:
         import pandas as pd
 
-        if len(sys.argv) != 7:
+        if len(sys.argv) != 6:
             messagebox.showerror(message=f"Se requieren 7 argumentos y se obtienen {len(sys.argv)}:\n{sys.argv}", title="Error en programacion", )
             exit(1)
 
         try:
             sub_menu = int(sys.argv[2])
             path_lista = str(sys.argv[3])
-            path_lista_req = str(sys.argv[4])
-            cantidad_muestras = str(sys.argv[5])
-            pais = str(sys.argv[6])
+            cantidad_muestras = str(sys.argv[4])
+            pais = str(sys.argv[5])
 
         except (ValueError, IndexError) as e:
             messagebox.showerror(message=f"Excepcion al ejecutar el programa:\n{e}", title="Error en lista de muestras", )
             exit(1)
 
         try:
-            df_muestras = pd.read_excel(path_lista)
-            df_requerimientos = pd.read_excel(path_lista_req)
+            df_muestras = pd.read_excel(path_lista, sheet_name="ListaMetodos")
+            df_requerimientos = pd.read_excel(path_lista, sheet_name="Requerimientos")
 
         except Exception as e:
             messagebox.showerror(message=f"Excepcion al abrir el Excel lista de muestras:\n{e}", title="Error en lista de muestras", )
@@ -488,7 +487,7 @@ match tipo_menu:
                 metodos = df_muestras["Metodo"].drop_duplicates().to_list()
                 analitos = df_muestras["Analito"].drop_duplicates().to_list()
 
-                df_requerimientos = pd.read_excel(path_lista_req)
+                df_requerimientos = pd.read_excel(path_lista, sheet_name="Requerimientos")
 
                 seleccion_metodo_analisis_entrada = ""
                 seleccion_metodo_analisis_entrada_lista = ['']
@@ -724,7 +723,7 @@ match tipo_menu:
                     seleccion_metodo_analisis_salida = ""
                     
                     metodos = df_muestras["Metodo"].drop_duplicates().to_list()
-                    df_requerimientos = pd.read_excel(path_lista_req)
+                    df_requerimientos = pd.read_excel(path_lista, sheet_name="Requerimientos")
 
                     print("-2", end="")
                     root.destroy()
@@ -751,7 +750,7 @@ match tipo_menu:
                 analisis = df_muestras["Analito"].drop_duplicates().to_list()
                 metodos  = df_muestras["Metodo"].drop_duplicates().to_list()
 
-                df_requerimientos = pd.read_excel(path_lista_req)
+                df_requerimientos = pd.read_excel(path_lista, sheet_name="Requerimientos")
 
                 seleccion_analisis_entrada = ""
                 seleccion_analisis_salida = ""
@@ -931,7 +930,7 @@ match tipo_menu:
                 analisis = df_muestras["Analito"].drop_duplicates().to_list()
                 metodos  = df_muestras["Metodo"].drop_duplicates().to_list()
 
-                df_requerimientos = pd.read_excel(path_lista_req)
+                df_requerimientos = pd.read_excel(path_lista, sheet_name="Requerimientos")
 
                 seleccion_analisis_entrada = ""
                 seleccion_analisis_salida = ""

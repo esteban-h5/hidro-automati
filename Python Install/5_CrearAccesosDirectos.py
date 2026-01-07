@@ -29,7 +29,7 @@ def crear_acceso_directo(ruta_archivo, ruta_acceso_directo):
     acceso_directo.IconLocation = r"%SystemRoot%\System32\imageres.dll,201"
     acceso_directo.save()
 
-programs = ["DescargaMuestras", "RegistrosPendientes", "CambiarLotes", "CopiaEnvases"]
+programs = ["DescargaMuestras", "RegistrosPendientes", "CambiarLotes", "CopiaEnvases", "CrearMuestras"]
 
 try:
   ejecutables = [
@@ -37,6 +37,7 @@ try:
       os.path.join(wd,"..","Registros Pendientes","RegistrosPendientes.py"),
       os.path.join(wd,"..","Cambiar Lotes","CambiarLotes.py"),
       os.path.join(wd,"..","Copia Envases","CopiaEnvases.py"),
+      os.path.join(wd,"..","Crear Muestras","CrearMuestras.py"),
   ]
 
   lista_escritorios = [
