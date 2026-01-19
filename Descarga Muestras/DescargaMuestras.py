@@ -12,23 +12,23 @@ try:
 
     from __myLIMS_modulos__ import (
         GetConfig, MensajeInicial, version_actual, existe_param_env,
-        EsperarCARGA_myLIMS, ExcepcionDeCarga, 
-        BotonSection, BotonAccion, BotonVentana,
+        EsperarCARGA_myLIMS, ExcepcionDeCarga, ChequearNavegador,
+        BotonSection, BotonAccion, BotonVentana, queue_redy,
+        ElementClickInterceptedException, ExcepcionArchivo,
         FormatoExcepcion, ExcepcionDeMuestra, ElementNotInteractableException,
         UnexpectedAlertPresentException, StaleElementReferenceException, InvalidSessionIdException, 
-        By, EC, DriverOptions, Chrome, Keys, WebDriverWait, DeltaTimer,
+        By, EC, DriverOptions, Chrome, Keys, WebDriverWait, DeltaTimer, alerta_visible,
         notify, sleep, datetime, requests, prefs, Path, EsperarCLICK,
     )
     from __myLIMS_wrappers__ import (
-        unique, Cortar,
-        BuscarAlertas,
+        unique, Cortar, BuscarAlertas,
+        ContarControlesPendientes,
+        CambiarFechas, MuestraPublicar
     )
-
     from __ficheros_modulos__ import (
         ListaMuestraXLSX, FilaAgregarXLSX,
         ObtenerIDExcel, AgregarMuestraXLSX,
     )
-
     from __myLIMS_wrappers__ import (
         Logout, Login, FormatoLimiteHoras,
     )
@@ -40,7 +40,7 @@ try:
         config              =   GetConfig( dirConfig=os.path.join(DM_wd,"config.txt") )
         global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
-        keys_used = ["filtro", "SoloBuscarControles", "DescargarPublicadas", "RegistrarMuestras", "RevisarRutinas", "AutoPublicar", "Olvidar", "BorrarDuplicados", "Alerta", "DOC_REVISION_ETFA_ID_CL", "DOC_REVISION_ID_CL", "nombreExcelRegistro", "nombreExcelHistorico"]
+        keys_used   = ["filtro", "SoloBuscarControles", "DescargarPublicadas", "RegistrarMuestras", "RevisarRutinas", "AutoPublicar", "Olvidar", "BorrarDuplicados", "Alerta", "DOC_REVISION_ETFA_ID_CL", "DOC_REVISION_ID_CL", "nombreExcelRegistro", "nombreExcelHistorico"]
         keys_used_g = ["myLIMSdomain", "Labsoftdomain", "paisActual", "ActivarLOG", "InicioJornada", "ExtensionJornada", "ListaMensajesRutina", "ListaMensajesHoras", "nombreExcelExcepciones"]
 
         for key in keys_used:
@@ -382,9 +382,6 @@ try:
         if not RevisarRutinas: TotalCambioFechas = "Desactivado"
         else: TotalCambioFechas = 0
 
-        T_MuestraInicio = None; T_TotalRestante = 0
-        T_TotalInicio = int(tiempo())
-
         if SoloBuscarControles:
             eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola, revisando controles y fechas para publicar...')
         else:
@@ -407,11 +404,16 @@ try:
     fila_muestra = [ id_excel, "##########", "##########", "##########", datetime.now().strftime('[%d-%m-%Y %H:%M]')]
     FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
 
+    timer = DeltaTimer(buffer_size=25)
+    timer.start(len(ListaMuestras))
+
     ########################################
     #Instancia para cada muestra a descargar
     for MuestraIndice, ID_Actual in enumerate(ListaMuestras,1):
         slog()
         id_excel += 1
+
+        timer.save(MuestraIndice)
 
         Excepcion_error = ""
         IntentosDeCarga = TotalReintentos
@@ -422,26 +424,6 @@ try:
             cant_previa = 0
 
         while IntentosDeCarga != 0:
-            try: 
-                T_MuestraInicio = tiempo()
-
-                mxm = sum(minutosXmuestra)/len(minutosXmuestra)
-                T_TotalRestante = mxm*(MuestrasCantidad-MuestraIndice)
-
-                if int(mxm) == 0:
-                    mxm = f"{mxm*60*60:.2f} seg/m"
-                else:
-                    mxm = f"{mxm*60:.2f} min/m"
-
-                
-                if int(T_TotalRestante) == 0: 
-                    T_TotalRestante = f"{T_TotalRestante*60:.2f} minutos [{mxm}]"
-                else:
-                    T_TotalRestante = f"{T_TotalRestante:.2f} horas [{mxm}]"
-                
-            except ZeroDivisionError: 
-                pass
-
             #Reintentar y recargar solo esta sección
             try:
 
@@ -461,13 +443,13 @@ try:
                 if SoloBuscarControles:
                     eprint( f'\nRevisando ID: {ID_Actual}\n'+
                             f'N de Muestra: {N_Muestra}\n'+
-                            f'Tiempo restante: {T_TotalRestante}\n'+
+                            f'Tiempo restante: {timer.t_restante} [{timer.h_estimada}]\n'+
                             f'Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{MuestrasCantidad}]\n'+
                             f'Registradas: {TotalDescarga} - Publicadas: {TotalPublicados} - Cambios de Fechas: {TotalCambioFechas}')
                 else:
                     eprint( f'\nRevisando ID: {ID_Actual}\n'+
                             f'N de Muestra: {N_Muestra}\n'+
-                            f'Tiempo restante: {T_TotalRestante}\n'+
+                            f'Tiempo restante: {timer.t_restante} [{timer.h_estimada}]\n'+
                             f'Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{MuestrasCantidad}]\n'+
                             f'Descargadas: {TotalDescarga} - Publicadas: {TotalPublicados} - Cambios de Fechas: {TotalCambioFechas}')
 
@@ -631,7 +613,7 @@ try:
                                 fila_muestra = [ id_excel, ID_Actual, "ATRASO", "ATRASO", ""]
                                 FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                             
-                            minutosXmuestra.append( (int(tiempo())-int(T_MuestraInicio))/3600 )
+                            timer.save(MuestraIndice)
                             break
 
                         if Publicar and Publicar != "Atraso":
@@ -642,7 +624,7 @@ try:
                                 FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                                 AgregarMuestraXLSX(dirExcel=dirExcelHistorico, ID_Muestra=ID_Actual, colnames=nombre_columnas)
                             
-                            minutosXmuestra.append( (int(tiempo())-int(T_MuestraInicio))/3600 )
+                            timer.save(MuestraIndice)
                             break
 
                         if not Publicar and Publicar != "Atraso":
@@ -654,7 +636,7 @@ try:
                             fila_muestra = [ id_excel, ID_Actual, "PUBLICABLE", "PUBLICABLE", ""]
                             FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                         
-                        minutosXmuestra.append( (int(tiempo())-int(T_MuestraInicio))/3600 )
+                        timer.save(MuestraIndice)
                         break
                 
                 tiene_rutina = "NO" if not flagRutina else "SI"
@@ -818,14 +800,14 @@ try:
                 eprint(f'REINTENTANDO [{IntentosDeCarga} Intentos restantes]\n')
                 continue
             
-            minutosXmuestra.append( (int(tiempo())-int(T_MuestraInicio))/3600 )
+            timer.save(MuestraIndice)
             break
 
         else:
             notify(title=f"Problemas con la muestra {ID_Actual}!", body=type(Excepcion_error).__name__)
 
             eprint(f'SE ACABARON LOS INTENTOS\nsaltando muestra {ID_Actual}\n')
-            minutosXmuestra.append((int(tiempo())-int(T_MuestraInicio))/3600)
+            timer.save(MuestraIndice)
             
             MuestrasError.append(ID_Actual)
             if Registrar:  
@@ -846,8 +828,6 @@ try:
     eprint("Sesión cerrada")
     driver.quit()
 
-    T_TotalFinal = int(tiempo())
-
     if len(MuestrasError) != 0: eprint(f"Ocurrieron {len(MuestrasError)} errores\n")
         
     if BorrarDup and not SoloBuscarControles:
@@ -857,7 +837,7 @@ try:
         total_archivos = len(archivos_descargados)
         
         eprint(
-            f'RESUMEN: Tiempo de ejecución: { ( (T_TotalFinal-T_TotalInicio)/3600):.2f} horas\n\n'+
+            f'RESUMEN: Tiempo de ejecución: { ( (self.end_time - self.start_time)/3600):.2f} horas\n\n'+
             f'Comenzó el {F_Inicial} y termino el {datetime.now().strftime("%d-%m %H:%M")} \n\n'+
             f'Existen {total_archivos} archivos en carpeta de descarga\n\n')
 

@@ -1,5 +1,5 @@
 from __myLIMS_modulos__ import *
-from __myLIMS_class__ import DeltaTimer
+from datetime import time
 
 def unique(lista, invertido=False):
     if invertido:

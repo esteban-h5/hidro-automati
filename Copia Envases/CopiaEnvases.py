@@ -253,8 +253,7 @@ try:
 
         copias_totales = sum(list(df_coti["N COPIAS"]))
 
-        timer.delta()
-        timer.final(idx-1,cantidad_cotizaciones)
+        timer.save(idx-1,cantidad_cotizaciones)
 
         eprint( f'Revisando Cotizacion: {id_coti} [{idx+1}/{cantidad_cotizaciones}]\n'+
                 f'Muestras de esta Cotizacion: {" ".join(lista_muestras_coti)}\n'+

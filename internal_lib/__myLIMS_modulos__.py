@@ -12,13 +12,14 @@ try:
     from selenium.webdriver import Chrome
 
     from cryptography.fernet import InvalidToken, Fernet
-    from datetime import datetime, timedelta, time
+    from datetime import datetime, timedelta
     from random import randint, choice, uniform
     from decouple import Config, RepositoryEnv
     from tkinter import filedialog, messagebox
     from keyring import get_password as get
     from collections import defaultdict
     from time import sleep
+    import time
     from win11toast import notify
     from pathlib import Path
 
@@ -387,48 +388,30 @@ def mover_mouse_antiSalvapantallas():
 
 class DeltaTimer:
     def __init__(self, buffer_size: int | None = None):
-        """
-        buffer_size:
-            - None  -> buffer infinito
-            - int   -> buffer circular de tamaño fijo
-        """
-        self._start_time = None
+        self.start_time = None
+        self.last_time = None
+        self.h_estimada = None
+
         self._buffer = []
         self._buffer_size = buffer_size
-        self.end_time = None
+        
+        self.largo_lista = None
 
-    def start(self):
-        """Inicia o reinicia el timer"""
-        self._start_time = time.time()
-
-    def delta(self) -> float:
-        """
-        Retorna el tiempo transcurrido en segundos
-        y lo guarda en el buffer
-        """
-        if self._start_time is None:
-            raise RuntimeError("El timer no ha sido iniciado")
-
-        delta = time.time() - self._start_time
-        self._add_to_buffer(delta)
-        self.start()
-        return delta
+    def start(self, len_lista_partitions: int):
+        self.start_time = time.time()
+        self.largo_lista = len_lista_partitions
 
     def _add_to_buffer(self, value: float):
         self._buffer.append(value)
         if self._buffer_size and len(self._buffer) > self._buffer_size:
             self._buffer.pop(0)
 
-    # ---------- PROMEDIOS ----------
-
     def promedio_segundos(self) -> float | None:
-        """Promedio en segundos"""
         if not self._buffer:
             return None
         return sum(self._buffer) / len(self._buffer)
 
     def promedio(self) -> str:
-        """Promedio en formato legible (segundos, minutos u horas)"""
         avg_seconds = self.promedio_segundos()
         if avg_seconds is None:
             return "-"
@@ -443,28 +426,43 @@ class DeltaTimer:
         avg_hours = avg_minutes / 60
         return f"{avg_hours:.2f} horas"
 
-    # ---------- ETA ----------
+    def save(self, idx: int):
 
-    def final(self, idx: int, len_lista_partitions: int) -> str:
+        if self.start_time is None:
+            raise RuntimeError("El timer no ha sido iniciado")
+        
+        t_actual = time.time()
+        if self.last_time:
+            delta = t_actual - self.last_time
+        else:
+            delta = 0
+        self._add_to_buffer(delta)
+        self.last_time = t_actual
+
         avg_seconds = self.promedio_segundos()
-        if avg_seconds is None:
-            return "-"
 
-        restantes = max(len_lista_partitions - idx - 1, 0)
+        restantes = max(self.largo_lista - idx - 1, 0)
         segundos_restantes = restantes * avg_seconds
 
         if segundos_restantes <= 0:
-            return "-"
-
-        if segundos_restantes < 60:
+            self.t_restante = "TERMINADO"
+        elif segundos_restantes < 60:
             self.t_restante = f"{segundos_restantes:.2f} segundos"
         elif segundos_restantes < 3600:
             self.t_restante = f"{segundos_restantes / 60:.2f} minutos"
         else:
             self.t_restante = f"{segundos_restantes / 3600:.2f} horas"
-        
-        self.end_time = (datetime.now() + timedelta(seconds=segundos_restantes)).strftime('%H:%M:%S')
-        
+
+        self.h_estimada = (datetime.now() + timedelta(seconds=segundos_restantes)).strftime('%H:%M:%S')
+
+    def finish(self):
+        if self.start_time is None:
+            raise RuntimeError("El timer no ha sido iniciado")
+
+        self.end_time = time.time()
+        self.total_seconds = self.end_time - self.start_time
+        self.total_time_fmt = self._format_seconds(self.total_seconds)
+
 
     def _format_seconds(self, seconds: float) -> str:
         if seconds < 60:

@@ -242,7 +242,7 @@ try:
             ListaPrecio = 0
 
     eprint(f"[Construyendo y subiendo cada {Partition} muestras en {total_part} partes ({total_muestras} muestras)]")
-    timer = DeltaTimer(buffer_size=10)
+    timer = DeltaTimer(buffer_size=25)
     timer.start()
 
     lista_errores = []
