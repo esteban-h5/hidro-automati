@@ -7,12 +7,12 @@ internal_lib        =   os.path.normpath(os.path.join(CM_wd,"..","internal_lib")
 sys.path.insert(0, internal_lib)
 
 from __myLIMS_modulos__ import (
-  datetime, get, version_actual, GetConfig, paisDICT, 
+  datetime, get, version_actual, GetConfig, paisDICT, DeltaTimer,
   MensajeInicial, filedialog, pd, notify, sleep, FormatoExcepcion
 )
 
 from __myLIMS_API__ import (
-  log_status, api_post,json, DeltaTimer, get_pricetable, 
+  log_status, api_post,json, get_pricetable, 
   SampleAnalysisInsert, FormatoDF
 )
 
@@ -74,7 +74,6 @@ try:
     for key in keys_usadas:
        if key not in config.keys():
             input(f"Valor de config \'{key}\' no encontrado en archivo config, enter para continuar igualmente...")
-
 
     paisActual      = global_config.get("paisActual", "").replace("é","e").replace("ú","u").lower()
     pais_prefijo    = paisDICT[paisActual]
@@ -181,8 +180,8 @@ try:
 
     eprint("[Formateando Datos de Analisis]")
     try:
-        informacion_muestras_df.columns = informacion_muestras_df.columns.str.lower()
-        analisis_df.columns = analisis_df.columns.str.lower()
+        informacion_muestras_df.columns = informacion_muestras_df.columns.str.lower().str.strip()
+        analisis_df.columns = analisis_df.columns.str.lower().str.strip()
         
         if col_fmt["col-id_muestras"] not in informacion_muestras_df.columns:
             raise ValueError(f"columna id_muestras ('{col_fmt["col-id_muestras"]}') no encontrada en {list(informacion_muestras_df.columns)}")
@@ -199,11 +198,11 @@ try:
                 f_infoid = fila[col_fmt["col-analisis_id"]]
 
                 if f_infoid in info_id_buffer:
-                    eprint(f"INFORMACION DUPLICADA {f_infoid} para muestra id {group_value}")
+                    logprint(f"INFORMACION DUPLICADA {f_infoid} para muestra id {group_value}")
                     continue
                 
                 if pd.isna(f_infoid):
-                    eprint(f"INFORMACION VACIA para muestra id {group_value}")
+                    logprint(f"INFORMACION VACIA para muestra id {group_value}")
                     continue
 
                 info_id_buffer.append(f_infoid)

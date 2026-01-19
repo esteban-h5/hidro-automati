@@ -178,7 +178,9 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
 
     if paisActual == "colombia":
         centro_servicio = 24
-        lista_precio = 106 if ListaPrecio == 0 else ListaPrecio
+        
+        # HB BOG 2026
+        lista_precio = 138 if ListaPrecio == 0 else ListaPrecio
         
         info_lista= lambda df: [
 
@@ -216,7 +218,9 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
 
     elif paisActual == "mexico":
         centro_servicio = 25
-        lista_precio = 107 if ListaPrecio == 0 else ListaPrecio
+        
+        #HB MTY 2026
+        lista_precio = 135 if ListaPrecio == 0 else ListaPrecio
 
         info_lista= lambda df: [
 
@@ -259,7 +263,7 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
 
     elif paisActual == "chile": # Asumir Chile
         centro_servicio = 20
-        lista_precio = 51 if ListaPrecio == 0 else ListaPrecio
+        lista_precio = 122 if ListaPrecio == 0 else ListaPrecio
         info_lista= lambda df: [
             
             SampleInfoInsert(DisplayValue=df[col_fmt["col-cliente_solicitante"]],
@@ -303,7 +307,7 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
         ]
 
     else:
-        raise ExcepcionDeCarga(f"País {paisActual} no se reconoce")
+        raise Exception(f"País {paisActual} no se reconoce")
 
     #########################################
     # Recorrer filas para construir solicitud

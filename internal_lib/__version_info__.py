@@ -1,12 +1,15 @@
 ###############################
 
-version_actual = "6.0.1"
-fecha_version = "lunes 5 de diciembre 2025"
+version_actual = "6.1.0"
+fecha_version = "viernes 16 de enero 2026"
 
 changelog = [
-    # "- Opción para actualizar base de datos local de ID de metodos",
-    "- Errores en columnas en excel de salida en crear muestras, revisar e interrumpir",
-    "- Guardar muestras creadas por particion",
+    "- strip a columnas",
+    "- Lista de precios actualizada a 2026",
+    "- orden de columnas con sort al comparar",
+    "- Error copias reales M100C",
+    "- DeltaTimer poss, agregar en CopiaEnvase",
+    "- Lectura por nombre columna CopiaEnvase",
 ]
 
 ###############################

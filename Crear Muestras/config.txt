@@ -27,14 +27,14 @@ ExcelEntrada    :   Hidrolab MTY _ Planilla de carga de muestras (WALMART)
 #################
 
 SCL-HojaIM : Muestras
-SCL-COL-indice_m                :   N°
-SCL-COL-id_muestras             :   ID muestra
+SCL-COL-indice_m                :   ID de muestra #N°
+SCL-COL-id_muestras             :   N° en Mylims #ID muestra
 SCL-COL-identificacion          :   Identificación de muestra
 SCL-COL-matriz                  :   Matriz
 SCL-COL-empresa                 :   Empresa
 SCL-COL-cuenta_relacionada      :   Cuenta Relacionada
 SCL-COL-motivo                  :   Motivo
-SCL-COL-cliente_solicitante     :   Cliente solicitante #Cliente solicitante (en caso de ser consultora)
+SCL-COL-cliente_solicitante     :   Cliente solicitante (en caso de ser consultora) #Cliente solicitante #
 SCL-COL-lugar_muestreo          :   Lugar de Muestreo
 SCL-COL-punto_muestreo          :   Punto de muestreo
 SCL-COL-direccion_muestreo      :   Dirección de muestreo
@@ -55,7 +55,7 @@ SCL-COL-etfa                    :   ETFA
 SCL-COL-tabla_comp              :   Tabla comparativa
 
 SCL-HojaA : Análisis
-SCL-COL-indice_a                :   N°
+SCL-COL-indice_a                :   ID muestra #N°
 SCL-COL-metodo_id               :   MetodoId
 SCL-COL-grupo_id                :   Id Grupo
 SCL-COL-analisis_id             :   AnalisisId

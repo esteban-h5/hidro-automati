@@ -83,10 +83,10 @@ def AbrirXLSX(dirExcel, colnames, except_kill=True, except_create=True, except_a
     try:
         regExcel = pd.read_excel(dirExcel, keep_default_na=False, index_col=None)
 
-        if colnames != regExcel.columns.to_list() and except_alert:
+        if sorted(colnames) != sorted(regExcel.columns.to_list()) and except_alert:
             if except_kill: raise ExcepcionArchivo(f"La cantidad de columnas no coincide, los datos pueden quedar corridos\nSe esparaba: {colnames}\nSe lee: {regExcel.columns.to_list()}\n")
             else: 
-              print(f"La cantidad de columnas no coincide, los datos pueden quedar corridos\nSe esparaba: {colnames}\nSe lee: {regExcel.columns.to_list()}\n")
+              print(f"La cantidad de columnas no coincide, los datos pueden quedar corridos\nSe esparaba: {sorted(colnames)}\nSe lee: {sorted(regExcel.columns.to_list())}\n")
               
         return regExcel
     
@@ -110,6 +110,7 @@ def ListaAColumnaXLSX(dirExcel, valores_fila, colname, colnames, except_kill=Fal
   regExcel = AbrirXLSX(dirExcel, colnames=colnames, except_kill=except_kill, except_create=except_create)
   start_idx = len(regExcel)
   funcion_print(f"Partiendo en {start_idx} y agregando {len(valores_fila)} valores")
+
   try:    
     for idx,val in enumerate(valores_fila):
       funcion_print(f"Agregando {val} en {start_idx+idx}")

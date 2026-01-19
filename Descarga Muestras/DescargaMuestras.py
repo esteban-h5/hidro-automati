@@ -10,9 +10,28 @@ try:
 
     sys.path.insert(0, internal_lib)
 
-    from __myLIMS_modulos__ import *
-    from __myLIMS_wrappers__ import *
-    from __ficheros_modulos__ import *
+    from __myLIMS_modulos__ import (
+        GetConfig, MensajeInicial, version_actual, existe_param_env,
+        EsperarCARGA_myLIMS, ExcepcionDeCarga, 
+        BotonSection, BotonAccion, BotonVentana,
+        FormatoExcepcion, ExcepcionDeMuestra, ElementNotInteractableException,
+        UnexpectedAlertPresentException, StaleElementReferenceException, InvalidSessionIdException, 
+        By, EC, DriverOptions, Chrome, Keys, WebDriverWait, DeltaTimer,
+        notify, sleep, datetime, requests, prefs, Path, EsperarCLICK,
+    )
+    from __myLIMS_wrappers__ import (
+        unique, Cortar,
+        BuscarAlertas,
+    )
+
+    from __ficheros_modulos__ import (
+        ListaMuestraXLSX, FilaAgregarXLSX,
+        ObtenerIDExcel, AgregarMuestraXLSX,
+    )
+
+    from __myLIMS_wrappers__ import (
+        Logout, Login, FormatoLimiteHoras,
+    )
 
     ########################################
     #Inicialización de Config
@@ -378,7 +397,7 @@ try:
         eprint(f"{FormatoExcepcion(e)}\nOcurrió un error al obtener los ID de muestras, favor de revisar log")
         input("Enter para cerrar sesión y navegador")
         Logout(driver,logout_url=Labsoftdomain)
-        wait(3)
+        sleep(3)
         driver.quit()
         exit(1)
 
@@ -686,19 +705,19 @@ try:
                     for _ in range(timeout):
                         if queue_redy(driver): break
                         if alerta_visible(driver): raise ExcepcionDeMuestra("ALERTA en procesado de muestra (Reintentar)")
-                        wait(1)
+                        sleep(1)
 
                     else:
                         raise ExcepcionDeMuestra("TIMOUT en procesado de muestra (notificacion naranja no desaparece)")
-                    wait(1)
+                    sleep(1)
                     #Esperar descarga de documento revisando cantidad de archivos en carpeta
                     for _ in range(timeout):
                         if cant_previa == len(os.listdir(dir_Descargados)):
-                            wait(1)
+                            sleep(1)
                             continue
                         
                         if any(".crdownload" in archivo or ".part" in archivo for archivo in os.listdir(dir_Descargados)):
-                            wait(1)
+                            sleep(1)
                             continue
 
                         if alerta_visible(driver): raise ExcepcionDeMuestra("ERROR en procesado de muestra (Reintentar)")
@@ -775,7 +794,7 @@ try:
                         break
                     except (requests.ConnectionError, requests.exceptions.ReadTimeout):
                         eprint("No hay connexión a internet, reintentando cada 15 segundos...")
-                        wait(15)
+                        sleep(15)
 
                 if isinstance(e, (ExcepcionDeMuestra,UnexpectedAlertPresentException, StaleElementReferenceException) ):
                     eprint(f'__________________\nProblemas con la muestra {ID_Actual}\n{FormatoExcepcion(e)}\n')
@@ -792,7 +811,7 @@ try:
                 else:
                     eprint(f'__________________\nProblemas desconocidos con la muestra {ID_Actual}\n{FormatoExcepcion(e)}\n')
 
-                wait(1)
+                sleep(1)
                 driver.refresh()
                 EsperarCARGA_myLIMS(driver, funcion_print=eprint)
                 IntentosDeCarga -= 1

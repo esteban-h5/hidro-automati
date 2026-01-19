@@ -16,9 +16,29 @@ CE_wd               =   os.path.dirname(os.path.realpath(__file__))
 internal_lib        =   os.path.normpath(os.path.join(CE_wd,"..","internal_lib"))
 sys.path.insert(0, internal_lib)
 
-from __myLIMS_modulos__ import *
-from __myLIMS_wrappers__ import *
-from __ficheros_modulos__ import *
+from __myLIMS_modulos__ import (
+    GetConfig, MensajeInicial, version_actual, existe_param_env,
+    EsperarCARGA_myLIMS, ExcepcionDeCarga, 
+    BotonSection, BotonAccion, BotonVentana,
+    FormatoExcepcion, ExcepcionDeMuestra,
+    UnexpectedAlertPresentException, StaleElementReferenceException, 
+    InvalidSessionIdException, NoSuchWindowException, 
+    By, EC, DriverOptions, Chrome, Keys, WebDriverWait, DeltaTimer,
+    notify, sleep, datetime, requests, prefs, del_alertas_iniciales
+)
+from __myLIMS_wrappers__ import (
+    unique, Cortar,
+)
+
+from __ficheros_modulos__ import (
+    ListaMuestraXLSX,
+    FilaAgregarXLSX,
+    AbrirXLSX, 
+)
+
+from __myLIMS_wrappers__ import (
+    Logout, Login,
+)
 
 ########################################
 #Inicialización de Config
@@ -111,7 +131,7 @@ else:
 
 MensajeInicial(file_name, funcion_print=eprint, config=config, global_config=global_config, funcion_log=logprint )
 
-eprint(f"País Actual: {paisActual}\n")
+eprint(f"País Actual: {paisActual}")
 
 if not existe_param_env(internal_lib):
     eprint("Error No se encontró archivo con credenciales. (Param.env)")
@@ -198,6 +218,9 @@ except ExcepcionDeCarga as e:
     exit(1)
 
 try:
+    timer = DeltaTimer(buffer_size=10)
+    timer.start()
+    
     flag_alerta_inicial = True
     ##############################################
     for idx, id_coti in enumerate(lista_id_coti):
@@ -230,9 +253,13 @@ try:
 
         copias_totales = sum(list(df_coti["N COPIAS"]))
 
+        timer.delta()
+        timer.final(idx-1,cantidad_cotizaciones)
+
         eprint( f'Revisando Cotizacion: {id_coti} [{idx+1}/{cantidad_cotizaciones}]\n'+
                 f'Muestras de esta Cotizacion: {" ".join(lista_muestras_coti)}\n'+
-                f'{copias_totales} copias totales\n')
+                f'{copias_totales} copias totales\n'
+                f'[termino {timer.end_time} en {timer.t_restante}]\n')
 
         try:
             coti_activa = driver.find_element(By.XPATH, xpath_muestra_activa ).is_selected()
@@ -301,6 +328,10 @@ try:
                         x_xlsx_estado_final.append("[COTI NO ENCUENTRA M]")
                     ####
 
+                    if not m_copias:
+                        eprint("[No se ]")
+                        continue
+                    
                     ## Seleccionar muestras para copiar
                     m_copia_1 = m_copias[0].find_element(By.XPATH, "./td[1]")
                     driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", m_copia_1)
@@ -344,7 +375,7 @@ try:
                 ############################################################################################
                 ## Seleccionar ID COPIA UNO POR UNO
                 else:
-                    eprint(f"[Más de 100 muestras en grilla, haciendo busqueda por separado]")
+                    eprint(f"[Más de 100 muestras en grilla ({MuestrasCantidad}), haciendo busqueda por separado]")
 
                     for muestra in lista_muestras_coti:
 
@@ -429,14 +460,15 @@ try:
                     MuestrasCantidadNueva = int(Cortar(MuestrasCantidadNueva, "de ", " ítems"))
 
                 flag_DiferenciaCantidad = (MuestrasCantidadNueva != MuestrasCantidad+int(copias_totales))
+
                 if flag_DiferenciaCantidad:
-                    eprint(f"[Cantidad de muestras no coincide con copias programadas]")
+                    eprint(f"[Cantidad de muestras copiadas no coincide con copias programadas]")
                     logprint(f"DIFERENCIAS DE CANTIDAD {MuestrasCantidad} muestras + {copias_totales} copias != {MuestrasCantidadNueva} nuevas cantidad de muestras totales")
                 
                 copias_reales = MuestrasCantidadNueva - MuestrasCantidad
                 
                 if copias_reales > 100:
-                    eprint(f"[MÁS DE 100 COPIAS, asignando 100 a PE ({copias_reales-100} restantes)]")
+                    eprint(f"[MÁS DE 100 COPIAS, asignando de primeras 100 a PE ({copias_reales} restantes)]")
                     cant_copias = 100
                 else:
                     cant_copias = copias_reales
@@ -444,6 +476,9 @@ try:
             else:
                 eprint(f"[Saltando copia ID]")
                 cant_copias = 0
+                copias_reales = 0
+
+                x_copias_id = "SIN COPIAS"
 
             ## Invertir Orden
             driver.find_element(By.XPATH,"//div[@id='InterfaceContent']/div[not(contains(@style, 'display: block;'))]//th[@data-title='Orden']").click()
@@ -459,7 +494,7 @@ try:
                 eprint(f"[Seleccionando ID para PE]")
 
                 elementos = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
-                
+
                 m_cliente = elementos[1].find_element(By.XPATH,"./td[6]").text
                 if not SufijoTitulo:
                     pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
@@ -485,22 +520,23 @@ try:
 
                     x_copias_id = " - ".join(m_selec_id)
                     ultimo_id = m_selec_id[-1]
+                    # ultimo_id = m_selec_id[-1]
 
                 if not CopiarMuestras: # x_muestra con selec y x_copia con ### 
                     x_copias_id = "###"
-
+                    
                     ## Cargar Buffer m_selec
                     for muestra in elementos:
 
                         muestra_id = muestra.find_element(By.XPATH, "./td[2]").text
-                        muestra_activa = (muestra.find_element(By.XPATH, "./td[24]").text == "Si")
+                        muestra_activa = (muestra.find_element(By.XPATH, "./td[25]").text == "Si")
 
                         if muestra_id in lista_muestras_coti and muestra_activa:
                             muestra_idx = muestra.find_element(By.XPATH, "./td[1]")
 
                             m_selec.append(muestra)
                             m_selec_id.append(muestra_id)
-
+                        
                     m_no_selec = unique(set(lista_muestras_coti) - set(m_selec_id))
 
                     #### EXCEL
@@ -511,7 +547,7 @@ try:
                         x_muestra_id = f'{" - ".join(m_selec_id)} ![ {" - ".join(m_no_selec)} ]'
                         x_xlsx_estado_final.append("[COTI NO ENCUENTRA M PE]")
                     ####
-                    ultimo_id = m_selec_id[-1]
+                ultimo_id = m_selec_id[-1] if m_selec_id else "None"
                 
                 eprint(f"[Úlitmo ID seleccionado: {ultimo_id}]")
                 x_xlsx_estado_final.append(f"[M100C ({copias_reales-100}) ({ultimo_id})]")
@@ -630,7 +666,7 @@ try:
                     break
                 except requests.ConnectionError:
                     eprint("No hay connexión a internet, reintentando cada 1 minuto...")
-                    wait(60)
+                    sleep(60)
 
             #Contar ventanas
             try:
@@ -660,7 +696,7 @@ try:
             if cantidad_ventanas != 0:
                 logprint(f'__________________\nCantidad de ventanas: {cantidad_ventanas} \nTitulos: {titulos} \nCuerpos: {cuerpos} \n{FormatoExcepcion(e)}\n') 
                 
-            wait(1)
+            sleep(1)
             FilaAgregarXLSX(dirExcel=dirExcelSalida, valores_fila=[x_idx, x_id_coti, x_muestra_id, x_copias_id, x_pe_id, x_pe_n_muestra, x_pe_titulo, x_xlsx_estado], colnames=nombre_columnas_out, except_kill=False, except_create=True)
 
             driver.get(myLIMSdomain)
