@@ -347,7 +347,7 @@ def SampleRecon(driver, Excluido, CentroServicio, funcion_print=print):
         return ActualSample
 
 
-def BuscarAlertas(driver, tipo_rutinas, tipo_horas, funcion_print=print):
+def BuscarAlertas(driver, tipo_rutinas, tipo_horas, nombreAlertaETFA, funcion_print=print):
     flagRutina= False
     flagCambiarFecha = False
 
@@ -400,7 +400,10 @@ def BuscarAlertas(driver, tipo_rutinas, tipo_horas, funcion_print=print):
                     funcion_print(f"[Alerta de tipo \"{m_tipo_upper}\"]")
                     flagRutina = True
 
-    return [flagCambiarFecha, flagRutina]
+            if m_tipo == nombreAlertaETFA and "Alerta de horas - ETFA" in m_inicio:
+                flagDesacreditar = True
+
+    return [flagCambiarFecha, flagRutina, flagDesacreditar]
 
 def ContarControlesPendientes(driver, ID_Actual, funcion_print=lambda *args, **kwargs: None):
     xpath_controles = "//div[@id='InterfaceContent']/div[@style='']//table[@role='grid']//tr"

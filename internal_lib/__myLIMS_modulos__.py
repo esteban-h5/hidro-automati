@@ -23,7 +23,7 @@ try:
     from win11toast import notify
     from pathlib import Path
 
-    import os, requests, sys, traceback, subprocess, re, ctypes, pandas as pd
+    import os, requests, sys, traceback, subprocess, re, ctypes, pandas as pd, socket
     from __version_info__ import version_actual
 
 except ModuleNotFoundError as e:
@@ -113,6 +113,14 @@ def GetConfig(dirConfig, encode="utf-8"):
 
     return configDict
 
+def internet_ok(timeout=1):
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\
+              .sendto(b"\x00", ("8.8.8.8", 53))
+        return True
+    except OSError:
+        return False
 
 #Devuelve texto para cuando se atrapa una excepción
 def FormatoExcepcion(e):
@@ -436,6 +444,7 @@ class DeltaTimer:
             delta = t_actual - self.last_time
         else:
             delta = 0
+            
         self._add_to_buffer(delta)
         self.last_time = t_actual
 

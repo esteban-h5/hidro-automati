@@ -13,7 +13,7 @@ try:
     from __myLIMS_modulos__ import (
         GetConfig, MensajeInicial, version_actual, existe_param_env,
         EsperarCARGA_myLIMS, ExcepcionDeCarga, ChequearNavegador,
-        BotonSection, BotonAccion, BotonVentana, queue_redy,
+        BotonSection, BotonAccion, BotonVentana, queue_redy, internet_ok,
         ElementClickInterceptedException, ExcepcionArchivo,
         FormatoExcepcion, ExcepcionDeMuestra, ElementNotInteractableException,
         UnexpectedAlertPresentException, StaleElementReferenceException, InvalidSessionIdException, 
@@ -70,6 +70,8 @@ try:
 
         tipo_horas = global_config.get("ListaMensajesHoras", "")
         tipo_horas = tipo_horas.lower().split(",") if tipo_horas else []
+
+        nombreAlertaETFA = config.get("nombreAlertaETFA").lower()
 
         filtroActual = config.get("filtro", "").replace("é","e").replace("ú","u").lower()
 
@@ -430,6 +432,7 @@ try:
                 flagDescargar = False
                 flagCambiarFecha = False
                 flagRutina = False
+                flagDesacreditar = False
                 flagControles = False
                 
                 ChequearNavegador(driver, kill=True)
@@ -455,6 +458,9 @@ try:
 
                 muestra_estado = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']/div[1]/div[1]//div[5]/div[3]//input[@class='k-input']").get_attribute("value")
                 
+                # muestra_fmuestreo   = driver.find_element(By.XPATH, "//input[@data-test='TakenDateTime']").get_attribute("value").replace("-", "/")
+                # muestra_frecepcion  = ":".join(fila.find_element(By.XPATH, './td[@data-test="StatusHistoryGrid.EditionDateTime"]').text.replace("-", "/").split(":")[:-1])
+                
                 if muestra_estado == "Publicada":
                     eprint("[Previamente Publicada]\n")
 
@@ -469,10 +475,9 @@ try:
                 BotonSection(driver,"SectionMessage").click()
                 EsperarCARGA_myLIMS(driver, funcion_print=eprint, kill=True)
 
-                #################
+                ###################################################
                 #Revisar mensajes
-                #Hacer click en k-pager-nav hasta que aparezca k-state-disabled en class?
-                flagCambiarFecha, flagRutina = BuscarAlertas(driver, tipo_rutinas, tipo_horas, funcion_print=eprint)
+                flagCambiarFecha, flagRutina, flagDesacreditar = BuscarAlertas(driver, tipo_rutinas, tipo_horas, nombreAlertaETFA, funcion_print=eprint)
                 EsperarCARGA_myLIMS(driver)
                 
                 ###################################################
@@ -495,15 +500,19 @@ try:
 
                         xpath_mensajes = '//div[@class="myLIMSweb-mail-list-item-box"]//li[contains(@class, "list-group-item")]'
                         
-                        lista_alertas = driver.find_elements(By.XPATH, xpath_mensajes)
+                        # Lista de li
+                        lista_alertas = driver.find_elements(By.XPATH, xpath_mensajes) 
+                        
+                        # Asignar índice de li
                         lista_alertas = sorted([f"({xpath_mensajes})[{i+1}]" for i in range(len(lista_alertas))], reverse=True)
 
+                        #Lista de alertas para desactivar
                         lista_alertas_pop = []
 
                         for m_index, iter_xpath in enumerate(lista_alertas):
                             lista_cambios = []
                             
-                            mensaje = driver.find_element(By.XPATH, iter_xpath)
+                            mensaje     = driver.find_element(By.XPATH, iter_xpath)
 
                             m_tipo      = mensaje.find_element(By.XPATH,'./div/div[3]').text.lower()
                             m_inicio    = mensaje.find_element(By.XPATH,'./div/div[2]/div[1]').text
@@ -569,6 +578,10 @@ try:
                                 except (ElementClickInterceptedException,ElementNotInteractableException) as e:
                                     raise ExcepcionDeMuestra("Error al cambiar fechas (Reintentar)")
                         
+                            if m_tipo == nombreAlertaETFA:
+                                input()
+                                BotonSection(driver,"SectionAccreditations").click()
+
                         else:
                             
                             for i in sorted(lista_alertas_pop, reverse=True):
@@ -584,7 +597,6 @@ try:
                                 else:
                                     flagDescargar = True
                                     flagRutina = True
-
 
                 ###################################################
                 #Revisar Controles Pendientes
@@ -772,7 +784,8 @@ try:
                 Excepcion_error = e
                 while True:
                     try:
-                        requests.head("https://8.8.8.8", timeout=timeout_con_check)
+                        eprint("Probando conexión a internet")
+                        internet_ok(timeout=1)
                         break
                     except (requests.ConnectionError, requests.exceptions.ReadTimeout):
                         eprint("No hay connexión a internet, reintentando cada 15 segundos...")
