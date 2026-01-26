@@ -607,13 +607,13 @@ def formato_fecha(fecha, formato="%d/%m/%Y %I:%M %p"):
     if fecha == None:
         return None
     
-    if "/" in fecha:
-        formato.replace("/", "-")
-    elif "-" in fecha:
-        formato.replace("-", "/")
+    #if "/" in fecha:
+    #    formato = formato.replace("/", "-")
+    if "-" in fecha:
+        formato = formato.replace("/", "-")
     else:
         raise ExcepcionDeMuestra(f"Problemas al formatear la fecha {fecha}:\n{e}")
-
+    
     try:
         if ".m." in fecha or "M" in fecha:
 

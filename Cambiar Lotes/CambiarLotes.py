@@ -952,6 +952,13 @@ while True:
                         
                         ventana = driver.find_element(By.XPATH, x_path_ventana)
                         ventana_entrada = ventana.find_element(By.XPATH, f'.//input[@data-role="datetimepicker"]')
+
+                        fecha_antigua = ventana_entrada.get_attribute("value")
+                        
+                        if ".m." in fecha_antigua and ".m." not in opcion_Fecha:
+                            opcion_Fecha = datetime.strptime(opcion_Fecha, "%d-%m-%Y %H:%M:%S").strftime("%d/%m/%Y %I:%M:%S %p")
+                            opcion_Fecha = opcion_Fecha.replace("AM", "a.m.").replace("PM", "p.m.")
+                        
                         ventana_entrada.send_keys(Keys.CONTROL, "a")
                         ventana_entrada.send_keys(Keys.DELETE)
                         ventana_entrada.send_keys(opcion_Fecha)

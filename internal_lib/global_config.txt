@@ -12,15 +12,15 @@ Labsoftdomain         :   https://labsoft-identitycenter-sts.mylimsweb.cloud/
 #
 # Variable del pais actual (no importan mayusculas ni tildes)
 # Chile - Perú - Colombia - México
-paisActual            :   Chile
+paisActual            :   Colombia
 #
 #
 # Largo de la jornada en cantidad de horas, dos puntos para separar horas y minutos (10:30) o (11)
-ExtensionJornada      :   11
+ExtensionJornada      :   9:30
 #
 #
 # Inicio de la jornada en formato 24h y dos puntos para separar horas y minutos (8:30) o (8)
-InicioJornada         :   8:30
+InicioJornada         :   8:00
 #
 #
 # Guardar lo mostrado por consola en archivo [True]
@@ -41,5 +41,3 @@ ListaMensajesHoras          :   Horas
 #
 # Excepciones generales
 nombreExcelExcepciones      :   Excepciones.xlsx
-#
-#
