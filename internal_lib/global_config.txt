@@ -39,6 +39,10 @@ AppExcel              	    :   excel.exe
 ListaMensajesRutina         :   Rutina,Analisis-Formato,Analisis-FQ,Analisis-FQAnion,Analisis-FQAyG,Analisis-FQDBO,Analisis-FQEAM,Analisis-FQFisico,Analisis-FQNutr,Analisis-FQ-P/LSS,Analisis-FQpHCond,Analisis-GC,Analisis-Lab,Analisis-MB,Analisis-Metales,Analisis-Terreno,Analisis-Balances,Formato
 #
 #
+# Nombre de alerta para condicionar Desacreditar analito
+TipoMensajeETFA			:		Formato-Horas
+#
+#
 # Lista de horas para las rutinas
 ListaMensajesHoras          :   Horas
 #

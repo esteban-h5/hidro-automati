@@ -346,38 +346,44 @@ def SampleRecon(driver, Excluido, CentroServicio, funcion_print=print):
             else: funcion_print(f"Saltando muestra {ID_muestras} erronea ({idx+1} de {largo_lista_muestras})\nID:{ID_muestras} - Estado: {Estados}\n")
         return ActualSample
 
+def CambiarAcreditacion(driver, nombreAlertaETFA, funcion_print=print):
+    pass
+
+def DesactivarAlerta(driver, xpath, texto="Corregido", funcion_print=print):
+    BotonSection(driver,"SectionMessage").click()
+    EsperarCARGA_myLIMS(driver)
+
+    driver.find_element(By.XPATH, xpath).click()
+    EsperarCARGA_myLIMS(driver, funcion_print=funcion_print)
+
+    BotonAccion(driver,"Inactivar").click()
+    EsperarCARGA_myLIMS(driver, funcion_print=funcion_print)
+
+    driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//textarea[@class="k-textbox"]').send_keys(texto)
+    BotonVentana(driver,"Confirmar").click()
+    EsperarCARGA_myLIMS(driver, funcion_print=funcion_print)
 
 def BuscarAlertas(driver, tipo_rutinas, tipo_horas, nombreAlertaETFA, funcion_print=print):
     flagRutina= False
     flagCambiarFecha = False
+    flagDesacreditar = False
 
     control_grilla = driver.find_element(By.XPATH, "//div[@class='myLIMSweb-mail-list-item-box']/div[contains(@class, 'k-pager-wrap') and contains(@class, 'k-widget') and @data-role='pager' and @id='pager']")
     cantidad_alertas = control_grilla.find_element(By.XPATH, ".//span[@class='k-pager-info k-label']").text
 
     if cantidad_alertas == "Nada a enseñar.":
-        return [flagCambiarFecha, flagRutina]
+        return [flagCambiarFecha, flagRutina, flagDesacreditar]
     else:
         cantidad_alertas =  int(Cortar(cantidad_alertas, "de ", " ítems"))
 
     if cantidad_alertas > 10:
         funcion_print(f"[Más de 10 alertas ({cantidad_alertas})]")
-        return [True, True]
+        return [True, True, True]
 
     else:
-        # if cantidad_alertas > 10:
-        #     control_grilla.find_element(By.XPATH, ".//span[@class='k-pager-sizes k-label']/span[1]").click()
-        #     EsperarCARGA_myLIMS(driver, funcion_print=funcion_print)
-        #     try:
-        #         driver.find_element(By.XPATH, "//div[@class='k-animation-container']//ul[@class='k-list k-reset']/li[last()]").click()
-        #         EsperarCARGA_myLIMS(driver, funcion_print=funcion_print)
-        #     except ElementNotInteractableException:
-        #         raise ExcepcionDeMuestra("No se pudo cambiar el tamaño de grilla por página")
-            
-        ###################################################
-        #Revisar mensajes
         xpath_mensajes = '//div[@class="myLIMSweb-mail-list-item-box"]//li[contains(@class, "list-group-item")]'
 
-        for index, mensaje in enumerate(driver.find_elements(By.XPATH,xpath_mensajes)):
+        for mensaje in driver.find_elements(By.XPATH,xpath_mensajes):
 
             m_tipo_upper    = mensaje.find_element(By.XPATH,'./div/div[3]').text
             m_tipo          = m_tipo_upper.lower()
@@ -401,6 +407,7 @@ def BuscarAlertas(driver, tipo_rutinas, tipo_horas, nombreAlertaETFA, funcion_pr
                     flagRutina = True
 
             if m_tipo == nombreAlertaETFA and "Alerta de horas - ETFA" in m_inicio:
+                funcion_print(f"[Alerta ETFA \"{m_tipo_upper}\"]")
                 flagDesacreditar = True
 
     return [flagCambiarFecha, flagRutina, flagDesacreditar]
@@ -618,10 +625,8 @@ def formato_fecha(fecha, formato="%d/%m/%Y %I:%M %p"):
     if fecha == None:
         return None
     
-    if "/" in fecha:
-        formato.replace("/", "-")
-    elif "-" in fecha:
-        formato.replace("-", "/")
+    if "-" in fecha:
+        formato = formato.replace("/", "-")
     else:
         raise ExcepcionDeMuestra(f"Problemas al formatear la fecha {fecha}:\n{e}")
 

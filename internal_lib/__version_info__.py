@@ -10,6 +10,8 @@ changelog = [
     "- Error copias reales M100C",
     "- DeltaTimer poss, agregar en CopiaEnvase",
     "- Lectura por nombre columna CopiaEnvase",
+    "- Cambiar Lotes revisar am pm en fecha recibimiento",
+    "- Detectar ETIQUETA en Param",
 ]
 
 ###############################

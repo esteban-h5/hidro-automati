@@ -11,6 +11,7 @@ except ModuleNotFoundError as e:
     input(f"Modulos no instalados: {e}\nEnter para cerrar")
     exit(1)  
 
+FLAG_ERRORES = False
 
 #Devolver diccionario con variables del código
 def GetConfig(dirConfig, encode="utf-8"):
@@ -114,9 +115,7 @@ try:
     if ".zip" not in zip_file:
         input("No se ha seleccionado un archivo .zip") 
         exit(1)
-
-    lista_config_old = [os.path.join(dir_actual,_) for _ in config]
-    
+        
     lista_archivos_persistentes_old = []
     lista_archivos_persistentes_new = []
     
@@ -133,16 +132,25 @@ try:
         
     #Descomprimir archivos
     with zipfile.ZipFile(zip_file, 'r') as zip_ref:
-        
-        lista_config_new = [os.path.join(dir_zip,_) for _ in config]
         zip_ref.extractall(dir_zip)
+    
+    subdir = os.path.join(dir_zip,os.path.basename(dir_zip))
+    if os.path.exists(subdir):
+        dir_zip = subdir
+
+    lista_config_new = [os.path.join(dir_zip,_) for _ in config]
+    lista_config_old = [os.path.join(dir_actual,_) for _ in config]
 
     for _ in config + xlsxDescarga + xlsxRegistros + fOtros:
         archivo = os.path.join(dir_actual,_)
+        
         if not os.path.exists(archivo):
             print(f"El archivo persistente {archivo} no existe")
+            FLAG_ERRORES = True
+
         if _ in excluir:
             print(f"Archivo persistente {_} para excluir")
+        
         else:
             lista_archivos_persistentes_old.append(archivo)
             lista_archivos_persistentes_new.append(os.path.join(dir_zip,_))
@@ -175,17 +183,21 @@ try:
     #Revisar variables de config y agregarlas a nuevo config en caso de no existir
     print("Revisando variables nuevas en archivos config")
     dict_cambio={}
-    cambio = ""
-    
+    cambio = ""        
+
     for idx in range(len(lista_config_new)):
         config_old = lista_config_old[idx]
         config_old_name = os.path.basename(os.path.dirname(lista_config_old[idx]))+" VIEJO"
         
         config_new = lista_config_new[idx]
         config_new_name = os.path.basename(os.path.dirname(lista_config_new[idx]))+" NUEVO"
-        
-        dict_old = GetConfig(config_old)
-        dict_new = GetConfig(config_new)
+        try:
+            dict_old = GetConfig(config_old)
+            dict_new = GetConfig(config_new)
+        except FileNotFoundError as e:
+            print(f":{e}:")
+            FLAG_ERRORES = True
+            continue
         
         for key in dict_new.keys():
             if key not in dict_old.keys():
@@ -207,8 +219,14 @@ try:
         
         if os.path.exists(archivo_old):
             if os.path.exists(archivo_new): os.remove(archivo_new)
-            if os.path.exists(archivo_old): shutil.copy2(archivo_old, archivo_new)
-            
+            if os.path.exists(archivo_old): 
+                try:
+                    shutil.copy2(archivo_old, archivo_new)
+                except FileNotFoundError as e:
+                    print(f":{e}:")
+                    FLAG_ERRORES = True
+                    continue
+
             #Agregar config
             if archivo_new in dict_cambio.keys():
                 with open(archivo_new, 'a') as file:
@@ -232,9 +250,76 @@ try:
             print(f"Ya no existe: {dir_old}")
     
     os.startfile(dir_zip)
-    input(f"{os.path.basename(dir_zip)} descomprimido correctamente, enter para salir...")
+    if FLAG_ERRORES:
+        input(f"{os.path.basename(dir_zip)} descomprimido con ERRORES, enter para salir...")
+    else:
+        input(f"{os.path.basename(dir_zip)} descomprimido correctamente, enter para salir...")
 
 except Exception as e:
   print(e)
   traceback.print_exc()
   input("Error, enter para salir...")
+
+
+""" ACTUALIZAR BASE DE DATOS
+
+try:
+    import os, sys, math
+    import pandas as pd
+    
+except ModuleNotFoundError as e:
+    input(f"Modulos no instalados: {e}\nEnter para cerrar")
+    exit(1)  
+
+PI_wd               =   os.path.dirname(os.path.realpath(__file__))
+internal_lib        =   os.path.normpath(os.path.join(PI_wd,"..","internal_lib"))
+
+sys.path.insert(0, internal_lib)
+
+from __myLIMS_API__ import get_methodprerequisite, get_methods
+from __myLIMS_modulos__ import GetConfig, get
+
+token = get('mylims_app', 'secret7')
+
+global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
+paisActual      = global_config.get("paisActual", "").replace("é","e").replace("ú","u").lower()
+
+log             = global_config.get("ActivarLOG", True)
+APIdomain       = global_config.get("api-url", "")
+rows = []
+
+page_size = 50
+page = 1
+
+# primera llamada para saber el total
+apiMetodos = get_methods(page, APIdomain=APIdomain, token=token)
+total = apiMetodos.TotalCount
+
+total_pages = math.ceil(total / page_size)
+
+print(f"Total métodos: {total}")
+print(f"Total páginas: {total_pages}")
+
+for page in range(1, total_pages + 1):
+    print(f"Consultando página {page}/{total_pages}")
+
+    apiMetodos = get_methods(page, APIdomain=APIdomain, token=token)
+
+    for metodo in apiMetodos.Result:
+        rows.append({
+            "MethodIdentification": metodo.Method.Identification,
+            "MethodId": metodo.Method.Id,
+            "InfoIdentification": metodo.Info.Identification,
+            "InfoId": metodo.Info.Id,
+        })
+
+# crear DataFrame
+df_salida = pd.DataFrame(rows)
+
+# guardar a Excel
+ruta_salida = os.path.join(internal_lib, "__MethodsDB__.xlsx")
+df_salida.to_excel(ruta_salida, index=False)
+
+print(f"Archivo generado: {ruta_salida}")
+
+"""

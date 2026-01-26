@@ -23,7 +23,8 @@ try:
     from __myLIMS_wrappers__ import (
         unique, Cortar, BuscarAlertas,
         ContarControlesPendientes,
-        CambiarFechas, MuestraPublicar
+        CambiarFechas, MuestraPublicar,
+        DesactivarAlerta
     )
     from __ficheros_modulos__ import (
         ListaMuestraXLSX, FilaAgregarXLSX,
@@ -41,7 +42,7 @@ try:
         global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
         keys_used   = ["filtro", "SoloBuscarControles", "DescargarPublicadas", "RegistrarMuestras", "RevisarRutinas", "AutoPublicar", "Olvidar", "BorrarDuplicados", "Alerta", "DOC_REVISION_ETFA_ID_CL", "DOC_REVISION_ID_CL", "nombreExcelRegistro", "nombreExcelHistorico"]
-        keys_used_g = ["myLIMSdomain", "Labsoftdomain", "paisActual", "ActivarLOG", "InicioJornada", "ExtensionJornada", "ListaMensajesRutina", "ListaMensajesHoras", "nombreExcelExcepciones"]
+        keys_used_g = ["myLIMSdomain", "Labsoftdomain", "paisActual", "ActivarLOG", "InicioJornada", "ExtensionJornada", "ListaMensajesRutina", "ListaMensajesHoras", "nombreExcelExcepciones", "TipoMensajeETFA"]
 
         for key in keys_used:
             if key not in config.keys():
@@ -71,7 +72,7 @@ try:
         tipo_horas = global_config.get("ListaMensajesHoras", "")
         tipo_horas = tipo_horas.lower().split(",") if tipo_horas else []
 
-        nombreAlertaETFA = config.get("nombreAlertaETFA").lower()
+        TipoMensajeETFA = global_config.get("TipoMensajeETFA").lower()
 
         filtroActual = config.get("filtro", "").replace("é","e").replace("ú","u").lower()
 
@@ -477,7 +478,7 @@ try:
 
                 ###################################################
                 #Revisar mensajes
-                flagCambiarFecha, flagRutina, flagDesacreditar = BuscarAlertas(driver, tipo_rutinas, tipo_horas, nombreAlertaETFA, funcion_print=eprint)
+                flagCambiarFecha, flagRutina, flagDesacreditar = BuscarAlertas(driver, tipo_rutinas, tipo_horas, TipoMensajeETFA, funcion_print=eprint)
                 EsperarCARGA_myLIMS(driver)
                 
                 ###################################################
@@ -485,11 +486,8 @@ try:
                 if flagCambiarFecha and not flagDescargar:
                     flagFechasCambiadas = True
 
-                    if not RevisarRutinas: 
-                        flagRutina = True
-                        flagDescargar = True
+                    if RevisarRutinas: 
 
-                    else:
                         elemento_filtro = driver.find_element(By.XPATH, "//input[@class='select2-search__field' and @placeholder='Filtro del mensaje']")
                         elemento_filtro.click()
                         elemento_filtro.send_keys("tipo:horas")
@@ -556,19 +554,7 @@ try:
                                         extension_jornada = EXTENSION_JORNADA
 
                                     if CambiarFechas(driver, lista_cambios, inicio_joranda=inicio_jornada, extension_jornada=extension_jornada, funcion_print=logprint):
-                                        BotonSection(driver,"SectionMessage").click()
-                                        EsperarCARGA_myLIMS(driver)
-
-                                        driver.find_element(By.XPATH, iter_xpath).click()
-                                        EsperarCARGA_myLIMS(driver, funcion_print=eprint)
-
-                                        BotonAccion(driver,"Inactivar").click()
-                                        EsperarCARGA_myLIMS(driver, funcion_print=eprint)
-
-                                        driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//textarea[@class="k-textbox"]').send_keys("Corregido")
-                                        BotonVentana(driver,"Confirmar").click()
-                                        EsperarCARGA_myLIMS(driver, funcion_print=eprint)
-
+                                        DesactivarAlerta(driver, iter_xpath, funcion_print=eprint)
                                         eprint("[Procesada Alerta de Horas]")
 
                                     else:
@@ -578,11 +564,35 @@ try:
                                 except (ElementClickInterceptedException,ElementNotInteractableException) as e:
                                     raise ExcepcionDeMuestra("Error al cambiar fechas (Reintentar)")
                         
-                            if m_tipo == nombreAlertaETFA:
-                                input()
-                                BotonSection(driver,"SectionAccreditations").click()
-        
-                            ####CAMBIO####
+                            if m_tipo == TipoMensajeETFA:
+                                eprint(f"[\"{m_inicio}\"]")
+                                
+                                mensaje.click()
+                                EsperarCARGA_myLIMS(driver)
+
+                                BotonAccion(driver,"Visualizar").click()
+                                EsperarCARGA_myLIMS(driver,extra=1)
+
+                                iframe = WebDriverWait(driver, 15).until( EC.presence_of_element_located((By.XPATH, '//div[@class="mce-tinymce mce-container mce-panel"]//iframe')) )
+                                driver.switch_to.frame(iframe)
+
+                                xpath_alertas = "//body[@id='tinymce']//ul/li"
+                                WebDriverWait(driver, 15).until( EC.presence_of_element_located((By.XPATH, xpath_alertas)) )
+                                [lista_cambios.append(_.text) for _ in driver.find_elements(By.XPATH,xpath_alertas)]
+
+                                driver.switch_to.default_content()
+                                BotonAccion(driver,"Cancelar").click()
+                                try:
+                                    if CambiarAcreditacion(driver, lista_cambios, TipoMensajeETFA, funcion_print=logprint):
+                                        DesactivarAlerta(driver, iter_xpath, funcion_print=eprint)
+                                        eprint("[Procesada Alerta de EFTA y Acreditación]")
+
+                                    else:
+                                        eprint("[Problemas con alerta de EFTA]")
+                                        flagFechasCambiadas = False
+
+                                except (ElementClickInterceptedException,ElementNotInteractableException) as e:
+                                    raise ExcepcionDeMuestra("Error al cambiar fechas (Reintentar)")
                             
                             # Usar para copiar envases y encontrar muestras en coti
                             def GetTablaColumna(xpath_tabla):
@@ -595,7 +605,7 @@ try:
 
                                 return tabla_dict
                             
-                            if True: #flagETFA
+                            if flagDesacreditar:
                                 BotonSection(driver,"SectionRelatedSamples").click()
                                 EsperarCARGA_myLIMS(driver)
 
@@ -639,6 +649,12 @@ try:
                                 else:
                                     flagDescargar = True
                                     flagRutina = True
+                                    
+                    else:
+                        flagRutina = True
+                        flagDescargar = True
+                        
+                        if flagDesacreditar:
 
                 ###################################################
                 #Revisar Controles Pendientes

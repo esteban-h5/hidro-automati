@@ -37,7 +37,7 @@ EstadoMuestras  :   Recibida,En Análisis,Registrada
 #
 #
 # Volver a correr muestras con estado guardado [False]
-RepasarEstado  :   False
+RepasarEstado  :   True
 #
 #
 # Saltar muestra en caso de error en calcular precios [True]

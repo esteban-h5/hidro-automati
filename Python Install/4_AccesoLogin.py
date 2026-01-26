@@ -6,7 +6,8 @@ try:
   from decouple import * 
   from time import sleep as wait
   import keyring, json
-  
+
+  #Permitir no tener etiquetaaaaaa
   from selenium.webdriver.support import expected_conditions as EC
   from selenium.webdriver.support.wait import WebDriverWait
   from selenium.webdriver.chrome.options import Options
@@ -98,11 +99,14 @@ try:
     else:
       input("No se econtro llave de desencriptación. (myLIMS_key)\nPresione enter para cerrar")
       exit(1)
-
-    encuser = config.get("USER").encode()
-    encpasswd = config.get("PASSWD").encode()
-    etiqueta = config.get("ETIQUETA")
-
+      
+    try:
+      encuser = config.get("USER").encode()
+      encpasswd = config.get("PASSWD").encode()
+      etiqueta = config.get("ETIQUETA")
+    except UndefinedValueError as e:
+      input(f"{e} Enter para continuar...")
+    
     try:
       user = str(Fernet(key).decrypt(encuser).decode())
       passwd = str(Fernet(key).decrypt(encpasswd).decode())
