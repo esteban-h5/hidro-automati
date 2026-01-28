@@ -180,8 +180,7 @@ def AgregarMuestraXLSX(dirExcel, ID_Muestra, colnames, ID_controles=["-"], excep
         raise ExcepcionArchivo("La cantidad de columnas no coincide")
       else:
         print(f"Error al guardar el archivo, la cantidad e columnas no coincide {e}")
-
-    
+        
     while True:
         try:
             regExcel.drop_duplicates().to_excel(dirExcel, index=False)

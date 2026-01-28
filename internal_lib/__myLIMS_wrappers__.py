@@ -372,7 +372,7 @@ def BuscarAlertas(driver, tipo_rutinas, tipo_horas, nombreAlertaETFA, funcion_pr
     cantidad_alertas = control_grilla.find_element(By.XPATH, ".//span[@class='k-pager-info k-label']").text
 
     if cantidad_alertas == "Nada a enseñar.":
-        return [flagCambiarFecha, flagRutina, flagDesacreditar]
+        return  [flagCambiarFecha, flagRutina, flagDesacreditar]
     else:
         cantidad_alertas =  int(Cortar(cantidad_alertas, "de ", " ítems"))
 
@@ -518,10 +518,20 @@ def ControlRecon(driver,muestraInicial):
 
     return ActualCQ
 
+# Usar para copiar envases y encontrar muestras en coti
+def GetTablaColumna(driver, xpath_tabla):
+    elemento_tabla = driver.find_element(By.XPATH, xpath_tabla)
+    lista_columnas_tabla = elemento_tabla.find_elements(By.XPATH,"./tr/th")
+    
+    tabla_dict = {}
+    for idx, elemento_columna in enumerate(lista_columnas_tabla):
+        tabla_dict = tabla_dict | {elemento_columna.text:idx} #Listar data-test? revisar tablas donde salto error
+
+    return tabla_dict
+
 
 #Subir ID de muestras en listaFichero a navegador buscando código de barra 
 def SubirLista(driver,listaLista, funcion_print=print):
-
     
     EsperarCARGA_myLIMS(driver)
     CodigoDeBarra = driver.find_element(By.XPATH,'//*[@placeholder="Código de Barras"]')
