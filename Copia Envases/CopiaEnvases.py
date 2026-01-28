@@ -217,6 +217,22 @@ except ExcepcionDeCarga as e:
     input("Enter para cerrar...")
     exit(1)
 
+
+"""
+    Cantidad de Muestras <=100
+        buscar y seleccionar varios
+    Cantidad de Muestras >100
+        buscar uno por uno
+    Revisar Cantidad Correcta
+    Crear PE con Copia
+        invertir grilla y seleccionar
+    Crear PE sin Copia
+        Cantidad de Muestras <=100
+        Cantidad de Muestras >100
+            Aletar y avisar que faltan Muestras
+
+"""
+
 try:
     timer = DeltaTimer(buffer_size=10)
     timer.start()
@@ -302,16 +318,19 @@ try:
                 ## Seleccionar ID COPIA
                 if MuestrasCantidad <= 100:
 
+                    tablaColnames = GetTablaColumna(driver, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
                     elementos = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
                     
                     ## Cargar Buffer m_copias
                     for muestra in elementos:
-
-                        muestra_id = muestra.find_element(By.XPATH, "./td[2]").text
-                        muestra_activa = (muestra.find_element(By.XPATH, "./td[24]").text == "Si")
+                        #2
+                        muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text
+                        #24
+                        muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text == "Si")
 
                         if muestra_id in lista_muestras_coti and muestra_activa:
-                            muestra_idx = muestra.find_element(By.XPATH, "./td[1]")
+                            #1
+                            muestra_idx = muestra.find_element(By.XPATH, f"./td[{tablaColnames['']}]")
 
                             m_copias.append(muestra)
                             m_copias_id.append(muestra_id)
@@ -326,13 +345,10 @@ try:
                         x_muestra_id = f'{" - ".join(m_copias_id)} ![ {" - ".join(m_no_copia)} ]'
                         x_xlsx_estado_final.append("[COTI NO ENCUENTRA M]")
                     ####
-
-                    if not m_copias:
-                        eprint("[No se ]")
-                        continue
                     
                     ## Seleccionar muestras para copiar
-                    m_copia_1 = m_copias[0].find_element(By.XPATH, "./td[1]")
+                    #1
+                    m_copia_1 = m_copias[0].find_element(By.XPATH, f"./td[{tablaColnames['']}]")
                     driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", m_copia_1)
                     m_copia_1.click()
 
@@ -343,15 +359,19 @@ try:
                     EsperarCARGA_myLIMS(driver)
 
                     ## Seleccionar cantidad en ventana
+                    tablaColnames = GetTablaColumna(driver, f"{xpath_ventana_copia}//tbody/tr")
                     for v_elementos in driver.find_elements(By.XPATH, f"{xpath_ventana_copia}//tbody/tr"):
-                        v_id = v_elementos.find_element(By.XPATH, "./td[1]").text
+                        #1
+                        v_id = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text
                         if v_id in lista_muestras_coti:
                             v_n_copias = int(list(df_coti[df_coti["ID MUESTRA"] == int(v_id)]["N COPIAS"])[0])
 
-                            v_copia = v_elementos.find_element(By.XPATH, "./td[6]")
+                            #6
+                            v_copia = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['']}]")
                             v_copia.click()
-
-                            v_copia = v_elementos.find_element(By.XPATH,"./td[6]//input[@class='k-input']")
+                            
+                            #6
+                            v_copia = v_elementos.find_element(By.XPATH,f"./td[{tablaColnames['']}]//input[@class='k-input']")
                             v_copia.send_keys(Keys.CONTROL, "a")
                             v_copia.send_keys(Keys.DELETE)
                             v_copia.send_keys(v_n_copias)
@@ -402,17 +422,21 @@ try:
                         driver.find_element(By.XPATH, f'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar"]//div[not(contains(@style, "display: none;"))]/button[@data-test="Copiar"]').click()
                         EsperarCARGA_myLIMS(driver)
 
+                        tablaColnames = GetTablaColumna(driver, f"{xpath_ventana_copia}//tbody/tr")
                         for v_elementos in driver.find_elements(By.XPATH, f"{xpath_ventana_copia}//tbody/tr"):
                             
-                            v_id = v_elementos.find_element(By.XPATH, "./td[1]").text
+                            #1
+                            v_id = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text
 
                             if v_id in lista_muestras_coti:
                                 v_n_copias = int(list(df_coti[df_coti["ID MUESTRA"] == int(v_id)]["N COPIAS"])[0])
 
-                                v_copia = v_elementos.find_element(By.XPATH, "./td[6]")
+                                #6
+                                v_copia = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['']}]")
                                 v_copia.click()
 
-                                v_copia = v_elementos.find_element(By.XPATH,"./td[6]//input[@class='k-input']")
+                                #6
+                                v_copia = v_elementos.find_element(By.XPATH,f"./td[{tablaColnames['']}]//input[@class='k-input']")
                                 v_copia.send_keys(Keys.CONTROL, "a")
                                 v_copia.send_keys(Keys.DELETE)
                                 v_copia.send_keys(v_n_copias)
@@ -492,9 +516,11 @@ try:
             if CrearPE:
                 eprint(f"[Seleccionando ID para PE]")
 
-                elementos = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
+                tablaColnames = GetTablaColumna(driver, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
+                elementos   = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
 
-                m_cliente = elementos[1].find_element(By.XPATH,"./td[6]").text
+                #6
+                m_cliente = elementos[1].find_element(By.XPATH,f"./td[{tablaColnames['']}]").text
                 if not SufijoTitulo:
                     pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
                 else:
@@ -509,7 +535,7 @@ try:
                         muestra = elementos[idx]
 
                         muestra_id = muestra.find_element(By.XPATH, "./td[2]").text
-                        muestra_activa = (muestra.find_element(By.XPATH, "./td[24]").text == "Si")
+                        muestra_activa = (muestra.find_element(By.XPATH, "./td[25]").text == "Si")
 
                         if not muestra_activa:
                             continue
@@ -519,7 +545,6 @@ try:
 
                     x_copias_id = " - ".join(m_selec_id)
                     ultimo_id = m_selec_id[-1]
-                    # ultimo_id = m_selec_id[-1]
 
                 if not CopiarMuestras: # x_muestra con selec y x_copia con ### 
                     x_copias_id = "###"
@@ -546,8 +571,9 @@ try:
                         x_muestra_id = f'{" - ".join(m_selec_id)} ![ {" - ".join(m_no_selec)} ]'
                         x_xlsx_estado_final.append("[COTI NO ENCUENTRA M PE]")
                     ####
-                ultimo_id = m_selec_id[-1] if m_selec_id else "None"
                 
+                ultimo_id = m_selec_id[-1] if m_selec_id else "None"
+
                 eprint(f"[Úlitmo ID seleccionado: {ultimo_id}]")
                 x_xlsx_estado_final.append(f"[M100C ({copias_reales-100}) ({ultimo_id})]")
                 
@@ -625,11 +651,14 @@ try:
                 x_pe_n_muestra = "SIN PE"
                 ####
                 
+                tablaColnames = GetTablaColumna(driver, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
                 elementos = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
                 for idx in range(copias_reales):
                     muestra = elementos[idx]
-                    muestra_id = muestra.find_element(By.XPATH, "./td[2]").text
-                    muestra_activa = (muestra.find_element(By.XPATH, "./td[24]").text == "Si")
+                    #2
+                    muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text
+                    #25
+                    muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text == "Si")
 
                     if not muestra_activa:
                         continue

@@ -389,8 +389,6 @@ try:
         else:
             eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola, descargando...')
 
-        minutosXmuestra = []
-
     except Exception as e:
         notify(title="Problemas en programa", body=type(e).__name__)
         eprint(f"{FormatoExcepcion(e)}\nOcurrió un error al obtener los ID de muestras, favor de revisar log")
@@ -595,7 +593,7 @@ try:
 
                                 return tabla_dict
                             
-                            if True: #flagETFA
+                            if flagDesacreditar:
                                 BotonSection(driver,"SectionRelatedSamples").click()
                                 EsperarCARGA_myLIMS(driver)
 
@@ -882,6 +880,7 @@ try:
 
     eprint("Sesión cerrada")
     driver.quit()
+    timepo_ejecucion = f"{ ( (timer.end_time - timer.start_time)/3600):.2f}"
 
     if len(MuestrasError) != 0: eprint(f"Ocurrieron {len(MuestrasError)} errores\n")
         
@@ -892,7 +891,7 @@ try:
         total_archivos = len(archivos_descargados)
         
         eprint(
-            f'RESUMEN: Tiempo de ejecución: { ( (self.end_time - self.start_time)/3600):.2f} horas\n\n'+
+            f'RESUMEN: Tiempo de ejecución: {timepo_ejecucion} horas\n\n'+
             f'Comenzó el {F_Inicial} y termino el {datetime.now().strftime("%d-%m %H:%M")} \n\n'+
             f'Existen {total_archivos} archivos en carpeta de descarga\n\n')
 
@@ -910,7 +909,7 @@ try:
     summary = open(nombreRESUMEN,"w")
     if not SoloBuscarControles:
         summary.write(
-            f"Resumen:\n\nTiempo de ejecucion: {((T_TotalFinal-T_TotalInicio)/3600):.2f} horas\n{(sum(minutosXmuestra)/len(minutosXmuestra))*60:.2f} minutos por muestra promedio\nComenzo el {F_Inicial} y termino el {datetime.now().strftime('%d-%m %H:%M')}\n"+
+            f"Resumen:\n\nTiempo de ejecucion: {timepo_ejecucion} horas\nComenzo el {F_Inicial} y termino el {datetime.now().strftime('%d-%m %H:%M')}\n"+
             f"{MuestrasCantidad} muestras en myLIMS\n"+
             f"{TotalDescarga} Descargados | {TotalPublicados} Publicados | {TotalCambioFechas} Fechas Cambiadas | {len(MuestrasError)} Errores\n"+
             f"{total_archivos} archivos dentro de directoro de Descarga\n\n"+
@@ -918,7 +917,7 @@ try:
 
     else:
         summary.write(
-            f"Resumen:\n\nTiempo de ejecucion: {((T_TotalFinal-T_TotalInicio)/3600):.2f} horas\n{(sum(minutosXmuestra)/len(minutosXmuestra))*60:.2f} minutos por muestra promedio\nComenzo el {F_Inicial} y termino el {datetime.now().strftime('%d-%m %H:%M')}\n"+
+            f"Resumen:\n\nTiempo de ejecucion: {timepo_ejecucion} horas\nComenzo el {F_Inicial} y termino el {datetime.now().strftime('%d-%m %H:%M')}\n"+
             f"{MuestrasCantidad} muestras en myLIMS\n"+
             f"{TotalDescarga} Registrados | {TotalPublicados} Publicados | {TotalCambioFechas} Fechas Cambiadas | {len(MuestrasError)} Errores\n"+
             f"\n----------------------\nConfiguración Usada:\n")
