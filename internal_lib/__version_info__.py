@@ -6,6 +6,7 @@ fecha_version = "miercoles 28 de enero 2026"
 changelog = [
     "- Formato Horas al Cambiar Fecha de recibimiento, am y pm",
     "- Deteccion de alerta ETFA y evitar publicación",
+    "- Registros pendientes y cambiar lotes detectando ETFA",
 ]
 
 ###############################

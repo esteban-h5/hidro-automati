@@ -46,6 +46,7 @@ log             = global_config.get("ActivarLOG", False)
 
 tipo_rutinas    = global_config.get("ListaMensajesRutina", "").lower().split(",")
 tipo_horas      = global_config.get("ListaMensajesHoras", "").lower().split(",")
+TipoMensajeETFA = global_config.get("TipoMensajeETFA").lower()
 
 nombreExcepciones  = global_config.get("nombreExcelExcepciones", "")
 dirExcepciones     = os.path.join(internal_lib, nombreExcepciones)
@@ -245,9 +246,9 @@ try:
                             #################
                             #Revisar mensajes
                             #Hacer click en k-pager-nav hasta que aparezca k-state-disabled en class
-                            flagCambiarFecha, flagAlerta = BuscarAlertas(driver, tipo_rutinas, tipo_horas, funcion_print=eprint)
+                            flagCambiarFecha, flagAlerta, flagDesacreditar = BuscarAlertas(driver, tipo_rutinas, tipo_horas, TipoMensajeETFA, funcion_print=eprint)
 
-                            if flagCambiarFecha: flagAlerta = True
+                            if flagCambiarFecha or flagDesacreditar: flagAlerta = True
 
                             BotonSection(driver,"SectionRelatedSamples").click()
                             EsperarCARGA_myLIMS(driver)
