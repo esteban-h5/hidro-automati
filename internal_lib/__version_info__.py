@@ -1,24 +1,11 @@
 ###############################
 
-version_actual = "5.5.3-fix"
-fecha_version = "viernes 23 de enero 2026"
+version_actual = "5.5.3-fix-1"
+fecha_version = "miercoles 28 de enero 2026"
 
 changelog = [
-    # #"- Corregir casos con más de 100 copias en copiamuestras (estado_final)",
-    # # "- Esperar a alerta 'Copias concluidas' de copias muestras y no mylims",
-    # # "- RevisarEtapaActual = 'en realizacion'",
-    # # "- Nuevo GetConfig de MuestrasAPI",
-    # # "- Agregar Mas usuarios, respeta los index",
-    # # "- Se incluye peso colombiano",
-    #"- Valores de Reintentos en DescargaMuestras",
-    #"- Credenciales creando con etiqueta para varias opciones",
-    #"- Ajuste Valores Predeterminados en config",
-    #"- Actualizar anuncia archivo config con nuevo valor",
-    # "- Config CambiarLotes",
-    # "- CambiarLotes y AbrirExcel en orden",
-    # "- CambiarLotes Excepcion Alterar metodo",
-    # "- Guardar Credenciales con decode, no en bytes",
     "- Formato Horas al Cambiar Fecha de recibimiento, am y pm",
+    "- Deteccion de alerta ETFA y evitar publicación",
 ]
 
 ###############################

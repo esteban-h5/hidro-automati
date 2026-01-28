@@ -21,8 +21,8 @@ try:
         config              =   GetConfig( dirConfig=os.path.join(DM_wd,"config.txt") )
         global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
-        keys_used = ["filtro", "SoloBuscarControles", "DescargarPublicadas", "RegistrarMuestras", "RevisarRutinas", "AutoPublicar", "Olvidar", "BorrarDuplicados", "Alerta", "DOC_REVISION_ETFA_ID_CL", "DOC_REVISION_ID_CL", "nombreExcelRegistro", "nombreExcelHistorico"]
-        keys_used_g = ["myLIMSdomain", "Labsoftdomain", "paisActual", "ActivarLOG", "InicioJornada", "ExtensionJornada", "ListaMensajesRutina", "ListaMensajesHoras", "nombreExcelExcepciones"]
+        keys_used   = ["filtro", "SoloBuscarControles", "DescargarPublicadas", "RegistrarMuestras", "RevisarRutinas", "AutoPublicar", "Olvidar", "BorrarDuplicados", "Alerta", "DOC_REVISION_ETFA_ID_CL", "DOC_REVISION_ID_CL", "nombreExcelRegistro", "nombreExcelHistorico"]
+        keys_used_g = ["myLIMSdomain", "Labsoftdomain", "paisActual", "ActivarLOG", "InicioJornada", "ExtensionJornada", "ListaMensajesRutina", "ListaMensajesHoras", "nombreExcelExcepciones", "TipoMensajeETFA"]
 
         for key in keys_used:
             if key not in config.keys():
@@ -51,6 +51,8 @@ try:
 
         tipo_horas = global_config.get("ListaMensajesHoras", "")
         tipo_horas = tipo_horas.lower().split(",") if tipo_horas else []
+
+        TipoMensajeETFA = global_config.get("TipoMensajeETFA").lower()
 
         filtroActual = config.get("filtro", "").replace("é","e").replace("ú","u").lower()
 
@@ -429,6 +431,7 @@ try:
                 flagDescargar = False
                 flagCambiarFecha = False
                 flagRutina = False
+                flagDesacreditar = False
                 flagControles = False
                 
                 ChequearNavegador(driver, kill=True)
@@ -454,6 +457,9 @@ try:
 
                 muestra_estado = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']/div[1]/div[1]//div[5]/div[3]//input[@class='k-input']").get_attribute("value")
                 
+                # muestra_fmuestreo   = driver.find_element(By.XPATH, "//input[@data-test='TakenDateTime']").get_attribute("value").replace("-", "/")
+                # muestra_frecepcion  = ":".join(fila.find_element(By.XPATH, './td[@data-test="StatusHistoryGrid.EditionDateTime"]').text.replace("-", "/").split(":")[:-1])
+                
                 if muestra_estado == "Publicada":
                     eprint("[Previamente Publicada]\n")
 
@@ -468,22 +474,18 @@ try:
                 BotonSection(driver,"SectionMessage").click()
                 EsperarCARGA_myLIMS(driver, funcion_print=eprint, kill=True)
 
-                #################
+                ###################################################
                 #Revisar mensajes
-                #Hacer click en k-pager-nav hasta que aparezca k-state-disabled en class?
-                flagCambiarFecha, flagRutina = BuscarAlertas(driver, tipo_rutinas, tipo_horas, funcion_print=eprint)
+                flagCambiarFecha, flagRutina, flagDesacreditar = BuscarAlertas(driver, tipo_rutinas, tipo_horas, TipoMensajeETFA, funcion_print=eprint)
                 EsperarCARGA_myLIMS(driver)
                 
                 ###################################################
                 #Cambiar Fechas
-                if flagCambiarFecha and not flagDescargar:
-                    flagFechasCambiadas = True
+                if (flagCambiarFecha or flagDesacreditar) and not flagDescargar:
 
-                    if not RevisarRutinas: 
-                        flagRutina = True
-                        flagDescargar = True
+                    if RevisarRutinas: 
+                        flagFechasCambiadas = True
 
-                    else:
                         elemento_filtro = driver.find_element(By.XPATH, "//input[@class='select2-search__field' and @placeholder='Filtro del mensaje']")
                         elemento_filtro.click()
                         elemento_filtro.send_keys("tipo:horas")
@@ -494,15 +496,19 @@ try:
 
                         xpath_mensajes = '//div[@class="myLIMSweb-mail-list-item-box"]//li[contains(@class, "list-group-item")]'
                         
-                        lista_alertas = driver.find_elements(By.XPATH, xpath_mensajes)
+                        # Lista de li
+                        lista_alertas = driver.find_elements(By.XPATH, xpath_mensajes) 
+                        
+                        # Asignar índice de li
                         lista_alertas = sorted([f"({xpath_mensajes})[{i+1}]" for i in range(len(lista_alertas))], reverse=True)
 
+                        #Lista de alertas para desactivar
                         lista_alertas_pop = []
 
                         for m_index, iter_xpath in enumerate(lista_alertas):
                             lista_cambios = []
                             
-                            mensaje = driver.find_element(By.XPATH, iter_xpath)
+                            mensaje     = driver.find_element(By.XPATH, iter_xpath)
 
                             m_tipo      = mensaje.find_element(By.XPATH,'./div/div[3]').text.lower()
                             m_inicio    = mensaje.find_element(By.XPATH,'./div/div[2]/div[1]').text
@@ -511,6 +517,8 @@ try:
                             if "inactive" in m_state:
                                 lista_alertas_pop.append(m_index)
                                 continue  
+
+                            # input(f"{m_tipo}/{TipoMensajeETFA} - {m_state} - {m_inicio}")
 
                             if m_tipo in tipo_horas:
                                 eprint(f"[\"{m_inicio}\"]")
@@ -558,7 +566,7 @@ try:
                                         driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//textarea[@class="k-textbox"]').send_keys("Corregido")
                                         BotonVentana(driver,"Confirmar").click()
                                         EsperarCARGA_myLIMS(driver, funcion_print=eprint)
-
+                                        
                                         eprint("[Procesada Alerta de Horas]")
 
                                     else:
@@ -567,7 +575,12 @@ try:
 
                                 except (ElementClickInterceptedException,ElementNotInteractableException) as e:
                                     raise ExcepcionDeMuestra("Error al cambiar fechas (Reintentar)")
-                        
+
+                            if m_tipo == TipoMensajeETFA:
+                                eprint("[Alerta ETFA, saltando publicacion]")
+                                flagFechasCambiadas = False
+                                flagDescargar = True
+
                         else:
                             
                             for i in sorted(lista_alertas_pop, reverse=True):
@@ -583,8 +596,11 @@ try:
                                 else:
                                     flagDescargar = True
                                     flagRutina = True
-
-
+                                    
+                    else:
+                        flagRutina = True
+                        flagDescargar = True
+                        
                 ###################################################
                 #Revisar Controles Pendientes
                 BotonSection(driver,"SectionRelatedSamples").click()
@@ -771,7 +787,8 @@ try:
                 Excepcion_error = e
                 while True:
                     try:
-                        requests.head("https://8.8.8.8", timeout=timeout_con_check)
+                        eprint("Probando conexión a internet")
+                        internet_ok(timeout=1)
                         break
                     except (requests.ConnectionError, requests.exceptions.ReadTimeout):
                         eprint("No hay connexión a internet, reintentando cada 15 segundos...")
@@ -884,5 +901,5 @@ try:
 except KeyboardInterrupt:
     print("Programa interrumpido por el usuario\nProceso del navegador desanclado\nCerrando terminal...")
     from time import sleep
-    sleep(1)
+    wait(1)
     exit(1)

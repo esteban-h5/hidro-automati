@@ -12,7 +12,7 @@ Labsoftdomain         :   https://labsoft-identitycenter-sts.mylimsweb.cloud/
 #
 # Variable del pais actual (no importan mayusculas ni tildes)
 # Chile - Perú - Colombia - México
-paisActual            :   Colombia
+paisActual            :   Chile
 #
 #
 # Largo de la jornada en cantidad de horas, dos puntos para separar horas y minutos (10:30) o (11)
@@ -37,6 +37,9 @@ ListaMensajesRutina         :   Rutina,Analisis-Formato,Analisis-FQ,Analisis-FQA
 #
 # Lista de horas para las rutinas
 ListaMensajesHoras          :   Horas
+#
+#
+TipoMensajeETFA             :   Formato-Horas
 #
 #
 # Excepciones generales

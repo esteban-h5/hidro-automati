@@ -346,37 +346,27 @@ def SampleRecon(driver, Excluido, CentroServicio, funcion_print=print):
         return ActualSample
 
 
-def BuscarAlertas(driver, tipo_rutinas, tipo_horas, funcion_print=print):
+def BuscarAlertas(driver, tipo_rutinas, tipo_horas, nombreAlertaETFA, funcion_print=print):
     flagRutina= False
     flagCambiarFecha = False
+    flagDesacreditar = False
 
     control_grilla = driver.find_element(By.XPATH, "//div[@class='myLIMSweb-mail-list-item-box']/div[contains(@class, 'k-pager-wrap') and contains(@class, 'k-widget') and @data-role='pager' and @id='pager']")
     cantidad_alertas = control_grilla.find_element(By.XPATH, ".//span[@class='k-pager-info k-label']").text
 
     if cantidad_alertas == "Nada a enseñar.":
-        return [flagCambiarFecha, flagRutina]
+        return  [flagCambiarFecha, flagRutina, flagDesacreditar]
     else:
         cantidad_alertas =  int(Cortar(cantidad_alertas, "de ", " ítems"))
 
     if cantidad_alertas > 10:
         funcion_print(f"[Más de 10 alertas ({cantidad_alertas})]")
-        return [True, True]
+        return [True, True, True]
 
     else:
-        # if cantidad_alertas > 10:
-        #     control_grilla.find_element(By.XPATH, ".//span[@class='k-pager-sizes k-label']/span[1]").click()
-        #     EsperarCARGA_myLIMS(driver, funcion_print=funcion_print)
-        #     try:
-        #         driver.find_element(By.XPATH, "//div[@class='k-animation-container']//ul[@class='k-list k-reset']/li[last()]").click()
-        #         EsperarCARGA_myLIMS(driver, funcion_print=funcion_print)
-        #     except ElementNotInteractableException:
-        #         raise ExcepcionDeMuestra("No se pudo cambiar el tamaño de grilla por página")
-            
-        ###################################################
-        #Revisar mensajes
         xpath_mensajes = '//div[@class="myLIMSweb-mail-list-item-box"]//li[contains(@class, "list-group-item")]'
 
-        for index, mensaje in enumerate(driver.find_elements(By.XPATH,xpath_mensajes)):
+        for mensaje in driver.find_elements(By.XPATH,xpath_mensajes):
 
             m_tipo_upper    = mensaje.find_element(By.XPATH,'./div/div[3]').text
             m_tipo          = m_tipo_upper.lower()
@@ -399,7 +389,11 @@ def BuscarAlertas(driver, tipo_rutinas, tipo_horas, funcion_print=print):
                     funcion_print(f"[Alerta de tipo \"{m_tipo_upper}\"]")
                     flagRutina = True
 
-    return [flagCambiarFecha, flagRutina]
+            if m_tipo == nombreAlertaETFA and "Alerta de horas - ETFA" in m_inicio:
+                funcion_print(f"[Alerta ETFA \"{m_tipo_upper}\"]")
+                flagDesacreditar = True
+
+    return [flagCambiarFecha, flagRutina, flagDesacreditar]
 
 def ContarControlesPendientes(driver, ID_Actual, funcion_print=lambda *args, **kwargs: None):
     xpath_controles = "//div[@id='InterfaceContent']/div[@style='']//table[@role='grid']//tr"
@@ -606,13 +600,16 @@ def marg_random():
 def formato_fecha(fecha, formato="%d/%m/%Y %I:%M %p"):
     if fecha == None:
         return None
+    state1 = "/" in fecha
+    state2 = "-" in fecha
     
-    #if "/" in fecha:
-    #    formato = formato.replace("/", "-")
-    if "-" in fecha:
+    if state1:
+        formato = formato.replace("-", "/")
+    if state2:
         formato = formato.replace("/", "-")
-    else:
-        raise ExcepcionDeMuestra(f"Problemas al formatear la fecha {fecha}:\n{e}")
+
+    if not state2 and not state1:
+        raise ExcepcionDeMuestra(f"Problemas al formatear la fecha {fecha}:\n")
     
     try:
         if ".m." in fecha or "M" in fecha:

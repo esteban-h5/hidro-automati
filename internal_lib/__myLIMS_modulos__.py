@@ -21,7 +21,7 @@ try:
     from win11toast import notify
     from pathlib import Path
 
-    import os, requests, sys, traceback, subprocess, re, ctypes, keyring, pandas as pd
+    import os, requests, sys, traceback, subprocess, re, ctypes, keyring, pandas as pd, socket
     from __version_info__ import version_actual
 
 except ModuleNotFoundError as e:
@@ -61,6 +61,15 @@ class ExcepcionArchivo(Exception):
 
 class ExcepcionDeCodigo(Exception):
     pass
+
+def internet_ok(timeout=1):
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\
+              .sendto(b"\x00", ("8.8.8.8", 53))
+        return True
+    except OSError:
+        return False
 
 def existe_param_env(path_internal):
   file = os.path.join(path_internal,"Param.env")
