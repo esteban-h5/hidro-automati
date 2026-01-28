@@ -226,10 +226,9 @@ except ExcepcionDeCarga as e:
     Revisar Cantidad Correcta
     Crear PE con Copia
         invertir grilla y seleccionar
+        Cantidad de copias >100
+            alertar e indicar ultimo id para asignar a futuro
     Crear PE sin Copia
-        Cantidad de Muestras <=100
-        Cantidad de Muestras >100
-            Aletar y avisar que faltan Muestras
 
 """
 
@@ -503,9 +502,7 @@ try:
 
                 x_copias_id = "SIN COPIAS"
 
-            ## Invertir Orden
-            driver.find_element(By.XPATH,"//div[@id='InterfaceContent']/div[not(contains(@style, 'display: block;'))]//th[@data-title='Orden']").click()
-            EsperarCARGA_myLIMS(driver)
+
 
             m_selec_id = []
             m_no_selec = []
@@ -514,6 +511,10 @@ try:
             ############################################################################################
             ## Seleccionar Nuevas Muestras para CREAR ENVASE
             if CrearPE:
+                ## Invertir Orden
+                driver.find_element(By.XPATH,"//div[@id='InterfaceContent']/div[not(contains(@style, 'display: block;'))]//th[@data-title='Orden']").click()
+                EsperarCARGA_myLIMS(driver)
+                
                 eprint(f"[Seleccionando ID para PE]")
 
                 tablaColnames = GetTablaColumna(driver, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
@@ -545,6 +546,11 @@ try:
 
                     x_copias_id = " - ".join(m_selec_id)
                     ultimo_id = m_selec_id[-1]
+                    eprint(f"[Úlitmo ID seleccionado: {ultimo_id}]")
+
+                    if cant_copias >100:
+                        eprint(f"[Más de 100 copias, faltan {cant_copias-100}]")
+                        x_xlsx_estado_final.append(f"[M100C ({cant_copias-100}) ({ultimo_id})]")
 
                 if not CopiarMuestras: # x_muestra con selec y x_copia con ### 
                     x_copias_id = "###"
@@ -560,88 +566,104 @@ try:
 
                             m_selec.append(muestra)
                             m_selec_id.append(muestra_id)
-                        
+
                     m_no_selec = unique(set(lista_muestras_coti) - set(m_selec_id))
 
                     #### EXCEL
-                    if not m_no_selec: #No contiene errores
+                    # usar x_muestra_id como muestras a seleccionar
+                    if m_no_selec: 
+                        if len(lista_muestras_coti) >100:
+                            eprint(f"[Más de 100 muestras para asociar a envase {' - '.join(m_no_selec)} no fueron seleccionadas]")
+                            x_muestra_id = f'{" - ".join(m_selec_id)} ![ {" - ".join(m_no_selec)} ]'
+                            x_xlsx_estado_final.append("[M100M]")        
+                        else:
+                            eprint(f"[Muestras {' - '.join(m_no_selec)} no existen en cotizacion]")
+                            x_muestra_id = f'{" - ".join(m_selec_id)} ![ {" - ".join(m_no_selec)} ]'
+                            x_xlsx_estado_final.append("[COTI NO ENCUENTRA M PE]")
+                        
+                    else:  #No contiene errores
                         x_muestra_id = " - ".join(m_selec_id)
-                    else: 
-                        eprint(f"[Muestras {' - '.join(m_no_selec)} no existen en cotizacion]")
-                        x_muestra_id = f'{" - ".join(m_selec_id)} ![ {" - ".join(m_no_selec)} ]'
-                        x_xlsx_estado_final.append("[COTI NO ENCUENTRA M PE]")
                     ####
                 
-                ultimo_id = m_selec_id[-1] if m_selec_id else "None"
+                if m_selec_id:
+                    ultimo_id = m_selec_id[-1] if m_selec_id else "None"
+                    
+                    ## Seleccionar muestras para copiar
+                    m_selec_1 = m_selec[0].find_element(By.XPATH, "./td[1]")
+                    driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", m_selec_1)
+                    m_selec_1.click()
 
-                eprint(f"[Úlitmo ID seleccionado: {ultimo_id}]")
-                x_xlsx_estado_final.append(f"[M100C ({copias_reales-100}) ({ultimo_id})]")
-                
-                ## Seleccionar muestras para copiar
-                m_selec_1 = m_selec[0].find_element(By.XPATH, "./td[1]")
-                driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", m_selec_1)
-                m_selec_1.click()
+                    for _ in m_selec[1:]:
+                        driver.execute_script("arguments[0].setAttribute('class', 'k-alt k-state-selected');", _)
 
-                for _ in m_selec[1:]:
-                    driver.execute_script("arguments[0].setAttribute('class', 'k-alt k-state-selected');", _)
+                    botones_accion = driver.find_element(By.XPATH, "//div[@id='InterfaceActions']//div[@class='labsoft-ui-buttons-bar']")
+                    driver.execute_script("""
+                        arguments[0].setAttribute('tabindex', '-1');
+                        arguments[0].focus();
+                    """, botones_accion)
 
-                botones_accion = driver.find_element(By.XPATH, "//div[@id='InterfaceActions']//div[@class='labsoft-ui-buttons-bar']")
-                driver.execute_script("""
-                    arguments[0].setAttribute('tabindex', '-1');
-                    arguments[0].focus();
-                """, botones_accion)
+                    [botones_accion.send_keys(Keys.ARROW_RIGHT) for _ in range(4)]
+                    eprint(f"[Creando PE]")
 
-                [botones_accion.send_keys(Keys.ARROW_RIGHT) for _ in range(4)]
-                eprint(f"[Creando PE]")
+                    boton_actividad = BotonAccion(driver,"Actividades")
+                    boton_actividad.click()
+                    EsperarCARGA_myLIMS(driver)
 
-                boton_actividad = BotonAccion(driver,"Actividades")
-                boton_actividad.click()
-                EsperarCARGA_myLIMS(driver)
+                    x_xlsx_estado = "ERROR ACTIVIDADES"
 
-                x_xlsx_estado = "ERROR ACTIVIDADES"
+                    boton_actividad.find_element(By.XPATH, "./../ul/li[@data-test='Crear']").click()
+                    EsperarCARGA_myLIMS(driver)
 
-                boton_actividad.find_element(By.XPATH, "./../ul/li[@data-test='Crear']").click()
-                EsperarCARGA_myLIMS(driver)
+                    driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Preparación de Envases')]").click()
+                    EsperarCARGA_myLIMS(driver)
 
-                driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Preparación de Envases')]").click()
-                EsperarCARGA_myLIMS(driver)
+                    BotonVentana(driver,"Seleccionar").click()
+                    EsperarCARGA_myLIMS(driver)
 
-                BotonVentana(driver,"Seleccionar").click()
-                EsperarCARGA_myLIMS(driver)
+                    nuevas_ventanas = driver.find_elements(By.XPATH, "//body/div[contains(@class, 'k-window') and contains(@style, 'display: block;')]")
 
-                nuevas_ventanas = driver.find_elements(By.XPATH, "//body/div[contains(@class, 'k-window') and contains(@style, 'display: block;')]")
+                    if len(nuevas_ventanas) != 1:
+                        x_xlsx_estado = "ALERTA INESPERADA"
+                        str_salida = ""
 
-                if len(nuevas_ventanas) != 1:
-                    x_xlsx_estado = "ALERTA INESPERADA"
-                    str_salida = ""
+                        logprint("lista alertas: ")
 
-                    logprint("lista alertas: ")
+                        for _ in nuevas_ventanas:
+                            titulo = _.find_element(By.XPATH,".//span[@class='k-window-title']").text
+                            cuerpo = _.find_element(By.XPATH,".//div[contains(@class, 'k-window-content')]").text
+                            str_salida = str_salida+f"\n- {titulo}"
+                            logprint(f"t: {titulo}\nc: {cuerpo}\n")
 
-                    for _ in nuevas_ventanas:
-                        titulo = _.find_element(By.XPATH,".//span[@class='k-window-title']").text
-                        cuerpo = _.find_element(By.XPATH,".//div[contains(@class, 'k-window-content')]").text
-                        str_salida = str_salida+f"\n- {titulo}"
-                        logprint(f"t: {titulo}\nc: {cuerpo}\n")
+                        raise ExcepcionDeMuestra(f"Alertas Inesperadas (más info en el log), titulos encontrados de ventanas: {str_salida}")
 
-                    raise ExcepcionDeMuestra(f"Alertas Inesperadas (más info en el log), titulos encontrados de ventanas: {str_salida}")
+                    driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Unidad de Fomento')]").click()
+                    BotonVentana(driver,"Confirmar").click()
+                    EsperarCARGA_myLIMS(driver)
 
-                driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Unidad de Fomento')]").click()
-                BotonVentana(driver,"Confirmar").click()
-                EsperarCARGA_myLIMS(driver)
+                    pe_identification = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Identification' and @name='Identification']")
+                    pe_identification.send_keys(pe_titulo)
 
-                pe_identification = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Identification' and @name='Identification']")
-                pe_identification.send_keys(pe_titulo)
+                    BotonAccion(driver,"SaveButton").click()
+                    EsperarCARGA_myLIMS(driver)
 
-                BotonAccion(driver,"SaveButton").click()
-                EsperarCARGA_myLIMS(driver)
+                    #### EXCEL
+                    x_pe_titulo = pe_titulo
+                    x_pe_id = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Id' and @name='Id']").get_attribute("value")
+                    x_pe_n_muestra = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='ControlNumber' and @name='ControlNumber']").get_attribute("value")
+                    ####
 
-                #### EXCEL
-                x_pe_titulo = pe_titulo
-                x_pe_id = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Id' and @name='Id']").get_attribute("value")
-                x_pe_n_muestra = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='ControlNumber' and @name='ControlNumber']").get_attribute("value")
-                ####
+                    eprint(f"[PE creado ({x_pe_id}) - ({x_pe_n_muestra}) - ({x_pe_titulo})]\n")
 
-                eprint(f"[PE creado ({x_pe_id}) - ({x_pe_n_muestra}) - ({x_pe_titulo})]\n")
+                else:
+
+                    #### EXCEL
+                    x_pe_titulo = "###"
+                    x_pe_id = "###"
+                    x_pe_n_muestra = "###"
+                    ####
+                    
+                    x_xlsx_estado_final.append("[SIN MUESTRAS]")    
+                    eprint(f"[No se han seleccionado muestras]")
 
             else:
 
@@ -651,6 +673,7 @@ try:
                 x_pe_n_muestra = "SIN PE"
                 ####
                 
+                #Obtener lista de copia
                 tablaColnames = GetTablaColumna(driver, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
                 elementos = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
                 for idx in range(copias_reales):
