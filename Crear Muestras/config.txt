@@ -26,7 +26,7 @@ ExcelEntrada    :   Hidrolab MTY _ Planilla de carga de muestras (WALMART)
 ##    CHILE    ##
 #################
 
-SCL-HojaIM : Muestras
+SCL-HojaIM : Hoja 30
 SCL-COL-indice_m                :   ID de muestra #N°
 SCL-COL-id_muestras             :   N° en Mylims #ID muestra
 SCL-COL-identificacion          :   Identificación de muestra

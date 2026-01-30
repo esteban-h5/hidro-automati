@@ -407,7 +407,7 @@ class DeltaTimer:
 
     def start(self):
         """Inicia o reinicia el timer"""
-        self._start_time = time.time()
+        self._start_time = tiempo()
 
     def delta(self) -> float:
         """
@@ -417,7 +417,7 @@ class DeltaTimer:
         if self._start_time is None:
             raise RuntimeError("El timer no ha sido iniciado")
 
-        delta = time.time() - self._start_time
+        delta = tiempo() - self._start_time
         self._add_to_buffer(delta)
         self.start()
         return delta

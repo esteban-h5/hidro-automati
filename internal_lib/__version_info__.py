@@ -1,12 +1,10 @@
 ###############################
 
-version_actual = "5.5.3-fix-1"
-fecha_version = "miercoles 28 de enero 2026"
+version_actual = "5.5.3-fix-2"
+fecha_version = "viernes 30 de enero 2026"
 
 changelog = [
-    "- Formato Horas al Cambiar Fecha de recibimiento, am y pm",
-    "- Deteccion de alerta ETFA y evitar publicación",
-    "- Registros pendientes y cambiar lotes detectando ETFA",
+    "- Integración Crear Muestras",
 ]
 
 ###############################

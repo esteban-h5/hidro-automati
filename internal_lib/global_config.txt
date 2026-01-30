@@ -10,6 +10,10 @@ myLIMSdomain          :   https://hidrolab.mylimsweb.cloud/
 Labsoftdomain         :   https://labsoft-identitycenter-sts.mylimsweb.cloud/
 #
 #
+# URL principal donde la API accedera
+api-url               :   https://hidrolab.mylimsweb.cloud/api/v2/
+#
+#
 # Variable del pais actual (no importan mayusculas ni tildes)
 # Chile - Perú - Colombia - México
 paisActual            :   Chile
