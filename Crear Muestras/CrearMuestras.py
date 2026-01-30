@@ -7,8 +7,8 @@ internal_lib        =   os.path.normpath(os.path.join(CM_wd,"..","internal_lib")
 sys.path.insert(0, internal_lib)
 
 from __myLIMS_modulos__ import (
-  datetime, get, version_actual, GetConfig, paisDICT, DeltaTimer,
-  MensajeInicial, filedialog, pd, notify, sleep, FormatoExcepcion
+  datetime, version_actual, GetConfig, paisDICT, DeltaTimer,
+  MensajeInicial, filedialog, pd, notify, wait, FormatoExcepcion, keyring
 )
 
 from __myLIMS_API__ import (
@@ -22,7 +22,7 @@ from __ficheros_modulos__ import (
 )
 
 fecha = datetime.now().strftime('%Y_%m_%d-%H_%M')
-token = get('mylims_app', 'secret7')
+token = keyring.get_password('mylims_app', 'secret7')
 
 file_name = os.path.basename(__file__)
 file_path = os.path.join(CM_wd,"") #Excel entrada
@@ -336,5 +336,5 @@ except Exception as e:
     notify(title="Problemas en programa", body=type(e).__name__)
     eprint(f"Problemas en programa: {FormatoExcepcion(e)}\n")
     eprint("Log exportado")
-    sleep(3)
+    wait(3)
     exit(1)
