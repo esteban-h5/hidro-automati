@@ -14,12 +14,33 @@ file_name           =   os.path.basename(__file__)
 
 CE_wd               =   os.path.dirname(os.path.realpath(__file__))
 internal_lib        =   os.path.normpath(os.path.join(CE_wd,"..","internal_lib"))
-
 sys.path.insert(0, internal_lib)
 
-from __myLIMS_modulos__ import *
-from __myLIMS_wrappers__ import *
-from __ficheros_modulos__ import *
+from __myLIMS_modulos__ import (
+    GetConfig, MensajeInicial, version_actual, existe_param_env,
+    EsperarCARGA_myLIMS, ExcepcionDeCarga, 
+    BotonSection, BotonAccion, BotonVentana,
+    FormatoExcepcion, ExcepcionDeMuestra,
+    UnexpectedAlertPresentException, StaleElementReferenceException, 
+    InvalidSessionIdException, NoSuchWindowException, 
+    By, EC, DriverOptions, Chrome, Keys, WebDriverWait, DeltaTimer,
+    notify, wait, datetime, requests, prefs, del_alertas_iniciales
+)
+
+from __myLIMS_wrappers__ import (
+    unique, Cortar,
+)
+
+from __ficheros_modulos__ import (
+    ListaMuestraXLSX,
+    FilaAgregarXLSX,
+    AbrirXLSX, 
+)
+
+from __myLIMS_wrappers__ import (
+    Logout, Login, GetTablaColumna,
+    DeltaTimer,
+)
 
 ########################################
 #Inicialización de Config
@@ -112,7 +133,7 @@ else:
 
 MensajeInicial(file_name, funcion_print=eprint, config=config, global_config=global_config, funcion_log=logprint )
 
-eprint(f"País Actual: {paisActual}\n")
+eprint(f"País Actual: {paisActual}")
 
 if not existe_param_env(internal_lib):
     eprint("Error No se encontró archivo con credenciales. (Param.env)")
@@ -121,6 +142,7 @@ if not existe_param_env(internal_lib):
 
 xpath_ventana           = "//div[contains(@class,'k-window') and contains(@style,'display: block;')]"
 xpath_muestra_activa    = "//div[@id='InterfaceContent']/div[1]//div[@class='labsoft-ui-input checkbox']//input[@data-test='Active']"
+xpath_seccion_muestras  = "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']//div[contains(@class, 'k-auto-scrollable')]"
 xpath_estado_muestra    = "//div[@id='InterfaceContent']/div[1]//label[contains(text(),'Estatus de la Muestra')]/following-sibling::span[contains(@class, 'k-combobox')]/span/input[@role='combobox']"
 xpath_lista_analitos    = "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[2]/table/tbody"
 xpath_alerta_inactiva   = f"{xpath_ventana}//span[@class='k-window-title' and contains(text(), 'Registro Inactivo')]/ancestor::div[contains(@class,'k-window') and contains(@style,'display: block;')]"
@@ -198,7 +220,25 @@ except ExcepcionDeCarga as e:
     input("Enter para cerrar...")
     exit(1)
 
+
+"""
+    Cantidad de Muestras <=100
+        buscar y seleccionar varios
+    Cantidad de Muestras >100
+        buscar uno por uno
+    Revisar Cantidad Correcta
+    Crear PE con Copia
+        invertir grilla y seleccionar
+        Cantidad de copias >100
+            alertar e indicar ultimo id para asignar a futuro
+    Crear PE sin Copia
+
+"""
+
 try:
+    timer = DeltaTimer(buffer_size=10)
+    timer.start(cantidad_cotizaciones)
+    
     flag_alerta_inicial = True
     ##############################################
     for idx, id_coti in enumerate(lista_id_coti):
@@ -231,9 +271,12 @@ try:
 
         copias_totales = sum(list(df_coti["N COPIAS"]))
 
+        timer.save(idx-1)
+
         eprint( f'Revisando Cotizacion: {id_coti} [{idx+1}/{cantidad_cotizaciones}]\n'+
                 f'Muestras de esta Cotizacion: {" ".join(lista_muestras_coti)}\n'+
-                f'{copias_totales} copias totales\n')
+                f'{copias_totales} copias totales\n'
+                f'Tiempo restante: {timer.t_restante} [{timer.h_estimada}]\n')
 
         try:
             coti_activa = driver.find_element(By.XPATH, xpath_muestra_activa ).is_selected()
@@ -277,16 +320,19 @@ try:
                 ## Seleccionar ID COPIA
                 if MuestrasCantidad <= 100:
 
+                    tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
                     elementos = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
                     
                     ## Cargar Buffer m_copias
                     for muestra in elementos:
-
-                        muestra_id = muestra.find_element(By.XPATH, "./td[2]").text
-                        muestra_activa = (muestra.find_element(By.XPATH, "./td[24]").text == "Si")
+                        #2
+                        muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['ID']}]").text
+                        #25
+                        muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['¿Activo?']}]").get_attribute("textContent") == "Si")
 
                         if muestra_id in lista_muestras_coti and muestra_activa:
-                            muestra_idx = muestra.find_element(By.XPATH, "./td[1]")
+                            #1
+                            muestra_idx = muestra.find_element(By.XPATH, f"./td[{tablaColnames['Orden']}]")
 
                             m_copias.append(muestra)
                             m_copias_id.append(muestra_id)
@@ -301,9 +347,10 @@ try:
                         x_muestra_id = f'{" - ".join(m_copias_id)} ![ {" - ".join(m_no_copia)} ]'
                         x_xlsx_estado_final.append("[COTI NO ENCUENTRA M]")
                     ####
-
+                    
                     ## Seleccionar muestras para copiar
-                    m_copia_1 = m_copias[0].find_element(By.XPATH, "./td[1]")
+                    #1
+                    m_copia_1 = m_copias[0].find_element(By.XPATH, f"./td[{tablaColnames['Orden']}]")
                     driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", m_copia_1)
                     m_copia_1.click()
 
@@ -314,15 +361,19 @@ try:
                     EsperarCARGA_myLIMS(driver)
 
                     ## Seleccionar cantidad en ventana
+                    tablaColnames = GetTablaColumna(driver, f"{xpath_ventana_copia}//div[@class='k-grid-header']//thead/tr")
                     for v_elementos in driver.find_elements(By.XPATH, f"{xpath_ventana_copia}//tbody/tr"):
-                        v_id = v_elementos.find_element(By.XPATH, "./td[1]").text
+                        #1
+                        v_id = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['Id']}]").text
                         if v_id in lista_muestras_coti:
                             v_n_copias = int(list(df_coti[df_coti["ID MUESTRA"] == int(v_id)]["N COPIAS"])[0])
 
-                            v_copia = v_elementos.find_element(By.XPATH, "./td[6]")
+                            #6
+                            v_copia = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['N°de Copias']}]")
                             v_copia.click()
-
-                            v_copia = v_elementos.find_element(By.XPATH,"./td[6]//input[@class='k-input']")
+                            
+                            #6
+                            v_copia = v_elementos.find_element(By.XPATH,f"./td[{tablaColnames['N°de Copias']}]//input[@class='k-input']")
                             v_copia.send_keys(Keys.CONTROL, "a")
                             v_copia.send_keys(Keys.DELETE)
                             v_copia.send_keys(v_n_copias)
@@ -345,7 +396,7 @@ try:
                 ############################################################################################
                 ## Seleccionar ID COPIA UNO POR UNO
                 else:
-                    eprint(f"[Más de 100 muestras en grilla, haciendo busqueda por separado]")
+                    eprint(f"[Más de 100 muestras en grilla ({MuestrasCantidad}), haciendo busqueda por separado]")
 
                     for muestra in lista_muestras_coti:
 
@@ -373,17 +424,21 @@ try:
                         driver.find_element(By.XPATH, f'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar"]//div[not(contains(@style, "display: none;"))]/button[@data-test="Copiar"]').click()
                         EsperarCARGA_myLIMS(driver)
 
+                        tablaColnames = GetTablaColumna(driver, f"{xpath_ventana_copia}//div[@class='k-grid-header']//thead/tr")
                         for v_elementos in driver.find_elements(By.XPATH, f"{xpath_ventana_copia}//tbody/tr"):
                             
-                            v_id = v_elementos.find_element(By.XPATH, "./td[1]").text
+                            #1
+                            v_id = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['Id']}]").text
 
                             if v_id in lista_muestras_coti:
                                 v_n_copias = int(list(df_coti[df_coti["ID MUESTRA"] == int(v_id)]["N COPIAS"])[0])
 
-                                v_copia = v_elementos.find_element(By.XPATH, "./td[6]")
+                                #6
+                                v_copia = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['N°de Copias']}]")
                                 v_copia.click()
 
-                                v_copia = v_elementos.find_element(By.XPATH,"./td[6]//input[@class='k-input']")
+                                #6
+                                v_copia = v_elementos.find_element(By.XPATH,f"./td[{tablaColnames['N°de Copias']}]//input[@class='k-input']")
                                 v_copia.send_keys(Keys.CONTROL, "a")
                                 v_copia.send_keys(Keys.DELETE)
                                 v_copia.send_keys(v_n_copias)
@@ -430,14 +485,15 @@ try:
                     MuestrasCantidadNueva = int(Cortar(MuestrasCantidadNueva, "de ", " ítems"))
 
                 flag_DiferenciaCantidad = (MuestrasCantidadNueva != MuestrasCantidad+int(copias_totales))
+
                 if flag_DiferenciaCantidad:
-                    eprint(f"[Cantidad de muestras no coincide con copias programadas]")
+                    eprint(f"[Cantidad de muestras copiadas no coincide con copias programadas]")
                     logprint(f"DIFERENCIAS DE CANTIDAD {MuestrasCantidad} muestras + {copias_totales} copias != {MuestrasCantidadNueva} nuevas cantidad de muestras totales")
                 
                 copias_reales = MuestrasCantidadNueva - MuestrasCantidad
                 
                 if copias_reales > 100:
-                    eprint(f"[MÁS DE 100 COPIAS, asignando 100 a PE ({copias_reales-100} restantes)]")
+                    eprint(f"[MÁS DE 100 COPIAS, asignando de primeras 100 a PE ({copias_reales} restantes)]")
                     cant_copias = 100
                 else:
                     cant_copias = copias_reales
@@ -445,10 +501,9 @@ try:
             else:
                 eprint(f"[Saltando copia ID]")
                 cant_copias = 0
+                copias_reales = 0
 
-            ## Invertir Orden
-            driver.find_element(By.XPATH,"//div[@id='InterfaceContent']/div[not(contains(@style, 'display: block;'))]//th[@data-title='Orden']").click()
-            EsperarCARGA_myLIMS(driver)
+                x_copias_id = "SIN COPIAS"
 
             m_selec_id = []
             m_no_selec = []
@@ -457,11 +512,17 @@ try:
             ############################################################################################
             ## Seleccionar Nuevas Muestras para CREAR ENVASE
             if CrearPE:
-                eprint(f"[Seleccionando ID para PE]")
-
-                elementos = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
+                ## Invertir Orden
+                driver.find_element(By.XPATH,"//div[@id='InterfaceContent']/div[not(contains(@style, 'display: block;'))]//th[@data-title='Orden']").click()
+                EsperarCARGA_myLIMS(driver)
                 
-                m_cliente = elementos[1].find_element(By.XPATH,"./td[6]").text
+                eprint(f"[Seleccionando ID para PE]")
+                
+                tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
+                elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
+                
+                #CLIENTE DE ULTIMA MUESTRA CREADA
+                m_cliente = elementos[1].find_element(By.XPATH,f"./td[{tablaColnames['Cuenta']}]").text
                 if not SufijoTitulo:
                     pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
                 else:
@@ -475,8 +536,8 @@ try:
                     for idx in range(cant_copias):
                         muestra = elementos[idx]
 
-                        muestra_id = muestra.find_element(By.XPATH, "./td[2]").text
-                        muestra_activa = (muestra.find_element(By.XPATH, "./td[24]").text == "Si")
+                        muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['ID']}]").text
+                        muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['¿Activo?']}]").get_attribute("textContent") == "Si")
 
                         if not muestra_activa:
                             continue
@@ -484,20 +545,30 @@ try:
                         m_selec.append(muestra)
                         m_selec_id.append(muestra_id)
 
-                    x_copias_id = " - ".join(m_selec_id)
-                    ultimo_id = m_selec_id[-1]
+                    if m_selec_id:
+                        x_copias_id = " - ".join(m_selec_id)
+                        ultimo_id = m_selec_id[-1]
+                        eprint(f"[Úlitmo ID seleccionado: {ultimo_id}]")
+
+                        if cant_copias >100:
+                            eprint(f"[Más de 100 copias, faltan {cant_copias-100}]")
+                            x_xlsx_estado_final.append(f"[M100C ({cant_copias-100}) ({ultimo_id})]")
+                    else:
+                        eprint(f"[No se encontraron las copias]")
 
                 if not CopiarMuestras: # x_muestra con selec y x_copia con ### 
                     x_copias_id = "###"
-
+                    
                     ## Cargar Buffer m_selec
                     for muestra in elementos:
-
-                        muestra_id = muestra.find_element(By.XPATH, "./td[2]").text
-                        muestra_activa = (muestra.find_element(By.XPATH, "./td[24]").text == "Si")
+                        #2
+                        muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['ID']}]").text
+                        #25
+                        muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['¿Activo?']}]").get_attribute("textContent") == "Si")
 
                         if muestra_id in lista_muestras_coti and muestra_activa:
-                            muestra_idx = muestra.find_element(By.XPATH, "./td[1]")
+                            #1
+                            muestra_idx = muestra.find_element(By.XPATH, f"./td[{tablaColnames['Orden']}]")
 
                             m_selec.append(muestra)
                             m_selec_id.append(muestra_id)
@@ -505,83 +576,101 @@ try:
                     m_no_selec = unique(set(lista_muestras_coti) - set(m_selec_id))
 
                     #### EXCEL
-                    if not m_no_selec: #No contiene errores
+                    # usar x_muestra_id como muestras a seleccionar
+                    if m_no_selec: 
+                        if len(lista_muestras_coti) >100:
+                            eprint(f"[Más de 100 muestras para asociar a envase {' - '.join(m_no_selec)} no fueron seleccionadas]")
+                            x_muestra_id = f'{" - ".join(m_selec_id)} ![ {" - ".join(m_no_selec)} ]'
+                            x_xlsx_estado_final.append("[M100M]")        
+                        else:
+                            eprint(f"[Muestras {' - '.join(m_no_selec)} no existen en cotizacion]")
+                            x_muestra_id = f'{" - ".join(m_selec_id)} ![ {" - ".join(m_no_selec)} ]'
+                            x_xlsx_estado_final.append("[COTI NO ENCUENTRA M PE]")
+                        
+                    else:  #No contiene errores
                         x_muestra_id = " - ".join(m_selec_id)
-                    else: 
-                        eprint(f"[Muestras {' - '.join(m_no_selec)} no existen en cotizacion]")
-                        x_muestra_id = f'{" - ".join(m_selec_id)} ![ {" - ".join(m_no_selec)} ]'
-                        x_xlsx_estado_final.append("[COTI NO ENCUENTRA M PE]")
                     ####
-                    ultimo_id = m_selec_id[-1]
                 
-                eprint(f"[Úlitmo ID seleccionado: {ultimo_id}]")
-                x_xlsx_estado_final.append(f"[M100C ({copias_reales-100}) ({ultimo_id})]")
-                
-                ## Seleccionar muestras para copiar
-                m_selec_1 = m_selec[0].find_element(By.XPATH, "./td[1]")
-                driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", m_selec_1)
-                m_selec_1.click()
+                if m_selec_id:
+                    ultimo_id = m_selec_id[-1] if m_selec_id else "None"
+                    
+                    ## Seleccionar muestras para copiar
+                    
+                    m_selec_1 = m_selec[0].find_element(By.XPATH, f"./td[{tablaColnames['Orden']}]")
+                    driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", m_selec_1)
+                    m_selec_1.click()
 
-                for _ in m_selec[1:]:
-                    driver.execute_script("arguments[0].setAttribute('class', 'k-alt k-state-selected');", _)
+                    for _ in m_selec[1:]:
+                        driver.execute_script("arguments[0].setAttribute('class', 'k-alt k-state-selected');", _)
 
-                botones_accion = driver.find_element(By.XPATH, "//div[@id='InterfaceActions']//div[@class='labsoft-ui-buttons-bar']")
-                driver.execute_script("""
-                    arguments[0].setAttribute('tabindex', '-1');
-                    arguments[0].focus();
-                """, botones_accion)
+                    botones_accion = driver.find_element(By.XPATH, "//div[@id='InterfaceActions']//div[@class='labsoft-ui-buttons-bar']")
+                    driver.execute_script("""
+                        arguments[0].setAttribute('tabindex', '-1');
+                        arguments[0].focus();
+                    """, botones_accion)
 
-                [botones_accion.send_keys(Keys.ARROW_RIGHT) for _ in range(4)]
-                eprint(f"[Creando PE]")
+                    [botones_accion.send_keys(Keys.ARROW_RIGHT) for _ in range(4)]
+                    eprint(f"[Creando PE]")
 
-                boton_actividad = BotonAccion(driver,"Actividades")
-                boton_actividad.click()
-                EsperarCARGA_myLIMS(driver)
+                    boton_actividad = BotonAccion(driver,"Actividades")
+                    boton_actividad.click()
+                    EsperarCARGA_myLIMS(driver)
 
-                x_xlsx_estado = "ERROR ACTIVIDADES"
+                    x_xlsx_estado = "ERROR ACTIVIDADES"
 
-                boton_actividad.find_element(By.XPATH, "./../ul/li[@data-test='Crear']").click()
-                EsperarCARGA_myLIMS(driver)
+                    boton_actividad.find_element(By.XPATH, "./../ul/li[@data-test='Crear']").click()
+                    EsperarCARGA_myLIMS(driver)
 
-                driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Preparación de Envases')]").click()
-                EsperarCARGA_myLIMS(driver)
+                    driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Preparación de Envases')]").click()
+                    EsperarCARGA_myLIMS(driver)
 
-                BotonVentana(driver,"Seleccionar").click()
-                EsperarCARGA_myLIMS(driver)
+                    BotonVentana(driver,"Seleccionar").click()
+                    EsperarCARGA_myLIMS(driver)
 
-                nuevas_ventanas = driver.find_elements(By.XPATH, "//body/div[contains(@class, 'k-window') and contains(@style, 'display: block;')]")
+                    nuevas_ventanas = driver.find_elements(By.XPATH, "//body/div[contains(@class, 'k-window') and contains(@style, 'display: block;')]")
 
-                if len(nuevas_ventanas) != 1:
-                    x_xlsx_estado = "ALERTA INESPERADA"
-                    str_salida = ""
+                    if len(nuevas_ventanas) != 1:
+                        x_xlsx_estado = "ALERTA INESPERADA"
+                        str_salida = ""
 
-                    logprint("lista alertas: ")
+                        logprint("lista alertas: ")
 
-                    for _ in nuevas_ventanas:
-                        titulo = _.find_element(By.XPATH,".//span[@class='k-window-title']").text
-                        cuerpo = _.find_element(By.XPATH,".//div[contains(@class, 'k-window-content')]").text
-                        str_salida = str_salida+f"\n- {titulo}"
-                        logprint(f"t: {titulo}\nc: {cuerpo}\n")
+                        for _ in nuevas_ventanas:
+                            titulo = _.find_element(By.XPATH,".//span[@class='k-window-title']").text
+                            cuerpo = _.find_element(By.XPATH,".//div[contains(@class, 'k-window-content')]").text
+                            str_salida = str_salida+f"\n- {titulo}"
+                            logprint(f"t: {titulo}\nc: {cuerpo}\n")
 
-                    raise ExcepcionDeMuestra(f"Alertas Inesperadas (más info en el log), titulos encontrados de ventanas: {str_salida}")
+                        raise ExcepcionDeMuestra(f"Alertas Inesperadas (más info en el log), titulos encontrados de ventanas: {str_salida}")
 
-                driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Unidad de Fomento')]").click()
-                BotonVentana(driver,"Confirmar").click()
-                EsperarCARGA_myLIMS(driver)
+                    driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Unidad de Fomento')]").click()
+                    BotonVentana(driver,"Confirmar").click()
+                    EsperarCARGA_myLIMS(driver)
 
-                pe_identification = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Identification' and @name='Identification']")
-                pe_identification.send_keys(pe_titulo)
+                    pe_identification = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Identification' and @name='Identification']")
+                    pe_identification.send_keys(pe_titulo)
 
-                BotonAccion(driver,"SaveButton").click()
-                EsperarCARGA_myLIMS(driver)
+                    BotonAccion(driver,"SaveButton").click()
+                    EsperarCARGA_myLIMS(driver)
 
-                #### EXCEL
-                x_pe_titulo = pe_titulo
-                x_pe_id = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Id' and @name='Id']").get_attribute("value")
-                x_pe_n_muestra = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='ControlNumber' and @name='ControlNumber']").get_attribute("value")
-                ####
+                    #### EXCEL
+                    x_pe_titulo = pe_titulo
+                    x_pe_id = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Id' and @name='Id']").get_attribute("value")
+                    x_pe_n_muestra = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='ControlNumber' and @name='ControlNumber']").get_attribute("value")
+                    ####
 
-                eprint(f"[PE creado ({x_pe_id}) - ({x_pe_n_muestra}) - ({x_pe_titulo})]\n")
+                    eprint(f"[PE creado ({x_pe_id}) - ({x_pe_n_muestra}) - ({x_pe_titulo})]\n")
+
+                else:
+
+                    #### EXCEL
+                    x_pe_titulo = "###"
+                    x_pe_id = "###"
+                    x_pe_n_muestra = "###"
+                    ####
+                    
+                    x_xlsx_estado_final.append("[SIN MUESTRAS SELEC]")    
+                    eprint(f"[No se han seleccionado muestras]")
 
             else:
 
@@ -591,12 +680,16 @@ try:
                 x_pe_n_muestra = "SIN PE"
                 ####
                 
-                elementos = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
+                #Obtener lista de copia
+                tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
+                elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
                 for idx in range(copias_reales):
                     muestra = elementos[idx]
-                    muestra_id = muestra.find_element(By.XPATH, "./td[2]").text
-                    muestra_activa = (muestra.find_element(By.XPATH, "./td[24]").text == "Si")
-
+                    #2
+                    muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['ID']}]").text
+                    #25
+                    muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['¿Activo?']}]").get_attribute("textContent") == "Si")
+                    
                     if not muestra_activa:
                         continue
 
@@ -671,7 +764,7 @@ try:
         except BaseException as e:
             eprint(f"Error para la cotizacion {id_coti}:\n\n {FormatoExcepcion(e)}")
             notify(title=f"Problemas con la cotizacion {id_coti}!", body=type(e).__name__)
-            sleep(3)
+            wait(3)
             break
 
     else:
