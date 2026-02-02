@@ -1,4 +1,5 @@
 **/log/*
 *.env
+.~lock.*
 **/__pycache__/
 internal_lib/__pycache__/*
