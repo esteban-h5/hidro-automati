@@ -20,11 +20,11 @@ paisActual            :   chile
 #
 #
 # Largo de la jornada en cantidad de horas, dos puntos para separar horas y minutos (10:30) o (11)
-ExtensionJornada      :   11
+ExtensionJornada      :   9:30
 #
 #
 # Inicio de la jornada en formato 24h y dos puntos para separar horas y minutos (8:30) o (8)
-InicioJornada         :   8:30
+InicioJornada         :   8:00
 #
 #
 # Guardar lo mostrado por consola en archivo [True]
@@ -47,7 +47,8 @@ TipoMensajeETFA			:		Formato-Horas
 ListaMensajesHoras          :   Horas
 #
 #
+TipoMensajeETFA             :   Formato-Horas
+#
+#
 # Excepciones generales
 nombreExcelExcepciones      :   Excepciones.xlsx
-#
-#

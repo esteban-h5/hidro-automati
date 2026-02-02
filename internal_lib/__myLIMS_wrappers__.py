@@ -521,11 +521,11 @@ def ControlRecon(driver,muestraInicial):
 # Usar para copiar envases y encontrar muestras en coti
 def GetTablaColumna(driver, xpath_tabla):
     elemento_tabla = driver.find_element(By.XPATH, xpath_tabla)
-    lista_columnas_tabla = elemento_tabla.find_elements(By.XPATH,"./tr/th")
+    lista_columnas_tabla = elemento_tabla.find_elements(By.XPATH,"./th")
     
     tabla_dict = {}
-    for idx, elemento_columna in enumerate(lista_columnas_tabla):
-        tabla_dict = tabla_dict | {elemento_columna.text:idx} #Listar data-test? revisar tablas donde salto error
+    for idx, elemento_columna in enumerate(lista_columnas_tabla, start=1):
+        tabla_dict = tabla_dict | {elemento_columna.get_attribute("textContent").strip():idx} #Listar data-test? revisar tablas donde salto error
 
     return tabla_dict
 
@@ -634,12 +634,17 @@ def marg_random():
 def formato_fecha(fecha, formato="%d/%m/%Y %I:%M %p"):
     if fecha == None:
         return None
+    state1 = "/" in fecha
+    state2 = "-" in fecha
     
-    if "-" in fecha:
+    if state1:
+        formato = formato.replace("-", "/")
+    if state2:
         formato = formato.replace("/", "-")
-    else:
-        raise ExcepcionDeMuestra(f"Problemas al formatear la fecha {fecha}:\n{e}")
 
+    if not state2 and not state1:
+        raise ExcepcionDeMuestra(f"Problemas al formatear la fecha {fecha}:\n")
+    
     try:
         if ".m." in fecha or "M" in fecha:
 

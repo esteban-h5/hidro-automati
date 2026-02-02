@@ -1,5 +1,6 @@
 **/log/*
 *.env
+.~lock.*
 **/__pycache__/
 internal_lib/__pycache__/*
 *.txt

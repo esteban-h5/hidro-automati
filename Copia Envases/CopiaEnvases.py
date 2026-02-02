@@ -37,7 +37,8 @@ from __ficheros_modulos__ import (
 )
 
 from __myLIMS_wrappers__ import (
-    Logout, Login,
+    Logout, Login, GetTablaColumna,
+    DeltaTimer,
 )
 
 ########################################
@@ -140,6 +141,7 @@ if not existe_param_env(internal_lib):
 
 xpath_ventana           = "//div[contains(@class,'k-window') and contains(@style,'display: block;')]"
 xpath_muestra_activa    = "//div[@id='InterfaceContent']/div[1]//div[@class='labsoft-ui-input checkbox']//input[@data-test='Active']"
+xpath_seccion_muestras  = "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']//div[contains(@class, 'k-auto-scrollable')]"
 xpath_estado_muestra    = "//div[@id='InterfaceContent']/div[1]//label[contains(text(),'Estatus de la Muestra')]/following-sibling::span[contains(@class, 'k-combobox')]/span/input[@role='combobox']"
 xpath_lista_analitos    = "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[2]/table/tbody"
 xpath_alerta_inactiva   = f"{xpath_ventana}//span[@class='k-window-title' and contains(text(), 'Registro Inactivo')]/ancestor::div[contains(@class,'k-window') and contains(@style,'display: block;')]"
@@ -234,7 +236,7 @@ except ExcepcionDeCarga as e:
 
 try:
     timer = DeltaTimer(buffer_size=10)
-    timer.start()
+    timer.start(cantidad_cotizaciones)
     
     flag_alerta_inicial = True
     ##############################################
@@ -268,12 +270,12 @@ try:
 
         copias_totales = sum(list(df_coti["N COPIAS"]))
 
-        timer.save(idx-1,cantidad_cotizaciones)
+        timer.save(idx-1)
 
         eprint( f'Revisando Cotizacion: {id_coti} [{idx+1}/{cantidad_cotizaciones}]\n'+
                 f'Muestras de esta Cotizacion: {" ".join(lista_muestras_coti)}\n'+
                 f'{copias_totales} copias totales\n'
-                f'[termino {timer.end_time} en {timer.t_restante}]\n')
+                f'Tiempo restante: {timer.t_restante} [{timer.h_estimada}]\n')
 
         try:
             coti_activa = driver.find_element(By.XPATH, xpath_muestra_activa ).is_selected()
@@ -317,19 +319,19 @@ try:
                 ## Seleccionar ID COPIA
                 if MuestrasCantidad <= 100:
 
-                    tablaColnames = GetTablaColumna(driver, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
+                    tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
                     elementos = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
                     
                     ## Cargar Buffer m_copias
                     for muestra in elementos:
                         #2
-                        muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text
-                        #24
-                        muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text == "Si")
+                        muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['ID']}]").text
+                        #25
+                        muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['¿Activo?']}]").get_attribute("textContent") == "Si")
 
                         if muestra_id in lista_muestras_coti and muestra_activa:
                             #1
-                            muestra_idx = muestra.find_element(By.XPATH, f"./td[{tablaColnames['']}]")
+                            muestra_idx = muestra.find_element(By.XPATH, f"./td[{tablaColnames['Orden']}]")
 
                             m_copias.append(muestra)
                             m_copias_id.append(muestra_id)
@@ -347,7 +349,7 @@ try:
                     
                     ## Seleccionar muestras para copiar
                     #1
-                    m_copia_1 = m_copias[0].find_element(By.XPATH, f"./td[{tablaColnames['']}]")
+                    m_copia_1 = m_copias[0].find_element(By.XPATH, f"./td[{tablaColnames['Orden']}]")
                     driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", m_copia_1)
                     m_copia_1.click()
 
@@ -358,19 +360,19 @@ try:
                     EsperarCARGA_myLIMS(driver)
 
                     ## Seleccionar cantidad en ventana
-                    tablaColnames = GetTablaColumna(driver, f"{xpath_ventana_copia}//tbody/tr")
+                    tablaColnames = GetTablaColumna(driver, f"{xpath_ventana_copia}//div[@class='k-grid-header']//thead/tr")
                     for v_elementos in driver.find_elements(By.XPATH, f"{xpath_ventana_copia}//tbody/tr"):
                         #1
-                        v_id = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text
+                        v_id = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['Id']}]").text
                         if v_id in lista_muestras_coti:
                             v_n_copias = int(list(df_coti[df_coti["ID MUESTRA"] == int(v_id)]["N COPIAS"])[0])
 
                             #6
-                            v_copia = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['']}]")
+                            v_copia = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['N°de Copias']}]")
                             v_copia.click()
                             
                             #6
-                            v_copia = v_elementos.find_element(By.XPATH,f"./td[{tablaColnames['']}]//input[@class='k-input']")
+                            v_copia = v_elementos.find_element(By.XPATH,f"./td[{tablaColnames['N°de Copias']}]//input[@class='k-input']")
                             v_copia.send_keys(Keys.CONTROL, "a")
                             v_copia.send_keys(Keys.DELETE)
                             v_copia.send_keys(v_n_copias)
@@ -421,21 +423,21 @@ try:
                         driver.find_element(By.XPATH, f'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar"]//div[not(contains(@style, "display: none;"))]/button[@data-test="Copiar"]').click()
                         EsperarCARGA_myLIMS(driver)
 
-                        tablaColnames = GetTablaColumna(driver, f"{xpath_ventana_copia}//tbody/tr")
+                        tablaColnames = GetTablaColumna(driver, f"{xpath_ventana_copia}//div[@class='k-grid-header']//thead/tr")
                         for v_elementos in driver.find_elements(By.XPATH, f"{xpath_ventana_copia}//tbody/tr"):
                             
                             #1
-                            v_id = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text
+                            v_id = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['Id']}]").text
 
                             if v_id in lista_muestras_coti:
                                 v_n_copias = int(list(df_coti[df_coti["ID MUESTRA"] == int(v_id)]["N COPIAS"])[0])
 
                                 #6
-                                v_copia = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['']}]")
+                                v_copia = v_elementos.find_element(By.XPATH, f"./td[{tablaColnames['N°de Copias']}]")
                                 v_copia.click()
 
                                 #6
-                                v_copia = v_elementos.find_element(By.XPATH,f"./td[{tablaColnames['']}]//input[@class='k-input']")
+                                v_copia = v_elementos.find_element(By.XPATH,f"./td[{tablaColnames['N°de Copias']}]//input[@class='k-input']")
                                 v_copia.send_keys(Keys.CONTROL, "a")
                                 v_copia.send_keys(Keys.DELETE)
                                 v_copia.send_keys(v_n_copias)
@@ -502,8 +504,6 @@ try:
 
                 x_copias_id = "SIN COPIAS"
 
-
-
             m_selec_id = []
             m_no_selec = []
             m_selec = []
@@ -516,12 +516,12 @@ try:
                 EsperarCARGA_myLIMS(driver)
                 
                 eprint(f"[Seleccionando ID para PE]")
-
-                tablaColnames = GetTablaColumna(driver, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
-                elementos   = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
-
-                #6
-                m_cliente = elementos[1].find_element(By.XPATH,f"./td[{tablaColnames['']}]").text
+                
+                tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
+                elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
+                
+                #CLIENTE DE ULTIMA MUESTRA CREADA
+                m_cliente = elementos[1].find_element(By.XPATH,f"./td[{tablaColnames['Cuenta']}]").text
                 if not SufijoTitulo:
                     pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
                 else:
@@ -535,8 +535,8 @@ try:
                     for idx in range(cant_copias):
                         muestra = elementos[idx]
 
-                        muestra_id = muestra.find_element(By.XPATH, "./td[2]").text
-                        muestra_activa = (muestra.find_element(By.XPATH, "./td[25]").text == "Si")
+                        muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['ID']}]").text
+                        muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['¿Activo?']}]").get_attribute("textContent") == "Si")
 
                         if not muestra_activa:
                             continue
@@ -544,25 +544,30 @@ try:
                         m_selec.append(muestra)
                         m_selec_id.append(muestra_id)
 
-                    x_copias_id = " - ".join(m_selec_id)
-                    ultimo_id = m_selec_id[-1]
-                    eprint(f"[Úlitmo ID seleccionado: {ultimo_id}]")
+                    if m_selec_id:
+                        x_copias_id = " - ".join(m_selec_id)
+                        ultimo_id = m_selec_id[-1]
+                        eprint(f"[Úlitmo ID seleccionado: {ultimo_id}]")
 
-                    if cant_copias >100:
-                        eprint(f"[Más de 100 copias, faltan {cant_copias-100}]")
-                        x_xlsx_estado_final.append(f"[M100C ({cant_copias-100}) ({ultimo_id})]")
+                        if cant_copias >100:
+                            eprint(f"[Más de 100 copias, faltan {cant_copias-100}]")
+                            x_xlsx_estado_final.append(f"[M100C ({cant_copias-100}) ({ultimo_id})]")
+                    else:
+                        eprint(f"[No se encontraron las copias]")
 
                 if not CopiarMuestras: # x_muestra con selec y x_copia con ### 
                     x_copias_id = "###"
                     
                     ## Cargar Buffer m_selec
                     for muestra in elementos:
-
-                        muestra_id = muestra.find_element(By.XPATH, "./td[2]").text
-                        muestra_activa = (muestra.find_element(By.XPATH, "./td[25]").text == "Si")
+                        #2
+                        muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['ID']}]").text
+                        #25
+                        muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['¿Activo?']}]").get_attribute("textContent") == "Si")
 
                         if muestra_id in lista_muestras_coti and muestra_activa:
-                            muestra_idx = muestra.find_element(By.XPATH, "./td[1]")
+                            #1
+                            muestra_idx = muestra.find_element(By.XPATH, f"./td[{tablaColnames['Orden']}]")
 
                             m_selec.append(muestra)
                             m_selec_id.append(muestra_id)
@@ -589,7 +594,8 @@ try:
                     ultimo_id = m_selec_id[-1] if m_selec_id else "None"
                     
                     ## Seleccionar muestras para copiar
-                    m_selec_1 = m_selec[0].find_element(By.XPATH, "./td[1]")
+                    
+                    m_selec_1 = m_selec[0].find_element(By.XPATH, f"./td[{tablaColnames['Orden']}]")
                     driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", m_selec_1)
                     m_selec_1.click()
 
@@ -662,7 +668,7 @@ try:
                     x_pe_n_muestra = "###"
                     ####
                     
-                    x_xlsx_estado_final.append("[SIN MUESTRAS]")    
+                    x_xlsx_estado_final.append("[SIN MUESTRAS SELEC]")    
                     eprint(f"[No se han seleccionado muestras]")
 
             else:
@@ -674,15 +680,15 @@ try:
                 ####
                 
                 #Obtener lista de copia
-                tablaColnames = GetTablaColumna(driver, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
-                elementos = driver.find_elements(By.XPATH, "//div[@id='InterfaceContent']/div[2]//div[@data-role='grid']/div[contains(@class, 'k-auto-scrollable')]/table/tbody/tr")
+                tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
+                elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
                 for idx in range(copias_reales):
                     muestra = elementos[idx]
                     #2
-                    muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text
+                    muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['ID']}]").text
                     #25
-                    muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['']}]").text == "Si")
-
+                    muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['¿Activo?']}]").get_attribute("textContent") == "Si")
+                    
                     if not muestra_activa:
                         continue
 

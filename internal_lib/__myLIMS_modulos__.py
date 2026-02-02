@@ -71,6 +71,15 @@ paisDICT = {
     "colombia":"BOG",
     }
 
+def internet_ok(timeout=1):
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\
+              .sendto(b"\x00", ("8.8.8.8", 53))
+        return True
+    except OSError:
+        return False
+
 def existe_param_env(path_internal):
   file = os.path.join(path_internal,"Param.env")
   return os.path.exists(file)
@@ -392,8 +401,6 @@ def mover_mouse_antiSalvapantallas():
         ctypes.windll.user32.SendInput(1, ctypes.pointer(ii_), ctypes.sizeof(ii_))
         sleep(0.05)  # Pausa breve entre movimientos
 
-
-
 class DeltaTimer:
     def __init__(self, buffer_size: int | None = None):
         self.start_time = None
@@ -454,7 +461,7 @@ class DeltaTimer:
         segundos_restantes = restantes * avg_seconds
 
         if segundos_restantes <= 0:
-            self.t_restante = "TERMINADO"
+            self.t_restante = "- segundos"
         elif segundos_restantes < 60:
             self.t_restante = f"{segundos_restantes:.2f} segundos"
         elif segundos_restantes < 3600:

@@ -77,6 +77,7 @@ EXTENSION_JORNADA = global_config.get("ExtensionJornada", "")
 
 tipo_rutinas = global_config.get("ListaMensajesRutina", "").lower().split(",") if global_config.get("ListaMensajesRutina") else []
 tipo_horas = global_config.get("ListaMensajesHoras", "").lower().split(",") if global_config.get("ListaMensajesHoras") else []
+TipoMensajeETFA = global_config.get("TipoMensajeETFA").lower()
 
 SoloBuscarControles = config.get("SoloBuscarControles", True)
 RevisarRutinas = config.get("RevisarRutinas", True)
@@ -964,8 +965,8 @@ while True:
 
                         fecha_antigua = ventana_entrada.get_attribute("value")
                         
-                        if ".m." in fecha_antigua:
-                            opcion_Fecha = datetime.strptime(opcion_Fecha, "%d-%m-%Y %H:%M:%S").strftime("%d-%m-%Y %I:%M:%S %p")
+                        if ".m." in fecha_antigua and ".m." not in opcion_Fecha:
+                            opcion_Fecha = datetime.strptime(opcion_Fecha, "%d-%m-%Y %H:%M:%S").strftime("%d/%m/%Y %I:%M:%S %p")
                             opcion_Fecha = opcion_Fecha.replace("AM", "a.m.").replace("PM", "p.m.")
                         
                         ventana_entrada.send_keys(Keys.CONTROL, "a")
@@ -1231,7 +1232,7 @@ while True:
                         "colombia":         "BOG",
                         "mexico":           "MTY",
                     }[paisActual]
-                    
+
                     filtros = {
                         "finalizadas":      [f"Muestras finalizadas Hidrolab {pais}"],
                         "metalab":          ["Muestras finalizadas Metalab SCL"],
@@ -1258,9 +1259,8 @@ while True:
 
                             "colombia"          :   ["1233",    #Alimentos
                                                     "1245",    #Canabis
-                                                    "1193",    #Aguas Potable
-                                                    ],
-                                                    
+                                                    "1193"],   #Aguas
+
                             "mexico"            :   ["1124"],   #Análisis    
                         }[paisActual]
 
@@ -1311,6 +1311,7 @@ while True:
 
                 for MuestraIndice, id_muestra in enumerate(muestras_entrada,1):
                     try:
+                        slog()
                         driver.get(f"{myLIMSdomain}Main.cshtml#Sample/Details/{id_muestra}")
                         EsperarCARGA_myLIMS(driver, funcion_print=eprint, kill=True)
                         
@@ -1321,8 +1322,11 @@ while True:
                         Excepcion_error = ""
                         IntentosDeCarga = 5
 
-                        flagControles = False
                         flagDescargar = False
+                        flagCambiarFecha = False
+                        flagRutina = False
+                        flagDesacreditar = False
+                        flagControles = False
 
                         if not SoloBuscarControles:
                             cant_previa = len(os.listdir(dir_Descargados))
@@ -1357,19 +1361,20 @@ while True:
                         #################
                         #Revisar mensajes
                         #Hacer click en k-pager-nav hasta que aparezca k-state-disabled en class?
-                        flagCambiarFecha, flagRutina = BuscarAlertas(driver, tipo_rutinas, tipo_horas, funcion_print=eprint)
+                        flagCambiarFecha, flagRutina, flagDesacreditar = BuscarAlertas(driver, tipo_rutinas, tipo_horas, TipoMensajeETFA, funcion_print=eprint)
                         EsperarCARGA_myLIMS(driver)
                         
                         ###################################################
                         #Cambiar Fechas
-                        if flagCambiarFecha and not flagDescargar:
-                            flagFechasCambiadas = True
+                        if (flagCambiarFecha or flagDesacreditar) and not flagDescargar:
 
                             if not RevisarRutinas: 
                                 flagRutina = True
                                 flagDescargar = True
 
                             else:
+                                flagFechasCambiadas = True
+
                                 elemento_filtro = driver.find_element(By.XPATH, "//input[@class='select2-search__field' and @placeholder='Filtro del mensaje']")
                                 elemento_filtro.click()
                                 elemento_filtro.send_keys("tipo:horas")
@@ -1454,6 +1459,11 @@ while True:
                                         except (ElementClickInterceptedException,ElementNotInteractableException) as e:
                                             raise ExcepcionDeMuestra("Error al cambiar fechas (Reintentar)")
                                 
+                                    if m_tipo == TipoMensajeETFA:
+                                        eprint("[Alerta ETFA, saltando publicacion]")
+                                        flagFechasCambiadas = False
+                                        flagDescargar = True
+
                                 else:
                                     
                                     for i in sorted(lista_alertas_pop, reverse=True):
@@ -1472,7 +1482,6 @@ while True:
                         ###################################################
                         #Revisar Controles Pendientes
                         BotonSection(driver,"SectionRelatedSamples", log=True, funcion_print=logprint ).click()
-                        sleep(1)
                         EsperarCARGA_myLIMS(driver)
                         
                         cant_controles, lista_controles = ContarControlesPendientes(driver, ID_Actual=id_muestra)

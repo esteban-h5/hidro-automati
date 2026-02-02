@@ -481,8 +481,7 @@ try:
                 
                 ###################################################
                 #Cambiar Fechas
-                if flagCambiarFecha and not flagDescargar:
-                    flagFechasCambiadas = True
+                if (flagCambiarFecha or flagDesacreditar) and not flagDescargar:
 
                     if RevisarRutinas: 
 
@@ -517,6 +516,8 @@ try:
                             if "inactive" in m_state:
                                 lista_alertas_pop.append(m_index)
                                 continue  
+
+                            # input(f"{m_tipo}/{TipoMensajeETFA} - {m_state} - {m_inicio}")
 
                             if m_tipo in tipo_horas:
                                 eprint(f"[\"{m_inicio}\"]")
@@ -652,7 +653,7 @@ try:
                         flagRutina = True
                         flagDescargar = True
                         
-                        if flagDesacreditar:
+                        # if flagDesacreditar:
 
                 ###################################################
                 #Revisar Controles Pendientes
