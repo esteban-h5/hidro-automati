@@ -119,6 +119,8 @@ try:
     if keyring.get_password('mylims_app', 'secret7') != None:
       print("Token de acceso existente")
       x = str(input("Volver a registrar token de acceso? (s/N) "))
+    else:
+      x = "s"
 
     DriverOptions = Options()
     DriverOptions.add_argument("--window-size=1172,708")

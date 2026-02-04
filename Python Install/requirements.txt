@@ -1,5 +1,5 @@
 pywin32==311
-pandas[all]==2.3.3
+pandas==2.3.3
 numpy==2.3.3
 psutil==7.1.0
 python-decouple==3.8
@@ -11,4 +11,5 @@ tkcalendar==1.6.1
 keyring==25.6.0
 win11toast==0.36.2
 pydantic==2.11.10
+openpyxl==3.1.5
 cryptography

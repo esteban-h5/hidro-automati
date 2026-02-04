@@ -841,7 +841,7 @@ try:
                 Excepcion_error = e
                 while True:
                     try:
-                        eprint("Probando conexión a internet")
+                        logprint("Probando conexión a internet")
                         internet_ok(timeout=1)
                         break
                     except (requests.ConnectionError, requests.exceptions.ReadTimeout):
