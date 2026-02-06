@@ -104,6 +104,7 @@ try:
       encuser = config.get("USER").encode()
       encpasswd = config.get("PASSWD").encode()
       etiqueta = config.get("ETIQUETA")
+      
     except UndefinedValueError as e:
       input(f"{e} Enter para continuar...")
     

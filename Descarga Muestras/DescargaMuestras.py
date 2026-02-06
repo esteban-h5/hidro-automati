@@ -18,13 +18,13 @@ try:
         FormatoExcepcion, ExcepcionDeMuestra, ElementNotInteractableException,
         UnexpectedAlertPresentException, StaleElementReferenceException, InvalidSessionIdException, 
         By, EC, DriverOptions, Chrome, Keys, WebDriverWait, DeltaTimer, alerta_visible,
-        notify, sleep, datetime, requests, prefs, Path, EsperarCLICK,
+        notify, sleep, datetime, requests, prefs, Path, EsperarCLICK, get
     )
     from __myLIMS_wrappers__ import (
         unique, Cortar, BuscarAlertas,
         ContarControlesPendientes,
         CambiarFechas, MuestraPublicar,
-        DesactivarAlerta
+        DesactivarAlerta, CambiarAcreditacion
     )
     from __ficheros_modulos__ import (
         ListaMuestraXLSX, FilaAgregarXLSX,
@@ -32,6 +32,9 @@ try:
     )
     from __myLIMS_wrappers__ import (
         Logout, Login, FormatoLimiteHoras,
+    )
+    from __myLIMS_API__ import (
+        get_samples_ID,
     )
 
     ########################################
@@ -42,7 +45,7 @@ try:
         global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
         keys_used   = ["filtro", "SoloBuscarControles", "DescargarPublicadas", "RegistrarMuestras", "RevisarRutinas", "AutoPublicar", "Olvidar", "BorrarDuplicados", "Alerta", "DOC_REVISION_ETFA_ID_CL", "DOC_REVISION_ID_CL", "nombreExcelRegistro", "nombreExcelHistorico"]
-        keys_used_g = ["myLIMSdomain", "Labsoftdomain", "paisActual", "ActivarLOG", "InicioJornada", "ExtensionJornada", "ListaMensajesRutina", "ListaMensajesHoras", "nombreExcelExcepciones", "TipoMensajeETFA"]
+        keys_used_g = ["myLIMSdomain", "Labsoftdomain", "paisActual", "ActivarLOG", "InicioJornada", "ExtensionJornada", "ListaMensajesRutina", "ListaMensajesHoras", "nombreExcelExcepciones", "TipoMensajeETFA", "api-url"]
 
         for key in keys_used:
             if key not in config.keys():
@@ -59,6 +62,7 @@ try:
 
         myLIMSdomain  = global_config.get("myLIMSdomain", "")
         Labsoftdomain = global_config.get("Labsoftdomain", "")
+        api_url       = global_config.get("api-url", "")
 
         paisActual = global_config.get("paisActual", "").replace("é","e").replace("ú","u").lower()
         log        = global_config.get("ActivarLOG", True)
@@ -274,7 +278,16 @@ try:
             eprint("Error No se encontró archivo con credenciales. (Param.env)")
             input("Enter para cerrar..")
             exit(1)
-            
+
+        # token = get('mylims_app', 'secret7')
+        # get_samples_ID("Account ne null and Active eq true and endswith(ControlNumber, '.0') and "+
+        #            "CurrentStatus/SampleStatus/Identification eq 'Finalizada' and "+
+        #            "ServiceCenter/Identification eq 'Hidrolab SCL'",
+        #            APIdomain=api_url,
+        #            token=token,
+        #            funcion_print=eprint, 
+        #            )
+        
         driver = Chrome(options=DriverOptions)
 
         eprint("Iniciando sesión en labsoft\n")
@@ -305,7 +318,7 @@ try:
         eprint(f"Cambiando los filtros de la Grilla, Cantidad de filtros: {len(filtros)}\n")
         EsperarCARGA_myLIMS(driver, funcion_print=eprint, recargar=False)
 
-        ListaMuestras = []; MuestrasError = []
+        ListaMuestras = [2355895]; MuestrasError = []
 
         for n_filtro in range(len(filtros)):
             
@@ -433,6 +446,7 @@ try:
                 flagRutina = False
                 flagDesacreditar = False
                 flagControles = False
+                flagFechasCambiadas = False
                 
                 ChequearNavegador(driver, kill=True)
 
@@ -564,7 +578,11 @@ try:
                                     raise ExcepcionDeMuestra("Error al cambiar fechas (Reintentar)")
                         
                             if m_tipo == TipoMensajeETFA:
-                                eprint(f"[\"{m_inicio}\"]")
+
+                                notify(title="ETFA", body=f"ETFA")
+                                input(f"[\"{m_inicio}\"]")
+                                
+                                # eprint(f"[\"{m_inicio}\"]")
                                 
                                 mensaje.click()
                                 EsperarCARGA_myLIMS(driver)
@@ -591,7 +609,7 @@ try:
                                         flagFechasCambiadas = False
 
                                 except (ElementClickInterceptedException,ElementNotInteractableException) as e:
-                                    raise ExcepcionDeMuestra("Error al cambiar fechas (Reintentar)")
+                                    raise ExcepcionDeMuestra("Error al cambiar acreditación (Reintentar)")
                             
                             # Usar para copiar envases y encontrar muestras en coti
                             def GetTablaColumna(xpath_tabla):

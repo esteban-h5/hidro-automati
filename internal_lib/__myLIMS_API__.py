@@ -39,6 +39,15 @@ def api_post(endpoint, body, APIdomain, token, funcion_print=print):
         
     return out
 
+def get_samples_ID(filter, APIdomain, token, funcion_print=print):
+    try:
+        respuesta = api_get(f"Samples?$inlinecount=allpages&$filter={filter}", APIdomain, token, PageResult[SampleBasic])
+    except HTTPError as e:
+        funcion_print(f"ERROR DE API {e} AL OBTENER MUESTRAS")
+        return []
+    
+    input(respuesta)
+
 def get_pricetable(identification: str, APIdomain, token, funcion_print=print) -> PageResult[PriceListBasic]:
     
     empty_obj = PriceListBasic(**{f: None for f in PriceListBasic.model_fields})

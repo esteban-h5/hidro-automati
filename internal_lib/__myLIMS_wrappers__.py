@@ -31,7 +31,6 @@ def Logout(driver, logout_url, kill=True):
 
 #INICIO DE SESIÓN
 def Login(driver, path_internal, login_url, post_url, funcion_print=print):
-
     param = Config(RepositoryEnv(os.path.join(path_internal,"Param.env")))
 
     key = get('mylims_app', 'secret4')
@@ -346,7 +345,8 @@ def SampleRecon(driver, Excluido, CentroServicio, funcion_print=print):
             else: funcion_print(f"Saltando muestra {ID_muestras} erronea ({idx+1} de {largo_lista_muestras})\nID:{ID_muestras} - Estado: {Estados}\n")
         return ActualSample
 
-def CambiarAcreditacion(driver, nombreAlertaETFA, funcion_print=print):
+def CambiarAcreditacion(driver, lista_cambios, TipoMensajeETFA, funcion_print=print):
+    input(f"Cambiar Acreditación {lista_cambios}")
     pass
 
 def DesactivarAlerta(driver, xpath, texto="Corregido", funcion_print=print):
