@@ -347,6 +347,17 @@ def SampleRecon(driver, Excluido, CentroServicio, funcion_print=print):
 
 def CambiarAcreditacion(driver, lista_cambios, TipoMensajeETFA, funcion_print=print):
     input(f"Cambiar Acreditación {lista_cambios}")
+    for cambio in lista_cambios:
+        Cortar(cambio, "Error tiempo de envase ETFA: ", ". Analito se debe reportar")
+
+    """
+    ["Muestra #2355895 - Alerta de horas - ETFA"]
+    Error tiempo de envase ETFA: Conductividad 'Conductividad'. 
+    Analito se debe reportar en 24 horas desde el muestreo y 
+    Fecha de recepción de la muestra es posterior al tiempo máximo de envase. 
+    Analito debe quedar 'No acreditado'.
+    """
+
     pass
 
 def DesactivarAlerta(driver, xpath, texto="Corregido", funcion_print=print):
@@ -789,7 +800,7 @@ def limpiar_diccionario(diccionario_alertas):
     return [alerta for alerta in diccionario_alertas if alerta['index'] not in lista_fecha_incorrecta]
 
 def Cortar(texto, inicio, final):
-    return texto.split(inicio)[1].split(final)[0]
+    return texto.replace("\n", "").split(inicio)[1].split(final)[0]
 
 #Cambiar la fecha de inicio de la muestra dentro del url en myLIMS
 def CambiarFechas(driver, alertas, inicio_joranda, extension_jornada, funcion_print=print):

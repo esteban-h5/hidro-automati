@@ -103,14 +103,13 @@ class SampleAnalysisInsert(BaseIntModel):
     #     input(f"[SampleAnalysisInsert creado] {self}")
 
 
-
 class SampleSpecificationInsert(BaseIntModel):
     SpecificationId:        Optional[int] = None
 
 class SampleInsert(BaseIntModel):
     Identification:         str
     ControlIdentification:  Optional[str]	
-    TakenDateTime:          Optional[date]	
+    TakenDateTime:          Optional[datetime]	
     SampleTypeId:           Optional[int]	#get_int
     ServiceCenterId:        int	
     CollectionPointId:      Optional[int]	
@@ -157,7 +156,7 @@ class PriceListBasic(BaseIntModel):
     Identification: Optional[str] = None
 
 class AccountBasic(BaseIntModel):
-    Complement: Optional[str] = None
+    Complement: Optional[Union[str, int]] = None
     ReferenceKey: Optional[str] = None
     AccountType: AccountTypeBasic
     PriceList: Optional[PriceListBasic] = None
@@ -183,7 +182,6 @@ class CityBasic(BaseIntModel):
     Id: int
     Identification: str
     State: StateBasic
-
 
 class CollectionPointClassBasic(BaseIntModel):
     Id: int
@@ -699,48 +697,66 @@ class UserIdentification(BaseIntModel):
 
 class SampleBasic(BaseIntModel):
     Id: int
-    Identification: str
-    ControlIdentification: str
+    Identification: Optional[Union[int,str]]
+
+    ControlIdentification: Optional[Union[int,str]] = None
+    Prefix: Optional[str] = None
+
     ControlNumber: str
     ReferenceKey: Optional[str] = None
-    Prefix: str
+
     GroupId: int
     Number: int
     Year: int
     SubNumber: int
     Revision: int
+
     Active: Optional[bool] = None
     SyncPortal: bool
     Received: bool
     Finalized: bool
     Published: bool
     Reviewed: bool
-    Conclusion: date
-    TakenDateTime: date
-    ReceivedTime: date
-    FinalizedTime: date
-    PublishedTime: date
-    ReviewedTime: date
-    ExpectedCollectionTime: date
+
+    # fechas que llegan None
+    Conclusion: Optional[datetime] = None
+    TakenDateTime: Optional[datetime] = None
+    ReceivedTime: Optional[datetime] = None
+    FinalizedTime: Optional[datetime] = None
+    PublishedTime: Optional[datetime] = None
+    ReviewedTime: Optional[datetime] = None
+    ExpectedCollectionTime: Optional[datetime] = None
+
     ReferenceSampleId: Optional[int] = None
     ReferenceSample: Optional['SampleBasic'] = None
-    ConclusionTime: Optional[int] = None 
+
+    ConclusionTime: Optional[int] = None
     ConclusionTimeFixed: bool
-    QCTestsControlSample: List['QCTestControlSampleBasic']
+
+    # listas que llegan None → lista vacía
+    QCTestsControlSample: Optional[List['QCTestControlSampleBasic']] = []
+    SampleWorks: Optional[List['SampleWorkBasic']] = []
+
     ServiceCenter: 'ServiceCenterBasic'
     SampleConclusion: Optional[SampleConclusionBasic] = None
     PriceList: Optional[PriceListBasic] = None
     SampleReason: SampleReasonBasic
     CurrentStatus: 'SampleStatusHistoryBasic'
     SampleType: 'SampleTypeBasic'
-    CollectionPointId: int
-    CollectionPoint: CollectionPointBasic
+
+    # vienen None
+    CollectionPointId: Optional[int] = None
+    CollectionPoint: Optional[CollectionPointBasic] = None
+
     Account: AccountBasic
     RelatedAccount: Optional[AccountBasic] = None
-    SampleWorks: List['SampleWorkBasic']
-    CustomInfo: 'SampleCustomInfo'
-    TotalPrice: Decimal
-    TotalPriceBusinessUnit: Decimal
+
+    # viene None
+    CustomInfo: Optional['SampleCustomInfo'] = None
+
+    # vienen None
+    TotalPrice: Optional[Decimal] = None
+    TotalPriceBusinessUnit: Optional[Decimal] = None
 
 class SampleDetail(BaseIntModel):
     Id: int

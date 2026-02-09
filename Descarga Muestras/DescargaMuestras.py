@@ -279,17 +279,7 @@ try:
             input("Enter para cerrar..")
             exit(1)
 
-        # token = get('mylims_app', 'secret7')
-        # get_samples_ID("Account ne null and Active eq true and endswith(ControlNumber, '.0') and "+
-        #            "CurrentStatus/SampleStatus/Identification eq 'Finalizada' and "+
-        #            "ServiceCenter/Identification eq 'Hidrolab SCL'",
-        #            APIdomain=api_url,
-        #            token=token,
-        #            funcion_print=eprint, 
-        #            )
-        
         driver = Chrome(options=DriverOptions)
-
         eprint("Iniciando sesión en labsoft\n")
 
         try:
@@ -300,6 +290,15 @@ try:
             eprint(f"{e}\n")
             input("Enter para cerrar...")
             exit(1)
+        eprint("Obteniendo listado de muestras")
+
+        ListaMuestras = get_samples_ID(
+            "Account ne null and Active eq true and endswith(ControlNumber, '.0') and "+
+            "CurrentStatus/SampleStatus/Identification eq 'Finalizada' and "+
+            "ServiceCenter/Identification eq 'Hidrolab SCL'",
+            APIdomain=api_url,
+            funcion_print=eprint, 
+        )
 
     except Exception as e:
         notify(title="Problemas en programa", body=type(e).__name__)
@@ -309,108 +308,30 @@ try:
         driver.quit()
         exit(1)
 
-    ########################################
-    #Busqueda ID de muestras a descargar
-    try:
-        driver.get(mainUrl)
-        EsperarCARGA_myLIMS(driver, funcion_print=eprint, recargar=False)
-
-        eprint(f"Cambiando los filtros de la Grilla, Cantidad de filtros: {len(filtros)}\n")
-        EsperarCARGA_myLIMS(driver, funcion_print=eprint, recargar=False)
-
-        ListaMuestras = [2355895]; MuestrasError = []
-
-        for n_filtro in range(len(filtros)):
-            
-            for _ in range(3):
-                try:
-
-                    if n_filtro == 0:
-                        BotonAccion(driver,"Grid").click()
-                        EsperarCLICK(driver,atributo="data-test",valor="Exhibir Recuento")            
-                    
-                    filtro = filtros[n_filtro]
-
-                    BotonAccion(driver,"Grid").click()
-                    EsperarCLICK(driver,atributo="data-test",valor=filtro)
-                    EsperarCARGA_myLIMS(driver, funcion_print=eprint, recargar=False)
-                    
-                    if pais == "BOG":
-                        t_muestra_text = driver.find_element(By.XPATH,"//span[@data-test='SampleItemGridFilter.SampleType.Identification']//input[@type='text']")
-                        t_muestra_text.send_keys("*agua")
-                        t_muestra_text.send_keys(Keys.ENTER)
-                        EsperarCARGA_myLIMS(driver)
-
-                    control_grilla = driver.find_element(By.XPATH, "//div[contains(@class, 'k-pager-wrap') and contains(@class, 'k-widget') and @data-role='pager']")
-                    control_grilla.find_element(By.XPATH, ".//span[@class='k-pager-sizes k-label']/span[1]").click()
-                    EsperarCARGA_myLIMS(driver)
-
-                    driver.find_element(By.XPATH, "//div[@class='k-animation-container']//ul[@class='k-list k-reset']/li[contains(text(), '100')]").click()
-                    EsperarCARGA_myLIMS(driver)
-
-                    break
-
-                except ElementNotInteractableException:
-                    driver.refresh()
-                    
-            else:
-                eprint(f"[No se pudo configurar la grilla] (filtro o elementos por grilla)")
-                Logout(driver,logout_url=Labsoftdomain)
-                driver.quit()
-                exit(1)
-
-            MuestrasCantidad = control_grilla.find_element(By.XPATH, ".//span[@class='k-pager-info k-label']").text
-            if MuestrasCantidad == "Nada a enseñar.":
-                MuestrasCantidad = 0
-                eprint(f"[No se encontraron muestras para el filtro {filtro}]")
-                Logout(driver,logout_url=Labsoftdomain)
-                driver.quit()
-                exit(1)
-            else:    
-                MuestrasCantidad = int(Cortar(MuestrasCantidad, "de ", " ítems"))
-                if MuestrasCantidad%100 == 0:
-                    Saltos = int( MuestrasCantidad/100 )
-                else:
-                    Saltos = int( ( MuestrasCantidad/100 ) + 1 )
-            eprint(f'Se registrarán { MuestrasCantidad } muestras en myLIMS para el filtro [{filtro}]\n')
-
-            #BUSQUEDA DE ID PARA CADA PÁGINA
-            for _ in range(Saltos):
-
-                #Lista con los id de todas las muestras en grid actual
-                ID_Muestras = [__.text for __ in WebDriverWait(driver, timeout).until(EC.presence_of_all_elements_located((By.XPATH,'//*[@data-test="SampleItemGrid.Id"]')))]
-                eprint(f'Página {_+1} registrada')
-                
-                ListaMuestras = ListaMuestras + [_ for _ in ID_Muestras if _ not in ID_Excluidos]
-            
-                if _ != Saltos-1: EsperarCLICK(driver,atributo="class",valor="k-icon k-i-arrow-60-right")
-                EsperarCARGA_myLIMS(driver, funcion_print=eprint)
-
-            else:            
-                eprint("",end="\n")
-
-        MuestrasCantidad = len(ListaMuestras)
-        TotalDescarga = 0
-        
-        if not AutoPublicar: TotalPublicados = "Desactivado"
-        else: TotalPublicados = 0
-
-        if not RevisarRutinas: TotalCambioFechas = "Desactivado"
-        else: TotalCambioFechas = 0
-
-        if SoloBuscarControles:
-            eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola, revisando controles y fechas para publicar...')
+    # ListaMuestras = [_ for _ in ListaMuestras if _ not in ID_Excluidos]
+    x = ListaMuestras
+    ListaMuestras = []
+    for _ in x:
+        if _ in ID_Excluidos:
+            eprint(f"{_} Saltado")
         else:
-            eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola, descargando...')
+            ListaMuestras.append(_)
+            
+    MuestrasCantidad = len(ListaMuestras)
+    MuestrasError = []
+    TotalDescarga = 0
+    TotalPublicados = 0
+    N_Muestra = 0
+    MuestraIndice = 1
+    ID_Actual = 0
 
-    except Exception as e:
-        notify(title="Problemas en programa", body=type(e).__name__)
-        eprint(f"{FormatoExcepcion(e)}\nOcurrió un error al obtener los ID de muestras, favor de revisar log")
-        input("Enter para cerrar sesión y navegador")
-        Logout(driver,logout_url=Labsoftdomain)
-        sleep(3)
-        driver.quit()
-        exit(1)
+    if not RevisarRutinas: TotalCambioFechas = "Desactivado"
+    else: TotalCambioFechas = 0
+
+    if SoloBuscarControles:
+        eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola, revisando controles y fechas para publicar...')
+    else:
+        eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola, descargando...')
 
     id_excel = ObtenerIDExcel(dirExcel=dirExcelRegistro, ncol=0, colnames=nombre_columnas_reg)
 
@@ -425,6 +346,7 @@ try:
     #Instancia para cada muestra a descargar
     for MuestraIndice, ID_Actual in enumerate(ListaMuestras,1):
         slog()
+
         id_excel += 1
 
         timer.save(MuestraIndice)
@@ -456,19 +378,18 @@ try:
                 N_Muestra = driver.find_element(By.XPATH, '//input[@data-test="ControlNumber"]').get_attribute("value")
                 cliente = driver.find_element(By.XPATH, '//input[@data-bind="value: Account.Identification"]').get_attribute("value")
                 
-                if SoloBuscarControles:
-                    eprint( f'\nRevisando ID: {ID_Actual}\n'+
-                            f'N de Muestra: {N_Muestra}\n'+
-                            f'Tiempo restante: {timer.t_restante} [{timer.h_estimada}]\n'+
-                            f'Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{MuestrasCantidad}]\n'+
-                            f'Registradas: {TotalDescarga} - Publicadas: {TotalPublicados} - Cambios de Fechas: {TotalCambioFechas}')
-                else:
-                    eprint( f'\nRevisando ID: {ID_Actual}\n'+
-                            f'N de Muestra: {N_Muestra}\n'+
-                            f'Tiempo restante: {timer.t_restante} [{timer.h_estimada}]\n'+
-                            f'Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{MuestrasCantidad}]\n'+
-                            f'Descargadas: {TotalDescarga} - Publicadas: {TotalPublicados} - Cambios de Fechas: {TotalCambioFechas}')
+                texto_por_muestra = f"""
+Revisando ID: {ID_Actual}
+N de Muestra: {N_Muestra}
+Tiempo restante: {timer.t_restante} [{timer.h_estimada}]
+Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{MuestrasCantidad}]
+"""                
+                texto_por_muestra = f"{texto_por_muestra}Registradas: {TotalDescarga} - " if SoloBuscarControles else f"{texto_por_muestra}Descargadas: {TotalDescarga} - "
+                texto_por_muestra = f"{texto_por_muestra}Publicadas: {TotalPublicados} - " if AutoPublicar else f"{texto_por_muestra}Publicables: {TotalPublicados} - "
+                texto_por_muestra = f"{texto_por_muestra}Cambios de Fechas: {TotalCambioFechas}"
 
+                eprint(texto_por_muestra)
+                
                 muestra_estado = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']/div[1]/div[1]//div[5]/div[3]//input[@class='k-input']").get_attribute("value")
                 
                 # muestra_fmuestreo   = driver.find_element(By.XPATH, "//input[@data-test='TakenDateTime']").get_attribute("value").replace("-", "/")
@@ -567,6 +488,7 @@ try:
                                         extension_jornada = EXTENSION_JORNADA
 
                                     if CambiarFechas(driver, lista_cambios, inicio_joranda=inicio_jornada, extension_jornada=extension_jornada, funcion_print=logprint):
+                                        TotalCambioFechas += 1
                                         DesactivarAlerta(driver, iter_xpath, funcion_print=eprint)
                                         eprint("[Procesada Alerta de Horas]")
 
@@ -718,6 +640,7 @@ try:
                             eprint("[No Publica]")
                     
                     else:
+                        TotalPublicados += 1
                         eprint("[Publicable]\n")
                         if Registrar:  
                             fila_muestra = [ id_excel, ID_Actual, "PUBLICABLE", "PUBLICABLE", ""]
@@ -905,6 +828,7 @@ try:
             MuestraIndice += 1
             continue
     
+    timer.finish()
     id_excel += 1
     fila_muestra = [ id_excel, "----------", "----------", "----------", "----------" ]
     FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    

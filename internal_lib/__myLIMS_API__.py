@@ -39,14 +39,31 @@ def api_post(endpoint, body, APIdomain, token, funcion_print=print):
         
     return out
 
-def get_samples_ID(filter, APIdomain, token, funcion_print=print):
+def get_samples_ID(filter, APIdomain, funcion_print=print):
+    samples_list = []
+
+    token = get('mylims_app', 'secret7')
+    url_text = f"Samples?$filter={filter}&$inlinecount=allpages&$top=100"
+
     try:
-        respuesta = api_get(f"Samples?$inlinecount=allpages&$filter={filter}", APIdomain, token, PageResult[SampleBasic])
+        respuesta = api_get(url_text, APIdomain, token, PageResult[SampleBasic])
     except HTTPError as e:
         funcion_print(f"ERROR DE API {e} AL OBTENER MUESTRAS")
-        return []
+        return samples_list
     
-    input(respuesta)
+    samples_list = samples_list + [sample.Id for sample in respuesta.Result]
+
+    total_page = int(respuesta.TotalCount/100)
+    funcion_print(f"Consultando {respuesta.TotalCount} muestras en {total_page} páginas")
+    
+    page = 1
+    while respuesta.Count >= 100:
+        funcion_print(f"{page}/{total_page}")
+        respuesta = api_get(url_text+f"&$skip={100*page}", APIdomain, token, PageResult[SampleBasic])
+        samples_list = samples_list + [sample.Id for sample in respuesta.Result]
+        page+=1
+
+    return samples_list
 
 def get_pricetable(identification: str, APIdomain, token, funcion_print=print) -> PageResult[PriceListBasic]:
     

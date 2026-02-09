@@ -19,11 +19,11 @@ DescargarPublicadas   :   False
 #
 #
 # Alertar si la configuracion ha sido alterada [True]
-Alerta		            :	  True
+Alerta		            :	  False
 #
 #
 # Publicación automatica [True]
-AutoPublicar          :   True
+AutoPublicar          :   False
 #
 #
 # Revisa si existen alertas de horas y las corrige [True]

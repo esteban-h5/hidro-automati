@@ -406,7 +406,8 @@ class DeltaTimer:
         self.start_time = None
         self.last_time = None
         self.h_estimada = None
-
+        self.t_restante = None
+        
         self._buffer = []
         self._buffer_size = buffer_size
         
