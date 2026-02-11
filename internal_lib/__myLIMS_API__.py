@@ -41,7 +41,6 @@ def api_post(endpoint, body, APIdomain, token, funcion_print=print):
 
 def get_samples_ID(filter, APIdomain, funcion_print=print):
     samples_list = []
-
     token = get('mylims_app', 'secret7')
     url_text = f"Samples?$filter={filter}&$inlinecount=allpages&$top=100"
 
@@ -51,15 +50,26 @@ def get_samples_ID(filter, APIdomain, funcion_print=print):
         funcion_print(f"ERROR DE API {e} AL OBTENER MUESTRAS")
         return samples_list
     
-    samples_list = samples_list + [sample.Id for sample in respuesta.Result]
+    samples_list = samples_list + [str(sample.Id) for sample in respuesta.Result]
 
     total_page = int(respuesta.TotalCount/100)
     funcion_print(f"Consultando {respuesta.TotalCount} muestras en {total_page} páginas")
     
     page = 1
+    retries = 5
     while respuesta.Count >= 100:
         funcion_print(f"{page}/{total_page}")
-        respuesta = api_get(url_text+f"&$skip={100*page}", APIdomain, token, PageResult[SampleBasic])
+        try:
+            respuesta = api_get(url_text+f"&$skip={100*page}", APIdomain, token, PageResult[SampleBasic])
+        except HTTPError as e:
+            if retries != 0:
+                retries -= 1
+                funcion_print(f"ERROR DE API {e} AL OBTENER MUESTRAS\nReintentando [{retries}]")
+                respuesta.Count = 100
+                continue
+
+            else:
+                break
         samples_list = samples_list + [sample.Id for sample in respuesta.Result]
         page+=1
 

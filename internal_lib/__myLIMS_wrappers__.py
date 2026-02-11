@@ -345,20 +345,56 @@ def SampleRecon(driver, Excluido, CentroServicio, funcion_print=print):
             else: funcion_print(f"Saltando muestra {ID_muestras} erronea ({idx+1} de {largo_lista_muestras})\nID:{ID_muestras} - Estado: {Estados}\n")
         return ActualSample
 
-def CambiarAcreditacion(driver, lista_cambios, TipoMensajeETFA, funcion_print=print):
-    input(f"Cambiar Acreditación {lista_cambios}")
+def CambiarAcreditacion(driver, lista_cambios, funcion_print=print):
+    
+    analisis_metodo = {}
     for cambio in lista_cambios:
-        Cortar(cambio, "Error tiempo de envase ETFA: ", ". Analito se debe reportar")
+        analisis, metodo = Cortar(cambio, "Error tiempo de envase ETFA: ", ". Analito se debe reportar").split(" '")
+        metodo = metodo.replace("'","")
+        #VARIOS ANALISIS PARA 1 METODOooooooooo
+        analisis_metodo = analisis_metodo | {metodo:analisis}
+    
+    BotonSection(driver,"SectionAccreditations").click()
+    EsperarCARGA_myLIMS(driver)
 
-    """
-    ["Muestra #2355895 - Alerta de horas - ETFA"]
-    Error tiempo de envase ETFA: Conductividad 'Conductividad'. 
-    Analito se debe reportar en 24 horas desde el muestreo y 
-    Fecha de recepción de la muestra es posterior al tiempo máximo de envase. 
-    Analito debe quedar 'No acreditado'.
-    """
+    count_total = [f"{metodo}-{analisis}" for analisis, metodo in analisis_metodo.items()]
+    count_actual = []
+    
+    executed = False
 
-    pass
+    for fila_acred in driver.find_elements(By.XPATH, '//div[@id="InterfaceContent"]/div[5]/div[@class="row labsoft-ui-layoutrow"]/div[1]//tbody[@role="rowgroup"]/tr'):
+        metodo = fila_acred.find_element(By.XPATH,'./td[@data-test="AccreditationsGrid.MethodIdentification"]').text
+        if metodo in analisis_metodo.keys():
+            analisis = fila_acred.find_element(By.XPATH,'./td[@data-test="AccreditationsGrid.InfoIdentification"]').text
+            if analisis == analisis_metodo[metodo]:
+                
+                if "myLIMSweb-grid-row-raw-data" in fila_acred.get_attribute("class"):
+                    funcion_print(f"Método {metodo} y Análisis {analisis} ya desacreditados")
+                    continue
+
+                if not executed:
+                    fila_acred.click()
+                    executed = True
+
+                driver.execute_script("arguments[0].setAttribute('class', 'k-state-selected');", fila_acred)
+                count_actual.append(f"{analisis}-{metodo}")
+
+    count_resultado = set(count_total) - set(count_actual)
+
+    if count_resultado:
+        funcion_print(f"No se ha encontrado elementos para desacreditar: {list(count_resultado)}")
+    
+        if not executed:
+            return True
+    
+    BotonAccion(driver,"InvalidateAccreditationButton").click()
+    EsperarCARGA_myLIMS(driver)
+    
+    driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//textarea[@class="k-textbox"]').send_keys("Invalidar Acreditación")
+    BotonVentana(driver,"Si").click()
+
+    EsperarCARGA_myLIMS(driver, funcion_print=funcion_print)
+    return True
 
 def DesactivarAlerta(driver, xpath, texto="Corregido", funcion_print=print):
     BotonSection(driver,"SectionMessage").click()

@@ -210,7 +210,7 @@ try:
             if Alerta:
                 input(f"{", ".join(str_alerta)}, presione enter para continuar\n")
             else:
-                print(f"{str_alerta}\n")
+                print(f"{", ".join(str_alerta)}\n")
 
         if not Olvidar:
             ID_Excluidos = unique(ID_Excepciones + ID_Registrados + ID_Historico)
@@ -284,7 +284,6 @@ try:
 
         try:
             Login(driver, path_internal=internal_lib, post_url=mainUrl, login_url=Labsoftdomain)
-            EsperarCARGA_myLIMS(driver, funcion_print=eprint, recargar=False)
 
         except ExcepcionDeCarga as e:
             eprint(f"{e}\n")
@@ -300,6 +299,8 @@ try:
             funcion_print=eprint, 
         )
 
+        EsperarCARGA_myLIMS(driver, funcion_print=eprint, recargar=False)
+
     except Exception as e:
         notify(title="Problemas en programa", body=type(e).__name__)
         eprint(f"{FormatoExcepcion(e)}\nError al cargar myLIMS")
@@ -308,17 +309,11 @@ try:
         driver.quit()
         exit(1)
 
-    # ListaMuestras = [_ for _ in ListaMuestras if _ not in ID_Excluidos]
-    x = ListaMuestras
-    ListaMuestras = []
-    for _ in x:
-        if _ in ID_Excluidos:
-            eprint(f"{_} Saltado")
-        else:
-            ListaMuestras.append(_)
-            
+    ListaMuestras = [_ for _ in ListaMuestras if _ not in ID_Excluidos]
+    ListaMuestras = ["2266372"]+ListaMuestras
     MuestrasCantidad = len(ListaMuestras)
     MuestrasError = []
+
     TotalDescarga = 0
     TotalPublicados = 0
     N_Muestra = 0
@@ -452,8 +447,6 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                 lista_alertas_pop.append(m_index)
                                 continue  
 
-                            # input(f"{m_tipo}/{TipoMensajeETFA} - {m_state} - {m_inicio}")
-
                             if m_tipo in tipo_horas:
                                 eprint(f"[\"{m_inicio}\"]")
                                 
@@ -504,8 +497,6 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                 notify(title="ETFA", body=f"ETFA")
                                 input(f"[\"{m_inicio}\"]")
                                 
-                                # eprint(f"[\"{m_inicio}\"]")
-                                
                                 mensaje.click()
                                 EsperarCARGA_myLIMS(driver)
 
@@ -522,57 +513,17 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                 driver.switch_to.default_content()
                                 BotonAccion(driver,"Cancelar").click()
                                 try:
-                                    if CambiarAcreditacion(driver, lista_cambios, TipoMensajeETFA, funcion_print=logprint):
+                                    if CambiarAcreditacion(driver, lista_cambios, funcion_print=logprint):
                                         DesactivarAlerta(driver, iter_xpath, funcion_print=eprint)
-                                        eprint("[Procesada Alerta de EFTA y Acreditación]")
+                                        eprint("[Procesada Alerta de EFTA sobre Acreditación]")
 
                                     else:
-                                        eprint("[Problemas con alerta de EFTA]")
+                                        eprint("[Problemas con alerta de EFTA sobre Acreditación]")
                                         flagFechasCambiadas = False
 
                                 except (ElementClickInterceptedException,ElementNotInteractableException) as e:
                                     raise ExcepcionDeMuestra("Error al cambiar acreditación (Reintentar)")
                             
-                            # Usar para copiar envases y encontrar muestras en coti
-                            def GetTablaColumna(xpath_tabla):
-                                elemento_tabla = driver.find_element(By.XPATH, xpath_tabla)
-                                lista_columnas_tabla = elemento_tabla.find_elements(By.XPATH,"./tr/th")
-                                
-                                tabla_dict = {}
-                                for idx, elemento_columna in enumerate(lista_columnas_tabla):
-                                    tabla_dict = tabla_dict | {elemento_columna.text:idx} #Listar data-test? revisar tablas donde salto error
-
-                                return tabla_dict
-                            
-                            if flagDesacreditar:
-                                BotonSection(driver,"SectionRelatedSamples").click()
-                                EsperarCARGA_myLIMS(driver)
-
-                                xpath_tabla = '//div[@id="InterfaceContent"]/div[5]/div[@class="row labsoft-ui-layoutrow"]/div[1]//tbody[@role="rowgroup"]' #REVISAR 5to div
-                                tabla_dict = GetTablaColumna(xpath_tabla)
-
-                                elemento_tabla = driver.find_element(By.XPATH, xpath_tabla)
-                                lista_seleccion = []
-                                for fila in elemento_tabla.find_elements(By.XPATH, "./tr"):
-                                    metodo  = fila.find_element(By.XPATH, "./td[@data-test='AccreditationsGrid.MethodIdentification']")
-                                    analito = fila.find_element(By.XPATH, "./td[@data-test='AccreditationsGrid.InfoIdentification']")
-                                    
-                                    if metodo in []:
-                                        lista_seleccion.append(fila)
-
-                                for _ in lista_seleccion:
-                                    driver.execute_script("arguments[0].setAttribute('class', 'k-alt k-state-selected');", driver.find_element(By.XPATH, _))
-
-                                BotonAccion(driver,"InvalidateAccreditationButton").click()
-                                EsperarCARGA_myLIMS(driver)
-
-                                ventana = driver.find_element(By.XPATH, "//div[@class='k-widget k-window' and contains(@style, 'display: block;')]/div[@data-role='window']")
-                                ventana.find_element(".//textarea").send_keys("Reprocesamiento Acreditación")
-
-                                BotonVentana(driver,"Si").click()
-                                EsperarCARGA_myLIMS(driver)
-
-                            ####CAMBIO####
                         else:
                             
                             for i in sorted(lista_alertas_pop, reverse=True):
