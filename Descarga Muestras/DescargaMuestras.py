@@ -86,6 +86,7 @@ try:
         Alerta          = config.get("Alerta", True)
         AutoPublicar    = config.get("AutoPublicar", True)
 
+        CorregirETFA    = config.get("CorregirETFA", True)
         RevisarRutinas  = config.get("RevisarRutinas", True)
         Olvidar         = config.get("Olvidar", False)
         Registrar       = config.get("RegistrarMuestras", True)
@@ -148,7 +149,7 @@ try:
 
         if SoloBuscarControles:
             eprint(
-                f"Solo Buscar Controles [True]:\t{SoloBuscarControles}\n\n"+
+                f"Solo Buscar Controles y alertas [True]:\t{SoloBuscarControles}\n\n"+
                 f"Publicación automática [True]:\t{AutoPublicar}\n\n"+
                 f"Olvidar registro [False]:\t{Olvidar}\n\n"+
                 f"Revisar Rutinas [True]:\t\t{RevisarRutinas}\n\n"+
@@ -297,9 +298,8 @@ try:
             "ServiceCenter/Identification eq 'Hidrolab SCL'",
             APIdomain=api_url,
             funcion_print=eprint, 
+            funcion_logprint = logprint,
         )
-
-        EsperarCARGA_myLIMS(driver, funcion_print=eprint, recargar=False)
 
     except Exception as e:
         notify(title="Problemas en programa", body=type(e).__name__)
@@ -310,18 +310,20 @@ try:
         exit(1)
 
     ListaMuestras = [_ for _ in ListaMuestras if _ not in ID_Excluidos]
-    ListaMuestras = ["2266372"]+ListaMuestras
+    # ListaMuestras = ["2337885"]+ListaMuestras
     MuestrasCantidad = len(ListaMuestras)
     MuestrasError = []
 
     TotalDescarga = 0
     TotalPublicados = 0
+    
     N_Muestra = 0
     MuestraIndice = 1
     ID_Actual = 0
 
-    if not RevisarRutinas: TotalCambioFechas = "Desactivado"
-    else: TotalCambioFechas = 0
+    if RevisarRutinas: 
+        TotalCambioFechas = 0
+        TotalDesacreditar = 0
 
     if SoloBuscarControles:
         eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola, revisando controles y fechas para publicar...')
@@ -340,6 +342,8 @@ try:
     ########################################
     #Instancia para cada muestra a descargar
     for MuestraIndice, ID_Actual in enumerate(ListaMuestras,1):
+        EsperarCARGA_myLIMS(driver, funcion_print=eprint, kill=True)
+
         slog()
 
         id_excel += 1
@@ -357,13 +361,14 @@ try:
         while IntentosDeCarga != 0:
             #Reintentar y recargar solo esta sección
             try:
-
                 flagDescargar = False
                 flagCambiarFecha = False
                 flagRutina = False
                 flagDesacreditar = False
                 flagControles = False
-                flagFechasCambiadas = False
+
+                checkCambiarFechas = False
+                checkDesacreditar = False
                 
                 ChequearNavegador(driver, kill=True)
 
@@ -380,8 +385,9 @@ Tiempo restante: {timer.t_restante} [{timer.h_estimada}]
 Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{MuestrasCantidad}]
 """                
                 texto_por_muestra = f"{texto_por_muestra}Registradas: {TotalDescarga} - " if SoloBuscarControles else f"{texto_por_muestra}Descargadas: {TotalDescarga} - "
-                texto_por_muestra = f"{texto_por_muestra}Publicadas: {TotalPublicados} - " if AutoPublicar else f"{texto_por_muestra}Publicables: {TotalPublicados} - "
-                texto_por_muestra = f"{texto_por_muestra}Cambios de Fechas: {TotalCambioFechas}"
+                texto_por_muestra = f"{texto_por_muestra}Publicadas: {TotalPublicados} - " if AutoPublicar else f"{texto_por_muestra}Publicables: {TotalPublicados}"
+                if RevisarRutinas:
+                    texto_por_muestra = f"{texto_por_muestra}\nCambios de Fechas: {TotalCambioFechas} - Cambios de Acreditación: {TotalDesacreditar}"
 
                 eprint(texto_por_muestra)
                 
@@ -410,8 +416,11 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                 EsperarCARGA_myLIMS(driver)
                 
                 ###################################################
-                #Cambiar Fechas
+                #Hacer Cambios
                 if (flagCambiarFecha or flagDesacreditar) and not flagDescargar:
+                    
+                    checkCambiarFechas = flagCambiarFecha
+                    checkDesacreditar = flagDesacreditar
 
                     if RevisarRutinas: 
 
@@ -481,13 +490,12 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                         extension_jornada = EXTENSION_JORNADA
 
                                     if CambiarFechas(driver, lista_cambios, inicio_joranda=inicio_jornada, extension_jornada=extension_jornada, funcion_print=logprint):
-                                        TotalCambioFechas += 1
                                         DesactivarAlerta(driver, iter_xpath, funcion_print=eprint)
                                         eprint("[Procesada Alerta de Horas]")
 
                                     else:
                                         eprint("[Problemas con las Horas]")
-                                        flagFechasCambiadas = False
+                                        checkCambiarFechas = False
 
                                 except (ElementClickInterceptedException,ElementNotInteractableException) as e:
                                     raise ExcepcionDeMuestra("Error al cambiar fechas (Reintentar)")
@@ -516,10 +524,9 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                     if CambiarAcreditacion(driver, lista_cambios, funcion_print=logprint):
                                         DesactivarAlerta(driver, iter_xpath, funcion_print=eprint)
                                         eprint("[Procesada Alerta de EFTA sobre Acreditación]")
-
                                     else:
                                         eprint("[Problemas con alerta de EFTA sobre Acreditación]")
-                                        flagFechasCambiadas = False
+                                        checkDesacreditar = False
 
                                 except (ElementClickInterceptedException,ElementNotInteractableException) as e:
                                     raise ExcepcionDeMuestra("Error al cambiar acreditación (Reintentar)")
@@ -533,9 +540,15 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                 eprint("[Sin alertas de Horas]")
 
                             else:
-                                if flagFechasCambiadas:
+                                if checkCambiarFechas:
                                     TotalCambioFechas += 1
                                     eprint(f"[Fechas cambiadas]")
+
+                                elif checkDesacreditar:
+                                    flagDescargar = True #PROHIBIR PUBLICACION
+                                    TotalDesacreditar +=1
+                                    eprint(f"[Desacreditacion hecha]")
+                                
                                 else:
                                     flagDescargar = True
                                     flagRutina = True
@@ -544,8 +557,6 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                         flagRutina = True
                         flagDescargar = True
                         
-                        # if flagDesacreditar:
-
                 ###################################################
                 #Revisar Controles Pendientes
                 BotonSection(driver,"SectionRelatedSamples").click()
@@ -602,6 +613,15 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                 
                 tiene_rutina = "NO" if not flagRutina else "SI"
                 tiene_controles = "NO" if not flagControles else "SI"
+                
+                if CorregirETFA:
+                    if flagDesacreditar:
+                        tiene_ETFA = "NO CORRIGE" if not checkDesacreditar else "CORREGIDO"
+                    else:
+                        tiene_ETFA = "NO"
+                else: 
+                    tiene_ETFA = "NO" if not flagDesacreditar else "SI"
+
                 TotalDescarga += 1
 
                 if Registrar:
@@ -610,7 +630,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                     FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)
                 
                 if SoloBuscarControles:
-                    eprint("[Saltada - Descargable]\n")
+                    eprint("[Saltada]\n")
 
                 else:
                     eprint("[Descarga]\n")

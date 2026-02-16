@@ -11,13 +11,15 @@ from time import sleep
 from time import time
 
 
-def api_get(endpoint, APIdomain, token, model: Type[T]) -> T:
+def api_get(endpoint, APIdomain, token, model: Type[T], espera=30) -> T:
     
     response = requests.get(APIdomain+endpoint, 
                 headers = {
                     "Content-Type": "application/json",
                     "x-access-key": token
-                })
+                },
+                timeout=(5, espera)
+    )
     
     response.raise_for_status()
     data = response.json()
@@ -39,17 +41,30 @@ def api_post(endpoint, body, APIdomain, token, funcion_print=print):
         
     return out
 
-def get_samples_ID(filter, APIdomain, funcion_print=print):
+def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=print):
     samples_list = []
     token = get('mylims_app', 'secret7')
     url_text = f"Samples?$filter={filter}&$inlinecount=allpages&$top=100"
 
-    try:
-        respuesta = api_get(url_text, APIdomain, token, PageResult[SampleBasic])
-    except HTTPError as e:
-        funcion_print(f"ERROR DE API {e} AL OBTENER MUESTRAS")
-        return samples_list
-    
+    retries = 5
+    while True:
+        try:
+            respuesta = api_get(url_text, APIdomain, token, PageResult[SampleBasic])
+        except HTTPError as e:
+            if retries != 0:
+                retries -= 1
+                respuesta
+                funcion_print(f"ERROR DE API {e} AL OBTENER MUESTRAS\nReintentando [{retries}]")
+                funcion_logprint("Body:", e.response.text)
+                
+                continue
+
+            else:
+                funcion_print(f"Continuando con lista actual")
+                return samples_list
+
+        break
+
     samples_list = samples_list + [str(sample.Id) for sample in respuesta.Result]
 
     total_page = int(respuesta.TotalCount/100)
