@@ -1,9 +1,10 @@
 ###############################
 
-version_actual = "6.1.0"
+version_actual = "6.1.0-test"
 fecha_version = "viernes 16 de enero 2026"
 
 changelog = [
+    "- Desacreditar y desactivar alerta pero no publicar",
     "- strip a columnas",
     "- Lista de precios actualizada a 2026",
     "- orden de columnas con sort al comparar",

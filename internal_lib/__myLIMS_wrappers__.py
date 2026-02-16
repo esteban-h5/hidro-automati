@@ -347,26 +347,27 @@ def SampleRecon(driver, Excluido, CentroServicio, funcion_print=print):
 
 def CambiarAcreditacion(driver, lista_cambios, funcion_print=print):
     
-    analisis_metodo = {}
+    metodo_analisis = {}
+    metodo_analisis_lectura = {}
+
     for cambio in lista_cambios:
         analisis, metodo = Cortar(cambio, "Error tiempo de envase ETFA: ", ". Analito se debe reportar").split(" '")
         metodo = metodo.replace("'","")
-        #VARIOS ANALISIS PARA 1 METODOooooooooo
-        analisis_metodo = analisis_metodo | {metodo:analisis}
-    
+        if metodo not in metodo_analisis:
+            metodo_analisis[metodo] = [analisis]
+        else:
+            metodo_analisis[metodo].append(analisis)
+
     BotonSection(driver,"SectionAccreditations").click()
     EsperarCARGA_myLIMS(driver)
 
-    count_total = [f"{metodo}-{analisis}" for analisis, metodo in analisis_metodo.items()]
-    count_actual = []
-    
     executed = False
 
     for fila_acred in driver.find_elements(By.XPATH, '//div[@id="InterfaceContent"]/div[5]/div[@class="row labsoft-ui-layoutrow"]/div[1]//tbody[@role="rowgroup"]/tr'):
         metodo = fila_acred.find_element(By.XPATH,'./td[@data-test="AccreditationsGrid.MethodIdentification"]').text
-        if metodo in analisis_metodo.keys():
+        if metodo in metodo_analisis:
             analisis = fila_acred.find_element(By.XPATH,'./td[@data-test="AccreditationsGrid.InfoIdentification"]').text
-            if analisis == analisis_metodo[metodo]:
+            if analisis in metodo_analisis[metodo]:
                 
                 if "myLIMSweb-grid-row-raw-data" in fila_acred.get_attribute("class"):
                     funcion_print(f"Método {metodo} y Análisis {analisis} ya desacreditados")
@@ -377,12 +378,22 @@ def CambiarAcreditacion(driver, lista_cambios, funcion_print=print):
                     executed = True
 
                 driver.execute_script("arguments[0].setAttribute('class', 'k-state-selected');", fila_acred)
-                count_actual.append(f"{analisis}-{metodo}")
-
-    count_resultado = set(count_total) - set(count_actual)
-
-    if count_resultado:
-        funcion_print(f"No se ha encontrado elementos para desacreditar: {list(count_resultado)}")
+                
+                if metodo not in metodo_analisis_lectura:
+                    metodo_analisis_lectura[metodo] = [analisis]
+                else:
+                    metodo_analisis_lectura[metodo].append(analisis)
+    
+    diff = {
+            (k, tuple(v))
+            for k, v in metodo_analisis.items()
+            } - {
+                (k, tuple(v))
+                for k, v in metodo_analisis_lectura.items()
+            }
+    
+    if diff:
+        funcion_print(f"No se ha encontrado elementos para desacreditar: {diff}")
     
         if not executed:
             return True
@@ -390,7 +401,7 @@ def CambiarAcreditacion(driver, lista_cambios, funcion_print=print):
     BotonAccion(driver,"InvalidateAccreditationButton").click()
     EsperarCARGA_myLIMS(driver)
     
-    driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//textarea[@class="k-textbox"]').send_keys("Invalidar Acreditación")
+    driver.find_element(By.XPATH, f'//div[@class="k-widget k-window" and contains(@style, "display: block")]//textarea[@class="k-textbox"]').send_keys("Invalidar Acreditación (Alerta)")
     BotonVentana(driver,"Si").click()
 
     EsperarCARGA_myLIMS(driver, funcion_print=funcion_print)
@@ -445,17 +456,18 @@ def BuscarAlertas(driver, tipo_rutinas, tipo_horas, nombreAlertaETFA, funcion_pr
             if "inactive" in m_state:
                 continue  
             
-            if m_tipo in tipo_rutinas or m_tipo in tipo_horas:
-                if "Alerta de horas" in m_inicio:
+            if m_tipo in tipo_rutinas or m_tipo in tipo_horas or m_tipo == nombreAlertaETFA:
+                
+                if "Alerta de horas - ETFA" in m_inicio:
+                    funcion_print(f"[Alerta ETFA \"{m_tipo_upper}\"]")
+                    flagDesacreditar = True
+                elif "Alerta de horas" in m_inicio:
                     funcion_print(f"[Alerta de Horas]")
                     flagCambiarFecha = True
                 else:
                     funcion_print(f"[Alerta de tipo \"{m_tipo_upper}\"]")
                     flagRutina = True
 
-            if m_tipo == nombreAlertaETFA and "Alerta de horas - ETFA" in m_inicio:
-                funcion_print(f"[Alerta ETFA \"{m_tipo_upper}\"]")
-                flagDesacreditar = True
 
     return [flagCambiarFecha, flagRutina, flagDesacreditar]
 
