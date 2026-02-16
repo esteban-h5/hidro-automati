@@ -243,7 +243,7 @@ try:
 
     eprint(f"[Construyendo y subiendo cada {Partition} muestras en {total_part} partes ({total_muestras} muestras)]")
     timer = DeltaTimer(buffer_size=25)
-    timer.start()
+    timer.start(len_lista_partitions)
 
     lista_errores = []
     ruta = os.path.join(CM_wd, f"salida_{fecha}.xlsx")
@@ -254,10 +254,8 @@ try:
     with open(os.path.join(CM_wd, f"errores_{fecha}.txt"), "w", encoding="utf-8") as errores_salida:
 
         for idx, inf_muestra_df in enumerate(lista_partitions):
-            timer.delta()
-            timer.final(idx-1,len_lista_partitions)
-
-            eprint(f"\n[{idx*(Partition)}/{total_muestras}] [{idx+1}/{total_part}] [termino {timer.end_time} en {timer.t_restante}]")
+            timer.save(idx)
+            eprint(f"\n[{idx*(Partition)}/{total_muestras}] [{idx+1}/{total_part}] [termino {timer.h_estimada} en {timer.t_restante}]")
 
             try:
                 sample_records = FormatoDF(inf_muestra_df, col_fmt, paisActual, getdomain=APIdomain, gettoken=token, ListaPrecio=ListaPrecio, funcion_log=logprint, funcion_print=eprint)
@@ -323,10 +321,7 @@ try:
             df_salida.columns = df_salida.columns.str.lower()
             analisis_df.columns = analisis_df.columns.str.lower()
         
-        timer.delta()
-
-
-
+    timer.finish()
     eprint("[Archivo excel creado]")
 
     input("Enter para cerrar...")

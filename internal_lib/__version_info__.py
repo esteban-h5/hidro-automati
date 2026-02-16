@@ -1,6 +1,6 @@
 ###############################
 
-version_actual = "6.1.0-test"
+version_actual = "6.1.0-test-1"
 fecha_version = "viernes 16 de enero 2026"
 
 changelog = [

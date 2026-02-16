@@ -1,5 +1,6 @@
 pywin32==311
 pandas==2.3.3
+xlsxwriter==3.2.9
 numpy==2.3.3
 psutil==7.1.0
 python-decouple==3.8

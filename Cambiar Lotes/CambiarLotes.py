@@ -18,7 +18,7 @@ from __myLIMS_modulos__ import (
     UnexpectedAlertPresentException, StaleElementReferenceException, InvalidSessionIdException,
     SessionNotCreatedException, TimeoutException, NoSuchWindowException, 
     ElementNotInteractableException, ElementClickInterceptedException,
-    SiExisteElemento, EsperarCLICK, queue_redy, 
+    SiExisteElemento, EsperarCLICK, queue_redy, DeltaTimer,
     By, EC, DriverOptions, Chrome, Keys, WebDriverWait,
     pd, notify, sleep, datetime, Path, requests, subprocess, messagebox
 )
@@ -181,6 +181,7 @@ else:
 
 muestras_requerimientos = pd.read_excel(dirExcelMetodosDB, sheet_name="Requerimientos")
 cantidad_muestras = len(muestras_entrada)
+timer = DeltaTimer(buffer_size=25)
 
 def excepcion_handler(e, id_muestra=None, driver=None, funcion_print=print):
     tipoError = type(e).__name__
@@ -230,13 +231,15 @@ def secuencia_inicio():
         exit(1)
 
     print("Ctrl+C para Interrumpir el programa")
+    timer.start(cantidad_muestras)
     return driver
 
 
 def secuencia_estado_muestra(driver, id_muestra, idx=None, total=None, estados=estadoMuestras):              
-    
     if idx != None and total != None:
+        timer.save(idx)
         eprint(f"\n[{idx+1}/{total}] Revisando muestra {id_muestra}")
+        eprint(f"Tiempo restante: {timer.t_restante} [{timer.h_estimada}]")
     else: 
         eprint(f"\nRevisando muestra {id_muestra}")
 
@@ -450,6 +453,7 @@ while True:
                             except BaseException as e:
                                 excepcion_handler(e, id_muestra, driver)
 
+                        timer.final()
                         notify(title="Programa finalizado")
                         eprint(f"\nPrograma finalizado... Cerrando\n")
                         Logout(driver,logout_url=Labsoftdomain)
