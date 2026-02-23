@@ -53,7 +53,7 @@ keys_used = [
     "ExcluirExcelSalida",
     "CopiarMuestras",
     "CrearPE",
-    "SufijoTituloGeneral",
+    "SufijoTitulo",
     "nombreExcelEntrada",
     "nombreExcelSalida",
 ]
@@ -84,11 +84,11 @@ RevisarEtapaActual      =   config.get("RevisarEtapaActual")
 ExcluirExcelSalida      =   config.get("ExcluirExcelSalida")
 CopiarMuestras          =   config.get("CopiarMuestras")
 CrearPE                 =   config.get("CrearPE")
-SufijoTituloGeneral     =   config.get("SufijoTituloGeneral")
+SufijoTitulo            =   config.get("SufijoTitulo")
 
 timeout                 =   120
 
-nombre_columnas_in      =   ["ID COTI", "ID MUESTRA", "N COPIAS", "FECHA EJECUCIÓN", "SUFIJO TÍTULO", "AGRUPACIÓN"]
+nombre_columnas_in      =   ["ID COTI", "ID MUESTRA", "N COPIAS"]
 nombre_columnas_out     =   ["INDICE", "ID COTI", "ID MUESTRA INICIAL", "ID COPIA", "PE ID", "PE ACTIVIDAD", "PE LUGAR ID", "ESTADO"]
 
 nombreLOG               =   os.path.join(CE_wd, "log", datetime.now().strftime('reporte_%Y_%m_%d-%H_%M'))
@@ -218,6 +218,21 @@ except ExcepcionDeCarga as e:
     eprint(f"{e}\n")
     input("Enter para cerrar...")
     exit(1)
+
+
+"""
+    Cantidad de Muestras <=100
+        buscar y seleccionar varios
+    Cantidad de Muestras >100
+        buscar uno por uno
+    Revisar Cantidad Correcta
+    Crear PE con Copia
+        invertir grilla y seleccionar
+        Cantidad de copias >100
+            alertar e indicar ultimo id para asignar a futuro
+    Crear PE sin Copia
+
+"""
 
 try:
     timer = DeltaTimer(buffer_size=10)
@@ -497,10 +512,10 @@ try:
                 
                 #CLIENTE DE ULTIMA MUESTRA CREADA
                 m_cliente = elementos[1].find_element(By.XPATH,f"./td[{tablaColnames['Cuenta']}]").text
-                if not SufijoTituloGeneral:
+                if not SufijoTitulo:
                     pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
                 else:
-                    pe_titulo = f"PE - {m_cliente} - {coti_name_id} - {SufijoTituloGeneral}"
+                    pe_titulo = f"PE - {m_cliente} - {coti_name_id} - {SufijoTitulo}"
 
                 logprint(f"titulo: {pe_titulo}")
 

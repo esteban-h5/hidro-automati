@@ -309,8 +309,9 @@ try:
         driver.quit()
         exit(1)
 
+    Borrados = len(list(set(ListaMuestras) & set(ID_Excluidos)))
     ListaMuestras = [_ for _ in ListaMuestras if _ not in ID_Excluidos]
-    ListaMuestras = ["2266505"]+ListaMuestras
+
     MuestrasCantidad = len(ListaMuestras)
     MuestrasError = []
 
@@ -326,9 +327,9 @@ try:
         TotalDesacreditar = 0
 
     if SoloBuscarControles:
-        eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola, revisando controles y fechas para publicar...')
+        eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola y excluyeron {Borrados}, revisando controles y fechas para publicar...')
     else:
-        eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola, descargando...')
+        eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola y excluyeron {Borrados}, descargando...')
 
     id_excel = ObtenerIDExcel(dirExcel=dirExcelRegistro, ncol=0, colnames=nombre_columnas_reg)
 
@@ -385,9 +386,9 @@ Tiempo restante: {timer.t_restante} [{timer.h_estimada}]
 Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{MuestrasCantidad}]
 """                
                 texto_por_muestra = f"{texto_por_muestra}Registradas: {TotalDescarga} - " if SoloBuscarControles else f"{texto_por_muestra}Descargadas: {TotalDescarga} - "
-                texto_por_muestra = f"{texto_por_muestra}Publicadas: {TotalPublicados} - " if AutoPublicar else f"{texto_por_muestra}Publicables: {TotalPublicados}"
-                if RevisarRutinas:
-                    texto_por_muestra = f"{texto_por_muestra}\nCambios de Fechas: {TotalCambioFechas} - Cambios de Acreditación: {TotalDesacreditar}"
+                texto_por_muestra = f"{texto_por_muestra}Publicadas: {TotalPublicados}" if AutoPublicar else f"{texto_por_muestra}Publicables: {TotalPublicados}"
+                texto_por_muestra = f"{texto_por_muestra}\nCambios de Acreditación: {TotalDesacreditar} - " if CorregirETFA else f"{texto_por_muestra}\nProblemas ETFA: {TotalDesacreditar} - "
+                texto_por_muestra = f"{texto_por_muestra}Cambios de Fechas: {TotalCambioFechas}" if RevisarRutinas else ""
 
                 eprint(texto_por_muestra)
                 
@@ -502,7 +503,6 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                         
                             if m_tipo == TipoMensajeETFA:
 
-                                notify(title="ETFA", body=f"ETFA")
                                 eprint(f"[\"{m_inicio}\"]")
 
                                 if not CorregirETFA:
