@@ -93,6 +93,7 @@ try:
     HojaA           = config.get(f"{pais_prefijo}-HojaA", "")
 
     col_fmt = {
+        #Muestras
         "col-indice_m"              : config.get(f"{pais_prefijo}-COL-indice_m", "").lower(),
         "col-id_muestras"           : config.get(f"{pais_prefijo}-COL-id_muestras", "").lower(),
         "col-identificacion"        : config.get(f"{pais_prefijo}-COL-identificacion", "").lower(),
@@ -120,6 +121,7 @@ try:
         "col-etfa"                  : config.get(f"{pais_prefijo}-COL-etfa", "").lower(),
         "col-tabla_comp"            : config.get(f"{pais_prefijo}-COL-tabla_comp", "").lower(),
 
+        #Analisis
         "col-indice_a"              : config.get(f"{pais_prefijo}-COL-indice_a", "").lower(),
         "col-metodo_id"             : config.get(f"{pais_prefijo}-COL-metodo_id", "").lower(),
         "col-grupo_id"              : config.get(f"{pais_prefijo}-COL-grupo_id", "").lower(),
@@ -179,16 +181,38 @@ try:
         exit(1)
 
     eprint("[Formateando Datos de Analisis]")
-    try:
-        informacion_muestras_df.columns = informacion_muestras_df.columns.str.lower().str.strip()
-        analisis_df.columns = analisis_df.columns.str.lower().str.strip()
+    
+    informacion_muestras_df.columns = informacion_muestras_df.columns.str.lower().str.strip()
+    analisis_df.columns = analisis_df.columns.str.lower().str.strip()
+    
+    cols_muestras = set(col_fmt[_] for _ in ["col-indice_m" ,"col-id_muestras" ,"col-identificacion" ,"col-matriz" ,"col-empresa" ,"col-cuenta_relacionada" ,"col-motivo" ,"col-cliente_solicitante" ,"col-lugar_muestreo" ,"col-punto_muestreo" ,"col-direccion_muestreo" ,"col-estado" ,"col-municipio" ,"col-siralab" ,"col-instrumento_ambiental" ,"col-tipo_muestreo" ,"col-consultora" ,"col-coordenadas" ,"col-resp_muestreo" ,"col-frecuencia" ,"col-proyecto" ,"col-region" ,"col-departamento" ,"col-comuna" ,"col-etfa" ,"col-tabla_comp"])
+    cols_analisis = set(col_fmt[_] for _ in ["col-indice_a","col-metodo_id","col-grupo_id","col-analisis_id","col-u_medida_id"])
+    
+    cols_df_muestras = set(informacion_muestras_df.columns.str.lower())
+    cols_df_analisis = set(analisis_df.columns.str.lower())
+
+    faltantes_muestras = cols_muestras - cols_df_muestras
+    faltantes_analisis = cols_analisis - cols_df_analisis
+
+    if faltantes_muestras:
+        eprint(f"No se existen columnas en Hoja {HojaIM} de excel:\n{faltantes_muestras}")
+
+    if faltantes_analisis:
+        eprint(f"No se encuentran columnas en Hoja {HojaA} de excel:\n{faltantes_analisis}")
         
+    if faltantes_analisis or faltantes_muestras:
+        input("Enter para continuar...")
+
+
+    try:
         if col_fmt["col-id_muestras"] not in informacion_muestras_df.columns:
             raise ValueError(f"columna id_muestras ('{col_fmt["col-id_muestras"]}') no encontrada en {list(informacion_muestras_df.columns)}")
 
         informacion_muestras_df = informacion_muestras_df.dropna(subset=[col_fmt["col-indice_m"]])
         analisis_df = analisis_df.dropna(subset=[col_fmt["col-indice_a"]])
         
+        informacion_muestras_df.columns
+
         analisis_group = {}
         for group_value, group_df in analisis_df.groupby(col_fmt["col-indice_a"], sort=False):
             #NO REPETIR VALORES INFO ID

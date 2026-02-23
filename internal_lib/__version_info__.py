@@ -1,21 +1,11 @@
 ###############################
 
-version_actual = "6.1.1"
+version_actual = "6.1.2"
 fecha_version = "viernes 16 de enero 2026"
 
 changelog = [
-    "- Desacreditar y desactivar alerta pero no publicar",
-    "- Alerta acreditacion en excel",
-    "- Modulos errores en Registros Pendientes",
-    # "- Revisar fecha de recepción y condicionar correccion de alerta",
-    # # "- strip a columnas",
-    # # "- Lista de precios actualizada a 2026",
-    # # "- orden de columnas con sort al comparar",
-    # # "- Error copias reales M100C",
-    # # "- DeltaTimer poss, agregar en CopiaEnvase",
-    # # "- Lectura por nombre columna CopiaEnvase",
-    # # "- Cambiar Lotes revisar am pm en fecha recibimiento",
-    # # "- Detectar ETIQUETA en Param",
+    "- Mostrar columnas que no existan en excel  de entrada para revisar ortografía",
+    "- Anunciar Diferencia entre",
 ]
 
 ###############################
