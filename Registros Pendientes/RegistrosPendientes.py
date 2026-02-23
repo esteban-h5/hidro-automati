@@ -25,12 +25,12 @@ from __myLIMS_modulos__ import (
 from __myLIMS_wrappers__ import (
     unique, ContarControlesPendientes,
     BuscarAlertas, MuestraPublicar,
-    ControlRecon,
+    ControlRecon, SampleRecon, SubirLista,
 )
 
 from __ficheros_modulos__ import (
     ListaMuestraXLSX, FilaAgregarXLSX,
-    AgregarMuestraXLSX,
+    AgregarMuestraXLSX, ComprobarExcelAbierto, ReestablecerXLSX
 )
 
 from __myLIMS_wrappers__ import (
@@ -268,7 +268,8 @@ try:
                             #Hacer click en k-pager-nav hasta que aparezca k-state-disabled en class
                             flagCambiarFecha, flagAlerta, flagDesacreditar = BuscarAlertas(driver, tipo_rutinas, tipo_horas, TipoMensajeETFA, funcion_print=eprint)
 
-                            if flagCambiarFecha or flagDesacreditar: flagAlerta = True
+                            if flagCambiarFecha or flagDesacreditar: 
+                                flagAlerta = True
 
                             BotonSection(driver,"SectionRelatedSamples").click()
                             EsperarCARGA_myLIMS(driver)

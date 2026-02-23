@@ -597,11 +597,10 @@ def SubirLista(driver,listaLista, funcion_print=print):
     largo_indices = len(listaLista)
     
     timer = DeltaTimer(buffer_size=10)
-    timer.start()
+    timer.start(largo_indices)
 
     for idx, _ID in enumerate(listaLista):
-        timer.delta()
-        timer.final(idx-1,largo_indices)
+        timer.save(idx)
         
         CodigoDeBarra.click()
         CodigoDeBarra.send_keys(Keys.CONTROL, Keys.ARROW_LEFT)
@@ -617,7 +616,7 @@ def SubirLista(driver,listaLista, funcion_print=print):
             funcion_print(f'Error con id: {_ID}\n')
             continue
         
-        funcion_print(f"ID {str(_ID)} subido ({idx+1} de {largo_indices}) [restantes: {timer.t_restante} - final: {timer.end_time}]")
+        funcion_print(f"ID {str(_ID)} subido ({idx+1} de {largo_indices}) [restantes: {timer.t_restante} - final: {timer.h_estimada}]")
         EsperarCARGA_myLIMS(driver)
 
 

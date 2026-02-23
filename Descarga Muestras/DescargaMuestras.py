@@ -107,7 +107,7 @@ try:
 	
         mainUrl                 =   f"{myLIMSdomain}Main.cshtml#Sample/Finalized/List"
         nombre_columnas         =   ["ID MUESTRAS"]
-        nombre_columnas_reg     =   ["ID", "ID MUESTRAS", "TIENE CONTROLES", "TIENE RUTINAS","MARCA"]
+        nombre_columnas_reg     =   ["ID", "ID MUESTRAS", "TIENE CONTROLES", "TIENE RUTINAS", "TIENE ETFA", "MARCA"]
 
         if log:
             print("Historial de log activo\n")
@@ -310,7 +310,7 @@ try:
         exit(1)
 
     ListaMuestras = [_ for _ in ListaMuestras if _ not in ID_Excluidos]
-    # ListaMuestras = ["2337885"]+ListaMuestras
+    ListaMuestras = ["2266505"]+ListaMuestras
     MuestrasCantidad = len(ListaMuestras)
     MuestrasError = []
 
@@ -333,7 +333,7 @@ try:
     id_excel = ObtenerIDExcel(dirExcel=dirExcelRegistro, ncol=0, colnames=nombre_columnas_reg)
 
     id_excel += 1
-    fila_muestra = [ id_excel, "##########", "##########", "##########", datetime.now().strftime('[%d-%m-%Y %H:%M]')]
+    fila_muestra = [ id_excel, "##########", "##########", "##########", "##########", datetime.now().strftime('[%d-%m-%Y %H:%M]')]
     FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
 
     timer = DeltaTimer(buffer_size=25)
@@ -400,7 +400,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                     eprint("[Previamente Publicada]\n")
 
                     if not DescargarPublicadas: 
-                        fila_muestra = [ id_excel, ID_Actual, "YA PUBLICADA", "YA PUBLICADA", ""]
+                        fila_muestra = [ id_excel, ID_Actual, "YA PUBLICADA", "YA PUBLICADA", "YA PUBLICADA", ""]
                         FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                         AgregarMuestraXLSX(dirExcel=dirExcelHistorico, ID_Muestra=ID_Actual, colnames=nombre_columnas)
                         break
@@ -503,33 +503,37 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                             if m_tipo == TipoMensajeETFA:
 
                                 notify(title="ETFA", body=f"ETFA")
-                                input(f"[\"{m_inicio}\"]")
-                                
-                                mensaje.click()
-                                EsperarCARGA_myLIMS(driver)
+                                eprint(f"[\"{m_inicio}\"]")
 
-                                BotonAccion(driver,"Visualizar").click()
-                                EsperarCARGA_myLIMS(driver,extra=1)
+                                if not CorregirETFA:
+                                    flagDescargar = True
+                                    
+                                else:
+                                    mensaje.click()
+                                    EsperarCARGA_myLIMS(driver)
 
-                                iframe = WebDriverWait(driver, 15).until( EC.presence_of_element_located((By.XPATH, '//div[@class="mce-tinymce mce-container mce-panel"]//iframe')) )
-                                driver.switch_to.frame(iframe)
+                                    BotonAccion(driver,"Visualizar").click()
+                                    EsperarCARGA_myLIMS(driver,extra=1)
 
-                                xpath_alertas = "//body[@id='tinymce']//ul/li"
-                                WebDriverWait(driver, 15).until( EC.presence_of_element_located((By.XPATH, xpath_alertas)) )
-                                [lista_cambios.append(_.text) for _ in driver.find_elements(By.XPATH,xpath_alertas)]
+                                    iframe = WebDriverWait(driver, 15).until( EC.presence_of_element_located((By.XPATH, '//div[@class="mce-tinymce mce-container mce-panel"]//iframe')) )
+                                    driver.switch_to.frame(iframe)
 
-                                driver.switch_to.default_content()
-                                BotonAccion(driver,"Cancelar").click()
-                                try:
-                                    if CambiarAcreditacion(driver, lista_cambios, funcion_print=logprint):
-                                        DesactivarAlerta(driver, iter_xpath, funcion_print=eprint)
-                                        eprint("[Procesada Alerta de EFTA sobre Acreditación]")
-                                    else:
-                                        eprint("[Problemas con alerta de EFTA sobre Acreditación]")
-                                        checkDesacreditar = False
+                                    xpath_alertas = "//body[@id='tinymce']//ul/li"
+                                    WebDriverWait(driver, 15).until( EC.presence_of_element_located((By.XPATH, xpath_alertas)) )
+                                    [lista_cambios.append(_.text) for _ in driver.find_elements(By.XPATH,xpath_alertas)]
 
-                                except (ElementClickInterceptedException,ElementNotInteractableException) as e:
-                                    raise ExcepcionDeMuestra("Error al cambiar acreditación (Reintentar)")
+                                    driver.switch_to.default_content()
+                                    BotonAccion(driver,"Cancelar").click()
+                                    try:
+                                        if CambiarAcreditacion(driver, lista_cambios, funcion_print=logprint):
+                                            DesactivarAlerta(driver, iter_xpath, funcion_print=eprint)
+                                            eprint("[Procesada Alerta de EFTA sobre Acreditación]")
+                                        else:
+                                            eprint("[Problemas con alerta de EFTA sobre Acreditación]")
+                                            checkDesacreditar = False
+
+                                    except (ElementClickInterceptedException,ElementNotInteractableException) as e:
+                                        raise ExcepcionDeMuestra("Error al cambiar acreditación (Reintentar)")
                             
                         else:
                             
@@ -547,7 +551,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                 elif checkDesacreditar:
                                     flagDescargar = True #PROHIBIR PUBLICACION
                                     TotalDesacreditar +=1
-                                    eprint(f"[Desacreditacion hecha]")
+                                    eprint(f"[Desacreditacion hecha]" if CorregirETFA else "[Muestra con alerta ETFA]")
                                 
                                 else:
                                     flagDescargar = True
@@ -581,7 +585,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                         if Publicar == "Atraso":
                             eprint("[Atraso - No Publica]")
                             if Registrar:  
-                                fila_muestra = [ id_excel, ID_Actual, "ATRASO", "ATRASO", ""]
+                                fila_muestra = [ id_excel, ID_Actual, "ATRASO", "ATRASO", "ATRASO", ""]
                                 FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                             
                             timer.save(MuestraIndice)
@@ -591,7 +595,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                             TotalPublicados += 1
                             eprint("[Publica]\n")
                             if Registrar:  
-                                fila_muestra = [ id_excel, ID_Actual, "PUBLICA", "PUBLICA", ""]
+                                fila_muestra = [ id_excel, ID_Actual, "PUBLICA", "PUBLICA", "PUBLICA", ""]
                                 FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                                 AgregarMuestraXLSX(dirExcel=dirExcelHistorico, ID_Muestra=ID_Actual, colnames=nombre_columnas)
                             
@@ -605,7 +609,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                         TotalPublicados += 1
                         eprint("[Publicable]\n")
                         if Registrar:  
-                            fila_muestra = [ id_excel, ID_Actual, "PUBLICABLE", "PUBLICABLE", ""]
+                            fila_muestra = [ id_excel, ID_Actual, "PUBLICABLE", "PUBLICABLE", "PUBLICABLE", ""]
                             FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                         
                         timer.save(MuestraIndice)
@@ -625,8 +629,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                 TotalDescarga += 1
 
                 if Registrar:
-                    if muestra_estado == "Publicada": fila_muestra = [ id_excel, ID_Actual, tiene_controles, tiene_rutina, "DESCARGA PUBLICADA"]
-                    else: fila_muestra = [ id_excel, ID_Actual, tiene_controles, tiene_rutina, ""]
+                    fila_muestra = [ id_excel, ID_Actual, tiene_controles, tiene_rutina, tiene_ETFA, "DESCARGA PUBLICADA" if muestra_estado == "Publicada" else ""]
                     FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)
                 
                 if SoloBuscarControles:
@@ -793,7 +796,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
             
             MuestrasError.append(ID_Actual)
             if Registrar:  
-                fila_muestra = [ id_excel, ID_Actual, "ERROR", "ERROR", ""]
+                fila_muestra = [ id_excel, ID_Actual, "ERROR", "ERROR", "ERROR", ""]
                 FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                            
             MuestraIndice += 1
@@ -801,7 +804,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
     
     timer.finish()
     id_excel += 1
-    fila_muestra = [ id_excel, "----------", "----------", "----------", "----------" ]
+    fila_muestra = [ id_excel, "----------", "----------", "----------", "----------", "----------" ]
     FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
 
     notify(title="Programa terminado", body=f"Descarga de muestras finalizada!")

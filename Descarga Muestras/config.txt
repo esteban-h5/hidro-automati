@@ -47,7 +47,7 @@ TotalReintentos      	:   5
 #
 #
 # Hacer correcciones de alertas ETFA [True]
-CorregirETFA      	  :   True
+CorregirETFA      	  :   False
 #
 #
 nombreExcelRegistro   		:   Registro.xlsx
