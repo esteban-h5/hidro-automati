@@ -53,7 +53,7 @@ keys_used = [
     "ExcluirExcelSalida",
     "CopiarMuestras",
     "CrearPE",
-    "SufijoTitulo",
+    "SufijoTituloGeneral",
     "nombreExcelEntrada",
     "nombreExcelSalida",
 ]
@@ -84,11 +84,11 @@ RevisarEtapaActual      =   config.get("RevisarEtapaActual")
 ExcluirExcelSalida      =   config.get("ExcluirExcelSalida")
 CopiarMuestras          =   config.get("CopiarMuestras")
 CrearPE                 =   config.get("CrearPE")
-SufijoTitulo            =   config.get("SufijoTitulo")
+SufijoTituloGeneral            =   config.get("SufijoTituloGeneral")
 
 timeout                 =   120
 
-nombre_columnas_in      =   ["ID COTI", "ID MUESTRA", "N COPIAS"]
+nombre_columnas_in      =   ["ID COTI", "ID MUESTRA", "N COPIAS", "FECHA EJECUCIÓN", "SUFIJO TÍTULO", "AGRUPACIÓN"]
 nombre_columnas_out     =   ["INDICE", "ID COTI", "ID MUESTRA INICIAL", "ID COPIA", "PE ID", "PE ACTIVIDAD", "PE LUGAR ID", "ESTADO"]
 
 nombreLOG               =   os.path.join(CE_wd, "log", datetime.now().strftime('reporte_%Y_%m_%d-%H_%M'))
@@ -168,11 +168,15 @@ except ValueError as e:
     input("Enter para cerrar...")
     exit(1)
 
+if len(set((df_entrada["AGRUPACIÓN"]))) >=1:
+    eprint("Subiendo según columna agrupación")
+    main_dict = df_entrada.groupby("AGRUPACIÓN", sort=False)["ID MUESTRA","ID COTI"].agg(list).to_dict()
+else:
+    main_dict = df_entrada.groupby("ID COTI", sort=False)["ID MUESTRA"].agg(list).to_dict()
 
-main_dict =  df_entrada.groupby("ID COTI", sort=False)["ID MUESTRA"].agg(list).to_dict()
+main_dict = df_entrada.groupby("ID COTI", sort=False)["ID MUESTRA"].agg(list).to_dict()
 
 lista_id_coti = unique(main_dict.keys())
-
 lista_excluidos = [int(_) for _ in ListaMuestraXLSX(dirExcelSalida, colname=nombre_columnas_out[1], colnames=nombre_columnas_out) ]
 
 for coti in lista_excluidos:
@@ -512,10 +516,10 @@ try:
                 
                 #CLIENTE DE ULTIMA MUESTRA CREADA
                 m_cliente = elementos[1].find_element(By.XPATH,f"./td[{tablaColnames['Cuenta']}]").text
-                if not SufijoTitulo:
+                if not SufijoTituloGeneral:
                     pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
                 else:
-                    pe_titulo = f"PE - {m_cliente} - {coti_name_id} - {SufijoTitulo}"
+                    pe_titulo = f"PE - {m_cliente} - {coti_name_id} - {SufijoTituloGeneral}"
 
                 logprint(f"titulo: {pe_titulo}")
 
