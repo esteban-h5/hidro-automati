@@ -1,12 +1,12 @@
 ###############################
 
-version_actual = "6.1.2"
+version_actual = "6.2.0"
 fecha_version = "viernes 16 de enero 2026"
 
 changelog = [
-    "- Mostrar columnas que no existan en excel  de entrada para revisar ortografía",
-    "- Anunciar Diferencia entre",
-    "- Alerta ETFA cuando corrige horas",
+    "- Desactivar restriccion de opcion 3 en Cambiar Lotes",
+    "- Prints extras en Cambiar Lotes",
+    "- Agrupacion en Copia Envases",
 ]
 
 ###############################

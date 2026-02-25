@@ -14,12 +14,14 @@ Partition       : 5
 ExcelObjetivo   :		C:\Users\Hidrolab\Documents\Automatizacion\Automatizacion-main\Registros Pendientes\RegistroAuxiliar.xlsx
 #
 #
-# COLUMNA EXCEL OBJETIVO PARA DEJAR NUEVAS MUESTRAS (Importan mayusculas)
+# Nombre de excel con muestras a crear (O directorio donde se guardan archivos)
+ExcelEntrada    :   C:\Users\Hidrolab\Downloads
+#
+#
+########
+# Columna en excel objetivo donde se guardaran las muestras creadas (Importan mayusculas)
+########
 COL-std_id_muestra          :   ID MUESTRAS
-#
-#
-# Nombre de excel con muestras a crear (Buscar en directorio de script)
-ExcelEntrada    :   Hidrolab MTY _ Planilla de carga de muestras (WALMART)
 
 
 #################
@@ -27,8 +29,8 @@ ExcelEntrada    :   Hidrolab MTY _ Planilla de carga de muestras (WALMART)
 #################
 
 SCL-HojaIM : Muestras
-SCL-COL-indice_m                :   id muestra#N°
-SCL-COL-id_muestras             :   N° en Mylims #ID muestra
+SCL-COL-indice_m                :   id muestra
+SCL-COL-id_muestras             :   N° en Mylims
 SCL-COL-identificacion          :   Identificación de muestra
 SCL-COL-matriz                  :   Matriz
 SCL-COL-empresa                 :   Empresa
@@ -38,9 +40,9 @@ SCL-COL-cliente_solicitante     :   Cliente solicitante
 SCL-COL-lugar_muestreo          :   Lugar de Muestreo
 SCL-COL-punto_muestreo          :   Punto de muestreo
 SCL-COL-direccion_muestreo      :   Dirección de muestreo
-SCL-COL-estado                  :   Estado
-SCL-COL-municipio               :   Municipio
-SCL-COL-siralab                 :   Siralab
+SCL-COL-estado                  :   #NO APLICA
+SCL-COL-municipio               :   #NO APLICA
+SCL-COL-siralab                 :   #NO APLICA
 SCL-COL-instrumento_ambiental   :   Instrumento ambiental
 SCL-COL-tipo_muestreo           :   Tipo de muestreo
 SCL-COL-consultora              :   Consultora?
@@ -49,7 +51,7 @@ SCL-COL-resp_muestreo           :   Resp Muestreo
 SCL-COL-frecuencia              :   Frecuencia
 SCL-COL-proyecto                :   Proyecto
 SCL-COL-region                  :   Región
-SCL-COL-departamento            :   Departamento
+SCL-COL-departamento            :   #NO APLICA
 SCL-COL-comuna                  :   Comuna
 SCL-COL-etfa                    :   ETFA
 SCL-COL-tabla_comp              :   Tabla comparativa

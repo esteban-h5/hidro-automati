@@ -3,7 +3,7 @@ Copiar archivos de configuracion con nuevas variables, dejando como persistente 
 """
 
 try:
-    import os, shutil, time, zipfile, importlib.util, traceback, re
+    import os, shutil, time, zipfile, importlib.util, traceback, re, glob
     from tkinter.filedialog import askopenfile
     from pathlib import Path
     
@@ -99,12 +99,22 @@ try:
         if save_pattern.match(fname):
             fOtros.append(os.path.join(n_il, fname))
 
-    excluir = [os.path.normpath(_) for _ in update_config["ExcluirArchivos"].split(",")]
+    # excluir = [os.path.normpath(_) for _ in update_config["ExcluirArchivos"].split(",")]
+    excluir = []
+    
+    for item in update_config["ExcluirArchivos"].split(","):
+        item = os.path.normpath(item.strip())
 
-    if "Automatizacion" not in os.path.basename(dir_actual):
-        input("Archivo de actualizacion no se encuentra en la carpeta de automatización")
-        exit(1)
-        
+        if "*" in item or "?" in item:
+            archivos = glob.glob(os.path.join(dir_actual, item), recursive=True)
+            excluir.extend([f"{os.path.basename(os.path.dirname(a))}\\{os.path.basename(a)}" for a in archivos])
+        else:
+            excluir.append(item)
+
+        if "Automatizacion" not in os.path.basename(dir_actual):
+            input("Archivo de actualizacion no se encuentra en la carpeta de automatización")
+            exit(1)
+
     #Archivo de actualizacion
     print("Seleccionar archivo zip de programa nuevo")
     zip_file = askopenfile(title='Seleccionar Archivo ZIP actualización')
@@ -140,10 +150,10 @@ try:
 
     lista_config_new = [os.path.join(dir_zip,_) for _ in config]
     lista_config_old = [os.path.join(dir_actual,_) for _ in config]
-
+    
     for _ in config + xlsxDescarga + xlsxRegistros + fOtros:
         archivo = os.path.join(dir_actual,_)
-        
+
         if not os.path.exists(archivo):
             print(f"El archivo persistente {archivo} no existe")
             FLAG_ERRORES = True

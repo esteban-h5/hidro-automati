@@ -136,11 +136,11 @@ try:
 
     ExcelEntrada = os.path.join(CM_wd,ExcelEntrada)
     
-    if not os.path.exists(ExcelEntrada):
+    if not os.path.exists(ExcelEntrada) or os.path.isdir(ExcelEntrada):
         eprint("Archivo Excel no encontrado, seleccionar...")
         ExcelEntrada = filedialog.askopenfilename(
             title="Selecciona el archivo excel 'Base de datos'",
-            initialdir=CM_wd,
+            initialdir=ExcelEntrada if os.path.isdir(ExcelEntrada) else CM_wd,
             filetypes=[("Excel files", "*.xlsx *.xls")]
         )
         if not ExcelEntrada:  # si el usuario cierra sin seleccionar
@@ -185,8 +185,8 @@ try:
     informacion_muestras_df.columns = informacion_muestras_df.columns.str.lower().str.strip()
     analisis_df.columns = analisis_df.columns.str.lower().str.strip()
     
-    cols_muestras = set(col_fmt[_] for _ in ["col-indice_m" ,"col-id_muestras" ,"col-identificacion" ,"col-matriz" ,"col-empresa" ,"col-cuenta_relacionada" ,"col-motivo" ,"col-cliente_solicitante" ,"col-lugar_muestreo" ,"col-punto_muestreo" ,"col-direccion_muestreo" ,"col-estado" ,"col-municipio" ,"col-siralab" ,"col-instrumento_ambiental" ,"col-tipo_muestreo" ,"col-consultora" ,"col-coordenadas" ,"col-resp_muestreo" ,"col-frecuencia" ,"col-proyecto" ,"col-region" ,"col-departamento" ,"col-comuna" ,"col-etfa" ,"col-tabla_comp"])
-    cols_analisis = set(col_fmt[_] for _ in ["col-indice_a","col-metodo_id","col-grupo_id","col-analisis_id","col-u_medida_id"])
+    cols_muestras = set(col_fmt[_] for _ in ["col-indice_m" ,"col-id_muestras" ,"col-identificacion" ,"col-matriz" ,"col-empresa" ,"col-cuenta_relacionada" ,"col-motivo" ,"col-cliente_solicitante" ,"col-lugar_muestreo" ,"col-punto_muestreo" ,"col-direccion_muestreo" ,"col-estado" ,"col-municipio" ,"col-siralab" ,"col-instrumento_ambiental" ,"col-tipo_muestreo" ,"col-consultora" ,"col-coordenadas" ,"col-resp_muestreo" ,"col-frecuencia" ,"col-proyecto" ,"col-region" ,"col-departamento" ,"col-comuna" ,"col-etfa" ,"col-tabla_comp"] if col_fmt[_] != "")
+    cols_analisis = set(col_fmt[_] for _ in ["col-indice_a","col-metodo_id","col-grupo_id","col-analisis_id","col-u_medida_id"] if col_fmt[_] != "")
     
     cols_df_muestras = set(informacion_muestras_df.columns.str.lower())
     cols_df_analisis = set(analisis_df.columns.str.lower())
@@ -195,14 +195,13 @@ try:
     faltantes_analisis = cols_analisis - cols_df_analisis
 
     if faltantes_muestras:
-        eprint(f"No se existen columnas en Hoja {HojaIM} de excel:\n{faltantes_muestras}")
+        eprint(f"ALERTA No se encuentran columnas en Hoja {HojaIM} de excel, se esperaba:\n{faltantes_muestras}")
 
     if faltantes_analisis:
-        eprint(f"No se encuentran columnas en Hoja {HojaA} de excel:\n{faltantes_analisis}")
+        eprint(f"ALERTA No se encuentran columnas en Hoja {HojaA} de excel, se esperaba:\n{faltantes_analisis}")
         
     if faltantes_analisis or faltantes_muestras:
-        input("Enter para continuar...")
-
+        input("Puede que se encuentren errores. Enter para continuar...")
 
     try:
         if col_fmt["col-id_muestras"] not in informacion_muestras_df.columns:

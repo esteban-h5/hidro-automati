@@ -138,7 +138,7 @@ def ListaAColumnaXLSX(dirExcel, valores_fila, colname, colnames, except_kill=Fal
 
 def FilaAgregarXLSX(dirExcel, valores_fila, colnames, except_kill=False, except_create=True, funcion_print=print):
   
-  funcion_print(f"Agregando {valores_fila}")
+  # funcion_print(f"Agregando {valores_fila}")
   regExcel = AbrirXLSX(dirExcel, colnames=colnames, except_kill=except_kill, except_create=except_create)
 
   try:    

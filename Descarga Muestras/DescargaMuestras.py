@@ -310,10 +310,6 @@ try:
         driver.quit()
         exit(1)
 
-    eprint(f"excluidos: {len(ID_Excluidos)} - en cola: {len(ListaMuestras)} ")
-    eprint(ListaMuestras)
-    eprint(ID_Excluidos)
-
     Borrados = len(list(set(ListaMuestras) & set(ID_Excluidos)))
     ListaMuestras = [str(_) for _ in ListaMuestras if _ not in ID_Excluidos]
 

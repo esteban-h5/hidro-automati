@@ -1066,10 +1066,10 @@ match tipo_menu:
                 def continuar(): 
                     if seleccion_analisis_entrada == "" or seleccion_analisis_salida == "" or seleccion_metodo_entrada == "" or seleccion_metodo_salida == "":
                         messagebox.showwarning(title="Alerta",message="Favor seleccionar todos los analitos y metodos")
-                    elif seleccion_analisis_entrada == seleccion_analisis_salida:
-                        messagebox.showwarning(title="Alerta",message="Favor seleccionar analitos distintos")
-                    elif seleccion_metodo_entrada == seleccion_metodo_salida:
-                        messagebox.showwarning(title="Alerta",message="Favor seleccionar metodos distintos")
+                    # elif seleccion_analisis_entrada == seleccion_analisis_salida:
+                    #     messagebox.showwarning(title="Alerta",message="Favor seleccionar analitos distintos")
+                    # elif seleccion_metodo_entrada == seleccion_metodo_salida:
+                    #     messagebox.showwarning(title="Alerta",message="Favor seleccionar metodos distintos")
 
                     else:
                         print(f"{seleccion_analisis_entrada}&{seleccion_analisis_salida}&{seleccion_metodo_entrada}&{seleccion_metodo_salida}&{check_var.get()}", end="")
