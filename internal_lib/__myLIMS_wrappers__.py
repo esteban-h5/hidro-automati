@@ -436,7 +436,7 @@ def BuscarAlertas(driver, tipo_rutinas, tipo_horas, nombreAlertaETFA, funcion_pr
 
     if cantidad_alertas > 10:
         funcion_print(f"[Más de 10 alertas ({cantidad_alertas})]")
-        return [True, True, True]
+        return [True, True, False]
 
     else:
         xpath_mensajes = '//div[@class="myLIMSweb-mail-list-item-box"]//li[contains(@class, "list-group-item")]'
@@ -458,12 +458,13 @@ def BuscarAlertas(driver, tipo_rutinas, tipo_horas, nombreAlertaETFA, funcion_pr
             
             if m_tipo in tipo_rutinas or m_tipo in tipo_horas or m_tipo == nombreAlertaETFA:
                 
-                if "Alerta de horas - ETFA" in m_inicio:
-                    funcion_print(f"[Alerta ETFA \"{m_tipo_upper}\"]")
-                    flagDesacreditar = True
-                elif "Alerta de horas" in m_inicio:
-                    funcion_print(f"[Alerta de Horas]")
-                    flagCambiarFecha = True
+                if "Alerta de horas" in m_inicio:
+                    if " - ETFA" in m_inicio:
+                        funcion_print(f"[Alerta ETFA \"{m_tipo_upper}\"]")
+                        flagDesacreditar = True
+                    else:
+                        funcion_print(f"[Alerta de Horas]")
+                        flagCambiarFecha = True
                 else:
                     funcion_print(f"[Alerta de tipo \"{m_tipo_upper}\"]")
                     flagRutina = True

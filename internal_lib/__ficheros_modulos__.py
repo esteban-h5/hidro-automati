@@ -136,8 +136,9 @@ def ListaAColumnaXLSX(dirExcel, valores_fila, colname, colnames, except_kill=Fal
             input("Error de permisos, se abrio el archivo con otra aplicación, favor cerrar y presionar enter para continuar")
 
 
-def FilaAgregarXLSX(dirExcel, valores_fila, colnames, except_kill=False, except_create=True):
-
+def FilaAgregarXLSX(dirExcel, valores_fila, colnames, except_kill=False, except_create=True, funcion_print=print):
+  
+  funcion_print(f"Agregando {valores_fila}")
   regExcel = AbrirXLSX(dirExcel, colnames=colnames, except_kill=except_kill, except_create=except_create)
 
   try:    
@@ -165,7 +166,6 @@ def FilaAgregarXLSX(dirExcel, valores_fila, colnames, except_kill=False, except_
 
 
 def AgregarMuestraXLSX(dirExcel, ID_Muestra, colnames, ID_controles=["-"], except_kill=False, except_create=False):
-    
     regExcel = AbrirXLSX(dirExcel, colnames=colnames, except_kill=except_kill, except_create=except_create)
     try:
       if "ID CONTROL" in colnames:

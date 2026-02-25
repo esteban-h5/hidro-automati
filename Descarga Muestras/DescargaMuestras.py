@@ -102,6 +102,7 @@ try:
 
         nombreHistorico   = config.get("nombreExcelHistorico", "Historico.xlsx")
         dirExcelHistorico = os.path.join(DM_wd, nombreHistorico) if nombreHistorico else ""
+
         nombreExcepciones = global_config.get("nombreExcelExcepciones", "Excepciones.xlsx")
         dirExcepciones    = os.path.join(internal_lib, nombreExcepciones)
 	
@@ -309,8 +310,12 @@ try:
         driver.quit()
         exit(1)
 
+    eprint(f"excluidos: {len(ID_Excluidos)} - en cola: {len(ListaMuestras)} ")
+    eprint(ListaMuestras)
+    eprint(ID_Excluidos)
+
     Borrados = len(list(set(ListaMuestras) & set(ID_Excluidos)))
-    ListaMuestras = [_ for _ in ListaMuestras if _ not in ID_Excluidos]
+    ListaMuestras = [str(_) for _ in ListaMuestras if _ not in ID_Excluidos]
 
     MuestrasCantidad = len(ListaMuestras)
     MuestrasError = []
@@ -335,7 +340,7 @@ try:
 
     id_excel += 1
     fila_muestra = [ id_excel, "##########", "##########", "##########", "##########", datetime.now().strftime('[%d-%m-%Y %H:%M]')]
-    FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
+    FilaAgregarXLSX(funcion_print=eprint, dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
 
     timer = DeltaTimer(buffer_size=25)
     timer.start(len(ListaMuestras))
@@ -387,7 +392,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
 """                
                 texto_por_muestra = f"{texto_por_muestra}Registradas: {TotalDescarga} - " if SoloBuscarControles else f"{texto_por_muestra}Descargadas: {TotalDescarga} - "
                 texto_por_muestra = f"{texto_por_muestra}Publicadas: {TotalPublicados}" if AutoPublicar else f"{texto_por_muestra}Publicables: {TotalPublicados}"
-                texto_por_muestra = f"{texto_por_muestra}\nCambios de Acreditación: {TotalDesacreditar} - " if CorregirETFA else f"{texto_por_muestra}\nProblemas ETFA: {TotalDesacreditar} - "
+                texto_por_muestra = f"{texto_por_muestra}\nCambios de Acreditación: {TotalDesacreditar} - " if CorregirETFA else f"{texto_por_muestra}\nAlertas ETFA: {TotalDesacreditar} - "
                 texto_por_muestra = f"{texto_por_muestra}Cambios de Fechas: {TotalCambioFechas}" if RevisarRutinas else ""
 
                 eprint(texto_por_muestra)
@@ -402,7 +407,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
 
                     if not DescargarPublicadas: 
                         fila_muestra = [ id_excel, ID_Actual, "YA PUBLICADA", "YA PUBLICADA", "YA PUBLICADA", ""]
-                        FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
+                        FilaAgregarXLSX(funcion_print=eprint, dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                         AgregarMuestraXLSX(dirExcel=dirExcelHistorico, ID_Muestra=ID_Actual, colnames=nombre_columnas)
                         break
                     else:
@@ -422,6 +427,8 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                     
                     checkCambiarFechas = flagCambiarFecha
                     checkDesacreditar = flagDesacreditar
+
+                    eprint(f"fechas: {checkCambiarFechas} - desacred {checkDesacreditar}")
 
                     if RevisarRutinas: 
 
@@ -503,6 +510,10 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                         
                             if m_tipo == TipoMensajeETFA:
 
+                                if not flagDesacreditar:
+                                    flagDesacreditar = True
+                                    checkDesacreditar = flagDesacreditar
+                                
                                 eprint(f"[\"{m_inicio}\"]")
 
                                 if not CorregirETFA:
@@ -586,7 +597,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                             eprint("[Atraso - No Publica]")
                             if Registrar:  
                                 fila_muestra = [ id_excel, ID_Actual, "ATRASO", "ATRASO", "ATRASO", ""]
-                                FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
+                                FilaAgregarXLSX(funcion_print=eprint, dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                             
                             timer.save(MuestraIndice)
                             break
@@ -596,7 +607,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                             eprint("[Publica]\n")
                             if Registrar:  
                                 fila_muestra = [ id_excel, ID_Actual, "PUBLICA", "PUBLICA", "PUBLICA", ""]
-                                FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
+                                FilaAgregarXLSX(funcion_print=eprint, dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                                 AgregarMuestraXLSX(dirExcel=dirExcelHistorico, ID_Muestra=ID_Actual, colnames=nombre_columnas)
                             
                             timer.save(MuestraIndice)
@@ -610,7 +621,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                         eprint("[Publicable]\n")
                         if Registrar:  
                             fila_muestra = [ id_excel, ID_Actual, "PUBLICABLE", "PUBLICABLE", "PUBLICABLE", ""]
-                            FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
+                            FilaAgregarXLSX(funcion_print=eprint, dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                         
                         timer.save(MuestraIndice)
                         break
@@ -630,7 +641,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
 
                 if Registrar:
                     fila_muestra = [ id_excel, ID_Actual, tiene_controles, tiene_rutina, tiene_ETFA, "DESCARGA PUBLICADA" if muestra_estado == "Publicada" else ""]
-                    FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)
+                    FilaAgregarXLSX(funcion_print=eprint, dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)
                 
                 if SoloBuscarControles:
                     eprint("[Saltada]\n")
@@ -797,7 +808,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
             MuestrasError.append(ID_Actual)
             if Registrar:  
                 fila_muestra = [ id_excel, ID_Actual, "ERROR", "ERROR", "ERROR", ""]
-                FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
+                FilaAgregarXLSX(funcion_print=eprint, dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
                            
             MuestraIndice += 1
             continue
@@ -805,7 +816,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
     timer.finish()
     id_excel += 1
     fila_muestra = [ id_excel, "----------", "----------", "----------", "----------", "----------" ]
-    FilaAgregarXLSX(dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
+    FilaAgregarXLSX(funcion_print=eprint, dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)                                    
 
     notify(title="Programa terminado", body=f"Descarga de muestras finalizada!")
 

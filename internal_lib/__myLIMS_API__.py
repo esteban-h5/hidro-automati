@@ -85,7 +85,7 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
 
             else:
                 break
-        samples_list = samples_list + [sample.Id for sample in respuesta.Result]
+        samples_list = samples_list + [str(sample.Id) for sample in respuesta.Result]
         page+=1
 
     return samples_list

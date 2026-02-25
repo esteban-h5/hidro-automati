@@ -6,6 +6,7 @@ fecha_version = "viernes 16 de enero 2026"
 changelog = [
     "- Mostrar columnas que no existan en excel  de entrada para revisar ortografía",
     "- Anunciar Diferencia entre",
+    "- Alerta ETFA cuando corrige horas",
 ]
 
 ###############################
