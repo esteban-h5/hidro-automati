@@ -1,18 +1,28 @@
 import requests, json, sys, os, pandas as pd, traceback, re
 from keyring import get_password as get
 from typing import Type, TypeVar
-from __myLIMS_class__ import *
+from __myLIMS_class__ import (
+    T, PageResult, List, SampleAnalysisInsert,
+    SampleBasic, PriceListBasic, SampleInfoInsert,
+    MethodPrerequisiteAnalysisBasic,
+    AnalysisGroupAnalysisBasic,
+    SampleReasonBasic, AccountDetail,
+    SampleTypeBasic, SpecificationBasic,
+    MethodAnalysisBasic, SampleInsert,
+    SampleSpecificationInsert,
+    ValidationError,
+)
+
 from requests.exceptions import HTTPError
 from openpyxl import load_workbook
 from zipfile import BadZipFile
+from urllib.parse import quote
 from win11toast import notify
 from datetime import datetime
 from time import sleep
 from time import time
 
-
 def api_get(endpoint, APIdomain, token, model: Type[T], espera=30) -> T:
-    
     response = requests.get(APIdomain+endpoint, 
                 headers = {
                     "Content-Type": "application/json",
@@ -24,7 +34,6 @@ def api_get(endpoint, APIdomain, token, model: Type[T], espera=30) -> T:
     response.raise_for_status()
     data = response.json()
     
-
     return model.model_validate(data)
 
 def api_post(endpoint, body, APIdomain, token, funcion_print=print):
@@ -34,6 +43,10 @@ def api_post(endpoint, body, APIdomain, token, funcion_print=print):
             "Content-Type": "application/json",
             "x-access-key": token
         },
+        #params = {
+            #"inlinecount":"allpages",
+            #"top":"100"
+        #}
         data=body
     )
     if funcion_print != None:
@@ -45,7 +58,6 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
     samples_list = []
     token = get('mylims_app', 'secret7')
     url_text = f"Samples?$filter={filter}&$inlinecount=allpages&$top=100"
-
     retries = 5
     while True:
         try:
@@ -90,12 +102,30 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
 
     return samples_list
 
+def get_grupoanalisis(id: int, APIdomain, token, funcion_print=print) ->  List[AnalysisGroupAnalysisBasic]:
+    
+    empty_obj = AnalysisGroupAnalysisBasic(**{f: None for f in AnalysisGroupAnalysisBasic.model_fields})
+
+    try:
+        # respuesta = api_get(f"AnalysisGroups/{id}/Analyses?$filter=Active eq true", APIdomain, token, PageResult[AnalysisGroupAnalysisBasic])
+        respuesta = api_get(f"AnalysisGroups/{id}/Analyses", APIdomain, token, PageResult[AnalysisGroupAnalysisBasic])
+    except HTTPError as e:
+        funcion_print(f"ERROR DE API {e} PARA GRUPO DE ANALISIS {id}")
+        return empty_obj
+
+    if respuesta.Count < 1:
+        funcion_print(f"NO SE ENCONTRARON RESULTADOS PARA GRUPO DE ANALISIS {id}")
+        return empty_obj
+
+    return respuesta.Result
+
+
 def get_pricetable(identification: str, APIdomain, token, funcion_print=print) -> PageResult[PriceListBasic]:
     
     empty_obj = PriceListBasic(**{f: None for f in PriceListBasic.model_fields})
 
     try:
-        respuesta = api_get(f"pricelists?$filter=Identification eq '{identification}' and Active eq true", APIdomain, token, PageResult[PriceListBasic])
+        respuesta = api_get(f"pricelists?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[PriceListBasic])
     except HTTPError as e:
         funcion_print(f"ERROR DE API {e} PARA TABLA DE PRECIOS {identification}")
         return empty_obj
@@ -114,7 +144,7 @@ def get_samplereason(identification: str, APIdomain, token, funcion_print=print)
     empty_obj = SampleReasonBasic(**{f: None for f in SampleReasonBasic.model_fields})
 
     try:
-        respuesta = api_get(f"samplereasons?$filter=Identification eq '{identification}' and Active eq true", APIdomain, token, PageResult[SampleReasonBasic])
+        respuesta = api_get(f"samplereasons?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[SampleReasonBasic])
     except HTTPError as e:
         funcion_print(f"ERROR DE API {e} PARA MOTIVO {identification}")
         return empty_obj
@@ -132,7 +162,7 @@ def get_account(identification: str, APIdomain, token, funcion_print=print) -> P
     empty_obj = AccountDetail(**{f: None for f in AccountDetail.model_fields})
     
     try:
-        respuesta = api_get(f"Accounts?$filter=Identification eq '{identification}'", APIdomain, token, PageResult[AccountDetail])
+        respuesta = api_get(f"Accounts?$filter=Identification eq '{quote(identification)}'", APIdomain, token, PageResult[AccountDetail])
     except HTTPError as e:
         funcion_print(f"ERROR DE API {e} PARA CUENTA {identification}")
         return empty_obj
@@ -151,7 +181,7 @@ def get_sampletype(identification: str, APIdomain, token, funcion_print=print) -
     empty_obj = SampleTypeBasic(**{f: None for f in SampleTypeBasic.model_fields})
     
     try:
-        respuesta = api_get(f"SampleTypes?$filter=Identification eq '{identification}'", APIdomain, token, PageResult[SampleTypeBasic])
+        respuesta = api_get(f"SampleTypes?$filter=Identification eq '{quote(identification)}'", APIdomain, token, PageResult[SampleTypeBasic])
     except HTTPError as e:
         funcion_print(f"ERROR DE API {e} PARA TIPO DE MUESTRA {identification}")
         return empty_obj
@@ -170,7 +200,7 @@ def get_specification(identification: str, APIdomain, token, funcion_print=print
     empty_obj = SpecificationBasic(**{f: None for f in SpecificationBasic.model_fields})
     
     try:
-        respuesta = api_get(f"Specifications?$filter=Identification eq '{identification}' and Active eq true", APIdomain, token, PageResult[SampleTypeBasic])
+        respuesta = api_get(f"Specifications?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[SampleTypeBasic])
     except HTTPError as e:
         funcion_print(f"ERROR DE API {e} PARA LA ESPECIFICACION {identification}")
         return empty_obj

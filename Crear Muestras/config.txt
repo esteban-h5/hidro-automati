@@ -29,14 +29,14 @@ COL-std_id_muestra          :   ID MUESTRAS
 #################
 
 SCL-HojaIM : Muestras
-SCL-COL-indice_m                :   id muestra
+SCL-COL-indice_m                :   ID de muestra
 SCL-COL-id_muestras             :   N° en Mylims
 SCL-COL-identificacion          :   Identificación de muestra
 SCL-COL-matriz                  :   Matriz
 SCL-COL-empresa                 :   Empresa
 SCL-COL-cuenta_relacionada      :   Cuenta Relacionada
 SCL-COL-motivo                  :   Motivo
-SCL-COL-cliente_solicitante     :   Cliente solicitante
+SCL-COL-cliente_solicitante     :   Cliente solicitante (en caso de ser consultora)
 SCL-COL-lugar_muestreo          :   Lugar de Muestreo
 SCL-COL-punto_muestreo          :   Punto de muestreo
 SCL-COL-direccion_muestreo      :   Dirección de muestreo
@@ -48,7 +48,7 @@ SCL-COL-tipo_muestreo           :   Tipo de muestreo
 SCL-COL-consultora              :   Consultora?
 SCL-COL-coordenadas             :   Coordenadas
 SCL-COL-resp_muestreo           :   Resp Muestreo
-SCL-COL-frecuencia              :   Frecuencia
+SCL-COL-frecuencia              :   #Frecuencia
 SCL-COL-proyecto                :   Proyecto
 SCL-COL-region                  :   Región
 SCL-COL-departamento            :   #NO APLICA
@@ -57,7 +57,7 @@ SCL-COL-etfa                    :   ETFA
 SCL-COL-tabla_comp              :   Tabla comparativa
 
 SCL-HojaA : Análisis
-SCL-COL-indice_a                :   N°
+SCL-COL-indice_a                :   ID muestra
 SCL-COL-metodo_id               :   MetodoId
 SCL-COL-grupo_id                :   Id Grupo
 SCL-COL-analisis_id             :   AnalisisId
@@ -163,24 +163,24 @@ BOG-COL-cliente_solicitante     :   Cliente solicitante #Cliente solicitante (en
 BOG-COL-lugar_muestreo          :   Lugar de Muestreo
 BOG-COL-punto_muestreo          :   Punto de muestreo
 BOG-COL-direccion_muestreo      :   Dirección de muestreo
-BOG-COL-estado                  :   Estado
+BOG-COL-estado                  :   #Estado
 BOG-COL-municipio               :   Municipio
-BOG-COL-siralab                 :   Siralab
-BOG-COL-instrumento_ambiental   :   Instrumento ambiental
+BOG-COL-siralab                 :   #Siralab
+BOG-COL-instrumento_ambiental   :   #Instrumento ambiental
 BOG-COL-tipo_muestreo           :   Tipo de muestreo
 BOG-COL-consultora              :   Consultora?
 BOG-COL-coordenadas             :   Coordenadas
 BOG-COL-resp_muestreo           :   Resp Muestreo
 BOG-COL-frecuencia              :   Frecuencia
-BOG-COL-proyecto                :   Proyecto
-BOG-COL-region                  :   Región
+BOG-COL-proyecto                :   #Proyecto
+BOG-COL-region                  :   #Región
 BOG-COL-departamento            :   Departamento
-BOG-COL-comuna                  :   Comuna
-BOG-COL-etfa                    :   ETFA
+BOG-COL-comuna                  :   #Comuna
+BOG-COL-etfa                    :   #ETFA
 BOG-COL-tabla_comp              :   Tabla comparativa
 
 BOG-HojaA : Análisis
-BOG-COL-indice_a                :   ID muestra
+BOG-COL-indice_a                :   N°
 BOG-COL-metodo_id               :   MetodoId
 BOG-COL-grupo_id                :   Id Grupo
 BOG-COL-analisis_id             :   AnalisisId

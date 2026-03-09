@@ -159,7 +159,12 @@ try:
         .fillna("0")                       # limpia los NaN que deja extract
         .astype(int)
     )
-    df_entrada["FECHA EJECUCIÓN"] = pd.to_datetime(df_entrada["FECHA EJECUCIÓN"].dt.strftime("%d-%m-%Y"), dayfirst=True).dt.normalize()
+    df_entrada = df_entrada.replace(r'^\s*$', pd.NA, regex=True)
+    df_entrada["AGRUPACIÓN"] = df_entrada["AGRUPACIÓN"].fillna("")
+
+    #Formatear solo si existen valores
+    if not df_entrada["FECHA EJECUCIÓN"].isna().any():
+        df_entrada["FECHA EJECUCIÓN"] = pd.to_datetime(df_entrada["FECHA EJECUCIÓN"].dt.strftime("%d-%m-%Y"), dayfirst=True).dt.normalize()
     
     if CopiarMuestras:
         df_entrada = df_entrada[df_entrada["N COPIAS"] != 0]
@@ -242,6 +247,9 @@ else:
             str(x) for x in grupo["ID MUESTRA"]
         ]
 
+    dict_padre = {"": dict_padre}
+
+
 try:
 
     prefs = prefs | {}
@@ -300,6 +308,7 @@ try:
         
         flag_alerta_inicial = True
         ##############################################
+
         for idx, texto_coti in enumerate(lista_texto_coti):
             slog()
             id_coti, fecha_ejecucion = texto_coti.split("|")
@@ -326,17 +335,22 @@ try:
             if flag_alerta_inicial:
                 flag_alerta_inicial = del_alertas_iniciales(driver, "//iframe[contains(@title,'Survey')]","//div[@role='button' and @aria-label='Close survey']")
 
-            df_coti = df_entrada[
+            filtro = (
                 (df_entrada["ID COTI"].astype(str) == str(id_coti)) &
-                (df_entrada["AGRUPACIÓN"].astype(str) == str(key)) &
-                (
-                    pd.to_datetime(df_entrada["FECHA EJECUCIÓN"])
+                (df_entrada["AGRUPACIÓN"] == key)
+            )
+
+            if fecha_ejecucion != "None":
+                filtro &= (
+                    pd.to_datetime(df_entrada["FECHA EJECUCIÓN"], errors="coerce")
                     .dt.strftime("%d-%m-%Y")
                     ==
                     pd.to_datetime(fecha_ejecucion, dayfirst=True)
                     .strftime("%d-%m-%Y")
                 )
-            ]
+            
+            df_coti = df_entrada[filtro]
+
             lista_muestras_coti = main_dict[texto_coti]
             copias_totales = sum(list(df_coti["N COPIAS"]))
 
@@ -698,16 +712,25 @@ try:
                                 logprint(f"t: {titulo}\nc: {cuerpo}\n")
 
                             raise ExcepcionDeMuestra(f"Alertas Inesperadas (más info en el log), titulos encontrados de ventanas: {str_salida}")
+                        
+                        if paisActual == "colombia":
+                            driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Peso Colombiano')]").click()
+                            logprint("click en peso colombiano")
 
-                        driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Unidad de Fomento')]").click()
-                        BotonVentana(driver,"Confirmar").click()
+                        elif paisActual == "mexico":
+                            driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Peso Mexicano')]").click()
+                            logprint("click en peso mexicano")
+
+                        else:
+                            driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Unidad de Fomento')]").click()
+                            logprint("click en unidad de fomento")
+
+                        # BotonVentana(driver,"Confirmar").click()
                         EsperarCARGA_myLIMS(driver)
 
                         pe_identification = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Identification' and @name='Identification']")
                         pe_identification.send_keys(pe_titulo)
 
-                        input("fecha")
-                        
                         if fecha_ejecucion != "None":
                             pe_fecha_ejecucion = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Execution' and @name='Execution']")
                             pe_fecha_ejecucion.click()
@@ -723,7 +746,7 @@ try:
 
                         #### EXCEL
                         x_pe_titulo = pe_titulo
-                        x_pe_id = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Id' and @name='Id']").get_attribute("value")
+                        x_pe_id = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Id' and @name='Id']").get_attribute("value").replace("\'", "")
                         x_pe_n_muestra = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='ControlNumber' and @name='ControlNumber']").get_attribute("value")
                         ####
 

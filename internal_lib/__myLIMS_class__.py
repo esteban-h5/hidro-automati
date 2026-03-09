@@ -95,7 +95,7 @@ class SampleInfoInsert(BaseIntModel):
 class SampleAnalysisInsert(BaseIntModel):
     InfoId:                Optional[int]
     MethodId:              Optional[int]
-    AnalysisGroupId:       Optional[int]
+    AnalysisGroupId:       Optional[int] = None
     MeasurementUnitId:     Optional[int] = None
 
     # def __init__(self, **data):
@@ -279,8 +279,6 @@ class QCTestBasic2(BaseIntModel):
     Year: int
     ControlNumber: str
     QCRoutineBatchId: int
-
-
 
 class SampleCustomInfo(BaseIntModel):
     DisplayValue: str
@@ -836,6 +834,10 @@ class MethodPrerequisiteAnalysisBasic(BaseIntModel):
     AutomaticInsert: Optional[bool] = None
     LastVersionMethod: Optional[MethodBasic] = None
 
+class AnalysisGroupAnalysisBasic(BaseIntModel):
+    Id:                     Optional[int]
+    MethodMaster:           Optional[MethodMasterBasic]
+    Info:                   Optional[InfoBasic]
 
 class MethodAnalysisBasic(BaseIntModel):
     Id: Optional[int] = None

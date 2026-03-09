@@ -1,12 +1,12 @@
 ###############################
 
-version_actual = "6.2.0"
+version_actual = "6.2.1"
 fecha_version = "viernes 16 de enero 2026"
 
 changelog = [
-    "- Desactivar restriccion de opcion 3 en Cambiar Lotes",
-    "- Prints extras en Cambiar Lotes",
-    "- Agrupacion en Copia Envases",
+    "- Error de permisos de excel en crea muestras",
+    "- Copia envases nuevas columnas vacías",
+    "- URL encode de nombres de empresa y resto de identificaciones",
 ]
 
 ###############################
