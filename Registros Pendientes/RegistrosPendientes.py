@@ -181,7 +181,8 @@ ErrorLinks = []
 
 Excepciones              = unique(ListaMuestraXLSX(dirExcel=dirExcepciones, colname="ID MUESTRAS", colnames=nombre_columnas_aux, except_alert=False, except_create=True))
 MuestrasRegistradasExcel = unique(ListaMuestraXLSX(dirExcel=dirExcelSalida, colname="ID MUESTRAS", colnames=nombre_columnas, except_alert=False, except_create=True))
-listaExcel               = unique(ListaMuestraXLSX(dirExcel=dirExcelEntrada, colnames=nombre_columnas, colname="ID MUESTRAS", except_kill=False, except_create=True))
+listaExcel               = unique(ListaMuestraXLSX(dirExcel=dirExcelEntrada,colname="ID MUESTRAS", colnames=nombre_columnas_aux,  except_kill=False, except_create=True))
+# listaExcel               = unique(ListaMuestraXLSX(dirExcel=dirExcelEntrada,colname="ID MUESTRAS", colnames=nombre_columnas,  except_kill=False, except_create=True))
 
 try:
     while True:

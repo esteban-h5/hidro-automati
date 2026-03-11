@@ -341,7 +341,6 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
             SampleInfoInsert(DisplayValue=df[col_fmt["col-resp_muestreo"]],
                 InfoId=474,Attribute=0,InfoGroupId=102),
         ]
-
     elif paisActual == "chile": # Asumir Chile
         centro_servicio = 20
         lista_precio = 122 if ListaPrecio == 0 else ListaPrecio

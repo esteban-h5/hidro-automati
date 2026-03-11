@@ -150,6 +150,9 @@ xpath_sec_muestra       = "//div[@id='InterfaceContent']/div[not(contains(@style
 
 df_entrada = AbrirXLSX(dirExcelEntrada, colnames=nombre_columnas_in)
 
+if df_entrada.empty:
+    input("Sin datos, Enter para cerrar...")
+
 try:
     df_entrada["N COPIAS"] = (
         df_entrada["N COPIAS"]
@@ -165,7 +168,7 @@ try:
     #Formatear solo si existen valores
     if not df_entrada["FECHA EJECUCIÓN"].isna().any():
         df_entrada["FECHA EJECUCIÓN"] = pd.to_datetime(df_entrada["FECHA EJECUCIÓN"].dt.strftime("%d-%m-%Y"), dayfirst=True).dt.normalize()
-    
+
     if CopiarMuestras:
         df_entrada = df_entrada[df_entrada["N COPIAS"] != 0]
 

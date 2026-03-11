@@ -1,13 +1,14 @@
 ###############################
 
 version_actual = "6.2.1"
-fecha_version = "viernes 16 de enero 2026"
+fecha_version = "miercoles 11 de enero 2026"
 
 changelog = [
     "- Error de permisos de excel en crea muestras",
     "- Copia envases nuevas columnas vacías",
     "- URL encode de nombres de empresa y resto de identificaciones",
     "- Avisar en log muestra copiada con +100 en coti para copia envases",
+    "- columna aux para registroauxiliar en registros pendientes, error columnas al borrar",
 ]
 
 ###############################

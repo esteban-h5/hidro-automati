@@ -1,2 +1,2 @@
 # Achivos excluidos para copiar separados por COMA y directorios con SLASH (/) Se consideran espacios (estos archivos no seran copiados)
-ExcluirArchivos:Descarga Muestras/ejemplo 1.txt,Copia Envases/*
+ExcluirArchivos:Descarga Muestras/ejemplo 1.txt

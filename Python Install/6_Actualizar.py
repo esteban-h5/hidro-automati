@@ -2,6 +2,9 @@
 Copiar archivos de configuracion con nuevas variables, dejando como persistente (Copiar y reemplazar) archivos de registro
 """
 
+ENCODIG_GENERAL = "utf-8"
+# ENCODIG_GENERAL = "latin-1"
+
 try:
     import os, shutil, time, zipfile, importlib.util, traceback, re, glob
     from tkinter.filedialog import askopenfile
@@ -14,7 +17,7 @@ except ModuleNotFoundError as e:
 FLAG_ERRORES = False
 
 #Devolver diccionario con variables del código
-def GetConfig(dirConfig, encode="utf-8"):
+def GetConfig(dirConfig, encode=ENCODIG_GENERAL):
   
     with open(dirConfig, "r", encoding=encode) as configTXT:
         lineas = []
@@ -98,7 +101,7 @@ try:
     for fname in os.listdir(os.path.join(dir_actual,n_il)):
         if save_pattern.match(fname):
             fOtros.append(os.path.join(n_il, fname))
-
+    
     # excluir = [os.path.normpath(_) for _ in update_config["ExcluirArchivos"].split(",")]
     excluir = []
     
