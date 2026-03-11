@@ -475,7 +475,7 @@ try:
                         eprint(f"[Más de 100 muestras en grilla ({MuestrasCantidad}), haciendo busqueda por separado]")
 
                         for muestra in lista_muestras_coti:
-
+                            
                             driver.find_element(By.XPATH, f"{xpath_sec_muestra}//th/span[@data-field='SampleId']//input[@type='text']").send_keys(muestra)
                             driver.find_element(By.XPATH,"//div[@class='mylimsweb-ui-main-header-interface-header-title']").click()
                             EsperarCARGA_myLIMS(driver)
@@ -535,6 +535,7 @@ try:
                                 driver.find_element(By.XPATH,"//div[@class='mylimsweb-ui-main-header-interface-header-title']").click()
                                 EsperarCARGA_myLIMS(driver)
 
+                            logprint(f"muestra {muestra} lista con {v_n_copias} copias")
 
                         #### EXCEL
                         if not m_no_copia: #No contiene errores

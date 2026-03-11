@@ -7,6 +7,7 @@ changelog = [
     "- Error de permisos de excel en crea muestras",
     "- Copia envases nuevas columnas vacías",
     "- URL encode de nombres de empresa y resto de identificaciones",
+    "- Avisar en log muestra copiada con +100 en coti para copia envases",
 ]
 
 ###############################
