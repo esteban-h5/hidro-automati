@@ -38,7 +38,7 @@ def parse_env_file(path):
     """Lee ETIQUETA, USER, PASSWD (sin descifrar) desde un .env. Devuelve dict o None."""
     if not os.path.exists(path):
         return None
-    data = {"ETIQUETA": None, "USER": None, "PASSWD": None}
+    data = {"ETIQUETA": None, "USER": None, "PASSWD": None, "LOCALE": None}
     with open(path, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
@@ -53,7 +53,7 @@ def parse_env_file(path):
                 data[k] = v
     return data
 
-def write_env_file(path, etiqueta, enc_user, enc_passwd):
+def write_env_file(path, etiqueta, enc_user, enc_passwd, locale=None):
     fecha = datetime.now().strftime("%d/%m/%Y")
     hora = datetime.now().strftime("%H:%M:%S")
     with open(path, "w", encoding="utf-8") as f:
@@ -62,6 +62,7 @@ def write_env_file(path, etiqueta, enc_user, enc_passwd):
         f.write(f"ETIQUETA={etiqueta}\n")
         f.write(f"USER={enc_user}\n")
         f.write(f"PASSWD={enc_passwd}\n")
+        f.write(f"LOCALE={locale}\n")
 
 # --- Gestión de nombres save_Param_n.env ---
 def list_save_files():

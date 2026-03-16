@@ -16,7 +16,7 @@ api-url               :   https://hidrolab.mylimsweb.cloud/api/v2/
 #
 # Variable del pais actual (no importan mayusculas ni tildes)
 # Chile - Perú - Colombia - México
-paisActual            :   Chile
+paisActual            :   chile
 #
 #
 # Largo de la jornada en cantidad de horas, dos puntos para separar horas y minutos (10:30) o (11)

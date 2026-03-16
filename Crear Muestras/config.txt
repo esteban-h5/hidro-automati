@@ -152,8 +152,8 @@ LIM-COL-u_medida_id             :   UMedidaId
 ################
 
 BOG-HojaIM : Muestras
-BOG-COL-indice_m                :   N° #ID de muestra
-BOG-COL-id_muestras             :   ID muestra #N° en Mylims
+BOG-COL-indice_m                :   ID de muestra
+BOG-COL-id_muestras             :   N° en Mylims
 BOG-COL-identificacion          :   Identificación de muestra
 BOG-COL-matriz                  :   Matriz
 BOG-COL-empresa                 :   Empresa

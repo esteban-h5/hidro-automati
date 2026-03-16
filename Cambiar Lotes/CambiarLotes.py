@@ -815,17 +815,18 @@ while True:
                                 continue
                             
                             ################################################
-                            #Buscar nuevos requerimientos y asignar respectivo metodo
-                            filas_entrada = get_analito_dict(driver, analitos=analisis_req)
+                            #Buscar nuevos requerimientos con analisis principal agregado y asignar respectivo metodo a requerimientos 
+                            if analisis_req:
+                                filas_entrada = get_analito_dict(driver, analitos=analisis_req)
 
-                            for d_analito in filas_entrada:
+                                for d_analito in filas_entrada:
 
-                                flag_estado = edit_alterar_por_metodo(driver, analito_dict=d_analito, nuevo_metodo=metodos_extra[d_analito['analisis']])
-                                
-                                if flag_estado == -1: 
-                                    eprint(f"Metodo {metodo_nuevo} no encontrado para analito numero {d_analito['id']} con metodo {analito['metodo']}")
-                                    if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SIN METODO")
-                                    continue
+                                    flag_estado = edit_alterar_por_metodo(driver, analito_dict=d_analito, nuevo_metodo=metodos_extra[d_analito['analisis']])
+                                    
+                                    if flag_estado == -1: 
+                                        eprint(f"Metodo {metodo_nuevo} no encontrado para analito numero {d_analito['id']} con metodo {analito['metodo']}")
+                                        if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SIN METODO")
+                                        continue
 
                             BotonAccion(driver,"SaveButton", log=True, funcion_print=logprint).click()
                             EsperarCARGA_myLIMS(driver)
