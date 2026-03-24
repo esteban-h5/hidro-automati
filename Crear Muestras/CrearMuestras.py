@@ -286,9 +286,9 @@ try:
                 valor = e.args[0]
                 llave = obtener_llave_por_valor(col_fmt, valor)
                 if llave:
-                    input(f"Error columna de config '{llave}' ('{valor}') no encontrada, enter para cerrar...")
+                    input(f"{e}\nError columna de config '{llave}' ('{valor}') no encontrada, enter para cerrar...")
                 else:
-                    input(f"Error columna {valor} no encontrada, enter para cerrar...")
+                    input(f"{e}\nError columna {valor} no encontrada, enter para cerrar...")
                 
                 if total_part > 3:
                     continue
@@ -330,8 +330,7 @@ try:
             for key,value in temp_dict.items():
 
                 if ExcelObjetivo:
-                    FilaAgregarXLSX(ExcelObjetivo, value, colnames=[col_fmt["col-std_id_muestra"]], except_kill=False, except_create=True)            
-
+                    FilaAgregarXLSX(ExcelObjetivo, value, colnames=[col_fmt["col-std_id_muestra"]], except_kill=False, except_create=True)
                 df_salida.loc[df_salida[col_fmt["col-indice_m"]] == int(key), col_fmt["col-id_muestras"]] = value
 
             df_salida.columns = org_col_inf
@@ -341,8 +340,8 @@ try:
                 df_salida.to_excel(writer, sheet_name=HojaIM, index=False)
                 analisis_df.to_excel(writer, sheet_name=HojaA, index=False)
                     
-            df_salida.columns = df_salida.columns.str.lower()
-            analisis_df.columns = analisis_df.columns.str.lower()
+            df_salida.columns = df_salida.columns.str.lower().str.strip()
+            analisis_df.columns = analisis_df.columns.str.lower().str.strip()
         
     timer.finish()
     eprint("[Archivo excel creado]")

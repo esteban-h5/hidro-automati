@@ -424,7 +424,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                     checkCambiarFechas = flagCambiarFecha
                     checkDesacreditar = flagDesacreditar
 
-                    eprint(f"fechas: {checkCambiarFechas} - desacred {checkDesacreditar}")
+                    # eprint(f"fechas: {checkCambiarFechas} - desacred {checkDesacreditar}")
 
                     if RevisarRutinas: 
 
