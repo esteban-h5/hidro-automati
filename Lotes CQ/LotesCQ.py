@@ -1,1 +1,3 @@
 #CAMBIOS PARA BRANCH
+
+class LoteCQ
