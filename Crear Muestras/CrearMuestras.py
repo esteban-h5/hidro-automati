@@ -257,7 +257,7 @@ try:
     lista_partitions = [informacion_muestras_df[i:i+Partition] for i in range(0, total_muestras, Partition)]
     len_lista_partitions = len(lista_partitions)
     
-    if ListaPrecio != 0 and not ListaPrecio.isdigit():
+    if ListaPrecio != 0 and not str(ListaPrecio).isdigit():
         ListaPrecio = get_pricetable(ListaPrecio, APIdomain=APIdomain, token=token, funcion_print=eprint).Id
         
         if ListaPrecio == None:
