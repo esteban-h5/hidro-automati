@@ -4,4 +4,5 @@
 **/__pycache__/
 internal_lib/__pycache__/*
 *.txt
+!**/config.txt
 salida*
