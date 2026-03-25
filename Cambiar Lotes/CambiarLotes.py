@@ -885,6 +885,10 @@ while True:
 
                             filas_entrada = get_analito_dict(driver, metodos=[metodo])
 
+                            largo_filas = len(filas_entrada)
+                            if largo_filas > 1:
+                                eprint(f"SE ENCONTRARON {largo_filas} FILAS CON EL MISMO METODO DE ANALISIS")
+                            
                             #Modo edición
                             driver.find_element(By.XPATH,'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar" and not(@style="display: none;")]//button[@data-test="BackToListButton" and text()="Editar"]').click()
                             EsperarCARGA_myLIMS(driver)
@@ -905,6 +909,7 @@ while True:
                             BotonAccion(driver,"SaveButton", log=True, funcion_print=logprint ).click()
                             EsperarCARGA_myLIMS(driver)
 
+                            if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "LISTO")
                             eprint(f"Muestra {id_muestra} editada\n")
 
                         except BaseException as e:
