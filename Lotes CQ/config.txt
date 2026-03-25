@@ -1,1 +1,7 @@
-#rellenoasdasdasdsa
+#Metodos:
+#- Prueba-Metodo-Esteban	General - QC
+#
+#- Blanco - Prueba-Metodo-Esteban
+#- Duplicado - Prueba-Metodo-Esteban
+#- Exactitud - Prueba-Metodo-Esteban
+#- Spike - Prueba-Metodo-Esteban
