@@ -757,8 +757,8 @@ class SampleBasic(BaseIntModel):
     TotalPriceBusinessUnit: Optional[Decimal] = None
 
 class SampleDetail(BaseIntModel):
-    Id: int
-    Identification: str
+    Id: Optional[int] = None
+    Identification: Optional[str] = None
     ControlIdentification: Optional[str] = None
     ControlNumber: Optional[str] = None
     ReferenceKey: Optional[str] = None

@@ -12,8 +12,8 @@ from __myLIMS_class__ import (
     SampleSpecificationInsert,
     ValidationError,
 )
-
-from requests.exceptions import HTTPError
+from __myLIMS_modulos__ import ExcepcionDeCarga
+from requests.exceptions import HTTPError, ReadTimeout
 from openpyxl import load_workbook
 from zipfile import BadZipFile
 from urllib.parse import quote
@@ -62,18 +62,15 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
     while True:
         try:
             respuesta = api_get(url_text, APIdomain, token, PageResult[SampleBasic])
-        except HTTPError as e:
+        except (HTTPError, ReadTimeout) as e:
             if retries != 0:
                 retries -= 1
-                respuesta
                 funcion_print(f"ERROR DE API {e} AL OBTENER MUESTRAS\nReintentando [{retries}]")
                 funcion_logprint("Body:", e.response.text)
-                
                 continue
 
             else:
-                funcion_print(f"Continuando con lista actual")
-                return samples_list
+                raise ExcepcionDeCarga("No se pudo obtener lista de muestras por API")                
 
         break
 
@@ -84,11 +81,12 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
     
     page = 1
     retries = 5
+    
     while respuesta.Count >= 100:
         funcion_print(f"{page}/{total_page}")
         try:
             respuesta = api_get(url_text+f"&$skip={100*page}", APIdomain, token, PageResult[SampleBasic])
-        except HTTPError as e:
+        except (HTTPError, ReadTimeout) as e:
             if retries != 0:
                 retries -= 1
                 funcion_print(f"ERROR DE API {e} AL OBTENER MUESTRAS\nReintentando [{retries}]")
@@ -96,7 +94,9 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
                 continue
 
             else:
-                break
+                funcion_print(f"Sin reintentos, continuando con lista actual")
+                return samples_list
+
         samples_list = samples_list + [str(sample.Id) for sample in respuesta.Result]
         page+=1
 
@@ -261,7 +261,7 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
         centro_servicio = 24
         
         # HB BOG 2026
-        lista_precio = 138 if ListaPrecio == 0 else ListaPrecio
+        lista_precio = 141 if ListaPrecio == 0 else ListaPrecio
         
         info_lista= lambda df: [
 
