@@ -651,6 +651,9 @@ class SampleStatusIdentification(BaseIntModel):
     Identification: str
 
 class SampleTypeBasic(BaseIntModel):
+    #SAMPLE TYPE MATRIZ NO PUEDE SER NULO
+    Id: Optional[int] = None  
+    Identification: Optional[str] = None
     Prefix: Optional[str] = None
     Active: Optional[bool] = None
     SampleClassId: Optional[int] = None
@@ -663,8 +666,6 @@ class SampleTypeBasic(BaseIntModel):
     SampleTypeParent: Optional[SampleTypeParentBasic]= None
     ReferenceKey: Optional[str] = None
     PackagingAlert: Optional[bool]= None
-    Id: Optional[int] = None
-    Identification:  Optional[str] = None
 
 class SendEmailRecipientIdentification(BaseIntModel):
     Id: int

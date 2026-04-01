@@ -89,8 +89,10 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
         except (HTTPError, ReadTimeout) as e:
             if retries != 0:
                 retries -= 1
-                funcion_print(f"ERROR DE API {e} AL OBTENER MUESTRAS\nReintentando [{retries}]")
+                funcion_print(f"{e} ERROR DE API AL OBTENER MUESTRAS\nReintentando en 10 seg [INTENTOS: {retries}]")
+                funcion_logprint("Body:", e.response.text)
                 respuesta.Count = 100
+                sleep(10)
                 continue
 
             else:
@@ -192,6 +194,9 @@ def get_sampletype(identification: str, APIdomain, token, funcion_print=print) -
 
     if respuesta.Count > 1:
         funcion_print(f"SE ENCONTRO MAS DE 1 RESULTADO\nSe encontro tambien: {' - '.join(_.Identification for _ in respuesta.Result[1:])}")
+    
+    if not respuesta.Result[0].Id or not respuesta.Result[0].Identification:
+        funcion_print(f"INFORMACION VACÍA PARA TIPO DE MUESTRA MATRIZ {identification} [{respuesta.Result[0].Id}]")
 
     return respuesta.Result[0]
 
@@ -200,7 +205,7 @@ def get_specification(identification: str, APIdomain, token, funcion_print=print
     empty_obj = SpecificationBasic(**{f: None for f in SpecificationBasic.model_fields})
     
     try:
-        respuesta = api_get(f"Specifications?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[SampleTypeBasic])
+        respuesta = api_get(f"Specifications?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[SpecificationBasic])
     except HTTPError as e:
         funcion_print(f"ERROR DE API {e} PARA LA ESPECIFICACION {identification}")
         return empty_obj
@@ -449,8 +454,8 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
             sample_records.append([id_muestra , solicitud.model_dump_json()])
 
         except ValidationError as e:
-            funcion_print(f"Error para muestra {idx} de {total_muestras} [id en excel: {id_muestra}] {e.errors()}")
-            funcion_log(f"-----------\n{e.json()}\n-----------\n")
+            funcion_print(f"Error para muestra {idx} de {total_muestras} [id en excel: {id_muestra}]")
+            funcion_print(f"-----------\n{e}\n-----------\n")
             sample_records.append([id_muestra, {'ERROR'}])
 
     return sample_records

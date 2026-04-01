@@ -1,4 +1,4 @@
-import sys,os
+import sys,os, traceback
 
 file_name           =   os.path.basename(__file__)
 CM_wd               =   os.path.dirname(os.path.realpath(__file__))
@@ -240,6 +240,7 @@ try:
 
         informacion_muestras_df["col-infos"] = informacion_muestras_df[col_fmt["col-indice_m"]].map(analisis_group)
     except KeyError as e:
+        traceback.print_exc(file=sys.stdout)
         valor = e.args[0]
         llave = obtener_llave_por_valor(col_fmt, valor)
         if llave:
@@ -257,7 +258,7 @@ try:
     lista_partitions = [informacion_muestras_df[i:i+Partition] for i in range(0, total_muestras, Partition)]
     len_lista_partitions = len(lista_partitions)
     
-    if ListaPrecio != 0 and not ListaPrecio.isdigit():
+    if ListaPrecio != 0 and not str(ListaPrecio).isdigit():
         ListaPrecio = get_pricetable(ListaPrecio, APIdomain=APIdomain, token=token, funcion_print=eprint).Id
         
         if ListaPrecio == None:
@@ -277,12 +278,14 @@ try:
     with open(os.path.join(CM_wd, f"errores_{fecha}.txt"), "w", encoding="utf-8") as errores_salida:
 
         for idx, inf_muestra_df in enumerate(lista_partitions):
+            slog()
             timer.save(idx)
             eprint(f"\n[{idx*(Partition)}/{total_muestras}] [{idx+1}/{total_part}] [termino {timer.h_estimada} en {timer.t_restante}]")
 
             try:
                 sample_records = FormatoDF(inf_muestra_df, col_fmt, paisActual, getdomain=APIdomain, gettoken=token, ListaPrecio=ListaPrecio, funcion_log=logprint, funcion_print=eprint)
             except KeyError as e:
+                traceback.print_exc(file=sys.stdout)
                 valor = e.args[0]
                 llave = obtener_llave_por_valor(col_fmt, valor)
                 if llave:
@@ -300,6 +303,7 @@ try:
             
             temp_dict = {}
             for idx2, (id_muestra, record) in enumerate(sample_records, start=1):
+                slog()
                 eprint(f"{idx2}/{total_solicitudes} [idx {id_muestra}]")
                 
                 if MostrarJSON:
@@ -331,6 +335,7 @@ try:
 
                 if ExcelObjetivo:
                     FilaAgregarXLSX(ExcelObjetivo, value, colnames=[col_fmt["col-std_id_muestra"]], except_kill=False, except_create=True)
+
                 df_salida.loc[df_salida[col_fmt["col-indice_m"]] == int(key), col_fmt["col-id_muestras"]] = value
 
             df_salida.columns = org_col_inf

@@ -717,6 +717,8 @@ try:
 
                             raise ExcepcionDeMuestra(f"Alertas Inesperadas (más info en el log), titulos encontrados de ventanas: {str_salida}")
                         
+                        input("kwea?")
+
                         if paisActual == "colombia":
                             driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Peso Colombiano')]").click()
                             logprint("click en peso colombiano")
@@ -729,7 +731,7 @@ try:
                             driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Unidad de Fomento')]").click()
                             logprint("click en unidad de fomento")
 
-                        # BotonVentana(driver,"Confirmar").click()
+                        BotonVentana(driver,"Confirmar").click()
                         EsperarCARGA_myLIMS(driver)
 
                         pe_identification = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Identification' and @name='Identification']")
@@ -747,7 +749,7 @@ try:
 
                         BotonAccion(driver,"SaveButton").click()
                         EsperarCARGA_myLIMS(driver)
-
+                        
                         #### EXCEL
                         x_pe_titulo = pe_titulo
                         x_pe_id = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Id' and @name='Id']").get_attribute("value").replace("\'", "")
@@ -755,7 +757,6 @@ try:
                         ####
 
                         eprint(f"[PE creado ({x_pe_id}) - ({x_pe_n_muestra}) - ({x_pe_titulo})]\n")
-
                     else:
 
                         #### EXCEL
