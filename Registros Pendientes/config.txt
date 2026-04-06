@@ -3,7 +3,7 @@
 #
 #
 # Intentar Publicar muestras al reconocer controles [True]
-Publicar              	    :   False
+HacerPublicacion      :   True
 #
 #
 # Revisa si las muestras tienen rutina para evitar publicarlas [True]

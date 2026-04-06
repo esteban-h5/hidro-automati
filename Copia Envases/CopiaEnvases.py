@@ -465,7 +465,7 @@ try:
 
                             xpath_estado_copia = f"{xpath_ventana_copia}//div[contains(text(),'Copias Concluidas.')]"
                             try:
-                                WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, xpath_estado_copia)))
+                                WebDriverWait(driver, 300).until(EC.presence_of_element_located((By.XPATH, xpath_estado_copia)))
                             except Exception:
                                 raise ExcepcionDeCarga(f"No apareció el mensaje 'Copias Concluidas.' dentro de la ventana: {xpath_estado_copia}")
                             
@@ -527,7 +527,7 @@ try:
 
                                 xpath_estado_copia = f"{xpath_ventana_copia}//div[contains(text(),'Copias Concluidas.')]"
                                 try:
-                                    WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, xpath_estado_copia)))
+                                    WebDriverWait(driver, 360).until(EC.presence_of_element_located((By.XPATH, xpath_estado_copia)))
                                 except Exception:
                                     raise ExcepcionDeCarga(f"No apareció el mensaje 'Copias Concluidas.' dentro de la ventana: {xpath_estado_copia}")
                                 
@@ -717,8 +717,9 @@ try:
 
                             raise ExcepcionDeMuestra(f"Alertas Inesperadas (más info en el log), titulos encontrados de ventanas: {str_salida}")
                         
-                        input("kwea?")
-
+                        notify("PAUSA PARA RECARGAR")
+                        input("ENTER PARA CONTINUAR...")
+                        
                         if paisActual == "colombia":
                             driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Peso Colombiano')]").click()
                             logprint("click en peso colombiano")

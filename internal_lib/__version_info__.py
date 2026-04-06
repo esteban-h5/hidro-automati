@@ -1,11 +1,12 @@
 ###############################
 
-version_actual = "6.2.2"
-fecha_version = "miercoles 11 de enero 2026"
+version_actual = "6.2.4"
+fecha_version = "miercoles 1 de abril 2026"
 
 changelog = [
-    "- Ajuste cambiar lotes agregar analito",
-    "- Variable País a archivo de param.env",
+    "- Problemas con creación de PE, pausa para recargar mylims",
+    "- Aumento tiempos de espera copia",
+    "- Reintento DescargaMuestras Excepcion y .text",
 ]
 
 ###############################
