@@ -312,20 +312,24 @@ try:
 
     Borrados = len(list(set(ListaMuestras) & set(ID_Excluidos)))
     ListaMuestras = [str(_) for _ in ListaMuestras if _ not in ID_Excluidos]
-
+    
+    if RevertirLista:
+        ListaMuestras.reverse()
+    if BarajarLista:
+        shuffle(ListaMuestras)
+    
     MuestrasCantidad = len(ListaMuestras)
     MuestrasError = []
 
     TotalDescarga = 0
     TotalPublicados = 0
+    TotalDesacreditar = 0
+    TotalCambioFechas = 0
     
     N_Muestra = 0
     MuestraIndice = 1
     ID_Actual = 0
 
-    if RevisarRutinas: 
-        TotalCambioFechas = 0
-        TotalDesacreditar = 0
 
     if SoloBuscarControles:
         eprint(f'Se agregaron {MuestrasCantidad} muestras a la cola y excluyeron {Borrados}, revisando controles y fechas para publicar...')
@@ -388,8 +392,8 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
 """                
                 texto_por_muestra = f"{texto_por_muestra}Registradas: {TotalDescarga} - " if SoloBuscarControles else f"{texto_por_muestra}Descargadas: {TotalDescarga} - "
                 texto_por_muestra = f"{texto_por_muestra}Publicadas: {TotalPublicados}" if AutoPublicar else f"{texto_por_muestra}Publicables: {TotalPublicados}"
-                texto_por_muestra = f"{texto_por_muestra}\nCambios de Acreditación: {TotalDesacreditar} - " if CorregirETFA else f"{texto_por_muestra}\nAlertas ETFA: {TotalDesacreditar} - "
-                texto_por_muestra = f"{texto_por_muestra}Cambios de Fechas: {TotalCambioFechas}" if RevisarRutinas else ""
+                texto_por_muestra = f"{texto_por_muestra}\nCambios de Acreditación: {TotalDesacreditar}" if CorregirETFA else f"{texto_por_muestra}\nAlertas ETFA: {TotalDesacreditar}"
+                texto_por_muestra = f"{texto_por_muestra} - Cambios de Fechas: {TotalCambioFechas}" if RevisarRutinas else f"{texto_por_muestra}"
 
                 eprint(texto_por_muestra)
                 
@@ -565,6 +569,9 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                     flagRutina = True
                                     
                     else:
+                        if checkDesacreditar:
+                            TotalDesacreditar +=1
+
                         flagRutina = True
                         flagDescargar = True
                         
