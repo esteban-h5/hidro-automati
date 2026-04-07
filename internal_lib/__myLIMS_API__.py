@@ -13,7 +13,7 @@ from __myLIMS_class__ import (
     ValidationError,
 )
 from __myLIMS_modulos__ import ExcepcionDeCarga
-from requests.exceptions import HTTPError, ReadTimeout
+from requests.exceptions import HTTPError, ReadTimeout, ConnectionError
 from openpyxl import load_workbook
 from zipfile import BadZipFile
 from urllib.parse import quote
@@ -62,11 +62,14 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
     while True:
         try:
             respuesta = api_get(url_text, APIdomain, token, PageResult[SampleBasic])
-        except (HTTPError, ReadTimeout) as e:
+        except (HTTPError, ReadTimeout, ConnectionError) as e:
             if retries != 0:
                 retries -= 1
-                funcion_print(f"ERROR DE API {e} AL OBTENER MUESTRAS\nReintentando [{retries}]")
+                
+                funcion_print(f"ERROR DE API AL OBTENER MUESTRAS\nReintentando en 10 seg [INTENTOS: {retries}]")
                 funcion_logprint("Body:", e.response)
+                sleep(10)
+                
                 continue
 
             else:
@@ -86,10 +89,10 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
         funcion_print(f"{page}/{total_page}")
         try:
             respuesta = api_get(url_text+f"&$skip={100*page}", APIdomain, token, PageResult[SampleBasic])
-        except (HTTPError, ReadTimeout) as e:
+        except (HTTPError, ReadTimeout, ConnectionError) as e:
             if retries != 0:
                 retries -= 1
-                funcion_print(f"{e} ERROR DE API AL OBTENER MUESTRAS\nReintentando en 10 seg [INTENTOS: {retries}]")
+                funcion_print(f"ERROR DE API AL OBTENER MUESTRAS\nReintentando en 10 seg [INTENTOS: {retries}]")
                 funcion_logprint("Body:", e.response)
                 respuesta.Count = 100
                 sleep(10)
