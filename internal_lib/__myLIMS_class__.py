@@ -82,14 +82,21 @@ class SampleInfoInsert(BaseIntModel):
 
         # Si es string, revisar
         if isinstance(v, str):
+            v = v.strip()
+            
             # if v.strip().lower() in {"nan", "n/a", "n-a"}:
-            if v.strip().lower() in {"nan", "n-a"}:
+            if v.lower() in {"nan", "n-a"}:
                 return None
 
             # Si es string pero contiene un número, conviértelo
-            if v.strip().isdigit():
-                return int(v.strip())
+            if v.isdigit():
+                return int(v)
 
+            if v.lower() == "si":
+                return "Si"
+            if v.lower() == "no":
+                return "No"
+        
         return v
 
 class SampleAnalysisInsert(BaseIntModel):
@@ -651,6 +658,9 @@ class SampleStatusIdentification(BaseIntModel):
     Identification: str
 
 class SampleTypeBasic(BaseIntModel):
+    #SAMPLE TYPE MATRIZ NO PUEDE SER NULO
+    Id: Optional[int] = None  
+    Identification: Optional[str] = None
     Prefix: Optional[str] = None
     Active: Optional[bool] = None
     SampleClassId: Optional[int] = None
@@ -663,8 +673,6 @@ class SampleTypeBasic(BaseIntModel):
     SampleTypeParent: Optional[SampleTypeParentBasic]= None
     ReferenceKey: Optional[str] = None
     PackagingAlert: Optional[bool]= None
-    Id: Optional[int] = None
-    Identification:  Optional[str] = None
 
 class SendEmailRecipientIdentification(BaseIntModel):
     Id: int
@@ -757,8 +765,8 @@ class SampleBasic(BaseIntModel):
     TotalPriceBusinessUnit: Optional[Decimal] = None
 
 class SampleDetail(BaseIntModel):
-    Id: int
-    Identification: str
+    Id: Optional[int] = None
+    Identification: Optional[str] = None
     ControlIdentification: Optional[str] = None
     ControlNumber: Optional[str] = None
     ReferenceKey: Optional[str] = None

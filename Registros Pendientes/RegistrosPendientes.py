@@ -45,7 +45,7 @@ config              =   GetConfig( dirConfig=os.path.join(RP_wd,"config.txt") )
 global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
 keys_used_g = ["myLIMSdomain", "Labsoftdomain", "AppExcel", "paisActual", "ActivarLOG", "ListaMensajesRutina", "ListaMensajesHoras", "nombreExcelExcepciones"]            
-keys_used = ["Publicar", "RevisarRutinas", "nombreExcelSalida", "nombreExcelEntrada", "nombreExcelError"]
+keys_used = ["HacerPublicacion", "RevisarRutinas", "nombreExcelSalida", "nombreExcelEntrada", "nombreExcelError"]
              
 for key in keys_used:
     if key not in config.keys():
@@ -73,7 +73,7 @@ dirExcepciones     = os.path.join(internal_lib, nombreExcepciones)
 
 nombreLOG       = os.path.join(RP_wd,"log",datetime.now().strftime('reporte_%Y_%m_%d-%H_%M'))
 
-Publicar        = config.get("Publicar", False)
+HacerPublicacion        = config.get("HacerPublicacion", False)
 RevisarRutina   = config.get("RevisarRutinas", False)
 
 nombreExcelSalida = config.get("nombreExcelSalida", "")
@@ -125,7 +125,7 @@ if os.path.exists(os.path.join(internal_lib, "hidro-env") ) and sys.prefix == sy
 
 MensajeInicial(file_name, funcion_print=eprint, config=config, global_config=global_config, funcion_log=logprint )
 
-if Publicar:
+if HacerPublicacion:
     eprint("Publicación activada\n")
 else:
     eprint("Publicación desactivada\n")
@@ -287,30 +287,31 @@ try:
                                     eprint("Muestra con alertas")
                                 
                                 if not RevisarRutina:
-                                    if Publicar:
-                                        Publicado = MuestraPublicar(driver, ID_Muestra=Muestra["ID"], kill=True, url=myLIMSdomain, funcion_print=logprint)
+                                    if HacerPublicacion:
 
-                                        if Publicado == "Atraso":
-                                            eprint("Muestra Atrasada")
-                                            
+                                        Publicar = MuestraPublicar(driver, ID_Muestra=Muestra["ID"], url=myLIMSdomain ,kill=True, funcion_print=logprint)
+
+                                        if Publicar == "Atraso":
+                                            eprint("[Atraso - No Publica]")
                                             fila_muestra = [ Muestra["INDICE"], Muestra["NUMERO"], Muestra["ID"], Muestra["CLIENTE"], "ATRASO", "ATRASO", "ATRASO", Muestra["ESTADO"], Muestra["ACTIVO"], Muestra["AREA"]]
                                             FilaAgregarXLSX(dirExcel=dirExcelSalida, valores_fila=fila_muestra, colnames=nombre_columnas, except_kill=False, except_create=True)                                    
-                                            
                                             cantMAtrasadas += 1; cantMPendientes += 1
-                                            continue
+                                            break
 
-                                        if Publicado and Publicado != "Atraso":
-                                            eprint("Publicada, saltando revisión de controles")
+                                        if Publicar and Publicar != "Atraso":
+                                            eprint("[Publicada, saltando revisión de controles]")
                                             cantMPublicadas += 1
-                                            continue
-                                    
-                                    if not Publicar:
+                                            break
+
+                                        if not Publicar and Publicar != "Atraso":
+                                            eprint("[No Publica]")
+
+                                    if not HacerPublicacion:
                                         fila_muestra = [ Muestra["INDICE"], Muestra["NUMERO"], Muestra["ID"],"PUBLICABLE", "PUBLICABLE", "PUBLICABLE", Muestra["ESTADO"], Muestra["ACTIVO"], Muestra["CLIENTE"], Muestra["AREA"]]
                                         FilaAgregarXLSX(dirExcel=dirExcelSalida, valores_fila=fila_muestra, colnames=nombre_columnas, except_kill=False, except_create=True)                                    
                                 
                                         eprint(f"Muestra {str(Muestra['ID'])} sin controles y publicación desactivada")
                                         
-                                    cantMPublicadas += 1
                                     continue
 
                                 if RevisarRutina:
@@ -323,7 +324,7 @@ try:
                                         continue
 
                                     else:
-                                        if Publicar:
+                                        if HacerPublicacion:
                                             Publicado = MuestraPublicar(driver, ID_Muestra=Muestra["ID"], kill=True, url=myLIMSdomain, funcion_print=logprint)
 
                                             if Publicado == "Atraso":
@@ -340,7 +341,7 @@ try:
                                                 cantMPublicadas += 1
                                                 continue
                                         
-                                        if not Publicar:
+                                        if not HacerPublicacion:
 
                                             fila_muestra = [ Muestra["INDICE"], Muestra["NUMERO"], Muestra["ID"],"PUBLICABLE", "PUBLICABLE", "PUBLICABLE", Muestra["ESTADO"], Muestra["ACTIVO"], Muestra["CLIENTE"], Muestra["AREA"]]
                                             FilaAgregarXLSX(dirExcel=dirExcelSalida, valores_fila=fila_muestra, colnames=nombre_columnas, except_kill=False, except_create=True)                                    

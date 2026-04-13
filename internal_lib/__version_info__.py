@@ -1,11 +1,16 @@
 ###############################
 
-version_actual = "6.2.2"
-fecha_version = "miercoles 11 de enero 2026"
+version_actual = "6.2.6"
+fecha_version = "miercoles 1 de abril 2026"
 
 changelog = [
-    "- Ajuste cambiar lotes agregar analito",
-    "- Variable País a archivo de param.env",
+    "- titulo previo a creación de pe",
+    "- eliminada pausa previo a aceptar creación de pe",
+    " se espera arreglo de mylims funcional",
+    "- Estado depart. municipio no necesarios para chile",
+    "- duplicados en keys_usadas"
+    "- comprobacion de SI o si o NO o no"
+    "- comprobacion de casilla responsable para revisar carga de mylims"
 ]
 
 ###############################

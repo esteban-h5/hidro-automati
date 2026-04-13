@@ -6,10 +6,17 @@ from zipfile import BadZipFile
 
 #Excepcion al no encontrar en diccionario, indicar valor no encontrado
 def obtener_llave_por_valor(dic, valor):
+    x = []
     for k, v in dic.items():
         if v == valor:
-            return k
-    return None
+            x.append(k)
+    lenx = len(x)
+    if not lenx:
+       return None
+    if lenx == 1: 
+      return x[0]
+    if lenx > 1: 
+      return ' - '.join(x)
 
 #Insertar filtro automaticamente al inicio de la columna
 def insertarFiltro(dirExcel, colnames):

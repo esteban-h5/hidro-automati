@@ -465,7 +465,7 @@ try:
 
                             xpath_estado_copia = f"{xpath_ventana_copia}//div[contains(text(),'Copias Concluidas.')]"
                             try:
-                                WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, xpath_estado_copia)))
+                                WebDriverWait(driver, 300).until(EC.presence_of_element_located((By.XPATH, xpath_estado_copia)))
                             except Exception:
                                 raise ExcepcionDeCarga(f"No apareció el mensaje 'Copias Concluidas.' dentro de la ventana: {xpath_estado_copia}")
                             
@@ -527,7 +527,7 @@ try:
 
                                 xpath_estado_copia = f"{xpath_ventana_copia}//div[contains(text(),'Copias Concluidas.')]"
                                 try:
-                                    WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.XPATH, xpath_estado_copia)))
+                                    WebDriverWait(driver, 360).until(EC.presence_of_element_located((By.XPATH, xpath_estado_copia)))
                                 except Exception:
                                     raise ExcepcionDeCarga(f"No apareció el mensaje 'Copias Concluidas.' dentro de la ventana: {xpath_estado_copia}")
                                 
@@ -586,6 +586,19 @@ try:
                 m_no_selec = []
                 m_selec = []
 
+                tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
+                elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
+                
+                #CLIENTE DE ULTIMA MUESTRA CREADA
+                m_cliente = elementos[1].find_element(By.XPATH,f"./td[{tablaColnames['Cuenta']}]").text
+                if not SufijoTituloGeneral:
+                    pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
+                else:
+                    pe_titulo = f"PE - {m_cliente} - {coti_name_id} - {SufijoTituloGeneral}"
+
+                logprint(f"titulo: {pe_titulo}")
+                x_pe_titulo = pe_titulo
+
                 ############################################################################################
                 ## Seleccionar Nuevas Muestras para CREAR ENVASE
                 if CrearPE:
@@ -594,23 +607,13 @@ try:
                     EsperarCARGA_myLIMS(driver)
                     
                     eprint(f"[Seleccionando ID para PE]")
-                    
-                    tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
-                    elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
-                    
-                    #CLIENTE DE ULTIMA MUESTRA CREADA
-                    m_cliente = elementos[1].find_element(By.XPATH,f"./td[{tablaColnames['Cuenta']}]").text
-                    if not SufijoTituloGeneral:
-                        pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
-                    else:
-                        pe_titulo = f"PE - {m_cliente} - {coti_name_id} - {SufijoTituloGeneral}"
-
-                    logprint(f"titulo: {pe_titulo}")
 
                     #Crear pe de muestras nuevas copiadas
                     if CopiarMuestras:
 
                         for idx in range(cant_copias):
+                            tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
+                            elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
                             muestra = elementos[idx]
 
                             muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['ID']}]").text
@@ -694,7 +697,7 @@ try:
 
                         boton_actividad.find_element(By.XPATH, "./../ul/li[@data-test='Crear']").click()
                         EsperarCARGA_myLIMS(driver)
-
+                        
                         driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Preparación de Envases')]").click()
                         EsperarCARGA_myLIMS(driver)
 
@@ -717,6 +720,18 @@ try:
 
                             raise ExcepcionDeMuestra(f"Alertas Inesperadas (más info en el log), titulos encontrados de ventanas: {str_salida}")
                         
+                        EsperarCARGA_myLIMS(driver)
+
+                        responsable = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='ResponsibleUser']/..//input[@class='k-input']").get_attribute("value")
+                        if not responsable:
+                            #### EXCEL
+                            x_pe_id = "###"
+                            x_pe_n_muestra = "###"
+                            ####
+                            
+                            x_xlsx_estado_final.append("[ERROR MYLIMS]")    
+                            raise ExcepcionDeMuestra(f"Carga de PE interrumpida, mylims no carga datos")
+
                         if paisActual == "colombia":
                             driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Peso Colombiano')]").click()
                             logprint("click en peso colombiano")
@@ -729,7 +744,7 @@ try:
                             driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Unidad de Fomento')]").click()
                             logprint("click en unidad de fomento")
 
-                        # BotonVentana(driver,"Confirmar").click()
+                        BotonVentana(driver,"Confirmar").click()
                         EsperarCARGA_myLIMS(driver)
 
                         pe_identification = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Identification' and @name='Identification']")
@@ -747,19 +762,16 @@ try:
 
                         BotonAccion(driver,"SaveButton").click()
                         EsperarCARGA_myLIMS(driver)
-
+                        
                         #### EXCEL
-                        x_pe_titulo = pe_titulo
                         x_pe_id = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Id' and @name='Id']").get_attribute("value").replace("\'", "")
                         x_pe_n_muestra = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='ControlNumber' and @name='ControlNumber']").get_attribute("value")
                         ####
 
                         eprint(f"[PE creado ({x_pe_id}) - ({x_pe_n_muestra}) - ({x_pe_titulo})]\n")
-
                     else:
 
                         #### EXCEL
-                        x_pe_titulo = "###"
                         x_pe_id = "###"
                         x_pe_n_muestra = "###"
                         ####
@@ -770,7 +782,6 @@ try:
                 else:
 
                     #### EXCEL
-                    x_pe_titulo = "SIN PE"
                     x_pe_id = "SIN PE"
                     x_pe_n_muestra = "SIN PE"
                     ####

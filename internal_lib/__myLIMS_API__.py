@@ -12,8 +12,8 @@ from __myLIMS_class__ import (
     SampleSpecificationInsert,
     ValidationError,
 )
-
-from requests.exceptions import HTTPError, ReadTimeout, ConnectionError as conerror
+from __myLIMS_modulos__ import ExcepcionDeCarga
+from requests.exceptions import HTTPError, ReadTimeout, ConnectionError
 from openpyxl import load_workbook
 from zipfile import BadZipFile
 from urllib.parse import quote
@@ -62,19 +62,18 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
     while True:
         try:
             respuesta = api_get(url_text, APIdomain, token, PageResult[SampleBasic])
-        except (HTTPError, ReadTimeout, conerror) as e:
+        except (HTTPError, ReadTimeout, ConnectionError) as e:
             if retries != 0:
                 retries -= 1
-                respuesta
-                funcion_print(f"{e} ERROR DE API AL OBTENER MUESTRAS\nReintentando en 10 seg [INTENTOS: {retries}]")
-                funcion_logprint("Body:", e.response.text)
+                
+                funcion_print(f"ERROR DE API AL OBTENER MUESTRAS\nReintentando en 10 seg [INTENTOS: {retries}]")
+                funcion_logprint("Body:", e.response)
                 sleep(10)
                 
                 continue
 
             else:
-                funcion_print(f"Continuando con lista actual")
-                return samples_list
+                raise ExcepcionDeCarga("No se pudo obtener lista de muestras por API")                
 
         break
 
@@ -85,21 +84,24 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
     
     page = 1
     retries = 5
+    
     while respuesta.Count >= 100:
         funcion_print(f"{page}/{total_page}")
         try:
             respuesta = api_get(url_text+f"&$skip={100*page}", APIdomain, token, PageResult[SampleBasic])
-        except (HTTPError, ReadTimeout, conerror) as e:
+        except (HTTPError, ReadTimeout, ConnectionError) as e:
             if retries != 0:
                 retries -= 1
-                funcion_print(f"{e} ERROR DE API AL OBTENER MUESTRAS\nReintentando en 10 seg [INTENTOS: {retries}]")
-                funcion_logprint("Body:", e.response.text)
+                funcion_print(f"ERROR DE API AL OBTENER MUESTRAS\nReintentando en 10 seg [INTENTOS: {retries}]")
+                funcion_logprint("Body:", e.response)
                 respuesta.Count = 100
                 sleep(10)
                 continue
 
             else:
-                break
+                funcion_print(f"Sin reintentos, continuando con lista actual")
+                return samples_list
+
         samples_list = samples_list + [str(sample.Id) for sample in respuesta.Result]
         page+=1
 
@@ -195,6 +197,9 @@ def get_sampletype(identification: str, APIdomain, token, funcion_print=print) -
 
     if respuesta.Count > 1:
         funcion_print(f"SE ENCONTRO MAS DE 1 RESULTADO\nSe encontro tambien: {' - '.join(_.Identification for _ in respuesta.Result[1:])}")
+    
+    if not respuesta.Result[0].Id or not respuesta.Result[0].Identification:
+        funcion_print(f"INFORMACION VACÍA PARA TIPO DE MUESTRA MATRIZ {identification} [{respuesta.Result[0].Id}]")
 
     return respuesta.Result[0]
 
@@ -203,7 +208,7 @@ def get_specification(identification: str, APIdomain, token, funcion_print=print
     empty_obj = SpecificationBasic(**{f: None for f in SpecificationBasic.model_fields})
     
     try:
-        respuesta = api_get(f"Specifications?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[SampleTypeBasic])
+        respuesta = api_get(f"Specifications?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[SpecificationBasic])
     except HTTPError as e:
         funcion_print(f"ERROR DE API {e} PARA LA ESPECIFICACION {identification}")
         return empty_obj
@@ -264,7 +269,7 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
         centro_servicio = 24
         
         # HB BOG 2026
-        lista_precio = 138 if ListaPrecio == 0 else ListaPrecio
+        lista_precio = 141 if ListaPrecio == 0 else ListaPrecio
         
         info_lista= lambda df: [
 
@@ -452,8 +457,8 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
             sample_records.append([id_muestra , solicitud.model_dump_json()])
 
         except ValidationError as e:
-            funcion_print(f"Error para muestra {idx} de {total_muestras} [id en excel: {id_muestra}] {e.errors()}")
-            funcion_log(f"-----------\n{e.json()}\n-----------\n")
+            funcion_print(f"Error para muestra {idx} de {total_muestras} [id en excel: {id_muestra}]")
+            funcion_print(f"-----------\n{e}\n-----------\n")
             sample_records.append([id_muestra, {'ERROR'}])
 
     return sample_records

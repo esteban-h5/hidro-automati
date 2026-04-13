@@ -1107,6 +1107,7 @@ while True:
                                         
                                     else:    
                                         eprint(f"Otra ventana encontrada [titulo: {ventana_titulo}], saltando muestra...")
+                                        logprint(f"[cuerpo: {ventana_titulo}]")
                                         if Registrar: 
                                             CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ALERTA PRECIOS")
                                         continue

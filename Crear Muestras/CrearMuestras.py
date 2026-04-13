@@ -1,4 +1,4 @@
-import sys,os
+import sys,os, traceback
 
 file_name           =   os.path.basename(__file__)
 CM_wd               =   os.path.dirname(os.path.realpath(__file__))
@@ -59,10 +59,10 @@ try:
     
     keys_usadas = [
         "MostrarJSON", "ExcelEntrada", "ExcelObjetivo", "COL-std_id_muestra", "Partition", "ListaPrecio",
-        "SCL-HojaIM", "SCL-COL-indice_m", "SCL-COL-id_muestras", "SCL-COL-identificacion", "SCL-COL-matriz", "SCL-COL-empresa", "SCL-COL-cuenta_relacionada", "SCL-COL-motivo", "SCL-COL-cliente_solicitante", "SCL-COL-lugar_muestreo", "SCL-COL-punto_muestreo", "SCL-COL-direccion_muestreo", "SCL-COL-estado", "SCL-COL-municipio", "SCL-COL-siralab", "SCL-COL-instrumento_ambiental", "SCL-COL-tipo_muestreo", "SCL-COL-consultora", "SCL-COL-coordenadas", "SCL-COL-resp_muestreo", "SCL-COL-frecuencia", "SCL-COL-proyecto", "SCL-COL-region", "SCL-COL-departamento", "SCL-COL-comuna", "SCL-COL-etfa", "SCL-COL-tabla_comp", "SCL-HojaA", "SCL-COL-indice_a", "SCL-COL-metodo_id", "SCL-COL-grupo_id", "SCL-COL-analisis_id", "SCL-COL-u_medida_id", "SCL-HojaIM", "SCL-COL-indice_m", "SCL-COL-id_muestras", "SCL-COL-identificacion", "SCL-COL-matriz", "SCL-COL-empresa", "SCL-COL-cuenta_relacionada", "SCL-COL-motivo", "SCL-COL-cliente_solicitante", "SCL-COL-lugar_muestreo", "SCL-COL-punto_muestreo", "SCL-COL-direccion_muestreo", "SCL-COL-estado", "SCL-COL-municipio", "SCL-COL-siralab", "SCL-COL-instrumento_ambiental", "SCL-COL-tipo_muestreo", "SCL-COL-consultora", "SCL-COL-coordenadas", "SCL-COL-resp_muestreo", "SCL-COL-frecuencia", "SCL-COL-proyecto", "SCL-COL-region", "SCL-COL-departamento", "SCL-COL-comuna", "SCL-COL-etfa", "SCL-COL-tabla_comp", "SCL-HojaA", "SCL-COL-indice_a", "SCL-COL-metodo_id", "SCL-COL-grupo_id", "SCL-COL-analisis_id", "SCL-COL-u_medida_id", 
-        "MTY-HojaIM", "MTY-COL-indice_m", "MTY-COL-id_muestras", "MTY-COL-identificacion", "MTY-COL-matriz", "MTY-COL-empresa", "MTY-COL-cuenta_relacionada", "MTY-COL-motivo", "MTY-COL-cliente_solicitante", "MTY-COL-lugar_muestreo", "MTY-COL-punto_muestreo", "MTY-COL-direccion_muestreo", "MTY-COL-estado", "MTY-COL-municipio", "MTY-COL-siralab", "MTY-COL-instrumento_ambiental", "MTY-COL-tipo_muestreo", "MTY-COL-consultora", "MTY-COL-coordenadas", "MTY-COL-resp_muestreo", "MTY-COL-frecuencia", "MTY-COL-proyecto", "MTY-COL-region", "MTY-COL-departamento", "MTY-COL-comuna", "MTY-COL-etfa", "MTY-COL-tabla_comp", "MTY-HojaA", "MTY-COL-indice_a", "MTY-COL-metodo_id", "MTY-COL-grupo_id", "MTY-COL-analisis_id", "MTY-COL-u_medida_id", "MTY-HojaIM", "MTY-COL-indice_m", "MTY-COL-id_muestras", "MTY-COL-identificacion", "MTY-COL-matriz", "MTY-COL-empresa", "MTY-COL-cuenta_relacionada", "MTY-COL-motivo", "MTY-COL-cliente_solicitante", "MTY-COL-lugar_muestreo", "MTY-COL-punto_muestreo", "MTY-COL-direccion_muestreo", "MTY-COL-estado", "MTY-COL-municipio", "MTY-COL-siralab", "MTY-COL-instrumento_ambiental", "MTY-COL-tipo_muestreo", "MTY-COL-consultora", "MTY-COL-coordenadas", "MTY-COL-resp_muestreo", "MTY-COL-frecuencia", "MTY-COL-proyecto", "MTY-COL-region", "MTY-COL-departamento", "MTY-COL-comuna", "MTY-COL-etfa", "MTY-COL-tabla_comp", "MTY-HojaA", "MTY-COL-indice_a", "MTY-COL-metodo_id", "MTY-COL-grupo_id", "MTY-COL-analisis_id", "MTY-COL-u_medida_id", 
-        "LIM-HojaIM", "LIM-COL-indice_m", "LIM-COL-id_muestras", "LIM-COL-identificacion", "LIM-COL-matriz", "LIM-COL-empresa", "LIM-COL-cuenta_relacionada", "LIM-COL-motivo", "LIM-COL-cliente_solicitante", "LIM-COL-lugar_muestreo", "LIM-COL-punto_muestreo", "LIM-COL-direccion_muestreo", "LIM-COL-estado", "LIM-COL-municipio", "LIM-COL-siralab", "LIM-COL-instrumento_ambiental", "LIM-COL-tipo_muestreo", "LIM-COL-consultora", "LIM-COL-coordenadas", "LIM-COL-resp_muestreo", "LIM-COL-frecuencia", "LIM-COL-proyecto", "LIM-COL-region", "LIM-COL-departamento", "LIM-COL-comuna", "LIM-COL-etfa", "LIM-COL-tabla_comp", "LIM-HojaA", "LIM-COL-indice_a", "LIM-COL-metodo_id", "LIM-COL-grupo_id", "LIM-COL-analisis_id", "LIM-COL-u_medida_id", "LIM-HojaIM", "LIM-COL-indice_m", "LIM-COL-id_muestras", "LIM-COL-identificacion", "LIM-COL-matriz", "LIM-COL-empresa", "LIM-COL-cuenta_relacionada", "LIM-COL-motivo", "LIM-COL-cliente_solicitante", "LIM-COL-lugar_muestreo", "LIM-COL-punto_muestreo", "LIM-COL-direccion_muestreo", "LIM-COL-estado", "LIM-COL-municipio", "LIM-COL-siralab", "LIM-COL-instrumento_ambiental", "LIM-COL-tipo_muestreo", "LIM-COL-consultora", "LIM-COL-coordenadas", "LIM-COL-resp_muestreo", "LIM-COL-frecuencia", "LIM-COL-proyecto", "LIM-COL-region", "LIM-COL-departamento", "LIM-COL-comuna", "LIM-COL-etfa", "LIM-COL-tabla_comp", "LIM-HojaA", "LIM-COL-indice_a", "LIM-COL-metodo_id", "LIM-COL-grupo_id", "LIM-COL-analisis_id", "LIM-COL-u_medida_id", 
-        "BOG-HojaIM", "BOG-COL-indice_m", "BOG-COL-id_muestras", "BOG-COL-identificacion", "BOG-COL-matriz", "BOG-COL-empresa", "BOG-COL-cuenta_relacionada", "BOG-COL-motivo", "BOG-COL-cliente_solicitante", "BOG-COL-lugar_muestreo", "BOG-COL-punto_muestreo", "BOG-COL-direccion_muestreo", "BOG-COL-estado", "BOG-COL-municipio", "BOG-COL-siralab", "BOG-COL-instrumento_ambiental", "BOG-COL-tipo_muestreo", "BOG-COL-consultora", "BOG-COL-coordenadas", "BOG-COL-resp_muestreo", "BOG-COL-frecuencia", "BOG-COL-proyecto", "BOG-COL-region", "BOG-COL-departamento", "BOG-COL-comuna", "BOG-COL-etfa", "BOG-COL-tabla_comp", "BOG-HojaA", "BOG-COL-indice_a", "BOG-COL-metodo_id", "BOG-COL-grupo_id", "BOG-COL-analisis_id", "BOG-COL-u_medida_id", "BOG-HojaIM", "BOG-COL-indice_m", "BOG-COL-id_muestras", "BOG-COL-identificacion", "BOG-COL-matriz", "BOG-COL-empresa", "BOG-COL-cuenta_relacionada", "BOG-COL-motivo", "BOG-COL-cliente_solicitante", "BOG-COL-lugar_muestreo", "BOG-COL-punto_muestreo", "BOG-COL-direccion_muestreo", "BOG-COL-estado", "BOG-COL-municipio", "BOG-COL-siralab", "BOG-COL-instrumento_ambiental", "BOG-COL-tipo_muestreo", "BOG-COL-consultora", "BOG-COL-coordenadas", "BOG-COL-resp_muestreo", "BOG-COL-frecuencia", "BOG-COL-proyecto", "BOG-COL-region", "BOG-COL-departamento", "BOG-COL-comuna", "BOG-COL-etfa", "BOG-COL-tabla_comp", "BOG-HojaA", "BOG-COL-indice_a", "BOG-COL-metodo_id", "BOG-COL-grupo_id", "BOG-COL-analisis_id", "BOG-COL-u_medida_id"
+        "SCL-HojaIM", "SCL-COL-indice_m", "SCL-COL-id_muestras", "SCL-COL-identificacion", "SCL-COL-matriz", "SCL-COL-empresa", "SCL-COL-cuenta_relacionada", "SCL-COL-motivo", "SCL-COL-cliente_solicitante", "SCL-COL-lugar_muestreo", "SCL-COL-punto_muestreo", "SCL-COL-direccion_muestreo", "SCL-COL-siralab", "SCL-COL-instrumento_ambiental", "SCL-COL-tipo_muestreo", "SCL-COL-consultora", "SCL-COL-coordenadas", "SCL-COL-resp_muestreo", "SCL-COL-frecuencia", "SCL-COL-proyecto", "SCL-COL-region", "SCL-COL-comuna", "SCL-COL-etfa", "SCL-COL-tabla_comp", "SCL-HojaA", "SCL-COL-indice_a", "SCL-COL-metodo_id", "SCL-COL-grupo_id", "SCL-COL-analisis_id", "SCL-COL-u_medida_id",
+        "MTY-HojaIM", "MTY-COL-indice_m", "MTY-COL-id_muestras", "MTY-COL-identificacion", "MTY-COL-matriz", "MTY-COL-empresa", "MTY-COL-cuenta_relacionada", "MTY-COL-motivo", "MTY-COL-cliente_solicitante", "MTY-COL-lugar_muestreo", "MTY-COL-punto_muestreo", "MTY-COL-direccion_muestreo", "MTY-COL-estado", "MTY-COL-municipio", "MTY-COL-siralab", "MTY-COL-instrumento_ambiental", "MTY-COL-tipo_muestreo", "MTY-COL-consultora", "MTY-COL-coordenadas", "MTY-COL-resp_muestreo", "MTY-COL-frecuencia", "MTY-COL-proyecto", "MTY-COL-region", "MTY-COL-departamento", "MTY-COL-comuna", "MTY-COL-etfa", "MTY-COL-tabla_comp", "MTY-HojaA", "MTY-COL-indice_a", "MTY-COL-metodo_id", "MTY-COL-grupo_id", "MTY-COL-analisis_id", "MTY-COL-u_medida_id", 
+        "LIM-HojaIM", "LIM-COL-indice_m", "LIM-COL-id_muestras", "LIM-COL-identificacion", "LIM-COL-matriz", "LIM-COL-empresa", "LIM-COL-cuenta_relacionada", "LIM-COL-motivo", "LIM-COL-cliente_solicitante", "LIM-COL-lugar_muestreo", "LIM-COL-punto_muestreo", "LIM-COL-direccion_muestreo", "LIM-COL-estado", "LIM-COL-municipio", "LIM-COL-siralab", "LIM-COL-instrumento_ambiental", "LIM-COL-tipo_muestreo", "LIM-COL-consultora", "LIM-COL-coordenadas", "LIM-COL-resp_muestreo", "LIM-COL-frecuencia", "LIM-COL-proyecto", "LIM-COL-region", "LIM-COL-departamento", "LIM-COL-comuna", "LIM-COL-etfa", "LIM-COL-tabla_comp", "LIM-HojaA", "LIM-COL-indice_a", "LIM-COL-metodo_id", "LIM-COL-grupo_id", "LIM-COL-analisis_id", "LIM-COL-u_medida_id", 
+        "BOG-HojaIM", "BOG-COL-indice_m", "BOG-COL-id_muestras", "BOG-COL-identificacion", "BOG-COL-matriz", "BOG-COL-empresa", "BOG-COL-cuenta_relacionada", "BOG-COL-motivo", "BOG-COL-cliente_solicitante", "BOG-COL-lugar_muestreo", "BOG-COL-punto_muestreo", "BOG-COL-direccion_muestreo", "BOG-COL-estado", "BOG-COL-municipio", "BOG-COL-siralab", "BOG-COL-instrumento_ambiental", "BOG-COL-tipo_muestreo", "BOG-COL-consultora", "BOG-COL-coordenadas", "BOG-COL-resp_muestreo", "BOG-COL-frecuencia", "BOG-COL-proyecto", "BOG-COL-region", "BOG-COL-departamento", "BOG-COL-comuna", "BOG-COL-etfa", "BOG-COL-tabla_comp", "BOG-HojaA", "BOG-COL-indice_a", "BOG-COL-metodo_id", "BOG-COL-grupo_id", "BOG-COL-analisis_id", "BOG-COL-u_medida_id",
         ]
     
     keys_used_g = ["paisActual", "ActivarLOG", "api-url"]
@@ -240,6 +240,7 @@ try:
 
         informacion_muestras_df["col-infos"] = informacion_muestras_df[col_fmt["col-indice_m"]].map(analisis_group)
     except KeyError as e:
+        traceback.print_exc(file=sys.stdout)
         valor = e.args[0]
         llave = obtener_llave_por_valor(col_fmt, valor)
         if llave:
@@ -257,7 +258,7 @@ try:
     lista_partitions = [informacion_muestras_df[i:i+Partition] for i in range(0, total_muestras, Partition)]
     len_lista_partitions = len(lista_partitions)
     
-    if ListaPrecio != 0 and not ListaPrecio.isdigit():
+    if ListaPrecio != 0 and not str(ListaPrecio).isdigit():
         ListaPrecio = get_pricetable(ListaPrecio, APIdomain=APIdomain, token=token, funcion_print=eprint).Id
         
         if ListaPrecio == None:
@@ -277,12 +278,14 @@ try:
     with open(os.path.join(CM_wd, f"errores_{fecha}.txt"), "w", encoding="utf-8") as errores_salida:
 
         for idx, inf_muestra_df in enumerate(lista_partitions):
+            slog()
             timer.save(idx)
             eprint(f"\n[{idx*(Partition)}/{total_muestras}] [{idx+1}/{total_part}] [termino {timer.h_estimada} en {timer.t_restante}]")
 
             try:
                 sample_records = FormatoDF(inf_muestra_df, col_fmt, paisActual, getdomain=APIdomain, gettoken=token, ListaPrecio=ListaPrecio, funcion_log=logprint, funcion_print=eprint)
             except KeyError as e:
+                traceback.print_exc(file=sys.stdout)
                 valor = e.args[0]
                 llave = obtener_llave_por_valor(col_fmt, valor)
                 if llave:
@@ -300,6 +303,7 @@ try:
             
             temp_dict = {}
             for idx2, (id_muestra, record) in enumerate(sample_records, start=1):
+                slog()
                 eprint(f"{idx2}/{total_solicitudes} [idx {id_muestra}]")
                 
                 if MostrarJSON:
@@ -331,6 +335,7 @@ try:
 
                 if ExcelObjetivo:
                     FilaAgregarXLSX(ExcelObjetivo, value, colnames=[col_fmt["col-std_id_muestra"]], except_kill=False, except_create=True)
+
                 df_salida.loc[df_salida[col_fmt["col-indice_m"]] == int(key), col_fmt["col-id_muestras"]] = value
 
             df_salida.columns = org_col_inf
