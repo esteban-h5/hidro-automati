@@ -22,6 +22,8 @@ from datetime import datetime
 from time import sleep
 from time import time
 
+CON_ERROR_HANDLER = (HTTPError, ReadTimeout, ConnectionError)
+
 def api_get(endpoint, APIdomain, token, model: Type[T], espera=30) -> T:
     response = requests.get(APIdomain+endpoint, 
                 headers = {
@@ -62,7 +64,7 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
     while True:
         try:
             respuesta = api_get(url_text, APIdomain, token, PageResult[SampleBasic])
-        except (HTTPError, ReadTimeout, ConnectionError) as e:
+        except CON_ERROR_HANDLER as e:
             if retries != 0:
                 retries -= 1
                 
@@ -89,7 +91,7 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
         funcion_print(f"{page}/{total_page}")
         try:
             respuesta = api_get(url_text+f"&$skip={100*page}", APIdomain, token, PageResult[SampleBasic])
-        except (HTTPError, ReadTimeout, ConnectionError) as e:
+        except CON_ERROR_HANDLER as e:
             if retries != 0:
                 retries -= 1
                 funcion_print(f"ERROR DE API AL OBTENER MUESTRAS\nReintentando en 10 seg [INTENTOS: {retries}]")
@@ -114,7 +116,7 @@ def get_grupoanalisis(id: int, APIdomain, token, funcion_print=print) ->  List[A
     try:
         # respuesta = api_get(f"AnalysisGroups/{id}/Analyses?$filter=Active eq true", APIdomain, token, PageResult[AnalysisGroupAnalysisBasic])
         respuesta = api_get(f"AnalysisGroups/{id}/Analyses", APIdomain, token, PageResult[AnalysisGroupAnalysisBasic])
-    except HTTPError as e:
+    except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA GRUPO DE ANALISIS {id}")
         return empty_obj
 
@@ -131,7 +133,7 @@ def get_pricetable(identification: str, APIdomain, token, funcion_print=print) -
 
     try:
         respuesta = api_get(f"pricelists?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[PriceListBasic])
-    except HTTPError as e:
+    except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA TABLA DE PRECIOS {identification}")
         return empty_obj
 
@@ -150,7 +152,7 @@ def get_samplereason(identification: str, APIdomain, token, funcion_print=print)
 
     try:
         respuesta = api_get(f"samplereasons?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[SampleReasonBasic])
-    except HTTPError as e:
+    except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA MOTIVO {identification}")
         return empty_obj
 
@@ -168,7 +170,7 @@ def get_account(identification: str, APIdomain, token, funcion_print=print) -> P
     
     try:
         respuesta = api_get(f"Accounts?$filter=Identification eq '{quote(identification)}'", APIdomain, token, PageResult[AccountDetail])
-    except HTTPError as e:
+    except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA CUENTA {identification}")
         return empty_obj
 
@@ -187,7 +189,7 @@ def get_sampletype(identification: str, APIdomain, token, funcion_print=print) -
     
     try:
         respuesta = api_get(f"SampleTypes?$filter=Identification eq '{quote(identification)}'", APIdomain, token, PageResult[SampleTypeBasic])
-    except HTTPError as e:
+    except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA TIPO DE MUESTRA {identification}")
         return empty_obj
 
@@ -209,7 +211,7 @@ def get_specification(identification: str, APIdomain, token, funcion_print=print
     
     try:
         respuesta = api_get(f"Specifications?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[SpecificationBasic])
-    except HTTPError as e:
+    except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA LA ESPECIFICACION {identification}")
         return empty_obj
 
@@ -229,7 +231,7 @@ def get_methodprerequisite(id: str, APIdomain, token, funcion_print=print) -> Li
 
     try:
         respuesta = api_get(f"Methods/{id}/MethodPrerequisiteAnalysisBasic?$filter=Active eq true", APIdomain, token, PageResult[MethodPrerequisiteAnalysisBasic])
-    except HTTPError as e:
+    except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA METODO {id}")
         return empty_obj
 
@@ -248,7 +250,7 @@ def get_methods(page: int, APIdomain, token, funcion_print=print) -> List[T]:
             f"Methods/Analyses?$skip={(page-1)*50}&$inlinecount=allpages&$filter=Method/Active eq true and (Method/MethodType/Identification eq 'General' or Method/MethodType/Identification eq 'General - QC')",
             APIdomain, token, PageResult[MethodAnalysisBasic]
         )
-    except HTTPError as e:
+    except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA BUSCAR METODOS")
         return [empty_obj]
 
@@ -456,11 +458,11 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
 
             sample_records.append([id_muestra , solicitud.model_dump_json()])
 
-        except ValidationError as e:
+        except (ValidationError,) + CON_ERROR_HANDLER as e:
             funcion_print(f"Error para muestra {idx} de {total_muestras} [id en excel: {id_muestra}]")
             funcion_print(f"-----------\n{e}\n-----------\n")
             sample_records.append([id_muestra, {'ERROR'}])
-
+            
     return sample_records
 
 

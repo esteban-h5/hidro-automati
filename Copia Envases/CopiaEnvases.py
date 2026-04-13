@@ -269,7 +269,7 @@ try:
 
     for key in dict_padre.keys():
         if key != "":
-            eprint(f"División {key}")
+            eprint(f"--------------\nDivisión {key}\n--------------\n")
 
         main_dict = dict_padre[key]
 
@@ -398,7 +398,7 @@ try:
                 m_copias_id = []
                 m_no_copia = []
                 m_copias = []
-
+                v_n_copias = None
                 if CopiarMuestras:
                     eprint(f"[Seleccionando ID para copiar]")
 

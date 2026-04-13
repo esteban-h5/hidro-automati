@@ -30,7 +30,7 @@ COL-std_id_muestra          :   ID MUESTRAS
 
 SCL-HojaIM : Muestras
 SCL-COL-indice_m                :   N°
-SCL-COL-id_muestras             :   ID muestra
+SCL-COL-id_muestras             :   ID de muestra
 SCL-COL-identificacion          :   Identificación de muestra
 SCL-COL-matriz                  :   Matriz
 SCL-COL-empresa                 :   Empresa

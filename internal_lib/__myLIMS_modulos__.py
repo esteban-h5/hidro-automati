@@ -13,7 +13,7 @@ try:
 
     from cryptography.fernet import InvalidToken, Fernet
     from datetime import datetime, timedelta
-    from random import randint, choice, uniform
+    from random import randint, choice, uniform, shuffle
     from decouple import Config, RepositoryEnv
     from tkinter import filedialog, messagebox
     from keyring import get_password as get
