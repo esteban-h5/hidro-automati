@@ -1,6 +1,6 @@
 ###############################
 
-version_actual = "6.2.5-2"
+version_actual = "6.2.6"
 fecha_version = "miercoles 1 de abril 2026"
 
 changelog = [
