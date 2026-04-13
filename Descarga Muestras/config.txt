@@ -22,6 +22,14 @@ DescargarPublicadas   :   False
 Alerta		            :	  False
 #
 #
+# Revertir lista de muestras pendientes [False]
+RevertirLista         :   False
+#
+#
+# Revertir lista de muestras pendientes [False]
+BarajarLista          :   False
+#
+#
 # Publicación automatica [True]
 AutoPublicar          :   True
 #
