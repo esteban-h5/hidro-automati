@@ -65,9 +65,11 @@ def get_samples_ID(filter, APIdomain, funcion_print=print, funcion_logprint=prin
         except (HTTPError, ReadTimeout, ConnectionError) as e:
             if retries != 0:
                 retries -= 1
+                
                 funcion_print(f"ERROR DE API AL OBTENER MUESTRAS\nReintentando en 10 seg [INTENTOS: {retries}]")
                 funcion_logprint("Body:", e.response)
                 sleep(10)
+                
                 continue
 
             else:
