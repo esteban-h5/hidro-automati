@@ -40,8 +40,6 @@ SCL-COL-cliente_solicitante     :   Cliente solicitante
 SCL-COL-lugar_muestreo          :   Lugar de Muestreo
 SCL-COL-punto_muestreo          :   Punto de muestreo
 SCL-COL-direccion_muestreo      :   Dirección de muestreo
-SCL-COL-estado                  :   #NO APLICA
-SCL-COL-municipio               :   #NO APLICA
 SCL-COL-siralab                 :   #NO APLICA
 SCL-COL-instrumento_ambiental   :   Instrumento ambiental
 SCL-COL-tipo_muestreo           :   Tipo de muestreo
@@ -51,7 +49,6 @@ SCL-COL-resp_muestreo           :   Resp Muestreo
 SCL-COL-frecuencia              :   #Frecuencia
 SCL-COL-proyecto                :   Proyecto
 SCL-COL-region                  :   Región
-SCL-COL-departamento            :   #NO APLICA
 SCL-COL-comuna                  :   Comuna
 SCL-COL-etfa                    :   ETFA
 SCL-COL-tabla_comp              :   Tabla comparativa

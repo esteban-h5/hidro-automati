@@ -586,6 +586,19 @@ try:
                 m_no_selec = []
                 m_selec = []
 
+                tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
+                elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
+                
+                #CLIENTE DE ULTIMA MUESTRA CREADA
+                m_cliente = elementos[1].find_element(By.XPATH,f"./td[{tablaColnames['Cuenta']}]").text
+                if not SufijoTituloGeneral:
+                    pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
+                else:
+                    pe_titulo = f"PE - {m_cliente} - {coti_name_id} - {SufijoTituloGeneral}"
+
+                logprint(f"titulo: {pe_titulo}")
+                x_pe_titulo = pe_titulo
+
                 ############################################################################################
                 ## Seleccionar Nuevas Muestras para CREAR ENVASE
                 if CrearPE:
@@ -594,23 +607,13 @@ try:
                     EsperarCARGA_myLIMS(driver)
                     
                     eprint(f"[Seleccionando ID para PE]")
-                    
-                    tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
-                    elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
-                    
-                    #CLIENTE DE ULTIMA MUESTRA CREADA
-                    m_cliente = elementos[1].find_element(By.XPATH,f"./td[{tablaColnames['Cuenta']}]").text
-                    if not SufijoTituloGeneral:
-                        pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
-                    else:
-                        pe_titulo = f"PE - {m_cliente} - {coti_name_id} - {SufijoTituloGeneral}"
-
-                    logprint(f"titulo: {pe_titulo}")
 
                     #Crear pe de muestras nuevas copiadas
                     if CopiarMuestras:
 
                         for idx in range(cant_copias):
+                            tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
+                            elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
                             muestra = elementos[idx]
 
                             muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['ID']}]").text
@@ -694,7 +697,7 @@ try:
 
                         boton_actividad.find_element(By.XPATH, "./../ul/li[@data-test='Crear']").click()
                         EsperarCARGA_myLIMS(driver)
-
+                        
                         driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Preparación de Envases')]").click()
                         EsperarCARGA_myLIMS(driver)
 
@@ -717,9 +720,18 @@ try:
 
                             raise ExcepcionDeMuestra(f"Alertas Inesperadas (más info en el log), titulos encontrados de ventanas: {str_salida}")
                         
-                        notify("PAUSA PARA RECARGAR")
-                        input("ENTER PARA CONTINUAR...")
-                        
+                        EsperarCARGA_myLIMS(driver)
+
+                        responsable = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='ResponsibleUser']/..//input[@class='k-input']").get_attribute("value")
+                        if not responsable:
+                            #### EXCEL
+                            x_pe_id = "###"
+                            x_pe_n_muestra = "###"
+                            ####
+                            
+                            x_xlsx_estado_final.append("[ERROR MYLIMS]")    
+                            raise ExcepcionDeMuestra(f"Carga de PE interrumpida, mylims no carga datos")
+
                         if paisActual == "colombia":
                             driver.find_element(By.XPATH, "//div[contains(@class, 'k-window')]//td[contains(text(),'Peso Colombiano')]").click()
                             logprint("click en peso colombiano")
@@ -752,7 +764,6 @@ try:
                         EsperarCARGA_myLIMS(driver)
                         
                         #### EXCEL
-                        x_pe_titulo = pe_titulo
                         x_pe_id = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Id' and @name='Id']").get_attribute("value").replace("\'", "")
                         x_pe_n_muestra = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='ControlNumber' and @name='ControlNumber']").get_attribute("value")
                         ####
@@ -761,7 +772,6 @@ try:
                     else:
 
                         #### EXCEL
-                        x_pe_titulo = "###"
                         x_pe_id = "###"
                         x_pe_n_muestra = "###"
                         ####
@@ -772,7 +782,6 @@ try:
                 else:
 
                     #### EXCEL
-                    x_pe_titulo = "SIN PE"
                     x_pe_id = "SIN PE"
                     x_pe_n_muestra = "SIN PE"
                     ####
