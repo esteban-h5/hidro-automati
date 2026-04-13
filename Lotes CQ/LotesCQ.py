@@ -1,3 +1,1 @@
-#CAMBIOS PARA BRANCH
-
-class LoteCQ
+#Inicio sesión

@@ -1,11 +1,7 @@
-import requests
-import keyring
-import json
-import sys
-import os
+import requests, keyring, json, sys, os
 
 # === CONFIGURACIÓN ===
-API_URL = "https://hidrolab.mylimsweb.cloud/api/v2/"
+API_URL = "https://hidrolab.mylimsweb.cloud/api/"
 TOKEN = keyring.get_password("mylims_app", "secret7")
 
 
@@ -59,6 +55,7 @@ def api_post(endpoint: str, body: dict):
 # data_api = api_get("Specifications?$filter=Identification eq 'DS 90 Tabla 1' and Active eq true")
 # data_api = api_get("Samples?$filter=Account/Identification eq 'GSI INGENIEROS CONSULTORES LTDA'")
 # data_api = api_get("samples/2094446/infos")
+
 """
 #FILTRO HIDROLAB SCL FINALIZADAS
 data_api = api_get("Samples?$filter=Account ne null and Active eq true and endswith(ControlNumber, '.0') and "+
@@ -79,7 +76,9 @@ data_api = api_get("Samples?$filter=Account ne null and Active eq true and endsw
 #data_api = api_get("Methods?$top=200&$filter=LastVersion eq true and Active eq true and MethodType/Identification eq 'General'&$inlinecount=allpages")
 # data_api = api_get("Methods/Analyses?$inlinecount=allpages&$filter=Method/Active eq true and Method/MethodType/Identification eq 'General'")
 # data_api = api_get("User?$filter=Identification eq ''")
-data_api = api_get("Users?$filter=startswith(Email,'daq')")
+# data_api = api_get("Users?$filter=startswith(Email,'daq')")api/SampleApi/CalculatePrice
+data_api = api_post("SampleApi/CalculatePrice", body={})
+# data_api = api_get("Samples/2428747/")
 # data_api = api_get("Methods?$inlinecount=allpages&$filter=Active eq conchetumare and MethodType/Identification eq 'General'")
 #data_api = api_get("ServiceAreas?$top=200&$inlinecount=allpages&$filter=Active eq true")
 # data_api = api_get("?$top=200&$inlinecount=allpages&$filter=Active eq true")
@@ -129,7 +128,8 @@ eprint("=> Respuesta formateada:")
 eprint(json.dumps(data, indent=4, ensure_ascii=False))
 
 # # Obtener la lista de resultados
-del data["Result"]
+if "Result" in data.keys():
+    del data["Result"]
 print(data)
 
 

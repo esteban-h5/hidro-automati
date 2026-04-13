@@ -11,7 +11,7 @@ try:
     sys.path.insert(0, internal_lib)
 
     from __myLIMS_modulos__ import (
-        GetConfig, MensajeInicial, version_actual, existe_param_env,
+        GetConfig, MensajeInicial, version_actual, existe_param_env, shuffle,
         EsperarCARGA_myLIMS, ExcepcionDeCarga, ChequearNavegador,
         BotonSection, BotonAccion, BotonVentana, queue_redy, internet_ok,
         ElementClickInterceptedException, ExcepcionArchivo,
@@ -44,7 +44,7 @@ try:
         config              =   GetConfig( dirConfig=os.path.join(DM_wd,"config.txt") )
         global_config       =   GetConfig( dirConfig=os.path.join(internal_lib,"global_config.txt") )
 
-        keys_used   = ["filtro", "SoloBuscarControles", "DescargarPublicadas", "RegistrarMuestras", "RevisarRutinas", "AutoPublicar", "Olvidar", "BorrarDuplicados", "Alerta", "DOC_REVISION_ETFA_ID_CL", "DOC_REVISION_ID_CL", "nombreExcelRegistro", "nombreExcelHistorico"]
+        keys_used   = ["RevertirLista", "BarajarLista", "filtro", "SoloBuscarControles", "DescargarPublicadas", "RegistrarMuestras", "RevisarRutinas", "AutoPublicar", "Olvidar", "BorrarDuplicados", "Alerta", "DOC_REVISION_ETFA_ID_CL", "DOC_REVISION_ID_CL", "nombreExcelRegistro", "nombreExcelHistorico"]
         keys_used_g = ["myLIMSdomain", "Labsoftdomain", "paisActual", "ActivarLOG", "InicioJornada", "ExtensionJornada", "ListaMensajesRutina", "ListaMensajesHoras", "nombreExcelExcepciones", "TipoMensajeETFA", "api-url"]
 
         for key in keys_used:
@@ -91,6 +91,9 @@ try:
         Olvidar         = config.get("Olvidar", False)
         Registrar       = config.get("RegistrarMuestras", True)
         TotalReintentos = config.get("TotalReintentos", 5)
+
+        RevertirLista   = config.get("RevertirLista", False)
+        BarajarLista    = config.get("BarajarLista", False)
 
         BorrarDup = config.get("BorrarDuplicados", True)
 
