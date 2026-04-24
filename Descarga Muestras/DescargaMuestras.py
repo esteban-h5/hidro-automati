@@ -314,12 +314,17 @@ try:
         exit(1)
 
     Borrados = len(list(set(ListaMuestras) & set(ID_Excluidos)))
-    ListaMuestras = [str(_) for _ in ListaMuestras if _ not in ID_Excluidos]
     
+    ListaMuestras = [int(_) for _ in ListaMuestras if _ not in ID_Excluidos]
+
     if RevertirLista:
         ListaMuestras.reverse()
-    if BarajarLista:
+    elif BarajarLista:
         shuffle(ListaMuestras)
+    else:
+        ListaMuestras.sort()
+
+    ListaMuestras = [str(_) for _ in ListaMuestras]
     
     MuestrasCantidad = len(ListaMuestras)
     MuestrasError = []
@@ -493,7 +498,6 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                         inicio_jornada = "6:30"
                                         extension_jornada = "17:29"
                                         __inicio, __fin = FormatoLimiteHoras(inicio_jornada, extension_jornada)
-
                                         eprint(f"[Cliente {cliente} con fechas especificas inicio {__inicio} y final {__fin}]")
                                     
                                     else:

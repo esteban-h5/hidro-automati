@@ -13,7 +13,7 @@ try:
 
     from cryptography.fernet import InvalidToken, Fernet
     from datetime import datetime, timedelta
-    from random import randint, choice, uniform
+    from random import randint, choice, uniform, shuffle
     from decouple import Config, RepositoryEnv
     from tkinter import filedialog, messagebox
     from keyring import get_password as get
@@ -207,7 +207,7 @@ def AlternarMedidaVentana(driver):
 def del_alertas_iniciales(driver, xalerta, xboton):
     try:
         alerta = WebDriverWait(driver, 1).until(EC.presence_of_element_located((By.XPATH, xalerta)))
-        if "iframe" in alerta:
+        if alerta.tag_name == "iframe":
             driver.switch_to.frame(alerta)
             alerta.find_element(By.XPATH, xboton).click()
             driver.switch_to.default_content()

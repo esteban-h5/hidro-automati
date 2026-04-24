@@ -165,9 +165,19 @@ try:
     df_entrada = df_entrada.replace(r'^\s*$', pd.NA, regex=True)
     df_entrada["AGRUPACIÓN"] = df_entrada["AGRUPACIÓN"].fillna("")
 
-    #Formatear solo si existen valores
-    if not df_entrada["FECHA EJECUCIÓN"].isna().any():
-        df_entrada["FECHA EJECUCIÓN"] = pd.to_datetime(df_entrada["FECHA EJECUCIÓN"].dt.strftime("%d-%m-%Y"), dayfirst=True).dt.normalize()
+    mask_original_notna = df_entrada["FECHA EJECUCIÓN"].notna()
+
+    if mask_original_notna.any():
+        valores_no_nulos = df_entrada.loc[mask_original_notna, "FECHA EJECUCIÓN"].astype(str).str.strip()
+        if valores_no_nulos.str.match(r'^\d+$').any():
+            raise ValueError("Formato incorrecto: No se permiten números puros (ej. 12312) en la fecha.")
+
+    fechas_limpias = pd.to_datetime(df_entrada["FECHA EJECUCIÓN"], dayfirst=True, errors='coerce')
+
+    if mask_original_notna.sum() != fechas_limpias.notna().sum():
+        raise ValueError("Formato incorrecto para fecha de ejecución (se esperaba dd-mm-yy o dd/mm/yy)")
+
+    df_entrada["FECHA EJECUCIÓN"] = fechas_limpias.dt.strftime("%d-%m-%Y")
 
     if CopiarMuestras:
         df_entrada = df_entrada[df_entrada["N COPIAS"] != 0]
@@ -176,7 +186,9 @@ except ValueError as e:
     eprint(f"Error en formato de entrada al obtener numero de copias:\n{e}")
     input("Enter para cerrar...")
     exit(1)
-    
+
+input(df_entrada)
+
 dict_padre = {}
 
 if len(set((df_entrada["AGRUPACIÓN"])))>1:
@@ -204,13 +216,16 @@ if len(set((df_entrada["AGRUPACIÓN"])))>1:
         ["AGRUPACIÓN", "ID COTI"], sort=False
     ):
         fecha = grupo["FECHA EJECUCIÓN"].iloc[0]
+        sufijo = grupo["SUFIJO TÍTULO"].iloc[0]
 
+        if pd.isna(sufijo):
+            sufijo = "None"
         if pd.isna(fecha):
             fecha_str = "None"
         else:
             fecha_str = pd.to_datetime(fecha).strftime("%d-%m-%Y")
 
-        subclave = f"{coti}|{fecha_str}"
+        subclave = f"{coti}|{fecha_str}|{sufijo}"
 
         dict_padre.setdefault(str(agrup), {})[subclave] = [
             str(x) for x in grupo["ID MUESTRA"]
@@ -238,13 +253,16 @@ else:
 
     for coti, grupo in df_entrada.groupby("ID COTI", sort=False):
         fecha = grupo["FECHA EJECUCIÓN"].iloc[0]
-        
+        sufijo = grupo["SUFIJO TÍTULO"].iloc[0]
+
+        if pd.isna(sufijo):
+            sufijo = "None"
         if pd.isna(fecha):
             fecha_str = "None"
         else:
             fecha_str = pd.to_datetime(fecha).strftime("%d-%m-%Y")
 
-        clave = f"{coti}|{fecha_str}"
+        clave = f"{coti}|{fecha_str}|{sufijo}"
 
         dict_padre[clave] = [
             str(x) for x in grupo["ID MUESTRA"]
@@ -269,7 +287,7 @@ try:
 
     for key in dict_padre.keys():
         if key != "":
-            eprint(f"División {key}")
+            eprint(f"--------------\nDivisión {key}\n--------------\n")
 
         main_dict = dict_padre[key]
 
@@ -314,7 +332,7 @@ try:
 
         for idx, texto_coti in enumerate(lista_texto_coti):
             slog()
-            id_coti, fecha_ejecucion = texto_coti.split("|")
+            id_coti, fecha_ejecucion, SufijoExcel = texto_coti.split("|")
 
             #### EXCEL
             x_idx = idx
@@ -398,7 +416,8 @@ try:
                 m_copias_id = []
                 m_no_copia = []
                 m_copias = []
-
+                v_n_copias = None
+                
                 if CopiarMuestras:
                     eprint(f"[Seleccionando ID para copiar]")
 
@@ -588,14 +607,17 @@ try:
 
                 tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
                 elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
-                
-                #CLIENTE DE ULTIMA MUESTRA CREADA
-                m_cliente = elementos[1].find_element(By.XPATH,f"./td[{tablaColnames['Cuenta']}]").text
-                if not SufijoTituloGeneral:
-                    pe_titulo = f"PE - {m_cliente} - {coti_name_id}"
-                else:
-                    pe_titulo = f"PE - {m_cliente} - {coti_name_id} - {SufijoTituloGeneral}"
 
+                #CLIENTE DE ULTIMA MUESTRA CREADA
+                m_cliente = elementos[0].find_element(By.XPATH,f"./td[{tablaColnames['Cuenta']}]").text
+                list_pe_titulo = ["PE", m_cliente, coti_name_id]
+
+                if SufijoTituloGeneral:
+                    list_pe_titulo.append(SufijoTituloGeneral)
+                if SufijoExcel != "None":
+                    list_pe_titulo.append(SufijoExcel)
+
+                pe_titulo = " - ".join(list_pe_titulo)
                 logprint(f"titulo: {pe_titulo}")
                 x_pe_titulo = pe_titulo
 
@@ -638,8 +660,10 @@ try:
 
                     if not CopiarMuestras: # x_muestra con selec y x_copia con ### 
                         x_copias_id = "###"
-                        
-                        ## Cargar Buffer m_selec
+
+                        tablaColnames = GetTablaColumna(driver, f"{xpath_seccion_muestras}/table/thead/tr")
+                        elementos = driver.find_elements(By.XPATH, f"{xpath_seccion_muestras}/table/tbody/tr")
+
                         for muestra in elementos:
                             muestra_id = muestra.find_element(By.XPATH, f"./td[{tablaColnames['ID']}]").text
                             muestra_activa = (muestra.find_element(By.XPATH, f"./td[{tablaColnames['¿Activo?']}]").get_attribute("textContent") == "Si")
@@ -756,7 +780,7 @@ try:
                             
                             pe_fecha_ejecucion.send_keys(Keys.CONTROL, "a")
                             pe_fecha_ejecucion.send_keys(Keys.DELETE)
-                            input(f"Fecha de ejecución: {fecha_ejecucion}")
+
                             pe_fecha_ejecucion.send_keys(fecha_ejecucion)
                             
 
