@@ -269,11 +269,23 @@ def secuencia_estado_muestra(driver, id_muestra, idx=None, total=None, estados=e
         eprint(f"Muestra en estado {muestra_estado}, se eperaba {estados}, saltando...\n")
         return -1
     
+import sys
+
+# 'argc' es simplemente el largo de la lista sys.argv
+argc = len(sys.argv)
+argv = sys.argv
+
 while True:
     slog()
-    eprint("Menú Principal")
-    menu_principal = tkMenu(0, dirExcelMetodosDB, cantidad_muestras, paisActual)
-    logprint(f"Salida del menu: {menu_principal}\n")
+    
+    if argc > 1:
+        eprint("Menú Principal de argumento")
+        menu_principal = argv[1]
+
+    else:
+        eprint("Menú Principal")
+        menu_principal = tkMenu(0, dirExcelMetodosDB, cantidad_muestras, paisActual)
+        logprint(f"Salida del menu: {menu_principal}\n")
 
     try:
         #PARA SUBMENU 7
@@ -295,12 +307,16 @@ while True:
 
         ####################
         #Reemplazar método de análisis para un parámetro con el mismo nombre
+        # 1 EIS-Rob-Nitrato&EAM-Nitrato&True& 
         case 1:
             eprint(f"{n_menu_principal}: Reemplazar uno o más métodos por otro método de análisis para {cantidad_muestras} muestras")
 
             #Obtener opcion a partir de menu
             # str_cambio = ptkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual)
-            str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB, cantidad_muestras, paisActual))
+            if argc > 2:
+                str_cambio = argv[2]
+            else:
+                str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB, cantidad_muestras, paisActual))
 
             while str_cambio == "-2":
                 str_cambio = str(tkMenu(n_menu_principal, dirExcelMetodosDB,  cantidad_muestras, paisActual))

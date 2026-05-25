@@ -1,11 +1,10 @@
 ###############################
 
-version_actual = "6.2.7-1"
+version_actual = "6.2.7-2"
 fecha_version = "miercoles 1 de abril 2026"
 
 changelog = [
-    "- Solo crear PE corregido",
-    "- Sufijo titulo funcional en copia envase",
+    "- Correccion fecha ejecución, dayfirst",
 ]
 
 ###############################

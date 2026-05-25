@@ -187,8 +187,6 @@ except ValueError as e:
     input("Enter para cerrar...")
     exit(1)
 
-input(df_entrada)
-
 dict_padre = {}
 
 if len(set((df_entrada["AGRUPACIÓN"])))>1:
@@ -223,7 +221,7 @@ if len(set((df_entrada["AGRUPACIÓN"])))>1:
         if pd.isna(fecha):
             fecha_str = "None"
         else:
-            fecha_str = pd.to_datetime(fecha).strftime("%d-%m-%Y")
+            fecha_str = pd.to_datetime(fecha, dayfirst=True).strftime("%d-%m-%Y")
 
         subclave = f"{coti}|{fecha_str}|{sufijo}"
 
@@ -260,7 +258,7 @@ else:
         if pd.isna(fecha):
             fecha_str = "None"
         else:
-            fecha_str = pd.to_datetime(fecha).strftime("%d-%m-%Y")
+            fecha_str = pd.to_datetime(fecha, dayfirst=True).strftime("%d-%m-%Y")
 
         clave = f"{coti}|{fecha_str}|{sufijo}"
 
@@ -363,7 +361,7 @@ try:
 
             if fecha_ejecucion != "None":
                 filtro &= (
-                    pd.to_datetime(df_entrada["FECHA EJECUCIÓN"], errors="coerce")
+                    pd.to_datetime(df_entrada["FECHA EJECUCIÓN"], dayfirst=True, errors="coerce")
                     .dt.strftime("%d-%m-%Y")
                     ==
                     pd.to_datetime(fecha_ejecucion, dayfirst=True)
@@ -783,7 +781,7 @@ try:
 
                             pe_fecha_ejecucion.send_keys(fecha_ejecucion)
                             
-
+                        input("Borrala")
                         BotonAccion(driver,"SaveButton").click()
                         EsperarCARGA_myLIMS(driver)
                         
