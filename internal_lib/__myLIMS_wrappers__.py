@@ -783,7 +783,6 @@ def atrasar_fecha_laboral(fecha_muestreo, delta_texto, inicio_joranda, extension
             nueva_fecha = lim_inferior + marg_random()
             n+=1
             if (nueva_fecha.time() > lim_jornada_inicio and nueva_fecha.time() < lim_jornada_fin ) or nueva_fecha.time() == lim_jornada_fin:
-                input(f"{nueva_fecha}")
                 n = 0
                 break
             if n%100 == 0: funcion_print(f"demorado en encontrar {nueva_fecha.time()} [{lim_inferior} - {lim_superior}] [ {lim_jornada_inicio} - {lim_jornada_fin}]")
@@ -983,7 +982,6 @@ def CambiarFechas(driver, alertas, inicio_joranda, extension_jornada, funcion_pr
             return False
         
     diccionario_alertas = limpiar_diccionario(diccionario_alertas)
-    input(diccionario_alertas)
     for alerta in diccionario_alertas:
 
         fecha_base  = alerta['fecha_base']

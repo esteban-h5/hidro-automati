@@ -601,35 +601,35 @@ match tipo_menu:
 
                     if (seleccion_metodo_analisis_entrada != "" or len(seleccion_metodo_analisis_entrada_lista) != 0) and seleccion_metodo_analisis_salida != "":
 
-                        if seleccion_metodo_analisis_entrada == seleccion_metodo_analisis_salida:
-                            messagebox.showwarning(title="Alerta",message="Favor seleccionar metodos de analisis distintos")
+                        # if seleccion_metodo_analisis_entrada == seleccion_metodo_analisis_salida:
+                        #     messagebox.showwarning(title="Alerta",message="Favor seleccionar metodos de analisis distintos")
 
-                        else:             
-                            if seleccion_metodo_analisis_entrada != "":
-                                seleccion_metodo_analisis_entrada_lista.append(seleccion_metodo_analisis_entrada)
-                                
-                            if seleccion_metodo_analisis_entrada_lista[0] == '':
-                                seleccion_metodo_analisis_entrada_lista = [seleccion_metodo_analisis_entrada]
-
-                            seleccion_metodo_analisis_entrada_lista = unique(seleccion_metodo_analisis_entrada_lista)
-
-                            for metodo in seleccion_metodo_analisis_entrada_lista:
-                                req_entrada = df_requerimientos.loc[df_requerimientos['Metodo'] == metodo, "AnalisRequerido"].drop_duplicates().to_list()
-                                req_salida = df_requerimientos.loc[df_requerimientos['Metodo'] == seleccion_metodo_analisis_salida, "AnalisRequerido"].drop_duplicates().to_list()
-                                
-                                lista_requerimientos = [req for req in req_salida if req not in req_entrada]
-                                lista_req_sin_uso = [req for req in req_entrada if req not in req_salida]
-
-                                if len(lista_req_sin_uso) != 0:
-                                    _tmp_str = '\n - '.join(lista_req_sin_uso)
-                                    messagebox.showwarning(title="Alerta",message=f"Metodo de entrada [{metodo}] tiene requerimientos que no son necesarios para nuevo metodo [{seleccion_metodo_analisis_salida}]:\n\n - {_tmp_str}")
-
-                                if len(lista_requerimientos) != 0:
-                                    _tmp_str = '\n - '.join(lista_requerimientos)
-                                    messagebox.showwarning(title="Alerta",message=f"Método {seleccion_metodo_analisis_salida} tiene {len(lista_requerimientos)} requerimientos distintos a {metodo}:\n\n - {_tmp_str}")
+                        # else:             
+                        if seleccion_metodo_analisis_entrada != "":
+                            seleccion_metodo_analisis_entrada_lista.append(seleccion_metodo_analisis_entrada)
                             
-                            print(f"{';'.join(seleccion_metodo_analisis_entrada_lista)}&{seleccion_metodo_analisis_salida}&{check_var.get()}&{seleccion_analisis}", end="")
-                            root.destroy() 
+                        if seleccion_metodo_analisis_entrada_lista[0] == '':
+                            seleccion_metodo_analisis_entrada_lista = [seleccion_metodo_analisis_entrada]
+
+                        seleccion_metodo_analisis_entrada_lista = unique(seleccion_metodo_analisis_entrada_lista)
+
+                        for metodo in seleccion_metodo_analisis_entrada_lista:
+                            req_entrada = df_requerimientos.loc[df_requerimientos['Metodo'] == metodo, "AnalisRequerido"].drop_duplicates().to_list()
+                            req_salida = df_requerimientos.loc[df_requerimientos['Metodo'] == seleccion_metodo_analisis_salida, "AnalisRequerido"].drop_duplicates().to_list()
+                            
+                            lista_requerimientos = [req for req in req_salida if req not in req_entrada]
+                            lista_req_sin_uso = [req for req in req_entrada if req not in req_salida]
+
+                            if len(lista_req_sin_uso) != 0:
+                                _tmp_str = '\n - '.join(lista_req_sin_uso)
+                                messagebox.showwarning(title="Alerta",message=f"Metodo de entrada [{metodo}] tiene requerimientos que no son necesarios para nuevo metodo [{seleccion_metodo_analisis_salida}]:\n\n - {_tmp_str}")
+
+                            if len(lista_requerimientos) != 0:
+                                _tmp_str = '\n - '.join(lista_requerimientos)
+                                messagebox.showwarning(title="Alerta",message=f"Método {seleccion_metodo_analisis_salida} tiene {len(lista_requerimientos)} requerimientos distintos a {metodo}:\n\n - {_tmp_str}")
+                        
+                        print(f"{';'.join(seleccion_metodo_analisis_entrada_lista)}&{seleccion_metodo_analisis_salida}&{check_var.get()}&{seleccion_analisis}", end="")
+                        root.destroy() 
 
                     else:
                         messagebox.showwarning(title="Alerta",message="Favor seleccionar métodos de análisis")
@@ -857,8 +857,8 @@ match tipo_menu:
                 
                     if seleccion_analisis_entrada == "" or seleccion_analisis_salida == "" or seleccion_metodo == "":
                         messagebox.showwarning(title="Alerta",message="Favor seleccionar ambos analitos y metodo")
-                    elif seleccion_analisis_entrada == seleccion_analisis_salida:
-                        messagebox.showwarning(title="Alerta",message="Favor seleccionar analitos distintos")
+                    # elif seleccion_analisis_entrada == seleccion_analisis_salida:
+                    #     messagebox.showwarning(title="Alerta",message="Favor seleccionar analitos distintos")
 
                     else:
                         print(f"{seleccion_analisis_entrada}&{seleccion_analisis_salida}&{seleccion_metodo}&{check_var.get()}", end="")

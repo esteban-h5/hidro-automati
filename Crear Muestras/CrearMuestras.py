@@ -213,6 +213,7 @@ try:
         informacion_muestras_df.columns
 
         analisis_group = {}
+        
         for group_value, group_df in analisis_df.groupby(col_fmt["col-indice_a"], sort=False):
             #NO REPETIR VALORES INFO ID
             info_id_buffer = []
