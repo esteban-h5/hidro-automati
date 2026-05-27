@@ -781,7 +781,15 @@ try:
 
                             pe_fecha_ejecucion.send_keys(fecha_ejecucion)
                             
-                        input("Borrala")
+                        pe_fecha_conclusion = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']//input[@data-test='Conclusion' and @name='Conclusion']")
+                        
+                        if pe_fecha_conclusion.get_attribute("value") != "":
+                            pe_fecha_conclusion.click()
+                            
+                            pe_fecha_conclusion.send_keys(Keys.CONTROL, "a")
+                            pe_fecha_conclusion.send_keys(Keys.DELETE)
+                        
+                        
                         BotonAccion(driver,"SaveButton").click()
                         EsperarCARGA_myLIMS(driver)
                         
@@ -824,8 +832,12 @@ try:
                     x_copias_id = " - ".join(m_selec_id)
                     
                     eprint(f"[Saltando creación de PE]\n")
+
+                if key != "":
+                    x_xlsx_estado = f"LISTO - {key}" if not x_xlsx_estado_final else " - ".join(x_xlsx_estado_final + key)
+                else:
+                    x_xlsx_estado = "LISTO" if not x_xlsx_estado_final else " - ".join(x_xlsx_estado_final)
                 
-                x_xlsx_estado = "LISTO" if not x_xlsx_estado_final else " - ".join(x_xlsx_estado_final)
                 FilaAgregarXLSX(dirExcel=dirExcelSalida, valores_fila=[x_idx, x_id_coti, x_muestra_id, x_copias_id, x_pe_id, x_pe_n_muestra, x_pe_titulo, x_xlsx_estado], colnames=nombre_columnas_out, except_kill=False, except_create=True)
 
                 if CopiarMuestras and CrearPE:
