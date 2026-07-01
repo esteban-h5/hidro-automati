@@ -705,13 +705,13 @@ def formato_fecha(fecha, formato="%d/%m/%Y %I:%M %p"):
         raise ExcepcionDeMuestra(f"Problemas al formatear la fecha {fecha}:\n")
     
     try:
-        if ".m." in fecha or "M" in fecha:
+        if ".m." in fecha or "M" in fecha or ". m." in fecha:
 
-            if "a.m." in fecha:
-                return datetime.strptime(fecha.replace("a.m.", "AM"), formato) 
+            if "a.m." in fecha or "a. m." in fecha:
+                return datetime.strptime(fecha.replace("a.m.", "AM").replace("a. m."), formato) 
 
-            elif "p.m." in fecha:
-                return datetime.strptime(fecha.replace("p.m.", "PM"), formato) 
+            elif "p.m." in fecha or "p. m." in fecha:
+                return datetime.strptime(fecha.replace("p.m.", "PM").replace("p. m."), formato) 
 
             else:
                 raise ExcepcionDeMuestra(f"Formato de fecha desconocido {fecha}")
@@ -783,7 +783,7 @@ def atrasar_fecha_laboral(fecha_muestreo, delta_texto, inicio_joranda, extension
             nueva_fecha = lim_inferior + marg_random()
             n+=1
             if (nueva_fecha.time() > lim_jornada_inicio and nueva_fecha.time() < lim_jornada_fin ) or nueva_fecha.time() == lim_jornada_fin:
-                input(f"{nueva_fecha}")
+                # input(f"{nueva_fecha}")
                 n = 0
                 break
             if n%100 == 0: funcion_print(f"demorado en encontrar {nueva_fecha.time()} [{lim_inferior} - {lim_superior}] [ {lim_jornada_inicio} - {lim_jornada_fin}]")
@@ -983,7 +983,7 @@ def CambiarFechas(driver, alertas, inicio_joranda, extension_jornada, funcion_pr
             return False
         
     diccionario_alertas = limpiar_diccionario(diccionario_alertas)
-    input(diccionario_alertas)
+    # input(diccionario_alertas)
     for alerta in diccionario_alertas:
 
         fecha_base  = alerta['fecha_base']
@@ -1030,7 +1030,11 @@ def CambiarFechas(driver, alertas, inicio_joranda, extension_jornada, funcion_pr
                 if ".m." in fecha_antigua:
                     nueva_fecha_inicio = datetime.strptime(nueva_fecha_inicio, "%d-%m-%Y %H:%M").strftime(nuevo_formato).replace("AM", "a.m.").replace("PM", "p.m.")
                     funcion_print(f"formato a.m. cambiado: {nueva_fecha_inicio}")
-                        
+                
+                elif ". m." in fecha_antigua:
+                    nueva_fecha_inicio = datetime.strptime(nueva_fecha_inicio, "%d-%m-%Y %H:%M").strftime(nuevo_formato).replace("AM", "a. m.").replace("PM", "p. m.")
+                    funcion_print(f"formato a. m. cambiado: {nueva_fecha_inicio}")
+
                 ventana_entrada.send_keys(Keys.CONTROL, "a")
                 ventana_entrada.send_keys(Keys.DELETE)
                 EsperarCARGA_myLIMS(driver)

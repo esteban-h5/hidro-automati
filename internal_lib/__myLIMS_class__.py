@@ -136,7 +136,9 @@ class SampleInsert(BaseIntModel):
     Infos:                  List[SampleInfoInsert]
     Analyses:               Optional[List[SampleAnalysisInsert]] = None
     Specifications:         Optional[List[SampleSpecificationInsert]] = []
-
+    SampleStatus: int
+    MultiCurrencyConfigCurrencyId: int
+    
 class User(BaseIntModel):
     Active: Optional[bool] = None
     Id: int
@@ -564,6 +566,15 @@ class MethodBasic(BaseIntModel):
     Id: Optional[int] = -1
     Identification: Optional[str] = None
 
+
+class MultiCurrencyConfigCurrencyBasic(BaseIntModel):
+    Active: Optional[bool] = None
+    CurrencyId: Optional[int] = None
+    Currency: Optional[CurrencyBasic] = None  # <-- Ojo: Asegúrate de tener definido 'CurrencyBasic' antes de esta línea
+    CultureId: Optional[str] = None
+    Id: Optional[int] = -1                     # Lo dejé con -1 por defecto, igual que en tu MethodBasic
+    Identification: Optional[str] = None
+
 class MultiCurrencyConfigCurrencyIdIdentification(BaseIntModel):
     Id: int
     Identification: str
@@ -749,6 +760,7 @@ class SampleBasic(BaseIntModel):
     SampleReason: SampleReasonBasic
     CurrentStatus: 'SampleStatusHistoryBasic'
     SampleType: 'SampleTypeBasic'
+    SampleStatus: int
 
     # vienen None
     CollectionPointId: Optional[int] = None
@@ -761,6 +773,7 @@ class SampleBasic(BaseIntModel):
     CustomInfo: Optional['SampleCustomInfo'] = None
 
     # vienen None
+    MultiCurrencyConfigCurrencyId: int
     TotalPrice: Optional[Decimal] = None
     TotalPriceBusinessUnit: Optional[Decimal] = None
 

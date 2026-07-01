@@ -235,6 +235,8 @@ try:
                 "mexico":           "MTY",
             }[paisActual]
 
+            paisAPI = f"Hidrolab {pais}"
+
             filtros = {
                 "finalizadas":      [f"Muestras finalizadas Hidrolab {pais}"],
                 "metalab":          ["Muestras finalizadas Metalab SCL"],
@@ -242,6 +244,9 @@ try:
             }[filtroActual]
 
             if filtroActual == "metalab":
+                
+                paisAPI = f"Metalab SCL"
+
                 IDbotonesDocumentos = ["1049",    #metalab antiguo
                                       "1217"]   #metalab
                 
@@ -299,7 +304,7 @@ try:
         ListaMuestras = get_samples_ID(
             "Account ne null and Active eq true and endswith(ControlNumber, '.0') and "+
             "CurrentStatus/SampleStatus/Identification eq 'Finalizada' and "+
-            "ServiceCenter/Identification eq 'Hidrolab SCL'",
+            f"ServiceCenter/Identification eq '{paisAPI}'",
             APIdomain=api_url,
             funcion_print=eprint, 
             funcion_logprint = logprint,

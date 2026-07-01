@@ -781,7 +781,6 @@ try:
 
                             pe_fecha_ejecucion.send_keys(fecha_ejecucion)
                             
-                        input("Borrala")
                         BotonAccion(driver,"SaveButton").click()
                         EsperarCARGA_myLIMS(driver)
                         
