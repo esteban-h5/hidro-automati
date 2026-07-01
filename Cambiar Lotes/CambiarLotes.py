@@ -347,141 +347,141 @@ while True:
                 else:
                     metodos_antiguos = [metodo_antiguo]
 
-                if metodo_nuevo in metodos_antiguos:
-                    eprint("Los metodos no pueden ser iguales")
+                # if metodo_nuevo in metodos_antiguos:
+                #     eprint("Los metodos no pueden ser iguales")
                     
-                else:
-                    # requerimientos_nuevos = muestras_requerimientos[muestras_requerimientos["Metodo"] == metodo_nuevo]["AnalisRequerido"].to_list()
-                    str_anuncio = f"Cambiando de \"{metodos_antiguos}\" a \"{metodo_nuevo}\" para {cantidad_muestras} muestras"
-                    
-                    if cambiar_u_medida:
-                        str_anuncio = str_anuncio+" revisando unidad de medida"
-                    
-                    if analisis:
-                        str_anuncio = f"{str_anuncio} y restringiendo analito {analisis}"
+                # else:
+                requerimientos_nuevos = muestras_requerimientos[muestras_requerimientos["Metodo"] == metodo_nuevo]["AnalisRequerido"].to_list()
+                str_anuncio = f"Cambiando de \"{metodos_antiguos}\" a \"{metodo_nuevo}\" para {cantidad_muestras} muestras"
+                
+                if cambiar_u_medida:
+                    str_anuncio = str_anuncio+" revisando unidad de medida"
+                
+                if analisis:
+                    str_anuncio = f"{str_anuncio} y restringiendo analito {analisis}"
 
-                    eprint(str_anuncio+"\n")
+                eprint(str_anuncio+"\n")
 
-                    #Inicio Navegador 
-                    try:
-                        from __myLIMS_modulos__  import *
-                        driver = secuencia_inicio()
+                #Inicio Navegador 
+                try:
+                    from __myLIMS_modulos__  import *
+                    driver = secuencia_inicio()
 
-                        for idx,id_muestra in enumerate(muestras_entrada):
+                    for idx,id_muestra in enumerate(muestras_entrada):
 
-                            try:
-                                flag_estado = secuencia_estado_muestra(driver, id_muestra,  idx=idx,  total=cantidad_muestras)
-                                if flag_estado == -1: 
-                                    if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SALTADA")
-                                    continue
+                        try:
+                            flag_estado = secuencia_estado_muestra(driver, id_muestra,  idx=idx,  total=cantidad_muestras)
+                            if flag_estado == -1: 
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SALTADA")
+                                continue
 
-                                BotonSection(driver,"SectionAnalysis", log=True, funcion_print=logprint ).click()
-                                EsperarCARGA_myLIMS(driver)
+                            BotonSection(driver,"SectionAnalysis", log=True, funcion_print=logprint ).click()
+                            EsperarCARGA_myLIMS(driver)
 
-                                if analisis != "":
-                                    filas_entrada = get_analito_dict(driver, metodos=metodos_antiguos, analitos=[analisis])
-                                else:
-                                    filas_entrada = get_analito_dict(driver, metodos=metodos_antiguos, analitos=[])
+                            if analisis != "":
+                                filas_entrada = get_analito_dict(driver, metodos=metodos_antiguos, analitos=[analisis])
+                            else:
+                                filas_entrada = get_analito_dict(driver, metodos=metodos_antiguos, analitos=[])
 
-                                if len(filas_entrada) == 0:
-                                    if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SIN METODO")
-                                    eprint(f"No se encontró el método {metodos_antiguos} en la muestra. Saltando edición...\n")
-                                    continue
-                                
-                                eprint(f"Analitos encontrados: {len(filas_entrada)}")
-                                
-                                BotonSection(driver,"SectionAnalysis", log=True, funcion_print=logprint ).click()
-                                EsperarCARGA_myLIMS(driver)
-
-                                #Modo edición
-                                driver.find_element(By.XPATH,'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar" and not(@style="display: none;")]//button[@data-test="BackToListButton" and text()="Editar"]').click()
-                                EsperarCARGA_myLIMS(driver)
-
-                                ################################################
-                                #Alterar metodo y cambiar por metodo de entrada
-                                flag_estado = edit_alterar_por_metodo(driver, analito_dict=filas_entrada, nuevo_metodo=metodo_nuevo)
-                                
-                                if flag_estado == -1: 
-                                    # eprint(f"Metodo {metodo_nuevo} no encontrado para analito numero {analito['id']} con metodo {analito['metodo']}")
-                                    eprint(f"Metodo {metodo_nuevo} no encontrado")
-                                    if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SIN METODO")
-                                    
-                                    BotonAccion(driver,"CancelButton", log=True, funcion_print=logprint ).click()
-                                    EsperarCARGA_myLIMS(driver)                             
-                                    continue
-
-                                if flag_estado == -2: 
-                                    # eprint(f"Metodo {metodo_nuevo} no encontrado para analito numero {analito['id']} con metodo {analito['metodo']}")
-                                    eprint(f"Metodo {metodo_nuevo} no se puede alterar")
-                                    if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "METODO NO ALT")
-                                    
-                                    BotonAccion(driver,"CancelButton", log=True, funcion_print=logprint ).click()
-                                    EsperarCARGA_myLIMS(driver)                             
-                                    continue
-
-                                BotonAccion(driver,"SaveButton", log=True, funcion_print=logprint ).click()
-                                EsperarCARGA_myLIMS(driver)
-
-                                str_salida = "\n".join([f" -> {_['analisis']} - {_['metodo']} - {_['medida']}" for _ in filas_entrada])
-
-                                # eprint(f"\nAnalito de método {analito['metodo']} y análisis {analito['analisis']} editado para muestra {id_muestra}")
-                                eprint(f"\neditado en la muestra {id_muestra}:\n{str_salida}")
-
-                                ##########################
-                                #Revisar unidad de medida:
-                                if "Subcontrato" in "".join(metodos_antiguos) and cambiar_u_medida:
-                                    eprint(f"Metodo Subcontrato, saltando revision de medida\n")
-
-                                else:
-                                    if cambiar_u_medida:
-                                        #Modo edición
-                                        driver.find_element(By.XPATH,'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar" and not(@style="display: none;")]//button[@data-test="BackToListButton" and text()="Editar"]').click()
-                                        EsperarCARGA_myLIMS(driver)
-
-                                        for analito in filas_entrada:
-                                            flag_estado = edit_revisar_medida(driver, analito_dict=analito, funcion_print=eprint)
-
-                                            if flag_estado == -1: 
-                                                eprint(f"Unidad de medida {analito['medida']} no encontrada para Metodo {metodo} en el analito numero {analito['id']} con metodo {analito['metodo']}")
-                                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SIN U/MEDIDA")
-                                                
-                                                BotonAccion(driver,"CancelButton", log=True, funcion_print=logprint ).click()
-                                                EsperarCARGA_myLIMS(driver)                             
-                                                continue
-                                                
-                                            if flag_estado == 1: 
-                                                eprint(f"Misma unidad de medida encontrada")
-                                            
-                                            if flag_estado == 0:
-                                                eprint(f"Unidad de medida {analito['medida']} cambiada")
-                                            
-                                        BotonAccion(driver,"SaveButton", log=True, funcion_print=logprint ).click()
-                                        EsperarCARGA_myLIMS(driver)
-
-                                # BotonSection(driver, "SectionLogistic", log=True, funcion_print=logprint ).click()
-                                # EsperarCARGA_myLIMS(driver)
-                                
-                                # edit_aprobar_logistica(driver, nuevos_metodos=metodos_antiguos, funcion_print=eprint)
+                            if len(filas_entrada) == 0:
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SIN METODO")
+                                eprint(f"No se encontró el método {metodos_antiguos} en la muestra. Saltando edición...\n")
+                                continue
                             
-                                eprint(f"\nMuestra {id_muestra} lista\n")
-                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "EDITADO")
+                            eprint(f"Analitos encontrados: {len(filas_entrada)}")
+                            
+                            BotonSection(driver,"SectionAnalysis", log=True, funcion_print=logprint ).click()
+                            EsperarCARGA_myLIMS(driver)
 
-                            except BaseException as e:
-                                excepcion_handler(e, id_muestra, driver)
+                            #Modo edición
+                            driver.find_element(By.XPATH,'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar" and not(@style="display: none;")]//button[@data-test="BackToListButton" and text()="Editar"]').click()
+                            EsperarCARGA_myLIMS(driver)
 
-                        timer.final()
-                        notify(title="Programa finalizado")
-                        eprint(f"\nPrograma finalizado... Cerrando\n")
-                        Logout(driver,logout_url=Labsoftdomain)
-                        driver.quit()
+                            ################################################
+                            #Alterar metodo y cambiar por metodo de entrada
+                            flag_estado = edit_alterar_por_metodo(driver, analito_dict=filas_entrada, nuevo_metodo=metodo_nuevo)
+                            
+                            if flag_estado == -1: 
+                                # eprint(f"Metodo {metodo_nuevo} no encontrado para analito numero {analito['id']} con metodo {analito['metodo']}")
+                                eprint(f"Metodo {metodo_nuevo} no encontrado")
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SIN METODO")
+                                
+                                BotonAccion(driver,"CancelButton", log=True, funcion_print=logprint ).click()
+                                EsperarCARGA_myLIMS(driver)                             
+                                continue
 
-                    except NoSuchWindowException:
-                        eprint("Ventana de navegador cerrada")
+                            if flag_estado == -2: 
+                                # eprint(f"Metodo {metodo_nuevo} no encontrado para analito numero {analito['id']} con metodo {analito['metodo']}")
+                                eprint(f"Metodo {metodo_nuevo} no se puede alterar")
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "METODO NO ALT")
+                                
+                                BotonAccion(driver,"CancelButton", log=True, funcion_print=logprint ).click()
+                                EsperarCARGA_myLIMS(driver)                             
+                                continue
 
-                    except KeyboardInterrupt:
-                        print("Programa interrumpido...\n Cerrando navegador")
-                        Logout(driver,logout_url=Labsoftdomain)
-                        driver.quit()
+                            BotonAccion(driver,"SaveButton", log=True, funcion_print=logprint ).click()
+                            EsperarCARGA_myLIMS(driver)
+
+                            str_salida = "\n".join([f" -> {_['analisis']} - {_['metodo']} - {_['medida']}" for _ in filas_entrada])
+
+                            # eprint(f"\nAnalito de método {analito['metodo']} y análisis {analito['analisis']} editado para muestra {id_muestra}")
+                            eprint(f"\neditado en la muestra {id_muestra}:\n{str_salida}")
+
+                            ##########################
+                            #Revisar unidad de medida:
+                            if "Subcontrato" in "".join(metodos_antiguos) and cambiar_u_medida:
+                                eprint(f"Metodo Subcontrato, saltando revision de medida\n")
+
+                            else:
+                                if cambiar_u_medida:
+                                    #Modo edición
+                                    driver.find_element(By.XPATH,'//div[@id="InterfaceActions"]//div[@class="labsoft-ui-buttons-bar" and not(@style="display: none;")]//button[@data-test="BackToListButton" and text()="Editar"]').click()
+                                    EsperarCARGA_myLIMS(driver)
+
+                                    for analito in filas_entrada:
+                                        flag_estado = edit_revisar_medida(driver, analito_dict=analito, funcion_print=eprint)
+
+                                        if flag_estado == -1: 
+                                            eprint(f"Unidad de medida {analito['medida']} no encontrada para Metodo {metodo} en el analito numero {analito['id']} con metodo {analito['metodo']}")
+                                            if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SIN U/MEDIDA")
+                                            
+                                            BotonAccion(driver,"CancelButton", log=True, funcion_print=logprint ).click()
+                                            EsperarCARGA_myLIMS(driver)                             
+                                            continue
+                                            
+                                        if flag_estado == 1: 
+                                            eprint(f"Misma unidad de medida encontrada")
+                                        
+                                        if flag_estado == 0:
+                                            eprint(f"Unidad de medida {analito['medida']} cambiada")
+                                        
+                                    BotonAccion(driver,"SaveButton", log=True, funcion_print=logprint ).click()
+                                    EsperarCARGA_myLIMS(driver)
+
+                            # BotonSection(driver, "SectionLogistic", log=True, funcion_print=logprint ).click()
+                            # EsperarCARGA_myLIMS(driver)
+                            
+                            # edit_aprobar_logistica(driver, nuevos_metodos=metodos_antiguos, funcion_print=eprint)
+                        
+                            eprint(f"\nMuestra {id_muestra} lista\n")
+                            if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "EDITADO")
+
+                        except BaseException as e:
+                            excepcion_handler(e, id_muestra, driver)
+
+                    timer.final()
+                    notify(title="Programa finalizado")
+                    eprint(f"\nPrograma finalizado... Cerrando\n")
+                    Logout(driver,logout_url=Labsoftdomain)
+                    driver.quit()
+
+                except NoSuchWindowException:
+                    eprint("Ventana de navegador cerrada")
+
+                except KeyboardInterrupt:
+                    print("Programa interrumpido...\n Cerrando navegador")
+                    Logout(driver,logout_url=Labsoftdomain)
+                    driver.quit()
 
         ####################
         #Reemplazar analíto por otro con el mismo método de análisis
