@@ -3,8 +3,8 @@ from keyring import get_password as get
 from typing import Type, TypeVar
 from __myLIMS_class__ import (
     T, PageResult, List, SampleAnalysisInsert,
-    SampleBasic, PriceListBasic, SampleInfoInsert,
-    MethodPrerequisiteAnalysisBasic,
+    SampleStatusBasic, SampleBasic, PriceListBasic, 
+    SampleInfoInsert, MethodPrerequisiteAnalysisBasic,
     AnalysisGroupAnalysisBasic,
     SampleReasonBasic, AccountDetail,
     SampleTypeBasic, SpecificationBasic,
@@ -127,12 +127,35 @@ def get_grupoanalisis(id: int, APIdomain, token, funcion_print=print) ->  List[A
     return respuesta.Result
 
 
+def get_samplestatus(identification: str, APIdomain, token, funcion_print=print) -> PageResult[SampleStatusBasic]:
+    
+    empty_obj = SampleStatusBasic(**{f: None for f in SampleStatusBasic.model_fields})
+
+    try:
+        respuesta = api_get(f"samplestatus?$filter=Identification eq '{quote(identification)}' and Active eq true",
+                             APIdomain, token, PageResult[SampleStatusBasic])
+        
+    except CON_ERROR_HANDLER as e:
+        funcion_print(f"ERROR DE API {e} PARA ESTADO DE MUESTRA {identification}")
+        return empty_obj
+
+    if respuesta.Count < 1:
+        funcion_print(f"NO SE ENCONTRARON RESULTADOS PARA ESTADO DE MUESTRA {identification}")
+        return empty_obj
+
+    if respuesta.Count > 1:
+        funcion_print(f"SE ENCONTRO MAS DE 1 RESULTADO\nSe encontro tambien: {' - '.join(_.Identification for _ in respuesta.Result[1:])}")
+
+    return respuesta.Result[0]
+
+
 def get_pricetable(identification: str, APIdomain, token, funcion_print=print) -> PageResult[PriceListBasic]:
     
     empty_obj = PriceListBasic(**{f: None for f in PriceListBasic.model_fields})
 
     try:
-        respuesta = api_get(f"pricelists?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[PriceListBasic])
+        respuesta = api_get(f"pricelists?$filter=Identification eq '{quote(identification)}' and Active eq true",
+                             APIdomain, token, PageResult[PriceListBasic])
     except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA TABLA DE PRECIOS {identification}")
         return empty_obj
@@ -151,7 +174,8 @@ def get_samplereason(identification: str, APIdomain, token, funcion_print=print)
     empty_obj = SampleReasonBasic(**{f: None for f in SampleReasonBasic.model_fields})
 
     try:
-        respuesta = api_get(f"samplereasons?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[SampleReasonBasic])
+        respuesta = api_get(f"samplereasons?$filter=Identification eq '{quote(identification)}' and Active eq true", 
+                            APIdomain, token, PageResult[SampleReasonBasic])
     except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA MOTIVO {identification}")
         return empty_obj
@@ -169,7 +193,8 @@ def get_account(identification: str, APIdomain, token, funcion_print=print) -> P
     empty_obj = AccountDetail(**{f: None for f in AccountDetail.model_fields})
     
     try:
-        respuesta = api_get(f"Accounts?$filter=Identification eq '{quote(identification)}'", APIdomain, token, PageResult[AccountDetail])
+        respuesta = api_get(f"Accounts?$filter=Identification eq '{quote(identification)}'", 
+                            APIdomain, token, PageResult[AccountDetail])
     except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA CUENTA {identification}")
         return empty_obj
@@ -188,7 +213,8 @@ def get_sampletype(identification: str, APIdomain, token, funcion_print=print) -
     empty_obj = SampleTypeBasic(**{f: None for f in SampleTypeBasic.model_fields})
     
     try:
-        respuesta = api_get(f"SampleTypes?$filter=Identification eq '{quote(identification)}'", APIdomain, token, PageResult[SampleTypeBasic])
+        respuesta = api_get(f"SampleTypes?$filter=Identification eq '{quote(identification)}'", 
+                            APIdomain, token, PageResult[SampleTypeBasic])
     except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA TIPO DE MUESTRA {identification}")
         return empty_obj
@@ -210,7 +236,8 @@ def get_specification(identification: str, APIdomain, token, funcion_print=print
     empty_obj = SpecificationBasic(**{f: None for f in SpecificationBasic.model_fields})
     
     try:
-        respuesta = api_get(f"Specifications?$filter=Identification eq '{quote(identification)}' and Active eq true", APIdomain, token, PageResult[SpecificationBasic])
+        respuesta = api_get(f"Specifications?$filter=Identification eq '{quote(identification)}' and Active eq true",
+                             APIdomain, token, PageResult[SpecificationBasic])
     except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA LA ESPECIFICACION {identification}")
         return empty_obj
@@ -230,7 +257,8 @@ def get_methodprerequisite(id: str, APIdomain, token, funcion_print=print) -> Li
     empty_obj = MethodPrerequisiteAnalysisBasic(**{f: None for f in MethodPrerequisiteAnalysisBasic.model_fields})
 
     try:
-        respuesta = api_get(f"Methods/{id}/MethodPrerequisiteAnalysisBasic?$filter=Active eq true", APIdomain, token, PageResult[MethodPrerequisiteAnalysisBasic])
+        respuesta = api_get(f"Methods/{id}/MethodPrerequisiteAnalysisBasic?$filter=Active eq true", 
+                            APIdomain, token, PageResult[MethodPrerequisiteAnalysisBasic])
     except CON_ERROR_HANDLER as e:
         funcion_print(f"ERROR DE API {e} PARA METODO {id}")
         return empty_obj
@@ -260,7 +288,7 @@ def get_methods(page: int, APIdomain, token, funcion_print=print) -> List[T]:
 
     return respuesta
 
-def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, funcion_print=print, funcion_log=print):
+def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, EstatusMuestra, funcion_print=print, funcion_log=print):
     sample_records = []
 
     ############################
@@ -419,7 +447,7 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
         
         try:
             id_muestra = muestra[col_fmt["col-indice_m"]]
-            
+
             samplereason_id     = get_id(muestra, "col-motivo", get_samplereason)
             account_id          = get_id(muestra, "col-empresa", get_account)
             related_account_id  = get_id(muestra, "col-cuenta_relacionada", get_account)
@@ -450,7 +478,7 @@ def FormatoDF(muestras, col_fmt, paisActual, getdomain, gettoken, ListaPrecio, f
                 Altitude=                       None,
                 Longitude=                      None,
                 groupId=                        None,
-                SampleStatus=                   8,
+                SampleStatus=                   EstatusMuestra,
                 MultiCurrencyConfigCurrencyId=  3,
                 UpdateTermAndPrice=             True,
                 Infos=                          info_lista(muestra),

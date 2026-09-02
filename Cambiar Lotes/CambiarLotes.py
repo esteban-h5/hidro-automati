@@ -235,7 +235,7 @@ def secuencia_inicio():
     return driver
 
 
-def secuencia_estado_muestra(driver, id_muestra, idx=None, total=None, estados=estadoMuestras):              
+def secuencia_estado_muestra(driver, id_muestra, idx=None, total=None, estados=estadoMuestras, revisar_norma = True):              
     if idx != None and total != None:
         timer.save(idx)
         eprint(f"\n[{idx+1}/{total}] Revisando muestra {id_muestra}")
@@ -267,7 +267,17 @@ def secuencia_estado_muestra(driver, id_muestra, idx=None, total=None, estados=e
 
     if muestra_estado not in estados:
         eprint(f"Muestra en estado {muestra_estado}, se eperaba {estados}, saltando...\n")
-        return -1
+        return -2
+
+    if revisar_norma:
+        BotonSection(driver,"SectionSpecification", log=True, funcion_print=logprint ).click()
+        EsperarCARGA_myLIMS(driver)
+
+        lista_spec = [a.text for a in driver.find_elements(By.XPATH,"//td[@data-test='SpecificationGrid.Specification.Identification']")]
+        
+        if lista_spec:
+            eprint(f"Se encontró norma(s): {' - '.join(lista_spec)}")
+            return -3
     
 import sys
 
@@ -307,7 +317,7 @@ while True:
 
         ####################
         #Reemplazar método de análisis para un parámetro con el mismo nombre
-        # 1 EIS-Rob-Nitrato&EAM-Nitrato&True& 
+        # 1 EIS-Rob-Nitrato&EAM-Nitrato&True&True
         case 1:
             eprint(f"{n_menu_principal}: Reemplazar uno o más métodos por otro método de análisis para {cantidad_muestras} muestras")
 
@@ -331,13 +341,13 @@ while True:
                 
                 if "|" in str_cambio:
                     metodos_principales = str_cambio.split("|")[0]
-                    metodo_antiguo, metodo_nuevo, cambiar_u_medida, analisis = metodos_principales.split("&")
+                    metodo_antiguo, metodo_nuevo, cambiar_u_medida, analisis, revisar_norma = metodos_principales.split("&")
 
                     #Asignar a diccionario con cada llave-valor analisis-metodo de requerimiento
                     metodos_extra = {_.split("&")[0]:_.split("&")[1] for _ in str_cambio.split("|")[1:]}
 
                 else:
-                    metodo_antiguo, metodo_nuevo, cambiar_u_medida, analisis = str_cambio.split("&")
+                    metodo_antiguo, metodo_nuevo, cambiar_u_medida, analisis, revisar_norma = str_cambio.split("&")
                     metodos_extra = {}
                 
                 cambiar_u_medida = (cambiar_u_medida == "True")
@@ -370,11 +380,19 @@ while True:
                     for idx,id_muestra in enumerate(muestras_entrada):
 
                         try:
-                            flag_estado = secuencia_estado_muestra(driver, id_muestra,  idx=idx,  total=cantidad_muestras)
+                            flag_estado = secuencia_estado_muestra(driver, id_muestra,  idx=idx,  total=cantidad_muestras, revisar_norma=revisar_norma)
                             if flag_estado == -1: 
                                 if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SALTADA")
                                 continue
 
+                            if flag_estado == -2: 
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SALTADA ESTADO")
+                                continue
+
+                            if flag_estado == -3: 
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SALTADA NORMA")
+                                continue
+                            
                             BotonSection(driver,"SectionAnalysis", log=True, funcion_print=logprint ).click()
                             EsperarCARGA_myLIMS(driver)
 
@@ -469,7 +487,7 @@ while True:
                         except BaseException as e:
                             excepcion_handler(e, id_muestra, driver)
 
-                    timer.final()
+                    timer.finish()
                     notify(title="Programa finalizado")
                     eprint(f"\nPrograma finalizado... Cerrando\n")
                     Logout(driver,logout_url=Labsoftdomain)
@@ -500,7 +518,7 @@ while True:
             
             else:
                 #No esperar requerimientos, se agregará metodo antes de borrar
-                analito_antiguo, analito_nuevo, metodo, cambiar_u_medida = str_cambio.split("&")
+                analito_antiguo, analito_nuevo, metodo, cambiar_u_medida, revisar_norma = str_cambio.split("&")
                 cambiar_u_medida = (cambiar_u_medida == "True")
 
                 if cambiar_u_medida:
@@ -516,11 +534,17 @@ while True:
                     for idx,id_muestra in enumerate(muestras_entrada):
 
                         try:
-                            flag_estado = secuencia_estado_muestra(driver, id_muestra,  idx=idx,  total=cantidad_muestras)
+                            flag_estado = secuencia_estado_muestra(driver, id_muestra,  idx=idx,  total=cantidad_muestras, revisar_norma=revisar_norma)
                             if flag_estado == -1: 
                                 if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SALTADA")
                                 continue
+                            if flag_estado == -2: 
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ESTADO SALTADA")
+                                continue
 
+                            if flag_estado == -3: 
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "NORMA")
+                                continue
                             BotonSection(driver,"SectionAnalysis", log=True, funcion_print=logprint ).click()
                             EsperarCARGA_myLIMS(driver)
 
@@ -637,7 +661,7 @@ while True:
 
             else:
                 #No esperar requerimientos, se agregará metodo antes de borrar
-                analito_antiguo, analito_nuevo, metodo_antiguo, metodo_nuevo, cambiar_u_medida = str_cambio.split("&")
+                analito_antiguo, analito_nuevo, metodo_antiguo, metodo_nuevo, cambiar_u_medida, revisar_norma = str_cambio.split("&")
                 cambiar_u_medida = (cambiar_u_medida == "True")
 
                 eprint(f"Cambiando de \"{analito_antiguo}\" con {metodo_antiguo} a \"{analito_nuevo}\" con {metodo_nuevo} para {cantidad_muestras} muestras ",end="")
@@ -655,11 +679,17 @@ while True:
                     for idx,id_muestra in enumerate(muestras_entrada):
 
                         try:
-                            flag_estado = secuencia_estado_muestra(driver, id_muestra,  idx=idx,  total=cantidad_muestras)
+                            flag_estado = secuencia_estado_muestra(driver, id_muestra,  idx=idx,  total=cantidad_muestras, revisar_norma=revisar_norma)
                             if flag_estado == -1: 
                                 if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SALTADA")
                                 continue
+                            if flag_estado == -2: 
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ESTADO SALTADA")
+                                continue
 
+                            if flag_estado == -3: 
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "NORMA")
+                                continue
                             BotonSection(driver,"SectionAnalysis", log=True, funcion_print=logprint ).click()
                             EsperarCARGA_myLIMS(driver)
 
@@ -802,9 +832,17 @@ while True:
                             metodos_req = list(metodos_extra.values())
                             analisis_req = list(metodos_extra.keys())
                             
-                            flag_estado = secuencia_estado_muestra(driver, id_muestra, idx=idx,  total=cantidad_muestras, estados=estadoMuestras)
+                            flag_estado = secuencia_estado_muestra(driver, id_muestra, idx=idx,  total=cantidad_muestras, estados=estadoMuestras, revisar_norma=revisar_norma)
                             if flag_estado == -1: 
                                 if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SALTADA")
+                                continue
+
+                            if flag_estado == -2: 
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ESTADO SALTADA")
+                                continue
+
+                            if flag_estado == -3: 
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "NORMA")
                                 continue
 
                             BotonSection(driver,"SectionAnalysis", log=True, funcion_print=logprint ).click()
@@ -891,9 +929,16 @@ while True:
                     for idx,id_muestra in enumerate(muestras_entrada):
 
                         try:
-                            flag_estado = secuencia_estado_muestra(driver, id_muestra,  idx=idx,  total=cantidad_muestras)
+                            flag_estado = secuencia_estado_muestra(driver, id_muestra,  idx=idx,  total=cantidad_muestras, revisar_norma=revisar_norma)
                             if flag_estado == -1: 
                                 if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SALTADA")
+                                continue
+                            if flag_estado == -2: 
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ESTADO SALTADA")
+                                continue
+
+                            if flag_estado == -3: 
+                                if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "NORMA")
                                 continue
 
                             BotonSection(driver,"SectionAnalysis", log=True, funcion_print=logprint ).click()
@@ -955,13 +1000,19 @@ while True:
                 for idx,id_muestra in enumerate(muestras_entrada):
                     try:
 
-                        flag_estado = secuencia_estado_muestra(driver, id_muestra, idx=idx,  total=cantidad_muestras, estados=estadoMuestras)
+                        flag_estado = secuencia_estado_muestra(driver, id_muestra, idx=idx,  total=cantidad_muestras, estados=estadoMuestras, revisar_norma=revisar_norma)
                         # flag_estado = secuencia_estado_muestra(driver, id_muestra)
 
                         if flag_estado == -1: 
                             if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SALTADA")
                             continue
+                        if flag_estado == -2: 
+                            if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ESTADO SALTADA")
+                            continue
 
+                        if flag_estado == -3: 
+                            if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "NORMA")
+                            continue
                         fecha_muestreo = driver.find_element(By.XPATH, "//input[@data-test='TakenDateTime']").get_attribute("value")
                         
                         try:
@@ -1063,11 +1114,18 @@ while True:
 
                 for idx, id_muestra in enumerate(muestras_entrada):
                     try:
-                        flag_estado = secuencia_estado_muestra(driver, id_muestra, idx=idx, total=cantidad_muestras, estados=estadoMuestras)
+                        flag_estado = secuencia_estado_muestra(driver, id_muestra, idx=idx, total=cantidad_muestras, estados=estadoMuestras, revisar_norma=revisar_norma)
                         if flag_estado == -1: 
                             if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "SALTADA")
                             continue
-                        
+
+                        if flag_estado == -2: 
+                            if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ESTADO SALTADA")
+                            continue
+
+                        if flag_estado == -3: 
+                            if Registrar: CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "NORMA")
+                            continue
                         eprint("Seccion de precios")
                         BotonSection(driver,"SectionPrice", log=True, funcion_print=logprint).click()
                         EsperarCARGA_myLIMS(driver)
@@ -1347,7 +1405,7 @@ while True:
                         cliente = driver.find_element(By.XPATH, '//input[@data-bind="value: Account.Identification"]').get_attribute("value")
                         
                         Excepcion_error = ""
-                        IntentosDeCarga = 5
+                        IntentosDeCarga = 1
 
                         flagDescargar = False
                         flagCambiarFecha = False
@@ -1431,7 +1489,7 @@ while True:
                                         continue  
 
                                     if m_tipo in tipo_horas:
-                                        eprint("[Alerta de Horas]")
+                                        # eprint("[Alerta de Horas]")
                                         mensaje.click()
                                         EsperarCARGA_myLIMS(driver)
 
@@ -1511,15 +1569,15 @@ while True:
                         BotonSection(driver,"SectionRelatedSamples", log=True, funcion_print=logprint ).click()
                         EsperarCARGA_myLIMS(driver)
                         
-                        cant_controles, lista_controles = ContarControlesPendientes(driver, ID_Actual=id_muestra)
+                        cant_controles, lista_controles = ContarControlesPendientes(driver, ID_Actual=id_muestra, NM_Actual=N_Muestra)
                         
                         if flagRutina:
                             flagDescargar = True
                             lista_controles = ["-"]
 
                         if cant_controles != 0:
-                            eprint(f"[{cant_controles} Controles Pendientes]")
-                            logprint(f'controles: {" - ".join(lista_alertas)}')
+                            eprint(f"[{cant_controles} Elementos Pendientes]")
+                            # logprint(f'controles: {" - ".join(lista_alertas)}')
                             flagDescargar = True
                             flagControles = True
                         else:
@@ -1685,7 +1743,6 @@ while True:
                                 if dir_archivo != os.path.join(dir_Descargados,nombre_informe):
                                     os.rename(dir_archivo, os.path.join(dir_Descargados,nombre_informe) )
 
-
                     #######################
                     # EXCEPCIONES GENERALES
                     except Exception as e:
@@ -1714,7 +1771,12 @@ while True:
                         driver.refresh()
                         EsperarCARGA_myLIMS(driver, funcion_print=eprint)
                         IntentosDeCarga -= 1
-                        eprint(f'REINTENTANDO [{IntentosDeCarga} Intentos restantes]\n')
+                        # eprint(f'REINTENTANDO [{IntentosDeCarga} Intentos restantes]\n')
+                        eprint(f'{e}\n[ERROR. Saltando Muestra]\n')
+                        
+                        if Registrar: 
+                            CambiarEstadoIDxlsx(dirExcelEntrada, id_muestra, nombre_columnas, "ERROR EXCEPCION")
+                                    
                         continue
                     
                     except BaseException as e:

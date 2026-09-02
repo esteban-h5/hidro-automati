@@ -394,7 +394,7 @@ try:
                     x_xlsx_estado = "COTI DESACTIVADA"
                     raise ExcepcionDeMuestra(f"[Cotizacion desactivada]")
 
-                if RevisarEtapaActual and coti_etapa != "En Realización":
+                if RevisarEtapaActual and coti_etapa not in ["En Realización"]:
                     x_xlsx_estado = f"COTI ETAPA {coti_etapa.upper()}"
                     raise ExcepcionDeMuestra(f"[Cotizacion en etapa {coti_etapa if coti_etapa else 'Vacío'}]")
 

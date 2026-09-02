@@ -224,7 +224,7 @@ def MuestraPublicar(driver, ID_Muestra, url, kill=False, funcion_print=print, re
 
             titulo = ventana.find_element(By.CLASS_NAME,"k-window-title").text
             descripcion = ventana.find_element(By.XPATH,".//div[@class='row labsoft-ui-layoutrow']/div[2]/div").text
-            
+
             ###
             if titulo == "Confirme":
                 ventana.find_element(By.XPATH, '//*[@data-test="Confirmar"]').click()
@@ -236,7 +236,15 @@ def MuestraPublicar(driver, ID_Muestra, url, kill=False, funcion_print=print, re
                 if SiExisteElemento(ventana,"data-test","Ok"):
                     EsperarCLICK(ventana, atributo="data-test", valor="Ok")
                     EsperarCARGA_myLIMS(driver)
+                
+                elif SiExisteElemento(ventana,"data-test","Si") and "Hay submuestras de esta muestra aún no finalizadas" in descripcion:
+                    EsperarCLICK(ventana, atributo="data-test", valor="Si")
+                    EsperarCARGA_myLIMS(driver)
                     
+                    driver.find_element(By.XPATH, '//span[@class="k-window-title" and contains(text(), "Confirme")]/../..//button[@data-test="Confirmar"]').click()
+                    EsperarCARGA_myLIMS(driver)
+
+
                 elif SiExisteElemento(ventana,"data-test","No"):
                     EsperarCLICK(ventana, atributo="data-test", valor="No")
                     EsperarCARGA_myLIMS(driver)
@@ -472,7 +480,7 @@ def BuscarAlertas(driver, tipo_rutinas, tipo_horas, nombreAlertaETFA, funcion_pr
 
     return [flagCambiarFecha, flagRutina, flagDesacreditar]
 
-def ContarControlesPendientes(driver, ID_Actual, funcion_print=lambda *args, **kwargs: None):
+def ContarControlesPendientes(driver, ID_Actual, NM_Actual, funcion_print=lambda *args, **kwargs: None):
     xpath_controles = "//div[@id='InterfaceContent']/div[@style='']//table[@role='grid']//tr"
     
     control_grilla = driver.find_element(By.XPATH, "//div[@id='InterfaceContent']/div[@style='']//div[contains(@class, 'k-pager-wrap') and contains(@class, 'k-widget') and @data-role='pager']")
@@ -484,6 +492,11 @@ def ContarControlesPendientes(driver, ID_Actual, funcion_print=lambda *args, **k
     cantidad_controles =  int(Cortar(cantidad_controles, "de ", " ítems"))
     Saltos = 1
     
+    es_submuestra = "-1" not in NM_Actual
+    NM_Acortado = NM_Actual.split("-")[0]
+
+    # funcion_print(es_submuestra)
+
     n_pendientes = 0
     lista_controles = []
 
@@ -498,11 +511,21 @@ def ContarControlesPendientes(driver, ID_Actual, funcion_print=lambda *args, **k
             if control_estado != "Publicada":
             
                 if control_id == str(ID_Actual):
-                    funcion_print(f"Saltando muestra original {control_id} en estado {control_estado}")
+                    funcion_print(f"Saltando muestra actual {control_id} en estado {control_estado}")
+                    
+                elif NM_Acortado+"-1" in control_nmuestra:
+                    funcion_print(f"Saltando muestra principal {control_id} en estado {control_estado}")
                 
-                elif control_nmuestra.split("-")[1][0] != "1":
-                    funcion_print(f"Saltando submuestra [{control_id}][{control_nmuestra}]")
-
+                # elif control_nmuestra.split("-")[1][0] != "1":
+                    # funcion_print(f"Saltando nueva version de muestra [{control_id}][{control_nmuestra}]")
+                
+                #Tiene submuestras
+                elif "-1" not in control_nmuestra:
+                    funcion_print(f"Submuestra {control_id} en estado {control_estado}!")
+                    if not es_submuestra and control_estado != "Finalizada": #Muestra principal con submuestra finalizadas se ignora
+                        n_pendientes += 1
+                
+                
                 else:
                     funcion_print(f"Control {control_id} en estado {control_estado}!")
                     lista_controles.append(control_id)
@@ -512,6 +535,7 @@ def ContarControlesPendientes(driver, ID_Actual, funcion_print=lambda *args, **k
         if _ != Saltos-1:
             EsperarCLICK(driver,atributo="class",valor="k-icon k-i-arrow-60-right")
             EsperarCARGA_myLIMS(driver)
+        
 
     return [n_pendientes,lista_controles]
 
@@ -708,10 +732,10 @@ def formato_fecha(fecha, formato="%d/%m/%Y %I:%M %p"):
         if ".m." in fecha or "M" in fecha or ". m." in fecha:
 
             if "a.m." in fecha or "a. m." in fecha:
-                return datetime.strptime(fecha.replace("a.m.", "AM").replace("a. m."), formato) 
+                return datetime.strptime(fecha.replace("a.m.", "AM").replace("a. m.", "AM"), formato) 
 
             elif "p.m." in fecha or "p. m." in fecha:
-                return datetime.strptime(fecha.replace("p.m.", "PM").replace("p. m."), formato) 
+                return datetime.strptime(fecha.replace("p.m.", "PM").replace("p. m.", "PM"), formato) 
 
             else:
                 raise ExcepcionDeMuestra(f"Formato de fecha desconocido {fecha}")
@@ -874,6 +898,7 @@ def CambiarFechas(driver, alertas, inicio_joranda, extension_jornada, funcion_pr
     fecha_recepcion = None
 
     AlternarMedidaVentana(driver) #Cambiar tamaño para hacer click en "Historial"
+    
     BotonSection(driver,"Historial").click()
     EsperarCARGA_myLIMS(driver)
 
@@ -950,8 +975,8 @@ def CambiarFechas(driver, alertas, inicio_joranda, extension_jornada, funcion_pr
                 else:
                     dict_alerta['delta'] = new_delta
                     dict_alerta['cota_maxima'] = Cortar(alerta, "(Fecha límite Inicio Análisis ", ")")
-
-            if "Analito se debería reportar inmediatamente después de la fecha de recepción de la muestra" in alerta:
+ 
+            if "reportar inmediatamente después de la fecha de recepción de la muestra" in alerta:
                 dict_alerta['tipo'] = "Recepción atrasada, inicio inmediato"
                 dict_alerta['fecha_recepcion'] = fecha_recepcion
                 dict_alerta['fecha_base']  = dict_alerta['fecha_recepcion']
@@ -982,12 +1007,10 @@ def CambiarFechas(driver, alertas, inicio_joranda, extension_jornada, funcion_pr
             return False
         
     diccionario_alertas = limpiar_diccionario(diccionario_alertas)
-<<<<<<< HEAD
     # input(diccionario_alertas)
-=======
->>>>>>> fefcba2750d643bf6a9f7462662cab543cb8c9c5
+    
     for alerta in diccionario_alertas:
-
+        print(alerta)
         fecha_base  = alerta['fecha_base']
         metodo      = alerta['metodo']
         delta_texto = alerta['delta']

@@ -504,7 +504,7 @@ match tipo_menu:
                     if seleccion:
                         seleccion_metodo_analisis_entrada = listbox.get(seleccion)
                         boton.config(text=f"{seleccion_metodo_analisis_entrada}")
-                        boton_agregar.config(style='on.TButton', command=lambda: agregar_selector_ventana(boton, fitro_var) )
+                        boton_agregar.config(style='on.TButton', command=lambda: agregar_selector_ventana(boton, filtro_var) )
                         ventana.destroy()
 
                 def seleccionar_elemento_salida(event, ventana, boton):
@@ -563,7 +563,7 @@ match tipo_menu:
 
                     if tipo == "entrada":
                         seleccion_filtro = seleccion_metodo_analisis_salida
-                        if seleccion_filtro != "" and fitro_var.get(): 
+                        if seleccion_filtro != "" and filtro_var.get(): 
                             seleccion_analito = df_muestras.loc[df_muestras['Metodo'] == seleccion_filtro, "Analito"].drop_duplicates().to_list()[0]
                             lista_seleccion_metodos = df_muestras.loc[df_muestras['Analito'] == seleccion_analito, "Metodo"].drop_duplicates().to_list()
 
@@ -577,7 +577,7 @@ match tipo_menu:
 
                     if tipo == "salida":
                         seleccion_filtro = seleccion_metodo_analisis_entrada
-                        if seleccion_filtro != "" and fitro_var.get(): 
+                        if seleccion_filtro != "" and filtro_var.get(): 
                             seleccion_analito = df_muestras.loc[df_muestras['Metodo'] == seleccion_filtro, "Analito"].drop_duplicates().to_list()[0]
                             lista_seleccion_metodos = df_muestras.loc[df_muestras['Analito'] == seleccion_analito, "Metodo"].drop_duplicates().to_list()
                         
@@ -628,13 +628,13 @@ match tipo_menu:
                                 _tmp_str = '\n - '.join(lista_requerimientos)
                                 messagebox.showwarning(title="Alerta",message=f"Método {seleccion_metodo_analisis_salida} tiene {len(lista_requerimientos)} requerimientos distintos a {metodo}:\n\n - {_tmp_str}")
                         
-                        print(f"{';'.join(seleccion_metodo_analisis_entrada_lista)}&{seleccion_metodo_analisis_salida}&{check_var.get()}&{seleccion_analisis}", end="")
+                        print(f"{';'.join(seleccion_metodo_analisis_entrada_lista)}&{seleccion_metodo_analisis_salida}&{medida_var.get()}&{seleccion_analisis}&{norma_var.get()}", end="")
                         root.destroy() 
 
                     else:
                         messagebox.showwarning(title="Alerta",message="Favor seleccionar métodos de análisis")
 
-                def agregar_selector_ventana(cuadro_entrada, fitro_var):
+                def agregar_selector_ventana(cuadro_entrada, filtro_var):
                     cuadro_texto = cuadro_entrada.cget("text")
                     global listbox_2, selector_ventana
                     if selector_ventana == None:
@@ -674,7 +674,7 @@ match tipo_menu:
                         
                         cuadro_entrada.config(text="Seleccionar Método de Entrada")
                     else:
-                        fitro_var.set(False)
+                        filtro_var.set(False)
                         if cuadro_texto != "Seleccionar Método de Entrada" and cuadro_texto not in seleccion_metodo_analisis_entrada_lista:
                             listbox_2.insert(tk.END, cuadro_texto)
                             seleccion_metodo_analisis_entrada_lista.append(cuadro_texto)
@@ -685,8 +685,9 @@ match tipo_menu:
                 root = tk.Tk()
                 mainStyle()
                 
-                check_var = tk.BooleanVar()
-                fitro_var = tk.BooleanVar(value=True)
+                medida_var = tk.BooleanVar()
+                filtro_var = tk.BooleanVar(value=True)
+                norma_var = tk.BooleanVar(value=True)
 
                 root.title("Alterar metodos de análisis")
                 root.geometry("400x450")
@@ -706,11 +707,14 @@ match tipo_menu:
                 boton_metodo_salida = tk.Button(root, text="Seleccionar Método de Salida", width=30, command=lambda: mostrar_frame("salida", boton_metodo_salida) )
                 boton_metodo_salida.pack()
 
-                filtro_checkbutton = tk.Checkbutton(root, text="Filtrar siguiente seleccion", variable=fitro_var)
+                filtro_checkbutton = tk.Checkbutton(root, text="Filtrar siguiente seleccion", variable=filtro_var)
                 filtro_checkbutton.pack(padx=10, pady=10)
 
-                checkbutton = tk.Checkbutton(root, text="Revisar Unidad de Medida", variable=check_var)
-                checkbutton.pack(padx=10, pady=10)
+                medida_checkbutton = tk.Checkbutton(root, text="Revisar Unidad de Medida", variable=medida_var)
+                medida_checkbutton.pack(padx=10, pady=10)
+
+                norma_checkbutton = tk.Checkbutton(root, text="Revisar Norma", variable=norma_var)
+                norma_checkbutton.pack(padx=10, pady=0)
                 
                 boton_analisis = tk.Button(root, text="Analisis (OPCIONAL)", width=30, command=lambda: mostrar_frame("analisis", boton_analisis) )
                 boton_analisis.pack()
@@ -829,7 +833,7 @@ match tipo_menu:
 
                     if tipo == "salida":
                         seleccion_filtro = seleccion_analisis_entrada
-                        if seleccion_filtro != "" and fitro_var.get(): 
+                        if seleccion_filtro != "" and filtro_var.get(): 
                             seleccion_filtrada = df_muestras.loc[df_muestras['Analito'] == seleccion_filtro, "Metodo"].drop_duplicates().to_list()[0]
                             lista_seleccion    = df_muestras.loc[df_muestras['Metodo'] == seleccion_filtrada, "Analito"].drop_duplicates().to_list()
                         else:
@@ -842,7 +846,7 @@ match tipo_menu:
 
                     if tipo == "metodo":
                         seleccion_filtro = seleccion_analisis_entrada
-                        if seleccion_filtro != "" and fitro_var.get(): 
+                        if seleccion_filtro != "" and filtro_var.get(): 
                             seleccion_filtrada = df_muestras.loc[df_muestras['Analito'] == seleccion_filtro, "Analito"].drop_duplicates().to_list()[0]
                             lista_seleccion    = df_muestras.loc[df_muestras['Analito'] == seleccion_filtrada, "Metodo"].drop_duplicates().to_list()
                         else:
@@ -861,12 +865,14 @@ match tipo_menu:
                     #     messagebox.showwarning(title="Alerta",message="Favor seleccionar analitos distintos")
 
                     else:
-                        print(f"{seleccion_analisis_entrada}&{seleccion_analisis_salida}&{seleccion_metodo}&{check_var.get()}", end="")
+                        print(f"{seleccion_analisis_entrada}&{seleccion_analisis_salida}&{seleccion_metodo}&{medida_var.get()}&{norma_var.get()}", end="")
                         root.destroy() 
 
                 root = tk.Tk()
-                check_var = tk.BooleanVar()
-                fitro_var = tk.BooleanVar(value=True)
+
+                medida_var = tk.BooleanVar()
+                filtro_var = tk.BooleanVar(value=True)
+                norma_var = tk.BooleanVar(value=True)
 
                 root.title("Reemplazar analitos")
                 root.geometry("400x450")
@@ -889,11 +895,14 @@ match tipo_menu:
                 boton_metodo = tk.Button(root, text="Seleccionar Método", width=30, command=lambda: mostrar_frame("metodo", boton_metodo) )
                 boton_metodo.pack()
 
-                filtro_checkbutton = tk.Checkbutton(root, text="Filtrar siguiente seleccion", variable=fitro_var)
+                filtro_checkbutton = tk.Checkbutton(root, text="Filtrar siguiente seleccion", variable=filtro_var)
                 filtro_checkbutton.pack(padx=10, pady=10)
 
-                checkbutton = tk.Checkbutton(root, text="Revisar Unidad de Medida", variable=check_var)
-                checkbutton.pack(padx=10, pady=0)
+                medida_checkbutton = tk.Checkbutton(root, text="Revisar Unidad de Medida", variable=medida_var)
+                medida_checkbutton.pack(padx=10, pady=10)
+
+                norma_checkbutton = tk.Checkbutton(root, text="Revisar Norma", variable=norma_var)
+                norma_checkbutton.pack(padx=10, pady=0)
                 
                 def reiniciar():
                     global seleccion_analisis_salida, seleccion_analisis_entrada, seleccion_metodo, metodos, analisis
@@ -1014,7 +1023,7 @@ match tipo_menu:
                     if tipo == "a_entrada":
 
                         seleccion_filtro = seleccion_metodo_entrada
-                        if seleccion_filtro != "" and fitro_var.get(): 
+                        if seleccion_filtro != "" and filtro_var.get(): 
                             seleccion_filtrada = df_muestras.loc[df_muestras['Metodo'] == seleccion_filtro, "Metodo"].drop_duplicates().to_list()[0]
                             lista_seleccion    = df_muestras.loc[df_muestras['Metodo'] == seleccion_filtrada, "Analito"].drop_duplicates().to_list()
                         else:
@@ -1027,7 +1036,7 @@ match tipo_menu:
                     if tipo == "a_salida":
 
                         seleccion_filtro = seleccion_metodo_salida
-                        if seleccion_filtro != "" and fitro_var.get(): 
+                        if seleccion_filtro != "" and filtro_var.get(): 
                             seleccion_filtrada = df_muestras.loc[df_muestras['Metodo'] == seleccion_filtro, "Metodo"].drop_duplicates().to_list()[0]
                             lista_seleccion    = df_muestras.loc[df_muestras['Metodo'] == seleccion_filtrada, "Analito"].drop_duplicates().to_list()
                         else:
@@ -1040,7 +1049,7 @@ match tipo_menu:
                     if tipo == "m_entrada":
                         
                         seleccion_filtro = seleccion_analisis_entrada
-                        if seleccion_filtro != "" and fitro_var.get(): 
+                        if seleccion_filtro != "" and filtro_var.get(): 
                             seleccion_filtrada = df_muestras.loc[df_muestras['Analito'] == seleccion_filtro, "Analito"].drop_duplicates().to_list()[0]
                             lista_seleccion    = df_muestras.loc[df_muestras['Analito'] == seleccion_filtrada, "Metodo"].drop_duplicates().to_list()
                         else:    
@@ -1053,7 +1062,7 @@ match tipo_menu:
                     if tipo == "m_salida":
 
                         seleccion_filtro = seleccion_analisis_salida
-                        if seleccion_filtro != "" and fitro_var.get(): 
+                        if seleccion_filtro != "" and filtro_var.get(): 
                             seleccion_filtrada = df_muestras.loc[df_muestras['Analito'] == seleccion_filtro, "Analito"].drop_duplicates().to_list()[0]
                             lista_seleccion    = df_muestras.loc[df_muestras['Analito'] == seleccion_filtrada, "Metodo"].drop_duplicates().to_list()
                         else:    
@@ -1072,12 +1081,13 @@ match tipo_menu:
                     #     messagebox.showwarning(title="Alerta",message="Favor seleccionar metodos distintos")
 
                     else:
-                        print(f"{seleccion_analisis_entrada}&{seleccion_analisis_salida}&{seleccion_metodo_entrada}&{seleccion_metodo_salida}&{check_var.get()}", end="")
+                        print(f"{seleccion_analisis_entrada}&{seleccion_analisis_salida}&{seleccion_metodo_entrada}&{seleccion_metodo_salida}&{medida_var.get()}&{norma_var.get()}", end="")
                         root.destroy() 
 
                 root = tk.Tk()
-                check_var = tk.BooleanVar()
-                fitro_var = tk.BooleanVar(value=True)
+                medida_var = tk.BooleanVar()
+                filtro_var = tk.BooleanVar(value=True)
+                norma_var = tk.BooleanVar(value=True)
 
                 root.title("Reemplazar analitos")
                 root.geometry("400x500")
@@ -1106,11 +1116,14 @@ match tipo_menu:
                 boton_metodo_salida = tk.Button(root, text="Seleccionar metodo de Salida", width=30, command=lambda: mostrar_frame("m_salida", boton_metodo_salida) )
                 boton_metodo_salida.pack()
 
-                filtro_checkbutton = tk.Checkbutton(root, text="Filtrar siguiente seleccion", variable=fitro_var)
+                filtro_checkbutton = tk.Checkbutton(root, text="Filtrar siguiente seleccion", variable=filtro_var)
                 filtro_checkbutton.pack(padx=10, pady=10)
 
-                checkbutton = tk.Checkbutton(root, text="Revisar Unidad de Medida", variable=check_var)
-                checkbutton.pack(padx=10, pady=0)
+                medida_checkbutton = tk.Checkbutton(root, text="Revisar Unidad de Medida", variable=medida_var)
+                medida_checkbutton.pack(padx=10, pady=0)
+
+                norma_checkbutton = tk.Checkbutton(root, text="Revisar Norma", variable=norma_var)
+                norma_checkbutton.pack(padx=10, pady=0)
                 
                 def reiniciar():
                     global seleccion_analisis_entrada, seleccion_analisis_salida, seleccion_metodo_entrada, seleccion_metodo_salida, metodos, analisis
@@ -1217,7 +1230,7 @@ match tipo_menu:
 
                     if tipo == "metodo":
                         seleccion_filtro = seleccion_analisis_entrada
-                        if seleccion_filtro != "" and fitro_var.get(): 
+                        if seleccion_filtro != "" and filtro_var.get(): 
                             seleccion_filtrada = df_muestras.loc[df_muestras['Analito'] == seleccion_filtro, "Analito"].drop_duplicates().to_list()[0]
                             lista_seleccion    = df_muestras.loc[df_muestras['Analito'] == seleccion_filtrada, "Metodo"].drop_duplicates().to_list()
                         else:
@@ -1230,7 +1243,7 @@ match tipo_menu:
 
                     if tipo == "analisis":
                         seleccion_filtro = seleccion_metodo_entrada
-                        if seleccion_filtro != "" and fitro_var.get(): 
+                        if seleccion_filtro != "" and filtro_var.get(): 
                             seleccion_filtrada = df_muestras.loc[df_muestras['Metodo'] == seleccion_filtro, "Metodo"].drop_duplicates().to_list()[0]
                             lista_seleccion    = df_muestras.loc[df_muestras['Metodo'] == seleccion_filtrada, "Analito"].drop_duplicates().to_list()
                         else:
@@ -1314,7 +1327,7 @@ match tipo_menu:
                         messagebox.showwarning(title="Alerta",message="Favor marcar opción para continuar")
 
                 root = tk.Tk()
-                fitro_var = tk.BooleanVar(value=True)
+                filtro_var = tk.BooleanVar(value=True)
 
                 root.title("Alterar metodos de análisis")
                 root.geometry("400x350")
@@ -1331,7 +1344,7 @@ match tipo_menu:
                 boton_metodo_salida = tk.Button(root, text="Seleccionar Análisis de Entrada", width=30, command=lambda: mostrar_frame("analisis", boton_metodo_salida) )
                 boton_metodo_salida.pack()
                 
-                filtro_checkbutton = tk.Checkbutton(root, text="Filtrar siguiente seleccion", variable=fitro_var)
+                filtro_checkbutton = tk.Checkbutton(root, text="Filtrar siguiente seleccion", variable=filtro_var)
                 filtro_checkbutton.pack(padx=10, pady=10)
 
                 def reiniciar():
@@ -1442,8 +1455,8 @@ match tipo_menu:
                         messagebox.showwarning(title="Alerta",message="Favor marcar opción para continuar")
 
                 root = tk.Tk()
-                fitro_var = tk.BooleanVar(value=True)
-
+                filtro_var = tk.BooleanVar(value=True)
+                norma_var = tk.BooleanVar(value=True)
                 root.title("Eliminar metodos de análisis")
                 root.geometry("400x270")
 

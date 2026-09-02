@@ -22,7 +22,7 @@ try:
     )
     from __myLIMS_wrappers__ import (
         unique, Cortar, BuscarAlertas,
-        ContarControlesPendientes,
+        ContarControlesPendientes, AlternarMedidaVentana,
         CambiarFechas, MuestraPublicar,
         DesactivarAlerta, CambiarAcreditacion
     )
@@ -385,6 +385,7 @@ try:
                 flagRutina = False
                 flagDesacreditar = False
                 flagControles = False
+                flagSubMuestras = False
 
                 checkCambiarFechas = False
                 checkDesacreditar = False
@@ -497,7 +498,8 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                 driver.switch_to.default_content()
 
                                 BotonAccion(driver,"Cancelar").click()
-                                
+                                AlternarMedidaVentana(driver)
+
                                 try:
                                     if cliente in ["AGUAS PATAGONIA S.A"]:
                                         inicio_jornada = "6:30"
@@ -518,7 +520,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                         checkCambiarFechas = False
 
                                 except (ElementClickInterceptedException,ElementNotInteractableException) as e:
-                                    raise ExcepcionDeMuestra("Error al cambiar fechas (Reintentar)")
+                                    raise ExcepcionDeMuestra(f"{e}\nError al cambiar fechas (Reintentar)")
                         
                             if m_tipo == TipoMensajeETFA:
 
@@ -526,7 +528,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                                     flagDesacreditar = True
                                     checkDesacreditar = flagDesacreditar
                                 
-                                eprint(f"[\"{m_inicio}\"]")
+                                #eprint(f"[\"{m_inicio}\"]")
 
                                 if not CorregirETFA:
                                     flagDescargar = True
@@ -592,12 +594,18 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                 BotonSection(driver,"SectionRelatedSamples").click()
                 EsperarCARGA_myLIMS(driver)
                 
-                cant_controles, controles_totales = ContarControlesPendientes(driver, ID_Actual=ID_Actual, funcion_print=logprint)
+                cant_controles, controles_totales = ContarControlesPendientes(driver, ID_Actual=ID_Actual, NM_Actual=N_Muestra, funcion_print=eprint)
+                # eprint(len(controles_totales))
+                # eprint(cant_controles)
 
                 if cant_controles != 0:
-                    eprint(f"[{cant_controles} Controles Pendientes]")
-                    flagControles = True
+                    if len(controles_totales) < cant_controles:
+                        eprint(f"[Se encuentran submuestras Pendientes]")
+                        flagSubMuestras = True
 
+                    eprint(f"[{cant_controles} Elementos Pendientes]")
+                    flagControles = True
+                    
                 if flagRutina or flagControles:
                     flagDescargar = True
 
@@ -643,7 +651,25 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                 
                 tiene_rutina = "NO" if not flagRutina else "SI"
                 tiene_controles = "NO" if not flagControles else "SI"
-                
+                marca = "DESCARGA PUBLICADA " if muestra_estado == "Publicada" else ""
+
+                if flagSubMuestras and not flagRutina and not flagControles:
+                    id_rep = ListaMuestras.count(ID_Actual)
+                    if id_rep == 1:
+                        eprint("[Repasando id al final de la lista]")
+
+                        ListaMuestras = ListaMuestras+[ID_Actual]
+                        MuestrasCantidad = len(ListaMuestras)
+
+                        ID_Actual = f"-{ID_Actual}"
+                        marca = marca+"CON SUBMUESTRAS"
+                        
+                    if id_rep > 1:
+                        eprint("[ID ya repasado, dejando resagado]")
+                        ID_Actual = f"-{ID_Actual}"
+                        marca = marca+"CON SUBMUESTRAS"
+
+
                 if CorregirETFA:
                     if flagDesacreditar:
                         tiene_ETFA = "NO CORRIGE" if not checkDesacreditar else "CORREGIDO"
@@ -655,7 +681,7 @@ Muestras Restantes: {MuestrasCantidad-MuestraIndice} Muestras [{MuestraIndice}/{
                 TotalDescarga += 1
 
                 if Registrar:
-                    fila_muestra = [ id_excel, ID_Actual, tiene_controles, tiene_rutina, tiene_ETFA, "DESCARGA PUBLICADA" if muestra_estado == "Publicada" else ""]
+                    fila_muestra = [ id_excel, ID_Actual, tiene_controles, tiene_rutina, tiene_ETFA, marca]
                     FilaAgregarXLSX(funcion_print=eprint, dirExcel=dirExcelRegistro, valores_fila=fila_muestra, colnames=nombre_columnas_reg, except_kill=False, except_create=True)
                 
                 if SoloBuscarControles:

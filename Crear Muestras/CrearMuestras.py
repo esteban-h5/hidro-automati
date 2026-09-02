@@ -12,7 +12,7 @@ from __myLIMS_modulos__ import (
 )
 
 from __myLIMS_API__ import (
-  log_status, api_post,json, get_pricetable, 
+  log_status, api_post,json, get_pricetable, get_samplestatus,
   SampleAnalysisInsert, FormatoDF
 )
 
@@ -83,6 +83,7 @@ try:
 
     MostrarJSON     = config.get("MostrarJSON", False)
     ListaPrecio     = config.get("ListaPrecio", 0)
+    EstatusMuestra  = config.get("EstatusMuestra", 8)
     
     Partition       = config.get("Partition", 50)
 
@@ -266,6 +267,18 @@ try:
             eprint("Lista de precios establecida al país")
             ListaPrecio = 0
 
+    if EstatusMuestra != 0 and not str(EstatusMuestra).isdigit():
+        EstatusMuestra = get_samplestatus(EstatusMuestra, APIdomain=APIdomain, token=token, funcion_print=eprint).Id
+
+        if EstatusMuestra == None:
+            eprint(f"Estado de muestra predeterminado a Modelo")
+            EstatusMuestra = 8
+
+        else:
+            eprint(f"Estado de muestra {EstatusMuestra}")
+
+    
+
     eprint(f"[Construyendo y subiendo cada {Partition} muestras en {total_part} partes ({total_muestras} muestras)]")
     timer = DeltaTimer(buffer_size=25)
     timer.start(len_lista_partitions)
@@ -284,7 +297,7 @@ try:
             eprint(f"\n[{idx*(Partition)}/{total_muestras}] [{idx+1}/{total_part}] [termino {timer.h_estimada} en {timer.t_restante}]")
 
             try:
-                sample_records = FormatoDF(inf_muestra_df, col_fmt, paisActual, getdomain=APIdomain, gettoken=token, ListaPrecio=ListaPrecio, funcion_log=logprint, funcion_print=eprint)
+                sample_records = FormatoDF(inf_muestra_df, col_fmt, paisActual, getdomain=APIdomain, gettoken=token, ListaPrecio=ListaPrecio, EstatusMuestra=EstatusMuestra, funcion_log=logprint, funcion_print=eprint)
             except KeyError as e:
                 traceback.print_exc(file=sys.stdout)
                 valor = e.args[0]

@@ -277,7 +277,7 @@ try:
 
                             ###################################################
                             #Revisar Controles Pendientes
-                            cant_controles, lista_controles = ContarControlesPendientes(driver, ID_Actual=Muestra["ID"])
+                            cant_controles, lista_controles = ContarControlesPendientes(driver, NM_Actual=Muestra["NUMERO"], ID_Actual=Muestra["ID"])
 
                             if cant_controles == 0:
                                 BotonSection(driver,"SectionDetails").click()

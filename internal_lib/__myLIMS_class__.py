@@ -136,7 +136,7 @@ class SampleInsert(BaseIntModel):
     Infos:                  List[SampleInfoInsert]
     Analyses:               Optional[List[SampleAnalysisInsert]] = None
     Specifications:         Optional[List[SampleSpecificationInsert]] = []
-    SampleStatus: int
+    SampleStatus:           int
     MultiCurrencyConfigCurrencyId: int
     
 class User(BaseIntModel):
@@ -297,11 +297,11 @@ class SampleCustomInfo(BaseIntModel):
     ValueDateTime: date
 
 class SampleStatusBasic(BaseIntModel):
-    Id: int
-    Identification: str
-    BeforeReceive: bool
-    AfterPublish: bool
-    PortalSampleStatus: bool
+    Id: Optional[int] = None
+    Identification: Optional[str] = None
+    BeforeReceive: Optional[bool] = None
+    AfterPublish: Optional[bool] = None
+    PortalSampleStatus: Optional[bool] = None
 
 class ServiceAreaBasic(BaseIntModel):
     ServiceCenter: ServiceCenterBasic
@@ -760,7 +760,6 @@ class SampleBasic(BaseIntModel):
     SampleReason: SampleReasonBasic
     CurrentStatus: 'SampleStatusHistoryBasic'
     SampleType: 'SampleTypeBasic'
-    SampleStatus: int
 
     # vienen None
     CollectionPointId: Optional[int] = None
@@ -773,9 +772,11 @@ class SampleBasic(BaseIntModel):
     CustomInfo: Optional['SampleCustomInfo'] = None
 
     # vienen None
-    MultiCurrencyConfigCurrencyId: int
     TotalPrice: Optional[Decimal] = None
     TotalPriceBusinessUnit: Optional[Decimal] = None
+
+    SampleStatus: Optional[int] = None
+    MultiCurrencyConfigCurrencyId: Optional[int] = None
 
 class SampleDetail(BaseIntModel):
     Id: Optional[int] = None

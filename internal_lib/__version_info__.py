@@ -1,12 +1,10 @@
 ###############################
 
-version_actual = "6.2.8-1"
-fecha_version = "miercoles 1 de abril 2026"
+version_actual = "6.3.1"
+fecha_version = "miercoles 02 de septiembre 2026"
 
 changelog = [
-    "- Correccion formato hora para MTY"
-    "- Correccion fecha ejecución, dayfirst",
-    "- inputs en descarga muestras",
+    "- Revision Norma en especificaciones al cambiar metodo"
 ]
 
 ###############################
